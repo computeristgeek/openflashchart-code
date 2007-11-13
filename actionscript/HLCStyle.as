@@ -1,5 +1,8 @@
 ﻿class HLCStyle extends BarStyle
 {
+	//
+	// HLC -- High Low Close
+	//
 	public var is_bar:Boolean = true;
 	
 	// MovieClip that holds each bar:

@@ -1,7 +1,7 @@
 &title=HLC Chart,{font-size:20px; color: #800000}&
 &y_legend=Your legend here!,12,#736AFF&
 &y_ticks=5,10,7&
-&x_legend=Waves in Feburary,20,0x736AFF&
+&x_legend=Waves in Feburary,20,#736AFF&
 &bars_width=0.95&
 
 &hlc=50,2,#F50505,One,10&

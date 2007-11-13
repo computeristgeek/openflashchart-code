@@ -12,7 +12,8 @@
 &y_min=7.1000&
 &y_max=7.1299&
 &tool_tip=#x_label#<br>Close: #close#<br>High: #high#<br>Low: #low#&
-&y_format=#val:number# kn&
+&_y_format=#val:number# kn&
+&y_format=#val# kn&
 &num_decimals=5&
 &is_fixed_num_decimals_forced=true&
 &is_decimal_separator_comma=true&

@@ -52,6 +52,12 @@ function get_colour( col:String )
 // make a number 1000 = 1,000
 function format( i:Number )
 {
+	return NumberUtils.formatNumber( i );
+	
+	//
+	//
+	//
+	
 	var s:String = '';
 	if( i<0 )
 		var num:Array = String(-i).split('.');
@@ -598,6 +604,9 @@ function LoadVarsOnLoad( success )
 	
 	_root.css = new Css('margin-top: 30;margin-right: 40;');
 
+	NumberFormat.getInstance(this);
+	NumberFormat.getInstanceY2(this);
+	
 	//
 	// Now we build the objects, the order in which we
 	// build them determins their Z position.
@@ -876,7 +885,7 @@ if( _root.data == undefined )
 		//
 		// We are in the IDE
 		//
-		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-16.txt";
+		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-HLC-02.txt";
 		//_root.data="http://www.stelteronline.de/index.php?option=com_joomleague&func=showStats_GetChartData&p=1";
 		lv.load(_root.data);
 	}

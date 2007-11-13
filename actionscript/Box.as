@@ -294,4 +294,31 @@
 			);
 		
 	}
+	
+	function makePointHLC( x:Number, high:Number, close:Number, low:Number, right_axis:Boolean, group:Number, group_count:Number ) 
+	{
+ 
+		var item_width:Number = this.width_() / this.count;
+		// the bar(s) have gaps between them:
+		var bar_set_width:Number = item_width*1;
+
+		// get the margin between sets of bars:
+		var bar_left:Number = this.left_()+((item_width-bar_set_width)/2);
+		// 1 bar == 100% wide, 2 bars = 50% wide each
+		var bar_width:Number = bar_set_width/group_count;
+
+		var left:Number = bar_left+(x*item_width);
+		left += bar_width*group;
+
+		return new PointHLC(
+			left,
+			this.getY( high, right_axis ),
+			this.getY( close, right_axis ),
+			this.getY( low, right_axis ),
+			high,
+			bar_width,
+			close
+			);
+ 
+	}
 }

@@ -21,6 +21,8 @@
 				//
 				if( lv['candle'+name] != undefined )
 					this.styles[c-1].set_values( lv['values'+name], labels, lv['links'+name] );
+				else if( lv['hlc'+name] != undefined )
+					this.styles[c-1].set_values( lv['values'+name], labels, lv['links'+name] );
 				else if( lv['scatter'+name] != undefined )
 					this.styles[c-1].set_values( lv['values'+name] );
 				else
@@ -65,6 +67,8 @@
 			return new CandleStyle(lv['candle'+name],'bar_'+c);
 		else if( lv['scatter'+name] != undefined )
 			return new Scatter(lv['scatter'+name],bgColour,'bar_'+c);
+		else if( lv['hlc'+name] != undefined )
+			return new HLCStyle(lv['hlc'+name],'bar_'+c);
 	}
 	
 	private function parseVal( val:String ):Array
