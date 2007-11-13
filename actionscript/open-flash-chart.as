@@ -772,16 +772,6 @@ function hide_message():Void
 	hide_oops();
 }
 
-/*
-
-ExternalInterface.addCallback("rollout", null, rollout);
-function rollout():Void
-{
-	_root.tooltip_x.hide();
-}
-
-*/
-
 ExternalInterface.addCallback("reload", null, reload);
 function reload( u:String ):Void
 {
@@ -895,8 +885,6 @@ if( _root.data == undefined )
 		// Load from inline HTML variables
 		//
 		_root.LoadVarsOnLoad = LoadVarsOnLoad;
-		//_root.make_chart = make_chart;
-		//_root.make_pie = make_pie;
 		_root.LoadVarsOnLoad( true );
 	}
 }
