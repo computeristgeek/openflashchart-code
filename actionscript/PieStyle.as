@@ -172,34 +172,60 @@ class PieStyle extends Style
 			//
 			// start off with the radius at 100%, then keep shrinking it untill
 			// all the labels fit into the Stage.
-			//
-			var outside:Boolean = false;
 			
+			// 2007-11-14 modified by veljac99:
+			//  - impproved algorithm for finding radius which reduces number of itterations ( from 24 to 6  - using data-13.txt )
+			
+			
+			var radMax:Number = rad;                      // maximum is 100%%
+			var radMin:Number = rad * 0.1;                // minimum is  10%
+			var radTest:Number = (radMax + radMin) * 0.7; // assume 70% (instead of usual 50%)
+			labelLineSize = radTest+this.label_line;
+			
+			//tollerance - stop caclulations if we are inside acceptable tollerance (here is 2% with minimum 2 points)
+			var tollerance:Number = radMax * 0.02; if (tollerance<2) tollerance=2; //2 percent tollerance but minimum 2
+			var iterations:Number =0;  // to avoid endless loop - allow only 30 itterations
+			
+			var outside:Boolean = false;
 			do
 			{
+				iterations +=1;
+
 				for( var i:Number=0; i < tfs.length; i++ )
 				{
 					var angle:Number = this.ExPoints[i].bar_bottom+this.ExPoints[i].bar_width/2;
 					outside = outside || this.move_label( tfs[i], labelLineSize, this.pie_mcs[i]._x, this.pie_mcs[i]._y, angle );
 				}
 				
-				if( !outside )
-				{
+				//found? Great. Go out!
+				if ( (radMax - radMin)<= tollerance || iterations>30 /*30 = max itterationa*/ ){
+					rad = radTest;
 					trace( 'break' );
-					trace( rad );
+					trace( "rad: " + rad + " iterations: " + iterations );
 					trace('--');
 					break;
 				}
 				
-				// LOOK, here we reduce the radius:
-				rad--;
-				labelLineSize = rad+this.label_line;
+				//not found - adopt and try again
+				//				trace ( "outside: " + outside + 
+				//					" [" + radMin + " - " + radMax + "] radTest:" + radTest
+				//					+ "  iterations: " + iterations
+				//					);
+				
+				
+				if (outside) {
+					radMax = radTest;
+				} else {
+					radMin = radTest;
+				}
+				radTest = (radMax + radMin)/2;
+				
+				labelLineSize = radTest+this.label_line;
 				outside = false;
 				
 			}while( true );
 			
-			
-		}
+		} //end if( this.labels.length>0 )
 		
 		for( var i:Number=0; i < this.ExPoints.length; i++ )
 		{
