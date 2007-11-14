@@ -409,13 +409,33 @@ class graph
 		$this->y2_axis_colour = '&y2_axis_colour='. $colour .'&'."\r\n";
 	}
 	
-
+/*
 	function pie( $alpha, $line_colour, $label_colour )
 	{
 		$this->pie = $alpha.','.$line_colour.','.$label_colour;
 
 	}
+*/
 
+	//
+	// Patch by, Jeremy Miller (14th Nov, 2007)
+	//
+	function pie( $alpha, $line_colour, $label_colour, $gradient = true, $border_size = false )
+	{
+		$this->pie = $alpha.','.$line_colour.','.$label_colour;
+		if (!$gradient) {
+			$this->pie .= ','.!$gradient;
+		}
+		if ($border_size)
+		{
+			if ($gradient === false)
+			{
+				$this->pie .= ',';
+			}
+			$this->pie .= ','.$border_size;
+		}
+	}
+	
 	function pie_values( $values, $labels, $links )
 	{
 		$this->pie_values = implode(',',$values);

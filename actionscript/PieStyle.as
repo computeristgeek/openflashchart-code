@@ -183,8 +183,10 @@ class PieStyle extends Style
 			labelLineSize = radTest+this.label_line;
 			
 			//tollerance - stop caclulations if we are inside acceptable tollerance (here is 2% with minimum 2 points)
-			var tollerance:Number = radMax * 0.02; if (tollerance<2) tollerance=2; //2 percent tollerance but minimum 2
-			var iterations:Number =0;  // to avoid endless loop - allow only 30 itterations
+			var tollerance:Number = radMax * 0.02;
+			if (tollerance<2)
+				tollerance=2; //2 percent tollerance but minimum 2
+			var iterations:Number=0;  // to avoid endless loop - allow only 30 itterations
 			
 			var outside:Boolean = false;
 			do
