@@ -52,38 +52,34 @@ function get_colour( col:String )
 // make a number 1000 = 1,000
 function format( i:Number )
 {
-	return NumberUtils.formatNumber( i );
+	return NumberUtils.formatNumber (i);
 	
-	//
-	//
-	//
-	
-	var s:String = '';
-	if( i<0 )
-		var num:Array = String(-i).split('.');
-	else
-		var num:Array = String(i).split('.');
-	
-	var x:String = num[0];
-	var pos:Number=0;
-	for(c=x.length-1;c>-1;c--)
-	{
-		if( pos%3==0 && s.length>0 )
-		{
-			s=','+s;
-			pos=0;
-		}
-		pos++;
-			
-		s=x.substr(c,1)+s;
-	}
-	if( num[1] != undefined )
-		s += '.'+ num[1].substr(0,2);
-		
-	if( i<0 )
-		s = '-'+s;
-		
-	return s;
+	//	var s:String = '';
+	//	if( i<0 )
+	//		var num:Array = String(-i).split('.');
+	//	else
+	//		var num:Array = String(i).split('.');
+	//	
+	//	var x:String = num[0];
+	//	var pos:Number=0;
+	//	for(c=x.length-1;c>-1;c--)
+	//	{
+	//		if( pos%3==0 && s.length>0 )
+	//		{
+	//			s=','+s;
+	//			pos=0;
+	//		}
+	//		pos++;
+	//			
+	//		s=x.substr(c,1)+s;
+	//	}
+	//	if( num[1] != undefined )
+	//		s += '.'+ num[1].substr(0,2);
+	//		
+	//	if( i<0 )
+	//		s = '-'+s;
+	//		
+	//	return s;
 }
 
 function formatTime( sval:String )
@@ -221,6 +217,7 @@ function format_y_axis_label( val:Number )
 		var tmp:String = _root._y_format.replace('#val#',_root.format(val));
 		tmp = tmp.replace('#val:time#',_root.formatTime(val));
 		tmp = tmp.replace('#val:none#',String(val));
+		tmp = tmp.replace('#val:number#', NumberUtils.formatNumber (Number(val)));		
 		return tmp;
 	}
 	else
