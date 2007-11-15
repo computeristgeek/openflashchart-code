@@ -111,8 +111,58 @@ function setContextualMenu()
 	/*
 	If you want to remove default items of Flash (except conf and about) uncomment this line
 	contextual_menu.hideBuiltInItems();
+	
+	
+	createClassObject
+	_root.menu = contextual_menu;
 	*/
 	contextual_menu.customItems.push(About);
+	
+	//
+	// added by J. Vandervort <jvandervort@users.sourceforge.net> ( 15th Nov 2007 )
+	//
+	var MyPrint:ContextMenuItem = new ContextMenuItem("Print Chart...");
+	MyPrint.onSelect = function(obj, item)
+	{
+		var pj:PrintJob = new PrintJob();
+		if (pj.start()) {
+
+			// save original _root size
+			var r:Object = {
+		  		width: _root._width,
+				height: _root._height
+		  	};
+			
+		  	// choose scalefactor from larger dimension
+			if(r.width > r.height){
+				var scaleFactor = pj.pageWidth/r.width;
+			} else {
+				var scaleFactor = pj.pageWidth/r.height;
+			}
+			// do the _root scaling
+			_root._xscale = (scaleFactor*100) - 1;
+		  	_root._yscale = (scaleFactor*100) - 1;
+		  
+			// add the page to the job and print
+			if (pj.addPage(0, {xMin:0, xMax:Stage.width, yMin:0, yMax:Stage.height})) {
+				pj.send();  // print page
+			}
+		  	// set original size back
+		  	with(_root){
+				_width = r.width;
+				_height = r.height;
+		  	}
+	 	}
+		delete pj;
+	};	
+	 
+	contextual_menu.customItems.push(MyPrint);
+
+	//If you want to remove default items of Flash (except conf
+	// and about) uncomment this line
+	contextual_menu.hideBuiltInItems();
+
+	 
 	createClassObject
 	_root.menu = contextual_menu;
 }
