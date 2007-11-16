@@ -29,6 +29,7 @@
 		if( _root.tool_tip_wrapper != undefined )
 		{
 			tmp = tip.replace('#val#',_root.format(val));
+			tmp = tmp.replace('#val:number#', NumberUtils.formatNumber (Number(val)));		
 			tmp = tmp.replace('#key#',key);
 			tmp = tmp.replace('#x_label#',x_axis_label);
 			tmp = tmp.replace('#val:time#',_root.formatTime(val));
