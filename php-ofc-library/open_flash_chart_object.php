@@ -61,7 +61,7 @@ function _ofc( $width, $height, $url, $use_swfobject, $base )
     $obj_id = 'chart';
     $div_name = 'flashcontent';
     
-    $out[] = '<script type="text/javascript" src="'. $base .'js/ofc.js"></script>';
+    //$out[] = '<script type="text/javascript" src="'. $base .'js/ofc.js"></script>';
     
     if( !isset( $open_flash_chart_seqno ) )
     {
