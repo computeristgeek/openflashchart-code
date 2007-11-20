@@ -1,13 +1,11 @@
 class graph_object:
-	def render( self, width, height, url ):
-		width = str(width)
-		height = str(height)
-		return """<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="400" height="300" id="graph-2" align="middle">
+	def render( self, width, height, url, ofc_base_url="/", ofc_swf="open-flash-chart.swf" ):
+		return """<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="%(width)d" height="%(height)d" id="graph-2" align="middle">
 <param name="allowScriptAccess" value="sameDomain" />
-<param name="movie" value="open-flash-chart.swf?width=""" + width + "&height=" + height + "&data=" + url + """" />
+<param name="movie" value="%(ofc_base_url)s%(ofc_swf)s?width=%(width)d&height=%(height)d&data=%(url)s" />
 <param name="quality" value="high" /><param name="bgcolor" value="#FFFFFF" />
-<embed src="open-flash-chart.swf?width=""" + width + "&height=" + height + "&data=" + url + """" quality="high" bgcolor="#FFFFFF" width="""" + width + """" height="""" + height + """" name="open-flash-chart" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
-</object>"""
+<embed src="%(ofc_base_url)s%(ofc_swf)s?width=%(width)d&height=%(height)d&data=%(url)s" quality="high" bgcolor="#FFFFFF" width=%(width)d height=%(height)d name="open-flash-chart" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+</object>""" % locals()
 
 class graph:
 	def __init__(self):
