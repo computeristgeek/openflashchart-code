@@ -11,6 +11,11 @@
 	//
 	private var mc:MovieClip;
 	
+	// when we hover over an item, it gives us
+	// the on_click stuff to deal with (because it
+	// never gets the click event (see hack above)
+	private var link:String;
+	
 	function Invisible( lv:Object )
 	{
 		this.mc = _root.createEmptyMovieClip( "tooltipX_mouse_out", _root.getNextHighestDepth() );
@@ -24,6 +29,15 @@
 			};
 			
 		this.mc.onMouseMove = _root.mouse_move;
+		
+		var tmp = this;
+		this.mc.onRelease = function() {
+			trace( 'Click '+tmp.link );
+			if( tmp.link != undefined )
+				getURL( tmp.link );
+				
+		};
+		
 		this.mc.useHandCursor = false;
 	}
 	
@@ -38,5 +52,17 @@
 	function hitTest( x:Number, y:Number )
 	{
 		return this.mc.hitTest( x, y );
+	}
+	
+	function use_hand( link:String )
+	{
+		this.mc.useHandCursor = true;
+		this.link = link;
+	}
+	
+	function use_arrow()
+	{
+		this.mc.useHandCursor = false;
+		this.link = undefined;
 	}
 }

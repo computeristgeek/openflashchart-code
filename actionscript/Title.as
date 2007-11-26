@@ -21,7 +21,7 @@
 	
 	function build( text:String )
 	{
-		this.title = text;
+		this.title = text.replace('#comma#',',');
 		
 		if( this.mc == undefined )
 		{

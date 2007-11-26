@@ -18,13 +18,16 @@
 	
 			for( var i:Number=0; i < labels.length; i++ )
 			{
-				this.add( labels[i] );
+				this.add( labels[i].replace('#comma#',',') );
 			}
 		}
 		else
 		{
-			for( var i:Number=minmax.x_min; i<=minmax.x_max; i++ )
-				this.add( _root.format( i ) );
+			// they *may* have used x_min and x_max to set
+			// the X Axis labels
+			if( style.show_labels )
+				for( var i:Number=minmax.x_min; i<=minmax.x_max; i++ )
+					this.add( _root.format( i ) );
 		}
 	}
 	

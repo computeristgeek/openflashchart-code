@@ -18,7 +18,7 @@
 		this.colour = _root.get_colour( vals[1] );
 		
 		if( vals.length > 2 )
-			this.key = vals[2];
+			this.key = vals[2].replace('#comma#',',');
 			
 		if( vals.length > 3 )
 			this.font_size = Number( vals[3] );

@@ -14,7 +14,7 @@
 		else
 			var tmp:Array = lv.y_legend.split(',');
 			
-		var text:String = tmp[0];
+		var text:String = tmp[0].replace('#comma#',',');
 		var size:Number = Number( tmp[1] );
 		var colour:Number = _root.get_colour( tmp[2] );
 

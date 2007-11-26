@@ -78,11 +78,11 @@ function _ofc( $width, $height, $url, $use_swfobject, $base )
     if( $use_swfobject )
     {
 	// Using library for auto-enabling Flash object on IE, disabled-Javascript proof  
-        $out[] = '<div id="'. $div_name .'" onmouseout="onrollout();"></div>';
+    $out[] = '<div id="'. $div_name .'"></div>';
 	$out[] = '<script type="text/javascript">';
 	$out[] = 'var so = new SWFObject("'. $base .'open-flash-chart.swf", "'. $obj_id .'", "'. $width . '", "' . $height . '", "9", "#FFFFFF");';
-	$out[] = 'so.addVariable("width", "' . $width . '");';
-	$out[] = 'so.addVariable("height", "' . $height . '");';
+	//$out[] = 'so.addVariable("width", "' . $width . '");';
+	//$out[] = 'so.addVariable("height", "' . $height . '");';
 	$out[] = 'so.addVariable("data", "'. $url . '");';
 	$out[] = 'so.addParam("allowScriptAccess", "sameDomain");';
 	$out[] = 'so.write("'. $div_name .'");';

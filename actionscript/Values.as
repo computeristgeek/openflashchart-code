@@ -1,8 +1,10 @@
 ﻿class Values
 {
 	public var styles:Array;
+	
+	private var attach_right:Array;
 
-	public function Values( lv:LoadVars, bgColour:Number, labels:Array )
+	public function Values( lv:LoadVars, bgColour:Number, x_axis_labels:Array )
 	{
 		this.styles = [];
 		var name:String = '';
@@ -15,16 +17,27 @@
 			if( lv['values'+name ] != undefined )
 			{
 				this.styles[c-1] = this.make_style( lv, name, c, bgColour );
-				
+			
 				//
 				// UGH -- quick fix for candle charts. Need to fix all bar charts
+				// these are slowly getting fixed...
 				//
 				if( lv['candle'+name] != undefined )
-					this.styles[c-1].set_values( lv['values'+name], labels, lv['links'+name] );
+					this.styles[c-1].set_values( lv['values'+name], x_axis_labels, lv['links'+name] );
 				else if( lv['hlc'+name] != undefined )
-					this.styles[c-1].set_values( lv['values'+name], labels, lv['links'+name] );
+					this.styles[c-1].set_values( lv['values'+name], x_axis_labels, lv['links'+name] );
 				else if( lv['scatter'+name] != undefined )
 					this.styles[c-1].set_values( lv['values'+name] );
+				else if( lv['bar'+name] != undefined )
+					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
+				else if( lv['filled_bar'+name] != undefined )
+					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
+				else if( lv['bar_3d'+name] != undefined )
+					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
+				else if( lv['bar_fade'+name] != undefined )
+					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
+				else if( lv['bar_sketch'+name] != undefined )
+					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
 				else
 					this.styles[c-1].set_values( this.parseVal( lv['values'+name] ) );
 			}
@@ -35,15 +48,33 @@
 		}
 		while( true );
 	
+	
+		var y2:Boolean = false;
+		var y2lines:Array;
+		
+		//
+		// some data sets are attached to the right
+		// Y axis (and min max)
+		//
+		this.attach_right = Array();
+			
+		if( lv.show_y2 != undefined )
+			if( lv.show_y2 != 'false' )
+				if( lv.y2_lines != undefined )
+				{
+					this.attach_right = lv.y2_lines.split(",");
+				}
 	}
+	
+	
 	
 	private function make_style( lv:LoadVars, name:String, c:Number, bgColour:Number )
 	{
 		if( lv['line'+name] != undefined )
 			return new LineStyle(lv['line'+name],'bar_'+c);
-		if( lv['line_dot'+name] != undefined )
+		else if( lv['line_dot'+name] != undefined )
 			return new LineDot(lv['line_dot'+name],bgColour,'bar_'+c);
-		if( lv['line_hollow'+name] != undefined )
+		else if( lv['line_hollow'+name] != undefined )
 			return new LineHollow(lv['line_hollow'+name],bgColour,'bar_'+c);
 		else if( lv['area_hollow'+name] != undefined )
 			return new AreaHollow(lv['area_hollow'+name],bgColour,'bar_'+c);
@@ -69,6 +100,9 @@
 			return new Scatter(lv['scatter'+name],bgColour,'bar_'+c);
 		else if( lv['hlc'+name] != undefined )
 			return new HLCStyle(lv['hlc'+name],'bar_'+c);
+		else if( lv['bar_sketch'+name] != undefined )
+			return new BarSketchStyle(lv['bar_sketch'+name],'bar_'+c);
+			
 	}
 	
 	private function parseVal( val:String ):Array
@@ -107,15 +141,13 @@
 	// If the current line is to be drawn on y2 (defined in data values, y2_lines)
 	private function is_right( y2lines:Array, line:Number )
 	{
-			//var y2lines:Array = _root.lv.y2_lines.split(",");
-			var right:Boolean = false;
-			for( var i:Number=0; i<y2lines.length; i++ )
-			{
-				if(y2lines[i] == line)
-					right = true; 
-			}
-			
-			return right;
+		var right:Boolean = false;
+		for( var i:Number=0; i<y2lines.length; i++ )
+		{
+			if(y2lines[i] == line)
+				right = true; 
+		}
+		return right;
 	}
 	
 	function _do_it()
@@ -129,23 +161,14 @@
 		
 		var bar_count:Number = this._count_bars();
 		var bar:Number = 0;
-		var y2:Boolean = false;
-		var y2lines:Array;
-			
-		if( _root.lv.show_y2 != undefined )
-			if( _root.lv.show_y2 != 'false' )
-				if( _root.lv.y2_lines != undefined )
-				{
-					y2 = true;
-					y2lines = _root.lv.y2_lines.split(",");
-				}
+		
 			
 		for( var c:Number=0; c<this.styles.length; c++ )
 		{
 			var right_axis:Boolean = false;
 				
 			// move values...
-			if( y2 && is_right(y2lines,c+1) )
+			if( this.is_right( this.attach_right, c+1 ) )
 				right_axis = true;
 
 			this.styles[c].valPos( b, right_axis, min, bar_count, bar );

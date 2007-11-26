@@ -12,6 +12,8 @@
 	private var max:Number;
 	private var steps:Number;
 	
+	private var right:Boolean;
+	
 	function YAxis( y_ticks:YTicks, lv:LoadVars, min:Number, max:Number, steps:Number, nr:Number )
 	{
 		// ticks: thin and wide ticks
@@ -22,12 +24,16 @@
 		else
 			this.grid_colour = 0xF5E1AA;
 		
-		if(nr != 2) {
+		this.right = (nr==2);
+		if( !this.right )
+		{
 			if( lv.y_axis_colour != undefined )
 				this.axis_colour = _root.get_colour( lv.y_axis_colour );
 			else
 				this.axis_colour = 0x784016;
-		}else{
+		}
+		else
+		{
 			if( lv.y2_axis_colour != undefined )
 				this.axis_colour = _root.get_colour( lv.y2_axis_colour );
 			else
@@ -39,58 +45,33 @@
 		this.max = max;
 		this.steps = steps;
 		
-		if(nr == 1) 
+		if( !this.right ) 
 			this.mc = _root.createEmptyMovieClip( "y_axis", _root.getNextHighestDepth() );
-	    else if(nr==2) 
+	    else
 			this.mc = _root.createEmptyMovieClip( "y_axis2", _root.getNextHighestDepth() );
 	
 		this._width = this.line_width + Math.max( this.ticks.small, this.ticks.big );
 	}
 	
-	function move( box:Box, nr:Number )
+	function move( box:Box )
 	{
-		if( nr == 2 )
+		if( this.right )
 		{
-			if( !_root.lv.show_y2 )
-				return;
-			
-			// Create the new axel
-			this.mc.clear();
-			this.mc.lineStyle(this.line_width,this.axis_colour,100);
-				
-			this.mc.moveTo( box.right, box.top );
-			this.mc.lineTo( box.right, box.bottom );	
-				
-			// create new ticks.. 
-			var every:Number = (this.max-this.min)/this.steps;
-			for( var i:Number=this.min; i<=this.max; i+=every )
-			{
-				
-				// start at the bottom and work up:
-				var y:Number = box.getY(i);
-				this.mc.moveTo( box.right, y );
-				if( i % this.ticks.steps == 0 )
-					this.mc.lineTo( box.right+this.ticks.big, y );
-				else
-					this.mc.lineTo( box.right+this.ticks.small, y );
-					
-			}
-			return;	
+			this._move_right( box );
 		}
-		
+		else
+		{
+			this._move_left( box );
+		}
+	}
+	
+	function _move_left( box:Box )
+	{
 		// this should be an option:
 		this.mc.clear();
-		// Ticks
-		//var tick:Number = box.height/(this.count-1);
-		
+
 		// Grid lines
 		this.mc.lineStyle(1,this.grid_colour,100);
-//		for( var i:Number=0; i < this.count; i++)
-//		{
-//			var y:Number = box.top+(i*tick);
-//			this.mc.moveTo( box.left, y );
-//			this.mc.lineTo( box.right, y );
-//		}
 
 		// y axel grid lines
 		var every:Number = (this.max-this.min)/this.steps;
@@ -132,6 +113,29 @@
 			else
 				this.mc.lineTo( box.left-this.ticks.small, y );
 				
+		}
+	}
+	
+	function _move_right( box:Box )
+	{
+		// Create the new axel
+		this.mc.clear();
+		this.mc.lineStyle( this.line_width, this.axis_colour, 100 );
+	
+		this.mc.moveTo( box.right, box.top );
+		this.mc.lineTo( box.right, box.bottom );	
+		
+		// create new ticks.. 
+		var every:Number = (this.max-this.min)/this.steps;
+		for( var i:Number=this.min; i<=this.max; i+=every )
+		{
+			// start at the bottom and work up:
+			var y:Number = box.getY(i);
+			this.mc.moveTo( box.right, y );
+			if( i % this.ticks.steps == 0 )
+				this.mc.lineTo( box.right+this.ticks.big, y );
+			else
+				this.mc.lineTo( box.right+this.ticks.small, y );
 		}
 	}
 	

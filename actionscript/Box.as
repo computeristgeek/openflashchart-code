@@ -23,7 +23,8 @@
 	public function Box( top:Number, left:Number, right:Number, bottom:Number,
 						minmax:MinMax,
 						x_left_label_width:Number, x_right_label_width:Number,
-						count:Number, jiggle:Boolean, three_d:Boolean )
+						count:Number, jiggle:Boolean, three_d:Boolean,
+						x_offset:Boolean )
 	{
 		
 		var tmp_left:Number = left;
@@ -67,7 +68,7 @@
 		//  +--+--+--+      |-+--+--+--+-+
 		//  0  1  2  3        0  1  2  3 
 		//
-		this.x_offset = true;
+		this.x_offset = x_offset;
 		
 		if( !this.x_offset )
 			this.count--;
@@ -251,7 +252,11 @@
 		var bar_set_width:Number = item_width*0.8;
 		
 		// get the margin between sets of bars:
-		var bar_left:Number = this.left_()+((item_width-bar_set_width)/2);
+		var tmp = 0;
+		if( this.x_offset )
+			tmp = item_width;
+			
+		var bar_left:Number = this.left_()+(tmp-bar_set_width)/2;
 		// 1 bar == 100% wide, 2 bars = 50% wide each
 		var bar_width:Number = bar_set_width/group_count;
 		

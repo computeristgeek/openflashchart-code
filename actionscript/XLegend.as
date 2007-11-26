@@ -12,7 +12,7 @@
 			
 		var tmp:Array = lv.x_legend.split(',');
 		
-		var text:String = tmp[0];
+		var text:String = tmp[0].replace('#comma#',',');
 		this.size = Number( tmp[1] );
 		this.colour = _root.get_colour( tmp[2] );
 		

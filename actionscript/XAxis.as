@@ -12,7 +12,7 @@
 	private var three_d:Boolean;
 	private var three_d_height:Number;
 	
-	function XAxis( tick:Number, lv:LoadVars, label_count:Number, steps:Number )
+	function XAxis( tick:Number, lv:LoadVars, steps:Number )
 	{
 		this.tick = tick;
 		
@@ -42,20 +42,31 @@
 			this.alt_axis_colour = _root.get_colour(style[4]);
 		}
 		
-		//this.label_count = label_count;
-		this.grid_count = label_count;
-		if( steps == undefined )
+		//
+		// this is set later when the chart has more information
+		//
+		this.grid_count = 1;
+		
+		// tick every X value?
+		if( steps==undefined )
 			this.x_steps = 1;
 		else
 			this.x_steps = steps;
-
+		
 		this.mc = _root.createEmptyMovieClip( "x_axis", _root.getNextHighestDepth() );
 		
 	}
 	
+	// grid lines, depends on number of values,
+	// the X Axis labels and X min and X max
 	function set_grid_count( val:Number )
 	{
 		this.grid_count = val;
+	}
+	
+	function get_grid_count( val:Number )
+	{
+		return this.grid_count;
 	}
 	
 	function move( box:Box )

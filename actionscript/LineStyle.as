@@ -10,7 +10,7 @@
 		this.colour = _root.get_colour( vals[1] );
 		
 		if( vals.length > 2 )
-			this.key = vals[2];
+			this.key = vals[2].replace('#comma#',',');
 			
 		if( vals.length > 3 )
 			this.font_size = Number( vals[3] );
@@ -108,12 +108,13 @@
 	{
 		var shortest:Number = Number.MAX_VALUE;
 		var point:Point = null;
+		var dx:Number;
 		
 		for( var i:Number=0; i < this.ExPoints.length; i++)
 		{
 			this.ExPoints[i].is_tip = false;
 			
-			var dx:Number = Math.abs( x - this.ExPoints[i].x );
+			dx = Math.abs( x - this.ExPoints[i].x );
 		
 			if( dx < shortest )
 			{
@@ -122,7 +123,7 @@
 			}
 		}
 		var dy:Number = Math.abs( y - point.y );
-		return { point:point, distance_x:0, distance_y:dy };
+		return { point:point, distance_x:shortest, distance_y:dy };
 	}
 	
 	// called by AreaHollow, LineHollow

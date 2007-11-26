@@ -380,6 +380,17 @@ function show_tip( owner:Object, x:Number, y:Number, tip_obj:Object )
 
 }
 
+function is_over( link:String )
+{
+	_root._inv.use_hand( link );
+}
+
+function is_out()
+{
+	_root._inv.use_arrow();
+}
+
+
 function mouse_over( ok:Boolean )
 {
 	var x:Number = _root._xmouse;
@@ -395,17 +406,10 @@ function mouse_over( ok:Boolean )
 	_root.chartValues.mouse_move( x, y );
 }
 
-//_root.onMouseMove = function()
-function mouse_move()
+// get the closest point from
+// each data set.
+function get_closest()
 {
-	if( _root.chartValues == undefined )
-		return;
-	
-	if( !_root._inv.hitTest(_root._xmouse, _root._ymouse) )
-		return;
-	
-	mouse_over( true );
-	
 	var tmp:Array = [];
 	var style:Style = null;
 	
@@ -417,27 +421,54 @@ function mouse_move()
 		tmp.push( style.closest( _root._xmouse, _root._ymouse ) );
 	}
 	
+	//for( var i:Number=0; i < tmp.length; i++ )
+	//	trace( i +'  '+tmp[i].distance_x );
+	return tmp;
+}
+
+//_root.onMouseMove = function()
+function mouse_move()
+{
+	if( _root.chartValues == undefined )
+		return;
+	
+	// is the mouse over the invisible layer?
+	if( !_root._inv.hitTest(_root._xmouse, _root._ymouse) )
+		return;
+	
+	//
+	mouse_over( true );
+	
+	// get closest points from each data set
+	var closest:Array = _root.get_closest();
+
+	// find closest point along X axis
+	var min:Number = Number.MAX_VALUE;
+	for( var i:Number=0; i < closest.length; i++ )
+		min = Math.min( min, closest[i].distance_x );
+	
+	//for( var i:Number=0; i < closest.length; i++ )
+	//	trace( i +'  '+closest[i].distance_x +'  '+ closest[i].distance_y );
+	
+	// now select all points that are the same distance
+	// along the X axis
 	var xx:Object = {point:null, distance_x:Number.MAX_VALUE, distance_y:Number.MAX_VALUE };
-	for( var i:Number=0; i < tmp.length; i++ )
+	for( var i:Number=0; i < closest.length; i++ )
 	{
-		if( tmp[i].distance_x == xx.distance_x )
+		if( closest[i].distance_x == min )
 		{
-			//
-			// points are in the same column, so choose
+			// these share the same X position, so choose
 			// the closest to the mouse in the Y
-			//
-			if( tmp[i].distance_y < xx.distance_y )
-				xx = tmp[i];
-		}
-		else if( tmp[i].distance_x < xx.distance_x )
-		{
-			xx = tmp[i];
+			if( closest[i].distance_y < xx.distance_y )
+				xx = closest[i];
 		}
 	}
 
 	_root.tooltip_x.draw( xx.point );
 	xx.point.is_tip = true;
 	
+	// make the line dot nice and big, does
+	// nothing for bars
 	for( var i:Number=0; i < _root.chartValues.styles.length; i++)
 		_root.chartValues.styles[i].highlight_value();
 }
@@ -513,13 +544,19 @@ function make_chart()
 	
 	
 	_root._min_max = new MinMax( this );
+	
+	// should the X Axis fit bar charts
+	// see Box.as for details
+	_root._x_offset = true;
+	if( this.x_offset != undefined )
+		_root._x_offset = (this.x_offset!='false');
 
 	// we build the graph from top to bottom 
 	_root._title = new Title( this );
 	_root._x_legend = new XLegend( this );
 	_root._y_legend = new YLegend( this , 1);
 	
-	if(_root.lv.show_y2) 
+	if( this.show_y2 ) 
 		_root._y2_legend = new YLegend( this , 2);
 	
 	var xTicks = 5;
@@ -530,7 +567,7 @@ function make_chart()
 	var x_label_style:XLabelStyle = new XLabelStyle( this );
 	var y_label_style:YLabelStyle = new YLabelStyle( this, 1 );
 	
-	if(_root.lv.show_y2) 
+	if( this.show_y2 ) 
 		var y_label_style2:YLabelStyle = new YLabelStyle( this, 2 );
 		
 	
@@ -544,7 +581,6 @@ function make_chart()
 	_root._x_axis = new XAxis(
 		xTicks,									// <-- tick size
 		this,
-		_root._x_axis_labels.count(),
 		xStep
 		);
 
@@ -564,7 +600,7 @@ function make_chart()
 		this
 		);
 
-	if(_root.lv.show_y2)
+	if( this.show_y2 )
 	{
 		_root._y_axis_labels2 = new YAxisLabels(
 			y_label_style2,
@@ -585,8 +621,8 @@ function make_chart()
 		_root._y_ticks.steps,
 		1
 		);
-
-	if(_root.lv.show_y2)
+	
+	if( this.show_y2 )
 	{
 		_root._y_axis2 = new YAxis(
 			_root._y_ticks,
@@ -597,13 +633,13 @@ function make_chart()
 			2
 			);
 	}
-	
+			
 	// The chart values are defined last and are on TOP of every thing else
 	_root.chartValues = new Values( this, _root._background.colour, _root._x_axis_labels.labels );
 	
 	// tell the x axis where the grid lines are:
-	_root._x_axis.set_grid_count( _root._x_axis_labels.count() );
-	
+	_root._x_axis.set_grid_count( Math.max( _root._x_axis_labels.count(), _root.chartValues.length() ) );
+
 	_root._keys = new Keys(
 		(_root._y_legend.width()+_root._y_axis_labels.width()+_root._y_axis.width()),		// <-- from left
 		_root._title.height(),											// <-- from top
@@ -673,7 +709,7 @@ function LoadVarsOnLoad( success )
 	
 	if( this.tool_tip != undefined )
 	{
-		_root.tool_tip_wrapper = this.tool_tip;
+		_root.tool_tip_wrapper = this.tool_tip.replace('#comma#',',');
 	}
 	
 	_root.loading.done();
@@ -705,7 +741,7 @@ function move()
 	// is hanging off the end of the screen?
 	var jiggle:Boolean = true;
 	
-	if(_root.lv.show_y2)
+	if( _root._y_axis2 != undefined )
 	{
 		right -= _root._y2_legend.width()+_root._y_axis_labels2.width()+_root._y_axis2.width();
 		// no need to shrink the box:
@@ -719,10 +755,10 @@ function move()
 		_root._min_max,					// <-- scale everything between min/max
 		_root._x_axis_labels.first_label_width(),
 		_root._x_axis_labels.last_label_width(),
-		//_root.chartValues.length(),
-		_root._x_axis_labels.count(),
+		_root._x_axis.get_grid_count(),
 		jiggle,
-		_root._x_axis.three_d
+		_root._x_axis.three_d,
+		_root._x_offset
 		);
 		
 
@@ -738,13 +774,13 @@ function move()
 	_root._y_legend.move(1);
 
 	
-	if(_root.lv.show_y2)
+	if( _root._y_axis2 != undefined )
 		_root._y2_legend.move(2);
 	
 	_root._y_axis_labels.move( _root._y_legend.width(), b );
 
 	// position of second y axel labels..
-	if(_root.lv.show_y2)
+	if( _root._y_axis2 != undefined )
 		_root._y_axis_labels2.move( Stage.width-(_root._y2_legend.width()+_root._y_axis_labels2.width()), b );
 
 	_root._x_axis.move( b );
@@ -756,8 +792,8 @@ function move()
 	
 	_root._y_axis.move( b , 1);
 	
-	if(_root.lv.show_y2)	
-		_root._y_axis2.move( b , 2 );
+	if( _root._y_axis2 != undefined )	
+		_root._y_axis2.move( b );
 	
 	_root.chartValues.move(
 		b,
@@ -824,17 +860,6 @@ function reload( u:String ):Void
 {
 	// inform the user we are reloading data:
 	_root.loading = new Loading('Loading data...');
-	
-	//removed by Maik Fox
-	//this is not neccessary as we already set up a LoadVars object
-	/*var lv:LoadVars = new LoadVars();
-	
-	// ugh!:
-	lv.onLoad = LoadVarsOnLoad;
-	lv.make_chart = make_chart;
-	lv.make_pie = make_pie;
-	// 
-	*/ 
 
 	var url:String = '';
 	
@@ -849,7 +874,26 @@ function reload( u:String ):Void
 		}
 	}
 	//setTitle( u );
-	lv.load(url);
+	
+	//
+	// this bit of code has had a patchy history,
+	// we don't need a new LoadVars object, but
+	// if we don't delete it, the object holds
+	// onto the old variabels. So say we load 2
+	// data sets, then load 1 data set, we end up
+	// with one new set and one old set. So we
+	// *do* need to delete it, just to get rid of
+	// the old data :-)
+	//
+	_root.lv = undefined;
+	_root.lv = new LoadVars();
+	_root.lv.onLoad = LoadVarsOnLoad;
+	_root.lv.make_chart = make_chart;
+	_root.lv.make_pie = make_pie;
+	_root.lv.load(url);
+	//
+	// ----- end -----
+	//
 }
 
 
@@ -922,7 +966,7 @@ if( _root.data == undefined )
 		//
 		// We are in the IDE
 		//
-		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-32.txt";
+		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-39.txt";
 		//_root.data="http://www.stelteronline.de/index.php?option=com_joomleague&func=showStats_GetChartData&p=1";
 		lv.load(_root.data);
 	}

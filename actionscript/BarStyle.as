@@ -9,6 +9,9 @@ class BarStyle extends Style
 	private var bar_mcs:Array;
 	public var name:String;
 	
+	// array to hold the on_click links
+	private var links:Array;
+	
 	public function BarStyle( val:String, name:String )
 	{
 		this.name = name;
@@ -24,7 +27,7 @@ class BarStyle extends Style
 		this.colour = _root.get_colour(vals[1]);
 		
 		if( vals.length > 2 )
-			this.key = vals[2];
+			this.key = vals[2].replace('#comma#',',');
 			
 		if( vals.length > 3 )
 			this.font_size = Number( vals[3] );
@@ -32,9 +35,14 @@ class BarStyle extends Style
 	}
 
 	// override Style:set_values
-	function set_values( v:Array, labels:Array )
+	function set_values( vals:String, links:String )
 	{
-		super.set_values( v );
+		super.set_values( this.parse_list( vals ) );
+		
+		if( links != undefined )
+			this.links = links.split(",");
+		else
+			this.links = Array();
 		
 		// make an empty array to hold each bar MovieClip:
 		this.bar_mcs = new Array(this.values.length);
@@ -42,35 +50,31 @@ class BarStyle extends Style
 		for( var i:Number=0; i < this.values.length; i++ )
 		{
 			var mc:MovieClip = _root.createEmptyMovieClip( this.name+'_'+i, _root.getNextHighestDepth() );
-		
-			mc.onRollOver = _root.FadeIn2;
-			mc.onRollOut = _root.FadeOut;
-			
 			mc._is_over = false;
 			
-			//mc.onRollOver = ChartUtil.glowIn;
-			
-			// this is used in FadeIn and FadeOut
-			//mc.tool_tip_title = labels[i];
-			//var tooltip:Object = {x_label:labels[i], value:this.values[i], key:this.key};
-			//mc.tooltip = tooltip;
-		
 			// add the MovieClip to our array:
 			this.bar_mcs[i] = mc;
 		}
 			
 	}
 	
-	public function fade_in()
+	private function parse_list( val:String ):Array
 	{
-		//this._alpha = 100;
+		var tmp:Array = Array();
+		
+		var vals:Array = val.split(",");
+		for( var i:Number=0; i < vals.length; i++ )
+		{
+			// push the *string* value
+			// because it may be 'null'
+			tmp.push( vals[i] );
+		}
+		return tmp;
 	}
 	
-	public function fade_out()
-	{
-		//this._alpha = this._alpha_original;
-	}
-	
+	//
+	// called by the Invisible layer - via _root
+	//
 	public function is_over( x:Number, y:Number )
 	{
 		for( var i:Number=0; i < this.bar_mcs.length; i++ )
@@ -81,6 +85,13 @@ class BarStyle extends Style
 				if( !tmp._is_over )
 				{
 					tmp._is_over = true;
+					
+					if( this.links[i] != undefined )
+					{
+						// tell _root that the mouse is over us,
+						// and if it is clicked do this link
+						_root.is_over( this.links[i] );
+					}
 					var t:Tween = new Tween(this.bar_mcs[i], "_alpha", Elastic.easeOut, this.bar_mcs[i]._alpha_original, 100, 60, false);
 				}
 			}
@@ -89,6 +100,7 @@ class BarStyle extends Style
 				if( tmp._is_over )
 				{
 					tmp._is_over = false;
+					_root.is_out();
 					var t:Tween = new Tween(this.bar_mcs[i], "_alpha", Elastic.easeOut, 100, this.bar_mcs[i]._alpha_original, 60, false);
 				}
 			}
@@ -169,9 +181,7 @@ class BarStyle extends Style
 		return mc;
 	}
 	
-	/*  
-	    ------O------
-	          A
+	/* 
 			  
 	    +-----+
 		|  B  |
@@ -194,8 +204,9 @@ class BarStyle extends Style
 			if( (x > this.ExPoints[i].x) && (x < this.ExPoints[i].x+this.ExPoints[i].width) )
 			{
 				// mouse is in position 1
-				shortest = 0;
+				shortest = Math.min( Math.abs( x - this.ExPoints[i].x ), Math.abs( x - (this.ExPoints[i].x+this.ExPoints[i].width) ) );
 				ex = this.ExPoints[i];
+				break;
 			}
 			else
 			{

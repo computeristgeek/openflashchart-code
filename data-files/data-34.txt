@@ -12,3 +12,4 @@
 &y_axis_colour=#666666&
 &y_grid_colour=#AAAAAA&
 &y2_axis_colour=& 
+&x_legend=%E4%B8%AD%E6%96%87%23comma%23%E4%B8%AD%E6%96%87%26-%25-%22-%C2%A3-%2B-%3D,20,#000000&

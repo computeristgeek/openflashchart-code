@@ -38,7 +38,7 @@
 		
 		if( this.y2_min == this.y2_max )
 			this.y2_max+=1;
-		
+			
 		if( lv.x_max == undefined )
 			this.x_max = 10;
 		else
