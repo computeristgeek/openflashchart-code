@@ -45,7 +45,7 @@
 		
 			if( lv.y2_label_style == undefined )
 				return;
-				
+			
 			// is it CSV?
 			var comma:Number = lv.y2_label_style.lastIndexOf(',');
 			

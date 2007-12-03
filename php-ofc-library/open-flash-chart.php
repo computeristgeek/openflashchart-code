@@ -997,7 +997,7 @@ class graph
 	 * @param links an array argument.
 	 *   An array of the links to the pie pieces.
 	 */	
-	function pie_values( $values, $labels, $links )
+	function pie_values( $values, $labels=array(), $links=array() )
 	{
 		$this->pie_values = implode(',',$values);
 		$this->pie_labels = implode(',',$labels);

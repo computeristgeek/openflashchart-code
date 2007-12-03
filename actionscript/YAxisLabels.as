@@ -22,8 +22,12 @@
 		}
 		else
 		{
-			// are the Y Labels visible?
+			// is the right Y axis enabled?
 			if( !lv.show_y2 )
+				return;
+			
+			// are the Y Labels visible?
+			if( !y_label_style.show_labels )
 				return;
 			
 			name = 'y_label_2_';
