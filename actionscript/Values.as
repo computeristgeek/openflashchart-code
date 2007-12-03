@@ -38,6 +38,8 @@
 					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
 				else if( lv['bar_sketch'+name] != undefined )
 					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
+				else if( lv['bar_glass'+name] != undefined )
+					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
 				else
 					this.styles[c-1].set_values( this.parseVal( lv['values'+name] ) );
 			}

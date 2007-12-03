@@ -1,8 +1,19 @@
 <?php
+
+/**
+ * This class manages all functions of the open flash chart api.
+ */
 class graph
 {
+	/**
+	* Constructer for the open_flash_chart_api
+	* Sets our default variables
+	*/
 	function graph()
 	{
+		$this->data_sets = array();
+		
+		
 		$this->data = array();
 		$this->links = array();
 		$this->width = 250;
@@ -17,6 +28,8 @@ class graph
 		$this->title = '';
 		$this->title_style = '';
 		$this->occurence = 0;
+		
+		$this->x_offset = '';
 
 		$this->x_tick_size = -1;
 
@@ -49,9 +62,9 @@ class graph
 		//$this->y_legend_colour = '#000000';
 	
 		$this->lines = array();
-		$this->line_default['type'] = 'line';
-		$this->line_default['values'] = '3,#87421F';
-		$this->js_line_default = 'so.addVariable("line","3,#87421F");';
+		// $this->line_default['type'] = 'line';
+		// $this->line_default['values'] = '3,#87421F';
+		// $this->js_line_default = 'so.addVariable("line","3,#87421F");';
 		
 		$this->bg_colour = '';
 		$this->bg_image = '';
@@ -72,6 +85,13 @@ class graph
 		// right Y axis?
 		$this->y2_lines = array();
 		
+		// Number formatting:
+		$this->y_format='';
+		$this->num_decimals='';
+		$this->is_fixed_num_decimals_forced='';
+		$this->is_decimal_separator_comma='';
+		$this->is_thousand_separator_disabled='';
+		
 		//
 		// set some default value incase the user forgets
 		// to set them, so at least they see *something*
@@ -83,11 +103,64 @@ class graph
 		$this->y_label_steps( 5 );
 	}
 
+	/**
+	* Set the unique_id to use for the flash object id.
+	*/
+	private function set_unique_id()
+	{
+		$this->unique_id = uniqid();
+	}
+	
+	/**
+	* Get the flash object ID for the last rendered object.
+	*/
+	function get_unique_id()
+	{
+		return ($this->unique_id);
+	}
+	
+	/**
+	* Set the base path for the swfobject.js
+	*
+	* @param base_path a string argument.
+	*   The path to the swfobject.js file
+	*/
+	function set_js_path($path)
+	{
+		$this->js_path = $path;
+	}
+	
+	/**
+	* Set the base path for the open-flash-chart.swf
+	*
+	* @param path a string argument.
+	*   The path to the open-flash-chart.swf file
+	*/
+	function set_swf_path($path)
+	{
+		$this->swf_path = $path;
+	}
+
+	/**
+	* Set the type of output data.
+	*
+	* @param type a string argument.
+	*   The type of data.  Currently only type is js, or nothing.
+	*/
+	function set_output_type($type)
+	{
+		$this->output_type = $type;
+	}
+	
+	// is this needed now?
 	function increment_occurence()
 	{
 		$this->occurence++;
 	}
 
+	/**
+	* returns the next line label for multiple lines.
+	*/
 	function next_line()
 	{
 		$line_num = '';
@@ -109,6 +182,9 @@ class graph
 		return urlencode( $tmp );
 	}
 
+	/**
+	* Format the text to the type of output.
+	*/
 	function format_output($output_type,$function,$values)
 	{
 		if($output_type == 'js')
@@ -122,22 +198,149 @@ class graph
 
 		return $tmp;
 	}
-		
+
+	/**
+	* Set the text and style of the title.
+	*
+	* @param title a string argument.
+	*   The text of the title.
+	* @param style a string.
+	*   CSS styling of the title.
+	*/
+	function set_title( $title, $style='' )
+	{
+		$this->title = $title;
+		if( strlen( $style ) > 0 )
+			$this->title_style = $style;
+	}
+
+	/**
+	 * Set the width of the chart.
+	 *
+	 * @param width an int argument.
+	 *   The width of the chart frame.
+	 */
+	function set_width( $width )
+	{
+		$this->width = $width;
+	}
+	
+	/**
+	 * Set the height of the chart.
+	 *
+	 * @param height an int argument.
+	 *   The height of the chart frame.
+	 */
+	function set_height( $height )
+	{
+		$this->height = $height;
+	}
+
+	/**
+	 * Set the base path of the swfobject.
+	 *
+	 * @param base a string argument.
+	 *   The base path of the swfobject.
+	 */
+	function set_base( $base='js/' )
+	{
+		$this->base = $base;
+	}
+	
+	// Number formatting:
+	function set_y_format( $val )
+	{
+		$this->y_format = $val;	
+	}
+	
+	function set_num_decimals( $val )
+	{
+		$this->num_decimals = $val;
+	}
+	
+	function set_is_fixed_num_decimals_forced( $val )
+	{
+		$this->is_fixed_num_decimals_forced = $val?'true':'false';
+	}
+	
+	function set_is_decimal_separator_comma( $val )
+	{
+		$this->is_decimal_separator_comma = $val?'true':'false';
+	}
+	
+	function set_is_thousand_separator_disabled( $val )
+	{
+		$this->is_thousand_separator_disabled = $val?'true':'false';
+	}
+
+	/**
+	 * Set the data for the chart
+	 * @param a an array argument.
+	 *   An array of the data to add to the chart.
+	 */
 	function set_data( $a )
 	{
 		$this->data[] = implode(',',$a);
 	}
+	
+	// UGH, these evil functions are making me fell ill
+	function set_links( $a )
+	{
+		$this->links[] = implode(',',$a);
+	}
+	
+	// $val is a boolean
+	function set_x_offset( $val )
+	{
+		$this->x_offset = $val?'true':'false';
+	}
 
+	/**
+	 * Set the tooltip to be displayed on each chart item.\n
+	 * \n
+	 * Replaceable tokens that can be used in the string include: \n
+	 * #val# - The actual value of whatever the mouse is over. \n
+	 * #key# - The key string. \n
+	 * \<br>  - New line. \n
+	 * #x_label# - The X label string. \n
+	 * #x_legend# - The X axis legend text. \n
+	 * Default string is: "#x_label#<br>#val#" \n
+	 * 
+	 * @param tip a string argument.
+	 *   A formatted string to show as the tooltip.
+	 */
 	function set_tool_tip( $tip )
 	{
 		$this->tool_tip = $this->esc( $tip );
 	}
 
+	/**
+	 * Set the x axis labels
+	 *
+	 * @param a an array argument.
+	 *   An array of the x axis labels.
+	 */
 	function set_x_labels( $a )
 	{
 		$this->x_labels = $a;
 	}
 
+	/**
+	 * Set the look and feel of the x axis labels
+	 *
+	 * @param font_size an int argument.
+	 *   The font size.
+	 * @param colour a string argument.
+	 *   The hex colour value.
+	 * @param orientation an int argument.
+	 *   The orientation of the x-axis text.
+	 *   0 - Horizontal
+	 *   1 - Vertical
+	 *   2 - 45 degrees
+	 * @param step an int argument.
+	 *   Show the label on every $step label.
+	 * @param grid_colour a string argument.
+	 */
 	function set_x_label_style( $size, $colour='', $orientation=0, $step=-1, $grid_colour='' )
 	{
 		$this->x_label_style = $size;
@@ -155,11 +358,25 @@ class graph
 			$this->x_label_style .= ','. $grid_colour;
 	}
 
+	/**
+	 * Set the background colour.
+	 * @param colour a string argument.
+	 *   The hex colour value.
+	 */
 	function set_bg_colour( $colour )
 	{
 		$this->bg_colour = $colour;
 	}
 
+	/**
+	 * Set a background image.
+	 * @param url a string argument.
+	 *   The location of the image.
+	 * @param x a string argument.
+	 *   The x location of the image. 'Right', 'Left', 'Center'
+	 * @param y a string argument.
+	 *   The y location of the image. 'Top', 'Bottom', 'Middle'
+	 */
 	function set_bg_image( $url, $x='center', $y='center' )
 	{
 		$this->bg_image = $url;
@@ -167,11 +384,25 @@ class graph
 		$this->bg_image_y = $y;
 	}
 
+	/**
+	 * Attach a set of data (a line, area or bar chart) to the right Y axis.
+	 * @param data_number an int argument.
+	 *   The numbered order the data was attached using set_data.
+	 */
 	function attach_to_y_right_axis( $data_number )
 	{
 		$this->y2_lines[] = $data_number;
 	}
-	
+
+	/**
+ 	 * Set the background colour of the grid portion of the chart.
+	 * @param col a string argument.
+	 *   The hex colour value of the background.
+	 * @param col2 a string argument.
+	 *   The hex colour value of the second colour if you want a gradient.
+	 * @param angle an int argument.
+	 *   The angle in degrees to make the gradient.
+	 */
 	function set_inner_background( $col, $col2='', $angle=-1 )
 	{
 		$this->inner_bg_colour = $col;
@@ -183,6 +414,9 @@ class graph
 			$this->inner_bg_angle = $angle;
 	}
 
+	/**
+	 * Internal function to build the y label style for y and y2
+	 */
 	function _set_y_label_style( $size, $colour )
 	{
 		$tmp = $size;
@@ -191,12 +425,28 @@ class graph
 			$tmp .= ','. $colour;
 		return $tmp;
 	}
-	
+
+	/**
+	 * Set the look and feel of the y axis labels
+	 *
+	 * @param font_size an int argument.
+	 *   The font size.
+	 * @param colour a string argument.
+	 *   The hex colour value.
+	 */
 	function set_y_label_style( $size, $colour='' )
 	{
 		$this->y_label_style = $this->_set_y_label_style( $size, $colour );
 	}
-	
+
+	/**
+	 * Set the look and feel of the right y axis labels
+	 *
+	 * @param font_size an int argument.
+	 *   The font size.
+	 * @param colour a string argument.
+	 *   The hex colour value.
+	 */
 	function set_y_right_label_style( $size, $colour='' )
 	{
 		$this->y_label_style_right = $this->_set_y_label_style( $size, $colour );
@@ -211,27 +461,57 @@ class graph
 	{
 		$this->x_min = intval( $min );
 	}
-	
+
+	/**
+	 * Set the maximum value of the y axis.
+	 *
+	 * @param max an int argument.
+	 *   The maximum value.
+	 */
 	function set_y_max( $max )
 	{
 		$this->y_max = intval( $max );
 	}
 
+	/**
+	 * Set the minimum value of the y axis.
+	 *
+	 * @param min an int argument.
+	 *   The minimum value.
+	 */
 	function set_y_min( $min )
 	{
 		$this->y_min = intval( $min );
 	}
 
+	/**
+	 * Set the maximum value of the right y axis.
+	 *
+	 * @param max an int argument.
+	 *   The maximum value.
+	 */  
 	function set_y_right_max( $max )
 	{
 		$this->y2_max = intval($max);
 	}
 
+	/**
+	 * Set the minimum value of the right y axis.
+	 *
+	 * @param min an int argument.
+	 *   The minimum value.
+	 */
 	function set_y_right_min( $min )
 	{
 		$this->y2_min = intval($min);
 	}
 
+	/**
+	 * Show the y label on every $step label.
+	 *
+	 * @param val an int argument.
+	 *   Show the label on every $step label.
+	 */
 	function y_label_steps( $val )
 	{
 		 $this->y_steps = intval( $val );
@@ -244,6 +524,16 @@ class graph
 				 $this->title_style = $style;
 	}
 
+	/**
+	 * Set the parameters of the x legend.
+	 *
+	 * @param text a string argument.
+	 *   The text of the x legend.
+	 * @param font_size an int argument.
+	 *   The font size of the x legend text.
+	 * @param colour a string argument
+	 *   The hex value of the font colour. 
+	 */
 	function set_x_legend( $text, $size=-1, $colour='' )
 	{
 		$this->x_legend = $this->esc( $text );
@@ -254,25 +544,45 @@ class graph
 			$this->x_legend_colour = $colour;
 	}
 
+	/**
+	 * Set the size of the x label ticks.
+	 *
+	 * @param size an int argument.
+	 *   The size of the ticks in pixels.
+	 */
 	function set_x_tick_size( $size )
 	{
 		if( $size > 0 )
 				$this->x_tick_size = $size;
 	}
-	
+
+	/**
+	 * Set how often you would like to show a tick on the x axis.
+	 *
+	 * @param steps an int argument.
+	 *   Show a tick ever $steps.
+	 */
 	function set_x_axis_steps( $steps )
 	{
 		if ( $steps > 0 )
 			$this->x_axis_steps = $steps;
 	}
 
+	/**
+	 * Set the depth in pixels of the 3D X axis slab.
+	 *
+	 * @param size an int argument.
+	 *   The depth in pixels of the 3D X axis.
+	 */
 	function set_x_axis_3d( $size )
 	{
 		if( $size > 0 )
 			$this->x_axis_3d = intval($size);
 	}
 	
-	// PRIVATE METHOD
+	/**
+	 * The private method of building the y legend output.
+	 */
 	function _set_y_legend( $text, $size, $colour )
 	{
 		$tmp = $text;
@@ -286,22 +596,58 @@ class graph
 		return $tmp;
 		}
 
+	/**
+	 * Set the parameters of the y legend.
+	 *
+	 * @param text a string argument.
+	 *   The text of the y legend.
+	 * @param font_size an int argument.
+	 *   The font size of the y legend text.
+	 * @param colour a string argument
+	 *   The hex colour value of the font colour. 
+	 */
 	function set_y_legend( $text, $size=-1, $colour='' )
 	{
 		$this->y_legend = $this->_set_y_legend( $text, $size, $colour );
 	}
-	
+
+	/**
+	 * Set the parameters of the right y legend.
+	 *
+	 * @param text a string argument.
+	 *   The text of the right y legend.
+	 * @param font_size an int argument.
+	 *   The font size of the right y legend text.
+	 * @param colour a string argument
+	 *   The hex value of the font colour. 
+	 */
 	function set_y_right_legend( $text, $size=-1, $colour='' )
 	{
 		$this->y_legend_right = $this->_set_y_legend( $text, $size, $colour );
 	}
-
+	
+	/**
+	 * Set the colour of the x axis line and grid.
+	 *
+	 * @param axis a string argument.
+	 *   The hex colour value of the x axis line.
+	 * @param grid a string argument.
+	 *   The hex colour value of the x axis grid. 
+	 */
 	function x_axis_colour( $axis, $grid='' )
 	{
 		$this->x_axis_colour = $axis;
 		$this->x_grid_colour = $grid;
 	}
 
+	/**
+	 * Set the colour of the y axis line and grid.
+	 *
+	 * @param axis a string argument.
+	 *   The hex colour value of the y axis line.
+	 * @param grid a string argument.
+	 *   The hex colour value of the y axis grid. 
+	 */
 	function y_axis_colour( $axis, $grid='' )
 	{
 		$this->y_axis_colour = $axis;
@@ -310,11 +656,31 @@ class graph
 			$this->y_grid_colour = $grid;
 	}
 
+	/**
+	 * Set the colour of the right y axis line.
+	 *
+	 * @param colour a string argument.
+	 *   The hex colour value of the right y axis line.
+	 */
 	function y_right_axis_colour( $colour )
 	{
 		 $this->y2_axis_colour = $colour;
 	}
 
+	/**
+	 * Draw a line without markers on values.
+	 *
+	 * @param width an int argument.
+	 *   The width of the line in pixels.
+	 * @param colour a string argument.
+	 *   The hex colour value of the line.
+	 * @param text a string argument.
+	 *   The label of the line.
+	 * @param font_size an int argument.
+	 *   Font size of the label
+	 * @param circles an int argument
+	 *   Need to find out.
+	 */
 	function line( $width, $colour='', $text='', $size=-1, $circles=-1 )
 	{
 		$type = 'line'. $this->next_line();
@@ -338,6 +704,20 @@ class graph
 		$this->lines[$type] = $description;
 	}
 
+	/**
+	 * Draw a line with solid dot markers on values.
+	 *
+	 * @param width an int argument.
+	 *   The width of the line in pixels.
+	 * @param dot_size an int argument.
+	 *   Size in pixels of the dot.
+	 * @param colour a string argument.
+	 *   The hex colour value of the line.
+	 * @param text a string argument.
+	 *   The label of the line.
+	 * @param font_size an int argument.
+	 *   Font size of the label.
+	 */
 	function line_dot( $width, $dot_size, $colour, $text='', $font_size='' )
 	{
 		$type = 'line_dot'. $this->next_line();
@@ -350,6 +730,20 @@ class graph
 		$this->lines[$type] = $description;
 	}
 
+	/**
+	 * Draw a line with hollow dot markers on values.
+	 *
+	 * @param width an int argument.
+	 *   The width of the line in pixels.
+	 * @param dot_size an int argument.
+	 *   Size in pixels of the dot.
+	 * @param colour a string argument.
+	 *   The hex colour value of the line.
+	 * @param text a string argument.
+	 *   The label of the line.
+	 * @param font_size an int argument.
+	 *   Font size of the label.
+	 */
 	function line_hollow( $width, $dot_size, $colour, $text='', $font_size='' )
 	{
 		$type = 'line_hollow'. $this->next_line();
@@ -362,6 +756,24 @@ class graph
 		$this->lines[$type] = $description;
 	}
 
+	/**
+	 * Draw an area chart.
+	 *
+	 * @param width an int argument.
+	 *   The width of the line in pixels.
+	 * @param dot_size an int argument.
+	 *   Size in pixels of the dot.
+	 * @param colour a string argument.
+	 *   The hex colour value of the line.
+	 * @param alpha an int argument.
+	 *   The percentage of transparency of the fill colour.
+	 * @param text a string argument.
+	 *   The label of the line.
+	 * @param font_size an int argument.
+	 *   Font size of the label.
+	 * @param fill_colour a string argument.
+	 *   The hex colour value of the fill colour.
+	 */
 	function area_hollow( $width, $dot_size, $colour, $alpha, $text='', $font_size='', $fill_colour='' )
 	{
 		$type = 'area_hollow'. $this->next_line();
@@ -377,7 +789,18 @@ class graph
 		$this->lines[$type] = $description;
 	}
 
-
+	/**
+	 * Draw a bar chart.
+	 *
+	 * @param alpha an int argument.
+	 *   The percentage of transparency of the bar colour.
+	 * @param colour a string argument.
+	 *   The hex colour value of the line.
+	 * @param text a string argument.
+	 *   The label of the line.
+	 * @param font_size an int argument.
+	 *   Font size of the label.
+	 */
 	function bar( $alpha, $colour='', $text='', $size=-1 )
 	{
 		$type = 'bar'. $this->next_line();
@@ -387,6 +810,20 @@ class graph
 		$this->lines[$type] = $description;
 	}
 
+	/**
+	 * Draw a bar chart with an outline.
+	 *
+	 * @param alpha an int argument.
+	 *   The percentage of transparency of the bar colour.
+	 * @param colour a string argument.
+	 *   The hex colour value of the line.
+	 * @param colour_outline a strng argument.
+	 *   The hex colour value of the outline.
+	 * @param text a string argument.
+	 *   The label of the line.
+	 * @param font_size an int argument.
+	 *   Font size of the label.
+	 */
 	function bar_filled( $alpha, $colour, $colour_outline, $text='', $size=-1 )
 	{
 		$type = 'filled_bar'. $this->next_line();
@@ -404,7 +841,19 @@ class graph
 
 		$this->lines[$type] = $description;
 	}
-	
+
+	/**
+	 * Draw a 3D bar chart.
+	 *
+	 * @param alpha an int argument.
+	 *   The percentage of transparency of the bar colour.
+	 * @param colour a string argument.
+	 *   The hex colour value of the line.
+	 * @param text a string argument.
+	 *   The label of the line.
+	 * @param font_size an int argument.
+	 *   Font size of the label.
+	 */
 	function bar_3D( $alpha, $colour='', $text='', $size=-1 )
 	{
 		$type = 'bar_3d'. $this->next_line();
@@ -413,7 +862,21 @@ class graph
 
 		$this->lines[$type] = $description;
 	}
-	
+
+	/**
+	 * Draw a 3D bar chart that looks like glass.
+	 *
+	 * @param alpha an int argument.
+	 *   The percentage of transparency of the bar colour.
+	 * @param colour a string argument.
+	 *   The hex colour value of the line.
+	 * @param outline_colour a string argument.
+	 *   The hex colour value of the outline.
+	 * @param text a string argument.
+	 *   The label of the line.
+	 * @param font_size an int argument.
+	 *   Font size of the label.
+	 */
 	function bar_glass( $alpha, $colour, $outline_colour, $text='', $size=-1 )
 	{
 		$type = 'bar_glass'. $this->next_line();
@@ -423,6 +886,18 @@ class graph
 		$this->lines[$type] = $description;
 	}
 
+	/**
+	 * Draw a faded bar chart.
+	 *
+	 * @param alpha an int argument.
+	 *   The percentage of transparency of the bar colour.
+	 * @param colour a string argument.
+	 *   The hex colour value of the line.
+	 * @param text a string argument.
+	 *   The label of the line.
+	 * @param font_size an int argument.
+	 *   Font size of the label.
+	 */
 	function bar_fade( $alpha, $colour='', $text='', $size=-1 )
 	{
 		$type = 'bar_fade'. $this->next_line();
@@ -481,6 +956,20 @@ class graph
 	//
 	// Patch by, Jeremy Miller (14th Nov, 2007)
 	//
+	/**
+	 * Draw a pie chart.
+	 *
+	 * @param alpha an int argument.
+	 *   The percentage of transparency of the pie colour.
+	 * @param line_colour a string argument.
+	 *   The hex colour value of the outline.
+	 * @param label_colour a string argument.
+	 *   The hex colour value of the label.
+	 * @param gradient a boolean argument.
+	 *   Use a gradient true or false.
+	 * @param border_size an int argument.
+	 *   Size of the border in pixels.
+	 */
 	function pie( $alpha, $line_colour, $label_colour, $gradient = true, $border_size = false )
 	{
 		$this->pie = $alpha.','.$line_colour.','.$label_colour;
@@ -498,6 +987,16 @@ class graph
 		}
 	}
 
+	/**
+	 * Set the values of the pie chart.
+	 *
+	 * @param values an array argument.
+	 *   An array of the values for the pie chart.
+	 * @param labels an array argument.
+	 *   An array of the labels for the pie pieces.
+	 * @param links an array argument.
+	 *   An array of the links to the pie pieces.
+	 */	
 	function pie_values( $values, $labels, $links )
 	{
 		$this->pie_values = implode(',',$values);
@@ -505,27 +1004,21 @@ class graph
 		$this->pie_links  = implode(",",$links);
 	}
 
-
+	/**
+	 * Set the pie slice colours.
+	 *
+	 * @param colours an array argument.
+	 *   The hex colour values of the pie pieces.
+	 */
 	function pie_slice_colours( $colours )
 	{
 		$this->pie_colours = implode(',',$colours);
 	}
 	
-	function set_width( $width )
-	{
-		$this->width = $width;
-	}
-	
-	function set_height( $height )
-	{
-		$this->height = $height;
-	}
-	
-	function set_base( $base='js/' )
-	{
-		$this->base = $base;
-	}
-	
+
+	/**
+	 * Render the output.
+	 */
 	function render($output_type = '')
 	{
 		$tmp = array();
@@ -604,6 +1097,21 @@ class graph
 		
 			$num++;
 		}
+		
+		$num = 1;
+		foreach( $this->links as $link )
+		{
+			if( $num==1 )
+			{
+				$tmp[] = $this->format_output($output_type, 'links', $link);
+			}
+			else
+			{
+				$tmp[] = $this->format_output($output_type,'links_'. $num, $link);
+			}
+		
+			$num++;
+		}
 
 		if( count( $this->y2_lines ) > 0 )
 		{
@@ -658,6 +1166,9 @@ class graph
   
 		if( strlen( $this->y2_axis_colour ) > 0 )
 			$tmp[] = $this->format_output($output_type,'y2_axis_colour',$this->y2_axis_colour);
+		
+		if( strlen( $this->x_offset ) > 0 )
+			$tmp[] = $this->format_output($output_type,'x_offset',$this->x_offset);
 
 		if( strlen( $this->inner_bg_colour ) > 0 )
 		{
@@ -681,6 +1192,24 @@ class graph
 
 		if( strlen( $this->tool_tip ) > 0 )
 			$tmp[] = $this->format_output($output_type,'tool_tip',$this->tool_tip);
+			
+			
+		
+		if( strlen( $this->y_format ) > 0 )
+			$tmp[] = $this->format_output($output_type,'y_format',$this->y_format);
+			
+		if( strlen( $this->num_decimals ) > 0 )
+			$tmp[] = $this->format_output($output_type,'num_decimals',$this->num_decimals);
+			
+		if( strlen( $this->is_fixed_num_decimals_forced ) > 0 )
+			$tmp[] = $this->format_output($output_type,'is_fixed_num_decimals_forced',$this->is_fixed_num_decimals_forced);
+			
+		if( strlen( $this->is_decimal_separator_comma ) > 0 )
+			$tmp[] = $this->format_output($output_type,'is_decimal_separator_comma',$this->is_decimal_separator_comma);
+			
+		if( strlen( $this->is_thousand_separator_disabled ) > 0 )
+			$tmp[] = $this->format_output($output_type,'is_thousand_separator_disabled',$this->is_thousand_separator_disabled);
+			
 
 		if($output_type == 'js')
 		{
@@ -688,8 +1217,81 @@ class graph
 			$tmp[] = '</script>';
 		}
 
+
+		$count = 1;
+		foreach( $this->data_sets as $set )
+		{
+			$tmp[] = $set->toString( $output_type, $count>1?'_'.$count:'' );
+			$count++;
+		}
+		
 		return implode("\r\n",$tmp);
 	}
+}
+
+class bar
+{
+	var $colour;
+	var $alpha;
+	var $data;
+	var $links;
+	var $_key;
+	var $key;
+	var $key_size;
+	var $var;
+	
+	function bar( $alpha, $colour )
+	{
+		$this->var = 'bar';
+		
+		$this->alpha = $alpha;
+		$this->colour = $colour;
+		$this->data = array();
+		$this->links = array();
+		$this->_key = false;
+	}
+
+	function key( $key, $size )
+	{
+		$this->_key = true;
+		$this->key = $key;
+		$this->key_size = $size;
+	}
+	
+	function add( $data, $link )
+	{
+		$this->data[] = $data;
+		$this->links[] = $link;
+	}
+	
+	function toString( $output_type, $set_num )
+	{
+		$values = $this->alpha .','. $this->colour;
+		
+		if( $this->_key )
+		{
+			$values .= ','. $this->key .','. $this->key_size;
+		}
+		
+		if( $output_type == 'js' )
+		{
+			$tmp = 'so.addVariable("'. $this->var .'","'. $values . '");';
+		}
+		else
+		{
+			$tmp  = '&'. $this->var. $set_num .'='. $values .'&';
+			$tmp .= "\r\n";
+			$tmp .= '&values'. $set_num .'='. implode( ',', $this->data ) .'&';
+			if( count( $this->links ) > 0 )
+			{
+				$tmp .= "\r\n";
+				$tmp .= '&links'. $set_num .'='. implode( ',', $this->links ) .'&';	
+			}
+		}
+
+		return $tmp;
+	}
+	
 }
 
 class candle
