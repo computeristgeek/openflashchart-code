@@ -62,9 +62,9 @@ class graph
 		//$this->y_legend_colour = '#000000';
 	
 		$this->lines = array();
-		// $this->line_default['type'] = 'line';
-		// $this->line_default['values'] = '3,#87421F';
-		// $this->js_line_default = 'so.addVariable("line","3,#87421F");';
+		$this->line_default['type'] = 'line';
+		$this->line_default['values'] = '3,#87421F';
+		$this->js_line_default = 'so.addVariable("line","3,#87421F");';
 		
 		$this->bg_colour = '';
 		$this->bg_image = '';
@@ -1073,7 +1073,7 @@ class graph
 		$values = '5,10,'. $this->y_steps;
 		$tmp[] = $this->format_output($output_type,'y_ticks',$values);
 
-		if( count( $this->lines ) == 0 )
+		if( count( $this->lines ) == 0 && count($this->data_sets)==0 )
 		{
 			$tmp[] = $this->format_output($output_type,$this->line_default['type'],$this->line_default['values']);	
 		}
@@ -1209,13 +1209,6 @@ class graph
 			
 		if( strlen( $this->is_thousand_separator_disabled ) > 0 )
 			$tmp[] = $this->format_output($output_type,'is_thousand_separator_disabled',$this->is_thousand_separator_disabled);
-			
-
-		if($output_type == 'js')
-		{
-			$tmp[] = 'so.write("my_chart' . $this->occurence . '");';
-			$tmp[] = '</script>';
-		}
 
 
 		$count = 1;
@@ -1223,6 +1216,12 @@ class graph
 		{
 			$tmp[] = $set->toString( $output_type, $count>1?'_'.$count:'' );
 			$count++;
+		}
+		
+		if($output_type == 'js')
+		{
+			$tmp[] = 'so.write("my_chart' . $this->occurence . '");';
+			$tmp[] = '</script>';
 		}
 		
 		return implode("\r\n",$tmp);
@@ -1254,7 +1253,7 @@ class bar
 	function key( $key, $size )
 	{
 		$this->_key = true;
-		$this->key = $key;
+		$this->key = graph::esc( $key );
 		$this->key_size = $size;
 	}
 	
@@ -1264,34 +1263,141 @@ class bar
 		$this->links[] = $link;
 	}
 	
-	function toString( $output_type, $set_num )
+	// return the variables for this
+	// bar chart
+	function _get_variable_list()
 	{
-		$values = $this->alpha .','. $this->colour;
+		$values = array();
+		$values[] = $this->alpha;
+		$values[] = $this->colour;
 		
 		if( $this->_key )
 		{
-			$values .= ','. $this->key .','. $this->key_size;
+			$values[] = $this->key;
+			$values[] = $this->key_size;
 		}
+		
+		return $values;
+	}
+	
+	function toString( $output_type, $set_num )
+	{
+		$values = implode( ',', $this->_get_variable_list() );
+		
+		$tmp = array();
 		
 		if( $output_type == 'js' )
 		{
-			$tmp = 'so.addVariable("'. $this->var .'","'. $values . '");';
+			$tmp[] = 'so.addVariable("'. $this->var .'","'. $values . '");';
+
+			$tmp[] = 'so.addVariable("values'. $set_num .'","'. implode( ',', $this->data ) .'");';
+			
+			if( count( $this->links ) > 0 )
+				$tmp[] = 'so.addVariable("values'. $set_num .'","'. implode( ',', $this->links ) .'");';
+
 		}
 		else
 		{
-			$tmp  = '&'. $this->var. $set_num .'='. $values .'&';
-			$tmp .= "\r\n";
-			$tmp .= '&values'. $set_num .'='. implode( ',', $this->data ) .'&';
+			$tmp[]  = '&'. $this->var. $set_num .'='. $values .'&';
+			$tmp[] = '&values'. $set_num .'='. implode( ',', $this->data ) .'&';
+			
 			if( count( $this->links ) > 0 )
-			{
-				$tmp .= "\r\n";
-				$tmp .= '&links'. $set_num .'='. implode( ',', $this->links ) .'&';	
-			}
+				$tmp[] = '&links'. $set_num .'='. implode( ',', $this->links ) .'&';	
 		}
 
-		return $tmp;
+		return implode( "\r\n", $tmp );
 	}
 	
+}
+
+class bar_3d extends bar
+{
+	function bar_3d( $alpha, $colour )
+	{
+		parent::bar( $alpha, $colour );
+		$this->var = 'bar_3d';
+	}
+}
+
+class bar_fade extends bar
+{
+	function bar_fade( $alpha, $colour )
+	{
+		parent::bar( $alpha, $colour );
+		$this->var = 'bar_fade';
+	}
+}
+
+class bar_outline extends bar
+{
+	var $outline_colour;
+	
+	function bar_outline( $alpha, $colour, $outline_colour )
+	{
+		parent::bar( $alpha, $colour );
+		$this->var = 'filled_bar';
+		$this->outline_colour = $outline_colour;
+	}
+	
+	// override the base method
+	function _get_variable_list()
+	{
+		$values = array();
+		$values[] = $this->alpha;
+		$values[] = $this->colour;
+		$values[] = $this->outline_colour;
+		
+		if( $this->_key )
+		{
+			$values[] = $this->key;
+			$values[] = $this->key_size;
+		}
+		
+		return $values;
+	}
+}
+
+class bar_glass extends bar_outline
+{
+	function bar_glass( $alpha, $colour, $outline_colour )
+	{
+		parent::bar_outline( $alpha, $colour, $outline_colour );
+		$this->var = 'bar_glass';
+	}
+}
+
+//
+// this has an outline colour and a 'jiggle' parameter
+// called offset
+//
+class bar_sketch extends bar_outline
+{
+	var $offset;
+	
+	function bar_sketch( $alpha, $offset, $colour, $outline_colour )
+	{
+		parent::bar_outline( $alpha, $colour, $outline_colour );
+		$this->var = 'bar_sketch';
+		$this->offset = $offset;
+	}
+	
+	// override the base method
+	function _get_variable_list()
+	{
+		$values = array();
+		$values[] = $this->alpha;
+		$values[] = $this->offset;
+		$values[] = $this->colour;
+		$values[] = $this->outline_colour;
+		
+		if( $this->_key )
+		{
+			$values[] = $this->key;
+			$values[] = $this->key_size;
+		}
+		
+		return $values;
+	}
 }
 
 class candle
