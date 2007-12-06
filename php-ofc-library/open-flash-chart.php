@@ -106,7 +106,7 @@ class graph
 	/**
 	* Set the unique_id to use for the flash object id.
 	*/
-	private function set_unique_id()
+	function set_unique_id()
 	{
 		$this->unique_id = uniqid();
 	}
