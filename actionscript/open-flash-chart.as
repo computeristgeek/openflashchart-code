@@ -902,15 +902,6 @@ function reload( u:String ):Void
 //
 // ********************************************************************************
 
-//_root.loading = new Loading('Loading data...');
-//
-// variables from the url:
-if( _root.width == undefined )
-	_root.width = 400; // <-- default width
-	
-if( _root.height == undefined )
-	_root.height = 300; // <-- default width
-	
 _root.loading = new Loading('Loading data...');	
 
 // so we can rotate text:
@@ -941,7 +932,6 @@ Stage.addListener(stageListener);
 // ------ END RESIZE ----
 //
 //
-
 
 // NetVicious, June 2007
 // Right click menu:

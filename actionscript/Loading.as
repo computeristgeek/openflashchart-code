@@ -21,6 +21,19 @@
 		
 		mc.txt.setTextFormat(fmt);
 		
+		//
+		// HACK! For some reason the Stage.height is not
+		// correct the very first time this object is created
+		// so we wait untill the first frame before placing
+		// the movie clip at the center of the Stage.
+		//
+		mc.onEnterFrame = function() {
+			this._x = (Stage.width/2)-((this.txt._width+10)/2);
+			this._y = (Stage.height/2)-((this.txt._height+10)/2);
+			delete this.onEnterFrame;
+		}
+			
+		
 		var cstroke = {width:2, color:0x808080, alpha:100};
 		var ccolor = {color:0xf0f0f0, alpha:100};
 		
@@ -29,8 +42,8 @@
 			mc.txt._width+10,
 			mc.txt._height+10,
 			6,
-			(Stage.width/2)-((mc.txt._width+10)/2),
-			(Stage.height/2)-((mc.txt._height+10)/2),
+			0,//(Stage.width/2)-((mc.txt._width+10)/2),
+			0,//(Stage.height/2)-((mc.txt._height+10)/2),
 			cstroke,
 			ccolor);
 		
@@ -61,7 +74,7 @@
 		
 		spin.onEnterFrame = function ()
     	{
-			this._rotation += 2.4;
+			this._rotation += 5;
 		}
 		
 		var dropShadow = new flash.filters.DropShadowFilter();
