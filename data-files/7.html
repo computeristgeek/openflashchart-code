@@ -1,0 +1,31 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+    
+<script type="text/javascript" src="../js/swfobject.js"></script>
+
+<div id="my_chart"></div>
+ 	
+<script type="text/javascript">
+
+    var so = new SWFObject("../actionscript/open-flash-chart.swf", "ofc", "300", "200", "9", "#FFFFFF");
+	
+	so.addVariable("variables","true"); 
+so.addVariable("scatter","3,0x004040,Dataset1,10"); 
+so.addVariable("y_min", "0"); 
+so.addVariable("y_max", 200); 
+so.addVariable("x_min", Date.parse("Jul 8, 2005")); 
+so.addVariable("x_max", Date.parse("Jul 8, 2006")); 
+so.addVariable("values","[" + Date.parse("Jul 8, 2005") + ",100,5],[" + (Date.parse("Jul 8, 2005")+4) + ",150,5]"); 
+so.addVariable("x_labels",Date.parse("Jul 8, 2005")+",x,y,z,"+Date.parse("Jul 8, 2006") ); 
+so.addVariable("tool_tip","x:#x_label#<br>y:#val#"); 
+
+so.addParam("allowScriptAccess", "always" );//"sameDomain");
+so.write("my_chart");
+</script>
+
+
+</body>
+</html>

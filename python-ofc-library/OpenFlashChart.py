@@ -1,11 +1,23 @@
 class graph_object:
-	def render( self, width, height, url, ofc_base_url="/", ofc_swf="open-flash-chart.swf" ):
-		return """<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="%(width)d" height="%(height)d" id="graph-2" align="middle">
+	def render( self, width, height, data_url, swf_url_root=''):
+		width = str(width)
+		height = str(height)
+		return """<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="400" height="300" id="graph-2" align="middle">
 <param name="allowScriptAccess" value="sameDomain" />
-<param name="movie" value="%(ofc_base_url)s%(ofc_swf)s?width=%(width)d&height=%(height)d&data=%(url)s" />
+<param name="movie" value="%sopen-flash-chart.swf?width=%s&height=%s&data=%s" />
 <param name="quality" value="high" /><param name="bgcolor" value="#FFFFFF" />
-<embed src="%(ofc_base_url)s%(ofc_swf)s?width=%(width)d&height=%(height)d&data=%(url)s" quality="high" bgcolor="#FFFFFF" width=%(width)d height=%(height)d name="open-flash-chart" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
-</object>""" % locals()
+<embed src="%sopen-flash-chart.swf?width=%s&height=%s&data=%s" quality="high" bgcolor="#FFFFFF" width="%s" height="%s" name="open-flash-chart" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+</object>"""%(swf_url_root,
+				width,
+				height,
+				data_url,
+				swf_url_root,
+				width,
+				height,
+				data_url,
+				width,
+				height,
+				)
 
 class graph:
 	def __init__(self):
@@ -190,17 +202,20 @@ class graph:
 		tmp += "&\r\n"
 		self.lines.append( tmp )
 
-	def area_hollow( self, width, dot_size, colour, alpha, text='', font_size=0 ):
+	def area_hollow( self, width, dot_size, colour, alpha, text='', font_size=0, fill_color='' ):
 		tmp = '&area_hollow'
 		
 		if( len( self.lines ) > 0 ):
 				tmp += '_%s' % (len( self.lines )+1)
 				
-		tmp += "=%s,%s,%s" % (width,dot_size,colour,alpha)
+		tmp += "=%s,%s,%s,%s" % (width,dot_size,colour,alpha)
 
 		if( len( text ) > 0 ):
 			tmp += ",%s,%s" % (text,font_size)
 
+		if( len( fill_color ) > 0 ):
+			tmp += ",%s" % (fill_color)
+				
 		tmp += "&\r\n"
 		self.lines.append( tmp )
 
