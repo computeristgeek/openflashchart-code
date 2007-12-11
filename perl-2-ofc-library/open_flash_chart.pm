@@ -1,5 +1,5 @@
 #
-# API ref: /php-ofc-library/open-flash-chart.php version 71
+# API ref: /php-ofc-library/open-flash-chart.php version 74
 #
 
 package open_flash_chart;
@@ -1086,8 +1086,20 @@ sub pie() {
 #
 sub pie_values() {
   my ($self, $values, $labels, $links ) = @_;
-  $labels = [] if !defined($labels);
-  $links = [] if !defined($links);
+  
+  if ( !defined($labels) ) {
+  	$labels = [];
+  	for ( my $i = 0; $i < scalar(@$values); $i++ ) {
+  		push(@$labels, '');
+  	}
+  }
+
+  if ( !defined($links) ) {
+  	$links = [];
+  	for ( my $i = 0; $i < scalar(@$values); $i++ ) {
+  		push(@$links, '');
+  	}
+  }
 
   #php divergence here.
   #make sure all labels are shown ie no zero values
@@ -1098,19 +1110,43 @@ sub pie_values() {
   }
   my $pie_total = 0;
   my $biggest_pie_slice = 0;
+  my $too_small_value = 0;
+  my $too_small_label = '';
   for ( my $i=0; $i < @$values; $i++) {
     $values->[$i] = sprintf("%.1f", ($values->[$i] / $total) * 100.0);
     # you can't have a zero pie slice
-    if ( $values->[$i] < 0.1 ) {
-      $values->[$i] += 0.1;
+    if ( $values->[$i] == 0 ) {
+    	splice(@{$values}, $i, 1);
+    	splice(@{$labels}, $i, 1);
+    	splice(@{$links}, $i, 1);
+    	$i--;
+    	next;
+    } elsif ($values->[$i] < 3) {
+    	$pie_total += $values->[$i];
+    	$too_small_value = $too_small_value + $values->[$i];
+   		$too_small_label .= ' '  . $labels->[$i];
+    	splice(@{$values}, $i, 1);
+    	splice(@{$labels}, $i, 1);
+    	splice(@{$links}, $i, 1);
+    	$i--;
+    	next;
     }
+    
     $pie_total += $values->[$i];
     if ( $values->[$i] > $values->[$biggest_pie_slice] ) {
       $biggest_pie_slice = $i;
     }
   }
+  
   #adjust for rounding errors, and fill to 100% on biggest pie slice
   $values->[$biggest_pie_slice] += (100.0 - $pie_total);
+
+	if ( $too_small_value > 0 ) {
+		push(@$values, $too_small_value);
+		$too_small_label =~ s/ $//;
+		push(@$labels, $too_small_label);
+		push(@$links,'');
+	}
 
   $self->{pie_values} = join(',',@$values);
   $self->{pie_labels} = join(',',@$labels);
@@ -1435,7 +1471,7 @@ sub toString() {
 
   my @tmp;
   if ($output_type eq 'js' ) {
-    push(@tmp, 'so.addVariable("'. $self->{var} .'","'. $values . '");');
+    push(@tmp, 'so.addVariable("'. $self->{var} . $set_num .'","'. $values . '");');
 
     push(@tmp, 'so.addVariable("values'. $set_num .'","'. join(',', @{$self->{data}}) .'");');
 
