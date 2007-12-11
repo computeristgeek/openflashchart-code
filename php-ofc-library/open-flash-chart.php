@@ -1288,7 +1288,7 @@ class bar
 		
 		if( $output_type == 'js' )
 		{
-			$tmp[] = 'so.addVariable("'. $this->var .'","'. $values . '");';
+			$tmp[] = 'so.addVariable("'. $this->var.$set_num .'","'. $values . '");'; 
 
 			$tmp[] = 'so.addVariable("values'. $set_num .'","'. implode( ',', $this->data ) .'");';
 			
