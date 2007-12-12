@@ -1,5 +1,5 @@
 #
-# API ref: /php-ofc-library/open-flash-chart.php version 74
+# API ref: /php-ofc-library/open-flash-chart.php version 78
 #
 
 package open_flash_chart;
@@ -474,12 +474,12 @@ sub set_y_right_label_style() {
 
 sub set_x_max() {
   my ($self, $max) = @_;
-  $self->{x_max} = int( $max );
+  $self->{x_max} = $max ;
 }
 
 sub set_x_min() {
   my ($self, $min) = @_;
-  $self->{x_min} = int( $min );
+  $self->{x_min} = $min;
 }
 
 #
@@ -490,7 +490,7 @@ sub set_x_min() {
 #
 sub set_y_max() {
   my ($self, $max) = @_;
-  $self->{y_max} = int( $max );
+  $self->{y_max} = $max;
 }
 
 #
@@ -501,7 +501,7 @@ sub set_y_max() {
 #
 sub set_y_min() {
   my ($self, $min) = @_;
-  $self->{y_min} = int( $min );
+  $self->{y_min} = $min;
 }
 
 #
@@ -512,7 +512,7 @@ sub set_y_min() {
 #
 sub set_y_right_max() {
   my ($self, $max) = @_;
-  $self->{y2_max} = int( $max );
+  $self->{y2_max} = $max;
 }
 
 #
@@ -523,7 +523,7 @@ sub set_y_right_max() {
 #
 sub set_y_right_min() {
   my ($self, $min) = @_;
-  $self->{y2_min} = int( $min );
+  $self->{y2_min} = $min;
 }
 
 #
@@ -534,7 +534,7 @@ sub set_y_right_min() {
 #
 sub y_label_steps() {
   my ($self, $val) = @_;
-  $self->{y_steps} = int( $val );
+  $self->{y_steps} = $val;
 }
 
 sub title() {
