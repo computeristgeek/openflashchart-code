@@ -22,8 +22,8 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 
 	for( my $i=0; $i<12; $i++ ) {
 		push ( @data_1, rand(10) );
-		push ( @data_2, rand(50) );
-		push ( @data_3, rand(500) );
+		push ( @data_2, rand(20) );
+		push ( @data_3, rand(2000) );
 	}
 
   my $g = graph->new();

@@ -1418,7 +1418,9 @@ sub swf_object {
 
 
 sub set_auto_y_max() {
-  my ($self) = @_;
+  my ($self, $smooth_rounding) = @_;
+  
+  $smooth_rounding = 1 if !defined($smooth_rounding);
 
   my $max;
   for my $data ( @{$self->{data}} ) {
@@ -1431,13 +1433,15 @@ sub set_auto_y_max() {
     }
   }  
   
-	# round the max up a bit to a nice round number
-	if ( $max < 100 ) { $max = $max + (-$max % 10) }
-	elsif ( $max < 500 ) { $max = $max + (-$max % 50) }
-	elsif ( $max < 1000 ) { $max = $max + (-$max % 100) }
-	elsif ( $max < 10000 ) { $max = $max + (-$max % 200) }
-	else { $max = $max + (-$max % 500) }
-  
+  if ( $smooth_rounding ) {
+  	# round the max up a bit to a nice round number
+  	if ( $max < 100 ) { $max = $max + (-$max % 10) }
+  	elsif ( $max < 500 ) { $max = $max + (-$max % 50) }
+  	elsif ( $max < 1000 ) { $max = $max + (-$max % 100) }
+  	elsif ( $max < 10000 ) { $max = $max + (-$max % 200) }
+  	else { $max = $max + (-$max % 500) }
+    $max = int($max);
+  }  
   
   $self->set_y_max($max);
 }
