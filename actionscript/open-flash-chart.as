@@ -638,7 +638,22 @@ function make_chart()
 	_root.chartValues = new Values( this, _root._background.colour, _root._x_axis_labels.labels );
 	
 	// tell the x axis where the grid lines are:
-	_root._x_axis.set_grid_count( Math.max( _root._x_axis_labels.count(), _root.chartValues.length() ) );
+	if( _root._min_max.has_x_range )
+	{
+		// the user has specified the X axis min and max
+		// this is used in scatter charts
+		_root._x_axis.set_grid_count(
+			_root._min_max.x_max-_root._min_max.x_min+1
+			);
+	}
+	else
+	{
+		// the user has not told us how long the X axis
+		// is, so we figure it out:
+		_root._x_axis.set_grid_count(
+			Math.max( _root._x_axis_labels.count(), _root.chartValues.length() )
+			);
+	}
 
 	_root._keys = new Keys(
 		(_root._y_legend.width()+_root._y_axis_labels.width()+_root._y_axis.width()),		// <-- from left
@@ -824,23 +839,29 @@ function setTitle(str:String):Void
 }
 
 ExternalInterface.addCallback("push_value", null, pushValue);
-function pushValue( val:String, label:String ):Void
+function pushValue( set:Number, val:String, label:String ):Void
 {
-	_root.chartValues.styles[0].add( Number( val ), label );
-	_root._x_axis_labels.add(label);
-	// tell the x axis where the grid lines are:
-	_root._x_axis.set_grid_count( _root.chartValues.length() );
-	_root.move();
+	if( set<_root.chartValues.length() )
+	{
+		_root.chartValues.styles[set].add( Number( val ), label );
+		_root._x_axis_labels.add(label);
+		// tell the x axis where the grid lines are:
+		_root._x_axis.set_grid_count( _root.chartValues.length() );
+		_root.move();
+	}
 }
 
 ExternalInterface.addCallback("delete_value", null, deleteValue);
-function deleteValue():Void
+function deleteValue( set:Number ):Void
 {
-	_root.chartValues.styles[0].del();
-	_root._x_axis_labels.del();
-	// tell the x axis where the grid lines are:
-	_root._x_axis.set_grid_count( _root.chartValues.length() );
-	_root.move();
+	if( set<_root.chartValues.length() )
+	{
+		_root.chartValues.styles[0].del();
+		_root._x_axis_labels.del();
+		// tell the x axis where the grid lines are:
+		_root._x_axis.set_grid_count( _root.chartValues.length() );
+		_root.move();
+	}
 }
 
 ExternalInterface.addCallback("show_message", null, show_message);
@@ -956,7 +977,7 @@ if( _root.data == undefined )
 		//
 		// We are in the IDE
 		//
-		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-43.txt";
+		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-46.txt";
 		//_root.data="http://www.stelteronline.de/index.php?option=com_joomleague&func=showStats_GetChartData&p=1";
 		lv.load(_root.data);
 	}

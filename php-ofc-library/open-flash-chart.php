@@ -454,56 +454,56 @@ class graph
 
 	function set_x_max( $max )
 	{
-		$this->x_max = intval( $max );
+		$this->x_max = floatval( $max );
 	}
 
 	function set_x_min( $min )
 	{
-		$this->x_min = intval( $min );
+		$this->x_min = floatval( $min );
 	}
 
 	/**
 	 * Set the maximum value of the y axis.
 	 *
-	 * @param max an int argument.
+	 * @param max an float argument.
 	 *   The maximum value.
 	 */
 	function set_y_max( $max )
 	{
-		$this->y_max = intval( $max );
+		$this->y_max = floatval( $max );
 	}
 
 	/**
 	 * Set the minimum value of the y axis.
 	 *
-	 * @param min an int argument.
+	 * @param min an float argument.
 	 *   The minimum value.
 	 */
 	function set_y_min( $min )
 	{
-		$this->y_min = intval( $min );
+		$this->y_min = floatval( $min );
 	}
 
 	/**
 	 * Set the maximum value of the right y axis.
 	 *
-	 * @param max an int argument.
+	 * @param max an float argument.
 	 *   The maximum value.
 	 */  
 	function set_y_right_max( $max )
 	{
-		$this->y2_max = intval($max);
+		$this->y2_max = floatval($max);
 	}
 
 	/**
 	 * Set the minimum value of the right y axis.
 	 *
-	 * @param min an int argument.
+	 * @param min an float argument.
 	 *   The minimum value.
 	 */
 	function set_y_right_min( $min )
 	{
-		$this->y2_min = intval($min);
+		$this->y2_min = floatval($min);
 	}
 
 	/**

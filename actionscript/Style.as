@@ -22,6 +22,18 @@
 	{
 		this.values = v;
 	}
+	
+	// called from external interface (JS)
+	public function add( val:String, tool_tip:String )
+	{
+		this.values.push( val );
+	}
+	
+	// called from external interface (JS)
+	public function del()
+	{
+		this.values.shift();
+	}
 
 	public function draw( val, mc )
 	{}

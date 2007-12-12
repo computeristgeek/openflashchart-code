@@ -43,7 +43,7 @@
 	public function valPos( b:Box, right_axis:Boolean, min:Number )
 	{
 		// we need this to draw the area:
-		this.bottom = b.getY( 0, right_axis );
+		this.bottom = b.getYbottom( right_axis );
 		super.valPos( b, right_axis, min );
 	}
 	

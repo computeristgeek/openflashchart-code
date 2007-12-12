@@ -7,6 +7,9 @@
 	public var x_min:Number;
 	public var x_max:Number;
 	
+	// have we been given x_min and x_max?
+	public var has_x_range:Boolean;
+	
 	function MinMax( lv:LoadVars )
 	{
 		if( lv.y_max == undefined )
@@ -38,16 +41,23 @@
 		
 		if( this.y2_min == this.y2_max )
 			this.y2_max+=1;
-			
+		
+		this.has_x_range = false;
 		if( lv.x_max == undefined )
 			this.x_max = 10;
 		else
+		{
+			this.has_x_range = true;
 			this.x_max = Number(lv.x_max)
+		}
 			
 		if( lv.x_min == undefined )
 			this.x_min = 0;
 		else
+		{
+			this.has_x_range = true;
 			this.x_min = Number(lv.x_min)
+		}
 	}
 	
 	function range( right:Boolean )
