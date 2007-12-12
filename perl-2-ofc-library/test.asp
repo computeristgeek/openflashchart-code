@@ -22,8 +22,8 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 
 	for( my $i=0; $i<12; $i++ ) {
 		push ( @data_1, rand(10) );
-		push ( @data_2, rand(10) );
-		push ( @data_3, rand(10) );
+		push ( @data_2, rand(50) );
+		push ( @data_3, rand(500) );
 	}
 
   my $g = graph->new();
@@ -41,7 +41,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 
 
 	$g->set_x_labels( ['Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'] );
-	$g->set_y_max( 10 );
+	#$g->set_y_max( 10 );
 	$g->set_y_min( 0 );
 
 	$g->y_label_steps( 1 );

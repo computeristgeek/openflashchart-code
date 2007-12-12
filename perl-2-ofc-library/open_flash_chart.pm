@@ -24,6 +24,7 @@ sub new() {
   $self->{height} = 200;
   $self->{base} = 'js/';
   $self->{x_labels} = [];
+  $self->{y_auto} = 1;
   $self->{y_min} = '';
   $self->{y_max} = '';
   $self->{x_min} = '';
@@ -102,7 +103,7 @@ sub new() {
   # even is it is only the axis and some ticks
   #
   $self->set_y_min( 0 );
-  $self->set_y_max( 20 );
+  #$self->set_y_max( 20 );
   $self->set_x_axis_steps( 1 );
   $self->y_label_steps( 5 );
 
@@ -485,18 +486,19 @@ sub set_x_min() {
 #
 # Set the maximum value of the y axis.
 #
-# @param max an int argument.
+# @param max a number argument.
 #   The maximum value.
 #
 sub set_y_max() {
   my ($self, $max) = @_;
+  $self->{y_auto} = 0;
   $self->{y_max} = $max;
 }
 
 #
 # Set the minimum value of the y axis.
 #
-# @param min an int argument.
+# @param min an number argument.
 #   The minimum value.
 #
 sub set_y_min() {
@@ -507,7 +509,7 @@ sub set_y_min() {
 #
 # Set the maximum value of the right y axis.
 #
-# @param max an int argument.
+# @param max an number argument.
 #   The maximum value.
 #
 sub set_y_right_max() {
@@ -518,7 +520,7 @@ sub set_y_right_max() {
 #
 # Set the minimum value of the right y axis.
 #
-# @param min an int argument.
+# @param min an number argument.
 #   The minimum value.
 #
 sub set_y_right_min() {
@@ -1276,6 +1278,9 @@ sub render() {
   }
 
   push(@$tmp, $self->format_output($output_type,'y_min',$self->{y_min}));
+  if ( $self->{y_auto} ) {
+    $self->set_auto_y_max();  
+  }
   push(@$tmp, $self->format_output($output_type,'y_max',$self->{y_max}));
 
   if( $self->{y2_min} ne '' ) {
@@ -1409,6 +1414,32 @@ sub swf_object {
   </object>
   ^;
   return $html;
+}
+
+
+sub set_auto_y_max() {
+  my ($self) = @_;
+
+  my $max;
+  for my $data ( @{$self->{data}} ) {
+    for my $pt ( split(',',$data) ) {
+      if ( !defined($max) ) {
+        $max = $pt;
+      } elsif ( $pt > $max ) {
+        $max = $pt;
+      }
+    }
+  }  
+  
+	# round the max up a bit to a nice round number
+	if ( $max < 100 ) { $max = $max + (-$max % 10) }
+	elsif ( $max < 500 ) { $max = $max + (-$max % 50) }
+	elsif ( $max < 1000 ) { $max = $max + (-$max % 100) }
+	elsif ( $max < 10000 ) { $max = $max + (-$max % 200) }
+	else { $max = $max + (-$max % 500) }
+  
+  
+  $self->set_y_max($max);
 }
 
 
