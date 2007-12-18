@@ -48,13 +48,28 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 	$g->set_y_legend( 'Open Flash Chart', 12, '0x736AFF' );
 
 	$Response->write($g->render());
+} elsif ( $Request->QueryString("data")->Item == 2 ) {
+	#
+	my @pie_data;
 
+	for( my $i=0; $i<5; $i++ ) {
+		push ( @pie_data, rand(5) );
+	}
 
+  my $g = graph->new();
+  $g->pie(60,'#505050','#000000');
+	$g->title( 'Open Flash Chart - Testing 123', '{font-size: 15px; color: #800000}' );
+
+	$g->pie_values( \@pie_data, ['777', 'MD-11', '737', '747-400', 'Airbus'], [] );
+  $g->pie_slice_colours( ['#ff0000','#ff6600','#ff9900','#ffcc00','#ffff00']);
+	$Response->write($g->render());
 
 } else {
   my $width = 600;
   my $height = 600;
   $Response->write( graph::swf_object( $width, $height, "test.asp?data=1" ));
+  $Response->write("<br/>");
+  $Response->write( graph::swf_object( $width, $height, "test.asp?data=2" ));
 }
 
 %>
