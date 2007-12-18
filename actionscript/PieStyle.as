@@ -128,7 +128,7 @@ class PieStyle extends Style
 		{
 			var slice_percent :Number = Number(this.values[i])*100/total; 
 			
-			if( slice_percent > 0 )
+			if( slice_percent >= 0 )
 			{
 				this.ExPoints.push(
 					new ExPoint(

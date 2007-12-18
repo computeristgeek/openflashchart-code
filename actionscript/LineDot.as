@@ -1,18 +1,17 @@
 ﻿class LineDot extends LineStyle
 {
 	public var bgColour:Number=0;
-	public var name:String;
 	public var mcs:Array;
 	
-	public function LineDot( val:String, bgColour:Number, name:String )
+	public function LineDot( lv:Object, name:String )
 	{
 		this.mcs=[];
 		this.values = [];
 		
-		this.bgColour = bgColour;
-		this.name = name;
+		this.bgColour = _root.get_background_colour();
+		this.name = 'line_dot'+name;
 		
-		var vals:Array = val.split(",");
+		var vals:Array = lv[this.name].split(",");
 		
 		this.line_width = Number( vals[0] );
 		this.colour = _root.get_colour( vals[1] );
@@ -30,42 +29,13 @@
 		this.mc2.clear();
 		this.mc2.lineStyle( 0, 0, 0);
 		this.mc2.fillCircle( 0, 0, this.circle_size+2, 15, this.bgColour );
-		//this.mc2.fillCircle( 0, 0, this.circle_size-this.line_width+2, 15, this.colour );
 		this.mc2.fillCircle( 0, 0, this.circle_size+1, 15, this.colour );
 		this.mc2._visible = false;
+		
+		this.set_values( lv['values'+name].split(",") );
 			
 	}
 	
-	/* override Style:set_values
-	function set_values( v:Array, labels:Array )
-	{
-		for( var i:Number=0; i < v.length; i++ )
-			this.add( v[i], labels[i] );
-	}
-	
-	public function add( val:String, tool_tip:String )
-	{
-		super.add( val );
-		
-		return;
-		
-		if( this.circle_size > 0 )
-		{
-			//
-			// if this is not a null value, create a tooltip for it:
-			//
-			if( val != 'null' )
-			{
-				var mc:MovieClip = _root.createEmptyMovieClip(this.name+'_dot_'+this.mcs.length, _root.getNextHighestDepth());
-				var tooltip = {x_label:tool_tip, value:_root.format(val), key:this.key};
-				this.make_dot( mc, this.colour, this.bgColour, tooltip );
-				this.mcs.push(mc);
-			}
-			else
-				this.mcs.push( null );
-		}
-	}
-	*/
 	// delete the left most value
 	function del()
 	{
@@ -86,14 +56,7 @@
 			var val:Point = this.ExPoints[i];
 			this.mc.lineStyle( 0, 0, 0);
 			this.mc.fillCircle( val.x, val.y, this.circle_size, 15, this.bgColour );
-			//this.mc.fillCircle( val.x, val.y, this.circle_size-this.line_width, 15, this.colour );
 			this.mc.fillCircle( val.x, val.y, this.circle_size-1, 15, this.colour );
 		}
-		
-		return;
-		
-		
-		for( var i:Number=0; i < this.ExPoints.length; i++ )
-			super.move_dot( this.ExPoints[i], this.mcs[i] )
 	}
 }

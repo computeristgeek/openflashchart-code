@@ -1,8 +1,11 @@
 ﻿class BarArrow extends BarStyle
 {
-	public function BarArrow( val:String, name:String )
+	public function BarArrow( lv:Object, name:String )
 	{
-		super( val, name );
+		this.name = 'bar_arrow'+name;
+		// this calls parent obj Style.Style first
+		this.parse_bar( lv[this.name] );
+		this.set_values( lv['values'+name], lv['links'+name], lv['tool_tips_set'+name] );
 	}
 	
 	public function draw_bar( val:PointBar, i:Number )

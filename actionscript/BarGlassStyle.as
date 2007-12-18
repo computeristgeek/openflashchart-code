@@ -3,10 +3,11 @@
 	public var is_bar:Boolean = true;
 	public var outline_colour:Number = 0x000000;
 
-	public function BarGlassStyle( val:String, name:String )
+	public function BarGlassStyle( lv:Object, name:String )
 	{
-		this.name = name;
-		this.parse( val );
+		this.name = 'bar_glass'+name;
+		this.parse( lv[this.name] );
+		this.set_values( lv['values'+name], lv['links'+name] );
 	}
 	
 	public function parse( val:String )

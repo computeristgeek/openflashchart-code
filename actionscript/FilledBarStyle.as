@@ -3,10 +3,10 @@
 	public var is_bar:Boolean = true;
 	public var outline_colour:Number = 0x000000;
 	
-	public function FilledBarStyle( val:String, name:String )
+	public function FilledBarStyle( lv:Object, name:String )
 	{
-		this.name = name;
-		this.parse( val );
+		this.name = 'filled_bar'+name;
+		this.parse( lv[this.name] );
 	}
 	
 	public function parse( val:String )

@@ -2,10 +2,13 @@
 {
 	private var mc:MovieClip;
 	private var mc2:MovieClip;
+	public var name:String;
 	
-	public function LineStyle( val:String, name:String )
+	public function LineStyle( lv:Object, name:String )
 	{
-		var vals:Array = val.split(",");
+		this.name = 'line'+name;
+		
+		var vals:Array = lv[this.name].split(",");
 		this.line_width = Number( vals[0] );
 		this.colour = _root.get_colour( vals[1] );
 		
@@ -23,6 +26,8 @@
 		this.mc2.fillCircle( 0, 0, 7, 15, 0xFFFFFF );
 		this.mc2.fillCircle( 0, 0, 5, 15, this.colour );
 		this.mc2._visible = false;
+		
+		this.set_values( lv['values'+name].split(",") );
 	}
 	
 	public function valPos( b:Box, right_axis:Boolean, min:Number )

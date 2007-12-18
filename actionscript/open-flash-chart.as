@@ -260,6 +260,11 @@ function get_x_axis_label( i:Number )
 	return _root._x_axis_labels.get( i );
 }
 
+function get_background_colour()
+{
+	return _root._background.colour;
+}
+
 function format_y_axis_label( val:Number )
 {
 	if( _root._y_format != undefined )
@@ -977,7 +982,7 @@ if( _root.data == undefined )
 		//
 		// We are in the IDE
 		//
-		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-46.txt";
+		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-23.txt";
 		//_root.data="http://www.stelteronline.de/index.php?option=com_joomleague&func=showStats_GetChartData&p=1";
 		lv.load(_root.data);
 	}

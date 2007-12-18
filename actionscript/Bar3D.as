@@ -3,9 +3,11 @@
 	public var is_bar:Boolean = true;
 	public var outline_colour:Number = 0x000000;
 
-	public function Bar3D( val:String, name:String )
+	public function Bar3D( lv:Object, name:String )
 	{
-		super( val, name );
+		this.name = 'bar_3d'+name;
+		this.parse_bar( lv[this.name] );
+		this.set_values( lv['values'+name], lv['links'+name] );
 	}
 	
 	private function top( mc:MovieClip, val:PointBar )

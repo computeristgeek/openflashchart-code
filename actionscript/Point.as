@@ -16,7 +16,7 @@
 		this.is_tip = false;
 	}
 	
-	public function make_tooltip( tip:String, key:String, val:Number, x_legend:String, x_axis_label:String )
+	public function make_tooltip( tip:String, key:String, val:Number, x_legend:String, x_axis_label:String, tip_set:String )
 	{
 		var tmp:String;
 		
@@ -29,11 +29,16 @@
 		if( _root.tool_tip_wrapper != undefined )
 		{
 			tmp = tip.replace('#val#',_root.format(val));
-			tmp = tmp.replace('#val:number#', NumberUtils.formatNumber (Number(val)));		
+			tmp = tmp.replace('#val:number#', NumberUtils.formatNumber (Number(val)));
 			tmp = tmp.replace('#key#',key);
 			tmp = tmp.replace('#x_label#',x_axis_label);
 			tmp = tmp.replace('#val:time#',_root.formatTime(val));
 			tmp = tmp.replace('#x_legend#',x_legend);
+			
+			// the user can add extra tooltips per
+			// data set (may be undefined):
+			if( tip_set != undefined )
+				tmp = tmp.replace('#set#',tip_set);
 		}
 		else
 		{

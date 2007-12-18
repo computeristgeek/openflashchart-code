@@ -29,17 +29,32 @@
 				else if( lv['scatter'+name] != undefined )
 					this.styles[c-1].set_values( lv['values'+name] );
 				else if( lv['bar'+name] != undefined )
-					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
+				
+					var iiii=0;
+					//this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
+				
+				else if( lv['line_dot'+name] != undefined )
+				
+					var iiii=0;
+					
+				else if( lv['line_hollow'+name] != undefined )
+				
+					var iiii=0;
+				else if( lv['line'+name] != undefined )
+				
+					var iiii=0;
+					
 				else if( lv['filled_bar'+name] != undefined )
 					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
 				else if( lv['bar_3d'+name] != undefined )
-					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
+					var iiii=0;
 				else if( lv['bar_fade'+name] != undefined )
-					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
+					var iiii=0;
 				else if( lv['bar_sketch'+name] != undefined )
 					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
 				else if( lv['bar_glass'+name] != undefined )
-					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
+				var iiii=0;
+					//this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
 				else
 					this.styles[c-1].set_values( this.parseVal( lv['values'+name] ) );
 			}
@@ -73,27 +88,39 @@
 	private function make_style( lv:LoadVars, name:String, c:Number, bgColour:Number )
 	{
 		if( lv['line'+name] != undefined )
-			return new LineStyle(lv['line'+name],'bar_'+c);
+			
+			//return new LineStyle(lv['line'+name],'bar_'+c);
+			return new LineStyle(lv,name);
+			
 		else if( lv['line_dot'+name] != undefined )
-			return new LineDot(lv['line_dot'+name],bgColour,'bar_'+c);
+		
+		
+			//return new LineDot(lv['line_dot'+name],bgColour,'bar_'+c);
+			return new LineDot(lv,name);
+			
+			
 		else if( lv['line_hollow'+name] != undefined )
-			return new LineHollow(lv['line_hollow'+name],bgColour,'bar_'+c);
+			//return new LineHollow(lv['line_hollow'+name],bgColour,'bar_'+c);
+			return new LineHollow(lv,name);
 		else if( lv['area_hollow'+name] != undefined )
 			return new AreaHollow(lv['area_hollow'+name],bgColour,'bar_'+c);
 		else if( lv['bar'+name] != undefined )
-			return new BarStyle(lv['bar'+name],'bar_'+c);
+		
+//			return new BarStyle(lv['bar'+name],'bar_'+c);
+			return new BarStyle(lv,name);
+			
 		else if( lv['filled_bar'+name] != undefined )
-			return new FilledBarStyle(lv['filled_bar'+name],'bar_'+c);
+			return new FilledBarStyle(lv,name);
 		else if( lv['bar_glass'+name] != undefined )
-			return new BarGlassStyle(lv['bar_glass'+name],'bar_'+c);
+			return new BarGlassStyle(lv,name);
 		else if( lv['bar_fade'+name] != undefined )
-			return new BarFade(lv['bar_fade'+name],'bar_'+c);
+			return new BarFade(lv,name);
 		else if( lv['bar_zebra'+name] != undefined )
 			return new BarZebra(lv['bar_zebra'+name],'bar_'+c);
 		else if( lv['bar_arrow'+name] != undefined )
-			return new BarArrow(lv['bar_arrow'+name],'bar_'+c);
+			return new BarArrow(lv,name);
 		else if( lv['bar_3d'+name] != undefined )
-			return new Bar3D(lv['bar_3d'+name],'bar_'+c);
+			return new Bar3D(lv,name);
 		else if( lv['pie'+name] != undefined )
 			return new PieStyle(lv['pie'+name], lv.x_labels!=undefined ? lv['values'] : "", lv['links']);
 		else if( lv['candle'+name] != undefined )

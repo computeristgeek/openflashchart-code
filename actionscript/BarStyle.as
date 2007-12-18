@@ -12,11 +12,15 @@ class BarStyle extends Style
 	// array to hold the on_click links
 	private var links:Array;
 	
-	public function BarStyle( val:String, name:String )
+	// array to hold the extra tool tip info
+	private var tooltips:Array;
+	
+	public function BarStyle( lv:Object, name:String )
 	{
-		this.name = name;
+		this.name = 'bar'+name;
 		// this calls parent obj Style.Style first
-		this.parse_bar( val );
+		this.parse_bar( lv[this.name] );
+		this.set_values( lv['values'+name], lv['links'+name], lv['tool_tips_set'+name] );
 	}
 	
 	public function parse_bar( val:String )
@@ -35,19 +39,31 @@ class BarStyle extends Style
 	}
 
 	// override Style:set_values
-	function set_values( vals:String, links:String )
+	function set_values( vals:String, links:String, tooltips:String )
 	{
 		super.set_values( this.parse_list( vals ) );
-		
-		if( links != undefined )
-			this.links = links.split(",");
-		else
-			this.links = Array();
+		this.set_links( links );
+		this.set_tooltips( tooltips );
+		this.set_mcs(this.values.length);
+	}
+
+	private function set_mcs( count:Number )
+	{
+		// delete the old movie clips
+		// this should be in the deconstructor...
+		if( this.bar_mcs!=undefined )
+		{
+			for( var i:Number=0; i<this.bar_mcs.length; i++ )
+			{
+				trace('remove mc');
+				_root.removeMovieClip( this.bar_mcs[i]._name );
+			}
+		}
 		
 		// make an empty array to hold each bar MovieClip:
-		this.bar_mcs = new Array(this.values.length);
+		this.bar_mcs = new Array(count);
 		
-		for( var i:Number=0; i < this.values.length; i++ )
+		for( var i:Number=0; i < count; i++ )
 		{
 			var mc:MovieClip = _root.createEmptyMovieClip( this.name+'_'+i, _root.getNextHighestDepth() );
 			mc._is_over = false;
@@ -55,7 +71,24 @@ class BarStyle extends Style
 			// add the MovieClip to our array:
 			this.bar_mcs[i] = mc;
 		}
-			
+	}
+	
+	// move to super:
+	private function set_links( links:String )
+	{
+		if( links != undefined )
+			this.links = links.split(",");
+		else
+			this.links = Array();
+	}
+	
+	// move to super:
+	private function set_tooltips( tooltips:String )
+	{
+		if( tooltips != undefined )
+			this.tooltips = tooltips.split(",");
+		else
+			this.tooltips = Array();
 	}
 	
 	private function parse_list( val:String ):Array
@@ -123,7 +156,8 @@ class BarStyle extends Style
 					this.key,
 					Number(this.values[i]),
 					_root.get_x_legend(),
-					_root.get_x_axis_label(i)
+					_root.get_x_axis_label(i),
+					this.tooltips[i]
 					);
 					
 				this.ExPoints.push( tmp );

@@ -48,6 +48,9 @@ class OpenFlashChart
 		@tool_tip   = ''
   end
 
+#Line 50 - add this
+@x_offset  = true
+
   def set_data(data)
     if @data.size == 0
       @data << '&values=' + data.join(',') + "& \n"
@@ -243,6 +246,9 @@ class OpenFlashChart
 			temp += @lines.to_s
 		end
 
+		#Line 249 - Add this
+		temp += "&x_offset=#{@x_offset}& \n"
+
 		temp += @data.to_s
 
 		if @y2_lines.size > 0
@@ -289,7 +295,51 @@ class OpenFlashChart
 		return temp
 	end
 
+  #
+  # Eli Smaga
+  #
+  # I fixed a bug with the ruby code, and I also added a function for
+  # setting the x_offset.
+  # I hope you find this useful. Let me know if you have any questions.
+  #
+  # The bug: If you try to implement the chart - resize example it won't
+  # work with the ruby code. I noticed that the output created from the
+  # swf_object method produced different output than the php code does. I
+  # modified the function so that it produces the same out put. Using this
+  # modified code I am now able to reproduce the chart resize example. I
+  # also modified the function so that the output it produces is easier to
+  # read in the browser source. Also, the previous function didn't include
+  # an id tag for the embed statement.
+  #
   def self.swf_object(width, height, url)
+    url     = CGI::escape(url)
+    output  = "<object classid=\"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\" codebase=\"http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0\" width=\"#{width}\" height=\"#{height}\" id=\"graph\" align=\"middle\">\n"
+    output += '<param name="allowScriptAccess" value="sameDomain" />'
+    output += "\n"
+    # i changed this line as well
+    output += "<param name=\"movie\" value=\"/open-flash-chart.swf?data=#{url}\" />\n"
+    output += "<param name=\"quality\" value=\"high\" />\n"
+    output += "<param name=\"bgcolor\" value=\"#FFFFFF\" />\n"
+    # i changed this line as well
+    output += '<embed src="/open-flash-chart.swf?' + 'data=' + url.to_s + '" quality="high" bgcolor="#FFFFFF" width="100%" height="100%" id="open-flash-chart" name="open-flash-chart" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />'
+    output += "\n"
+    output += '</object>'
+    output += "\n"
+		return output
+  end
+  
+  # You can just add this function to the end of the file
+  # function for setting the x_offset
+  def set_x_offset(offset)
+    if offset == false || offset == true
+      @x_offset = offset
+    else
+      @x_offset = true
+    end
+  end
+
+  # renamed by monk.e.boy on the 18th Dec 2007 and replaced with the above patch
+  def self.swf_object_old(width, height, url)
     output  = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="400" height="300" id="graph-2" align="middle">'
     output += '<param name="allowScriptAccess" value="sameDomain" />'
     output += "<param name=\"movie\" value=\"/open-flash-chart.swf?width=$width &height=#{height.to_s} &data=#{url}  /><param name=\"quality\" value=\"high\" /><param name=\"bgcolor\" value=\"#FFFFFF\" />"
