@@ -28,7 +28,8 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 
   my $g = graph->new();
 
-	$g->title( 'Open Flash Chart - Testing 123', '{font-size: 15px; color: #800000}' );
+	$g->title( 'Open Flash Chart - Bar Test', '{font-size: 15px; color: #800000}' );
+	$g->set_x_legend( 'By Hours Wasted', 12, '#000000' );
 
 	$g->set_data( \@data_1 );
 	$g->bar( 50, '0x0066CC', 'Me', 10 );
@@ -41,7 +42,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 
 
 	$g->set_x_labels( ['Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'] );
-	#$g->set_y_max( 10 );
+	#$g->set_y_max( 10 ); #not need with new auto y_max
 	$g->set_y_min( 0 );
 
 	$g->y_label_steps( 1 );
@@ -58,18 +59,22 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 
   my $g = graph->new();
   $g->pie(60,'#505050','#000000');
-	$g->title( 'Open Flash Chart - Testing 123', '{font-size: 15px; color: #800000}' );
+	$g->title( 'Open Flash Chart - Pie Test', '{font-size: 15px; color: #800000}' );
 
 	$g->pie_values( \@pie_data, ['777', 'MD-11', '737', '747-400', 'Airbus'], [] );
   $g->pie_slice_colours( ['#ff0000','#ff6600','#ff9900','#ffcc00','#ffff00']);
 	$Response->write($g->render());
-
 } else {
-  my $width = 600;
+  my $width = '100%';
   my $height = 600;
+ 	$Response->write('<div style="border: 1px solid #784016;">');
   $Response->write( graph::swf_object( $width, $height, "test.asp?data=1" ));
-  $Response->write("<br/>");
+  $Response->write("</div>");
+
+ 	$Response->write('<div style="margin-top: 20px; border: 1px solid #784016;">');
   $Response->write( graph::swf_object( $width, $height, "test.asp?data=2" ));
+  $Response->write("</div>");
+  
 }
 
 %>
