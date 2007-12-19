@@ -180,9 +180,9 @@ class graph
 	/**
 	* Format the text to the type of output.
 	*/
-	function format_output($output_type,$function,$values)
+	function format_output($function,$values)
 	{
-		if($output_type == 'js')
+		if($this->output_type == 'js')
 		{
 			$tmp = 'so.addVariable("'. $function .'","'. $values . '");';
 		}
@@ -1014,11 +1014,11 @@ class graph
 	/**
 	 * Render the output.
 	 */
-	function render($output_type = '')
+	function render()
 	{
 		$tmp = array();
 
-		if($output_type == 'js')
+		if($this->output_type == 'js')
 		{
 			$this->set_unique_id();
 		
@@ -1033,7 +1033,7 @@ class graph
 		{
 			$values = $this->title;
 			$values .= ','. $this->title_style;
-			$tmp[] = $this->format_output($output_type,'title',$values);
+			$tmp[] = $this->format_output('title',$values);
 		}
 
 		if( strlen( $this->x_legend ) > 0 )
@@ -1041,41 +1041,41 @@ class graph
 			$values = $this->x_legend;
 			$values .= ','. $this->x_legend_size;
 			$values .= ','. $this->x_legend_colour;
-			$tmp[] = $this->format_output($output_type,'x_legend',$values);
+			$tmp[] = $this->format_output('x_legend',$values);
 		}
 	
 		if( strlen( $this->x_label_style ) > 0 )
-			$tmp[] = $this->format_output($output_type,'x_label_style',$this->x_label_style);
+			$tmp[] = $this->format_output('x_label_style',$this->x_label_style);
 	
 		if( $this->x_tick_size > 0 )
-			$tmp[] = $this->format_output($output_type,'x_ticks',$this->x_tick_size);
+			$tmp[] = $this->format_output('x_ticks',$this->x_tick_size);
 
 		if( $this->x_axis_steps > 0 )
-			$tmp[] = $this->format_output($output_type,'x_axis_steps',$this->x_axis_steps);
+			$tmp[] = $this->format_output('x_axis_steps',$this->x_axis_steps);
 
 		if( strlen( $this->x_axis_3d ) > 0 )
-			$tmp[] = $this->format_output($output_type,'x_axis_3d',$this->x_axis_3d);
+			$tmp[] = $this->format_output('x_axis_3d',$this->x_axis_3d);
 		
 		if( strlen( $this->y_legend ) > 0 )
-			$tmp[] = $this->format_output($output_type,'y_legend',$this->y_legend);
+			$tmp[] = $this->format_output('y_legend',$this->y_legend);
 		
 		if( strlen( $this->y_legend_right ) > 0 )
-			$tmp[] = $this->format_output($output_type,'y2_legend',$this->y_legend_right);
+			$tmp[] = $this->format_output('y2_legend',$this->y_legend_right);
 
 		if( strlen( $this->y_label_style ) > 0 )
-			$tmp[] = $this->format_output($output_type,'y_label_style',$this->y_label_style);
+			$tmp[] = $this->format_output('y_label_style',$this->y_label_style);
 
 		$values = '5,10,'. $this->y_steps;
-		$tmp[] = $this->format_output($output_type,'y_ticks',$values);
+		$tmp[] = $this->format_output('y_ticks',$values);
 
 		if( count( $this->lines ) == 0 && count($this->data_sets)==0 )
 		{
-			$tmp[] = $this->format_output($output_type,$this->line_default['type'],$this->line_default['values']);	
+			$tmp[] = $this->format_output($this->line_default['type'],$this->line_default['values']);	
 		}
 		else
 		{
 			foreach( $this->lines as $type=>$description )
-				$tmp[] = $this->format_output($output_type,$type,$description);	
+				$tmp[] = $this->format_output($type,$description);	
 		}
 	
 		$num = 1;
@@ -1083,11 +1083,11 @@ class graph
 		{
 			if( $num==1 )
 			{
-				$tmp[] = $this->format_output($output_type, 'values', $data);
+				$tmp[] = $this->format_output( 'values', $data);
 			}
 			else
 			{
-				$tmp[] = $this->format_output($output_type,'values_'. $num, $data);
+				$tmp[] = $this->format_output('values_'. $num, $data);
 			}
 		
 			$num++;
@@ -1098,11 +1098,11 @@ class graph
 		{
 			if( $num==1 )
 			{
-				$tmp[] = $this->format_output($output_type, 'links', $link);
+				$tmp[] = $this->format_output( 'links', $link);
 			}
 			else
 			{
-				$tmp[] = $this->format_output($output_type,'links_'. $num, $link);
+				$tmp[] = $this->format_output('links_'. $num, $link);
 			}
 		
 			$num++;
@@ -1110,60 +1110,60 @@ class graph
 
 		if( count( $this->y2_lines ) > 0 )
 		{
-			$tmp[] = $this->format_output($output_type,'y2_lines',implode( ',', $this->y2_lines ));
+			$tmp[] = $this->format_output('y2_lines',implode( ',', $this->y2_lines ));
 			//
 			// Should this be an option? I think so...
 			//
-			$tmp[] = $this->format_output($output_type,'show_y2','true');
+			$tmp[] = $this->format_output('show_y2','true');
 		}
 
 		if( count( $this->x_labels ) > 0 )
-			$tmp[] = $this->format_output($output_type,'x_labels',implode(',',$this->x_labels));
+			$tmp[] = $this->format_output('x_labels',implode(',',$this->x_labels));
 		else
 		{
 			if( strlen($this->x_min) > 0 )
-				$tmp[] = $this->format_output($output_type,'x_min',$this->x_min);
+				$tmp[] = $this->format_output('x_min',$this->x_min);
 				
 			if( strlen($this->x_max) > 0 )
-				$tmp[] = $this->format_output($output_type,'x_max',$this->x_max);			
+				$tmp[] = $this->format_output('x_max',$this->x_max);			
 		}
 		
-		$tmp[] = $this->format_output($output_type,'y_min',$this->y_min);
-		$tmp[] = $this->format_output($output_type,'y_max',$this->y_max);
+		$tmp[] = $this->format_output('y_min',$this->y_min);
+		$tmp[] = $this->format_output('y_max',$this->y_max);
 
 		if( strlen($this->y2_min) > 0 )
-			$tmp[] = $this->format_output($output_type,'y2_min',$this->y2_min);
+			$tmp[] = $this->format_output('y2_min',$this->y2_min);
 			
 		if( strlen($this->y2_max) > 0 )
-			$tmp[] = $this->format_output($output_type,'y2_max',$this->y2_max);
+			$tmp[] = $this->format_output('y2_max',$this->y2_max);
 		
 		if( strlen( $this->bg_colour ) > 0 )
-			$tmp[] = $this->format_output($output_type,'bg_colour',$this->bg_colour);
+			$tmp[] = $this->format_output('bg_colour',$this->bg_colour);
 
 		if( strlen( $this->bg_image ) > 0 )
 		{
-			$tmp[] = $this->format_output($output_type,'bg_image',$this->bg_image);
-			$tmp[] = $this->format_output($output_type,'bg_image_x',$this->bg_image_x);
-			$tmp[] = $this->format_output($output_type,'bg_image_y',$this->bg_image_y);
+			$tmp[] = $this->format_output('bg_image',$this->bg_image);
+			$tmp[] = $this->format_output('bg_image_x',$this->bg_image_x);
+			$tmp[] = $this->format_output('bg_image_y',$this->bg_image_y);
 		}
 
 		if( strlen( $this->x_axis_colour ) > 0 )
 		{
-			$tmp[] = $this->format_output($output_type,'x_axis_colour',$this->x_axis_colour);
-			$tmp[] = $this->format_output($output_type,'x_grid_colour',$this->x_grid_colour);
+			$tmp[] = $this->format_output('x_axis_colour',$this->x_axis_colour);
+			$tmp[] = $this->format_output('x_grid_colour',$this->x_grid_colour);
 		}
 
 		if( strlen( $this->y_axis_colour ) > 0 )
-			$tmp[] = $this->format_output($output_type,'y_axis_colour',$this->y_axis_colour);
+			$tmp[] = $this->format_output('y_axis_colour',$this->y_axis_colour);
 
 		if( strlen( $this->y_grid_colour ) > 0 )
-			$tmp[] = $this->format_output($output_type,'y_grid_colour',$this->y_grid_colour);
+			$tmp[] = $this->format_output('y_grid_colour',$this->y_grid_colour);
   
 		if( strlen( $this->y2_axis_colour ) > 0 )
-			$tmp[] = $this->format_output($output_type,'y2_axis_colour',$this->y2_axis_colour);
+			$tmp[] = $this->format_output('y2_axis_colour',$this->y2_axis_colour);
 		
 		if( strlen( $this->x_offset ) > 0 )
-			$tmp[] = $this->format_output($output_type,'x_offset',$this->x_offset);
+			$tmp[] = $this->format_output('x_offset',$this->x_offset);
 
 		if( strlen( $this->inner_bg_colour ) > 0 )
 		{
@@ -1173,47 +1173,47 @@ class graph
 				$values .= ','. $this->inner_bg_colour_2;
 				$values .= ','. $this->inner_bg_angle;
 			}
-			$tmp[] = $this->format_output($output_type,'inner_background',$values);
+			$tmp[] = $this->format_output('inner_background',$values);
 		}
 	
 		if( strlen( $this->pie ) > 0 )
 		{
-			$tmp[] = $this->format_output($output_type,'pie',$this->pie);
-			$tmp[] = $this->format_output($output_type,'values',$this->pie_values);
-			$tmp[] = $this->format_output($output_type,'pie_labels',$this->pie_labels);
-			$tmp[] = $this->format_output($output_type,'colours',$this->pie_colours);
-			$tmp[] = $this->format_output($output_type,'links',$this->pie_links);
+			$tmp[] = $this->format_output('pie',$this->pie);
+			$tmp[] = $this->format_output('values',$this->pie_values);
+			$tmp[] = $this->format_output('pie_labels',$this->pie_labels);
+			$tmp[] = $this->format_output('colours',$this->pie_colours);
+			$tmp[] = $this->format_output('links',$this->pie_links);
 		}
 
 		if( strlen( $this->tool_tip ) > 0 )
-			$tmp[] = $this->format_output($output_type,'tool_tip',$this->tool_tip);
+			$tmp[] = $this->format_output('tool_tip',$this->tool_tip);
 			
 			
 		
 		if( strlen( $this->y_format ) > 0 )
-			$tmp[] = $this->format_output($output_type,'y_format',$this->y_format);
+			$tmp[] = $this->format_output('y_format',$this->y_format);
 			
 		if( strlen( $this->num_decimals ) > 0 )
-			$tmp[] = $this->format_output($output_type,'num_decimals',$this->num_decimals);
+			$tmp[] = $this->format_output('num_decimals',$this->num_decimals);
 			
 		if( strlen( $this->is_fixed_num_decimals_forced ) > 0 )
-			$tmp[] = $this->format_output($output_type,'is_fixed_num_decimals_forced',$this->is_fixed_num_decimals_forced);
+			$tmp[] = $this->format_output('is_fixed_num_decimals_forced',$this->is_fixed_num_decimals_forced);
 			
 		if( strlen( $this->is_decimal_separator_comma ) > 0 )
-			$tmp[] = $this->format_output($output_type,'is_decimal_separator_comma',$this->is_decimal_separator_comma);
+			$tmp[] = $this->format_output('is_decimal_separator_comma',$this->is_decimal_separator_comma);
 			
 		if( strlen( $this->is_thousand_separator_disabled ) > 0 )
-			$tmp[] = $this->format_output($output_type,'is_thousand_separator_disabled',$this->is_thousand_separator_disabled);
+			$tmp[] = $this->format_output('is_thousand_separator_disabled',$this->is_thousand_separator_disabled);
 
 
 		$count = 1;
 		foreach( $this->data_sets as $set )
 		{
-			$tmp[] = $set->toString( $output_type, $count>1?'_'.$count:'' );
+			$tmp[] = $set->toString( $count>1?'_'.$count:'' );
 			$count++;
 		}
 		
-		if($output_type == 'js')
+		if($this->output_type == 'js')
 		{
 			$tmp[] = 'so.write("' . $this->unique_id . '");';
 			$tmp[] = '</script>';
@@ -1275,13 +1275,13 @@ class bar
 		return $values;
 	}
 	
-	function toString( $output_type, $set_num )
+	function toString( $set_num )
 	{
 		$values = implode( ',', $this->_get_variable_list() );
 		
 		$tmp = array();
 		
-		if( $output_type == 'js' )
+		if( $this->output_type == 'js' )
 		{
 			$tmp[] = 'so.addVariable("'. $this->var.$set_num .'","'. $values . '");'; 
 
