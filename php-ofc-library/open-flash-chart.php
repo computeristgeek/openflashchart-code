@@ -18,7 +18,8 @@ class graph
 		$this->links = array();
 		$this->width = 250;
 		$this->height = 200;
-		$this->base = 'js/';
+		$this->js_path = 'js/';
+		$this->swf_path = '';
 		$this->x_labels = array();
 		$this->y_min = '';
 		$this->y_max = '';
@@ -1028,9 +1029,9 @@ class graph
 			$this->increment_occurence();
 		
 			$tmp[] = '<div id="my_chart' . $this->occurence . '"></div>';
-			$tmp[] = '<script type="text/javascript" src="' . $this->base . 'swfobject.js"></script>';
+			$tmp[] = '<script type="text/javascript" src="' . $this->js_path . 'swfobject.js"></script>';
 			$tmp[] = '<script type="text/javascript">';
-			$tmp[] = 'var so = new SWFObject("open-flash-chart.swf", "ofc", "'. $this->width . '", "' . $this->height . '", "9", "#FFFFFF");';
+			$tmp[] = 'var so = new SWFObject("' . $this->swf_path . 'open-flash-chart.swf", "ofc", "'. $this->width . '", "' . $this->height . '", "9", "#FFFFFF");';
 			$tmp[] = 'so.addVariable("variables","true");';
 		}
 
