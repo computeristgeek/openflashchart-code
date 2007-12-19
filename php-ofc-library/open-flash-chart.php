@@ -1288,7 +1288,7 @@ class bar
 			$tmp[] = 'so.addVariable("values'. $set_num .'","'. implode( ',', $this->data ) .'");';
 			
 			if( count( $this->links ) > 0 )
-				$tmp[] = 'so.addVariable("values'. $set_num .'","'. implode( ',', $this->links ) .'");';
+				$tmp[] = 'so.addVariable("links'. $set_num .'","'. implode( ',', $this->links ) .'");';
 
 		}
 		else
