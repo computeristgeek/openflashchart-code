@@ -152,12 +152,6 @@ class graph
 	{
 		$this->output_type = $type;
 	}
-	
-	// is this needed now?
-	function increment_occurence()
-	{
-		$this->occurence++;
-	}
 
 	/**
 	* returns the next line label for multiple lines.
@@ -1026,9 +1020,9 @@ class graph
 
 		if($output_type == 'js')
 		{
-			$this->increment_occurence();
+			$this->set_unique_id();
 		
-			$tmp[] = '<div id="my_chart' . $this->occurence . '"></div>';
+			$tmp[] = '<div id="' . $this->unique_id . '"></div>';
 			$tmp[] = '<script type="text/javascript" src="' . $this->js_path . 'swfobject.js"></script>';
 			$tmp[] = '<script type="text/javascript">';
 			$tmp[] = 'var so = new SWFObject("' . $this->swf_path . 'open-flash-chart.swf", "ofc", "'. $this->width . '", "' . $this->height . '", "9", "#FFFFFF");';
@@ -1221,7 +1215,7 @@ class graph
 		
 		if($output_type == 'js')
 		{
-			$tmp[] = 'so.write("my_chart' . $this->occurence . '");';
+			$tmp[] = 'so.write("' . $this->unique_id . '");';
 			$tmp[] = '</script>';
 		}
 		
