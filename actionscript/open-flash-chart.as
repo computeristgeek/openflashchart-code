@@ -542,11 +542,7 @@ function make_chart()
 	//
 	// the order that these are built determines their Z order:
 	//
-	
-	
-	
 	_root._inner_background = new InnerBackground( this );
-	
 	
 	_root._min_max = new MinMax( this );
 	
@@ -982,7 +978,7 @@ if( _root.data == undefined )
 		//
 		// We are in the IDE
 		//
-		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-23.txt";
+		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-47.txt";
 		//_root.data="http://www.stelteronline.de/index.php?option=com_joomleague&func=showStats_GetChartData&p=1";
 		lv.load(_root.data);
 	}
