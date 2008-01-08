@@ -1,5 +1,5 @@
 #
-# API ref: /php-ofc-library/open-flash-chart.php version 78
+# API ref: /php-ofc-library/open-flash-chart.php version 90
 #
 
 package open_flash_chart;
@@ -22,7 +22,8 @@ sub new() {
   $self->{links} = [];
   $self->{width} = 250;
   $self->{height} = 200;
-  $self->{base} = 'js/';
+  $self->{js_base} = 'js/';
+  $self->{swf_path} = '';
   $self->{x_labels} = [];
   $self->{y_auto} = 1;
   $self->{y_min} = '';
@@ -155,12 +156,6 @@ sub set_output_type() {
   $self->{output_type} = $type;
 }
 
-# is this needed now?
-sub increment_occurence() {
-  my ($self) = @_;
-  $self->{occurence}++;
-}
-
 # returns the next line label for multiple lines.
 sub next_line() {
   my ($self) = @_;
@@ -187,9 +182,9 @@ sub esc() {
 
 # Format the text to the type of output.
 sub format_output() {
-  my ($self, $output_type, $function, $values) = @_;
+  my ($self, $function, $values) = @_;
   my $tmp='';
-  if($output_type eq 'js') {
+  if($self->{output_type} eq 'js') {
     $tmp = 'so.addVariable("'. $function .'","'. $values . '");';
   } else {
     $tmp = '&'. $function .'='. $values .'&';
@@ -1170,79 +1165,79 @@ sub pie_slice_colours() {
 # Render the output.
 #
 sub render() {
-  my ($self,$output_type) = @_;
-  $output_type = '' if !defined($output_type);
+  my ($self) = @_;
+
   my $tmp = [];
   my $values;
 
-  if($output_type eq 'js') {
-    $self->increment_occurence();
+  if($self->{output_type} eq 'js') {
+    $self->set_unique_id();
 
-    push(@$tmp, '<div id="my_chart' . $self->{occurence} . '"></div>');
-    push(@$tmp, '<script type="text/javascript" src="' . $self->{base} . 'swfobject.js"></script>');
+    push(@$tmp, '<div id="' . $self->{unique_id} . '"></div>');
+    push(@$tmp, '<script type="text/javascript" src="' . $self->{js_path} . 'swfobject.js"></script>');
     push(@$tmp, '<script type="text/javascript">');
-    push(@$tmp, 'var so = new SWFObject("open-flash-chart.swf", "ofc", "'. $self->{width} . '", "' . $self->{height} . '", "9", "#FFFFFF");');
+    push(@$tmp, 'var so = new SWFObject("' . $self->{swf_path} . 'open-flash-chart.swf", "ofc", "'. $self->{width} . '", "' . $self->{height} . '", "9", "#FFFFFF");');
     push(@$tmp, 'so.addVariable("variables","true");');
   }
 
   if( $self->{title} ne '' ) {
     $values = $self->{title};
     $values .= ','. $self->{title_style};
-    push(@$tmp, $self->format_output($output_type,'title',$values));
+    push(@$tmp, $self->format_output('title',$values));
   }
 
   if( $self->{x_legend} ne '' ) {
     $values = $self->{x_legend};
     $values .= ','. $self->{x_legend_size};
     $values .= ','. $self->{x_legend_colour};
-    push(@$tmp, $self->format_output($output_type,'x_legend',$values));
+    push(@$tmp, $self->format_output('x_legend',$values));
   }
 
   if( $self->{x_label_style} ne '') {
-    push(@$tmp, $self->format_output($output_type,'x_label_style',$self->{x_label_style}));
+    push(@$tmp, $self->format_output('x_label_style',$self->{x_label_style}));
   }
 
   if( $self->{x_tick_size} > 0 ) {
-    push(@$tmp, $self->format_output($output_type,'x_ticks',$self->{x_tick_size}));
+    push(@$tmp, $self->format_output('x_ticks',$self->{x_tick_size}));
   }
 
   if( $self->{x_axis_steps} > 0 ) {
-    push(@$tmp, $self->format_output($output_type,'x_axis_steps',$self->{x_axis_steps}));
+    push(@$tmp, $self->format_output('x_axis_steps',$self->{x_axis_steps}));
   }
 
   if( $self->{x_axis_3d} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'x_axis_3d',$self->{x_axis_3d}));
+    push(@$tmp, $self->format_output('x_axis_3d',$self->{x_axis_3d}));
   }
 
   if( $self->{y_legend} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'y_legend',$self->{y_legend}));
+    push(@$tmp, $self->format_output('y_legend',$self->{y_legend}));
   }
 
   if( $self->{y_legend_right} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'y2_legend',$self->{y_legend_right}));
+    push(@$tmp, $self->format_output('y2_legend',$self->{y_legend_right}));
   }
 
   if( $self->{y_label_style} > 0 ) {
-    push (@$tmp, $self->format_output($output_type,'y_label_style',$self->{y_label_style}));
+    push (@$tmp, $self->format_output('y_label_style',$self->{y_label_style}));
   }
 
   $values = '5,10,'. $self->{y_steps};
-  push(@$tmp, $self->format_output($output_type,'y_ticks',$values));
+  push(@$tmp, $self->format_output('y_ticks',$values));
 
   if( scalar(@{$self->{lines}}) == 0 && scalar(@{$self->{data_sets}}) == 0 ) {
-    push(@$tmp, $self->format_output($output_type,$self->{line_default}->{type},$self->{line_default}->{values}));
+    push(@$tmp, $self->format_output($self->{line_default}->{type},$self->{line_default}->{values}));
   } else {
     for my $line ( @{$self->{lines}} ) {
-      push(@$tmp, $self->format_output($output_type,$line->{type},$line->{description}));
+      push(@$tmp, $self->format_output($line->{type},$line->{description}));
     }
   }
 
   my $num = 1;
   for my $data ( @{$self->{data}} ) {
     if( $num==1 ) {
-      push(@$tmp, $self->format_output($output_type, 'values', $data));
+      push(@$tmp, $self->format_output('values', $data));
     } else  {
-      push(@$tmp, $self->format_output($output_type,'values_'. $num, $data));
+      push(@$tmp, $self->format_output('values_'. $num, $data));
     }
     $num++;
   }
@@ -1250,72 +1245,72 @@ sub render() {
   $num = 1;
   for my $link ( @{$self->{links}} ) {
     if( $num==1 ) {
-      push(@$tmp, $self->format_output($output_type, 'links', $link));
+      push(@$tmp, $self->format_output('links', $link));
     } else  {
-      push(@$tmp, $self->format_output($output_type,'links_'. $num, $link));
+      push(@$tmp, $self->format_output('links_'. $num, $link));
     }
     $num++;
   }
 
   if( scalar(@{$self->{y2_lines}} ) > 0 ) {
-    push(@$tmp, $self->format_output($output_type,'y2_lines',join(',', @{$self->{y2_lines}})));
+    push(@$tmp, $self->format_output('y2_lines',join(',', @{$self->{y2_lines}})));
     #
     # Should this be an option? I think so...
     #
-    push(@$tmp, $self->format_output($output_type,'show_y2','true'));
+    push(@$tmp, $self->format_output('show_y2','true'));
   }
 
   if( scalar( @{$self->{x_labels}}) > 0 ) {
-    push(@$tmp, $self->format_output($output_type,'x_labels', join(',',@{$self->{x_labels}}) ));
+    push(@$tmp, $self->format_output('x_labels', join(',',@{$self->{x_labels}}) ));
   } else {
     if( $self->{x_min} ne '' ) {
-      push(@$tmp, $self->format_output($output_type,'x_min',$self->{x_min}));
+      push(@$tmp, $self->format_output('x_min',$self->{x_min}));
     }
 
     if( $self->{x_max} ne '' ) {
-      push(@$tmp, $self->format_output($output_type,'x_max',$self->{x_max}));
+      push(@$tmp, $self->format_output('x_max',$self->{x_max}));
     }
   }
 
-  push(@$tmp, $self->format_output($output_type,'y_min',$self->{y_min}));
+  push(@$tmp, $self->format_output('y_min',$self->{y_min}));
   if ( $self->{y_auto} ) {
     $self->set_auto_y_max();  
   }
-  push(@$tmp, $self->format_output($output_type,'y_max',$self->{y_max}));
+  push(@$tmp, $self->format_output('y_max',$self->{y_max}));
 
   if( $self->{y2_min} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'y2_min',$self->{y2_min}));
+    push(@$tmp, $self->format_output('y2_min',$self->{y2_min}));
   }
 
   if( $self->{y2_max} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'y2_max',$self->{y2_max}));
+    push(@$tmp, $self->format_output('y2_max',$self->{y2_max}));
   }
 
   if( $self->{bg_colour} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'bg_colour',$self->{bg_colour}));
+    push(@$tmp, $self->format_output('bg_colour',$self->{bg_colour}));
   }
 
   if( $self->{bg_image} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'bg_image',$self->{bg_image}));
-    push(@$tmp, $self->format_output($output_type,'bg_image_x',$self->{bg_image_x}));
-    push(@$tmp, $self->format_output($output_type,'bg_image_y',$self->{bg_image_y}));
+    push(@$tmp, $self->format_output('bg_image',$self->{bg_image}));
+    push(@$tmp, $self->format_output('bg_image_x',$self->{bg_image_x}));
+    push(@$tmp, $self->format_output('bg_image_y',$self->{bg_image_y}));
   }
 
   if( $self->{x_axis_colour} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'x_axis_colour',$self->{x_axis_colour}));
-    push(@$tmp, $self->format_output($output_type,'x_grid_colour',$self->{x_grid_colour}));
+    push(@$tmp, $self->format_output('x_axis_colour',$self->{x_axis_colour}));
+    push(@$tmp, $self->format_output('x_grid_colour',$self->{x_grid_colour}));
   }
 
   if( $self->{y_axis_colour} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'y_axis_colour',$self->{y_axis_colour}));
+    push(@$tmp, $self->format_output('y_axis_colour',$self->{y_axis_colour}));
   }
 
   if( $self->{y_grid_colour} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'y_grid_colour',$self->{y_grid_colour}));
+    push(@$tmp, $self->format_output('y_grid_colour',$self->{y_grid_colour}));
   }
 
   if( $self->{y2_axis_colour} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'y2_axis_colour',$self->{y2_axis_colour}));
+    push(@$tmp, $self->format_output('y2_axis_colour',$self->{y2_axis_colour}));
   }
 
   if( $self->{inner_bg_colour} ne '' ) {
@@ -1324,49 +1319,49 @@ sub render() {
       $values .= ','. $self->{inner_bg_colour_2};
       $values .= ','. $self->{inner_bg_angle};
     }
-    push(@$tmp, $self->format_output($output_type,'inner_background',$values));
+    push(@$tmp, $self->format_output('inner_background',$values));
   }
 
   if( $self->{pie} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'pie',$self->{pie}));
-    push(@$tmp, $self->format_output($output_type,'values',$self->{pie_values}));
-    push(@$tmp, $self->format_output($output_type,'pie_labels',$self->{pie_labels}));
-    push(@$tmp, $self->format_output($output_type,'colours',$self->{pie_colours}));
-    push(@$tmp, $self->format_output($output_type,'links',$self->{pie_links}));
+    push(@$tmp, $self->format_output('pie',$self->{pie}));
+    push(@$tmp, $self->format_output('values',$self->{pie_values}));
+    push(@$tmp, $self->format_output('pie_labels',$self->{pie_labels}));
+    push(@$tmp, $self->format_output('colours',$self->{pie_colours}));
+    push(@$tmp, $self->format_output('links',$self->{pie_links}));
   }
 
   if( $self->{tool_tip} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'tool_tip',$self->{tool_tip}));
+    push(@$tmp, $self->format_output('tool_tip',$self->{tool_tip}));
   }
 
   if( $self->{y_format} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'y_format',$self->{y_format}));
+    push(@$tmp, $self->format_output('y_format',$self->{y_format}));
   }
 
   if( $self->{num_decimals} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'num_decimals',$self->{num_decimals}));
+    push(@$tmp, $self->format_output('num_decimals',$self->{num_decimals}));
   }
 
   if( $self->{is_fixed_num_decimals_forced} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'is_fixed_num_decimals_forced',$self->{is_fixed_num_decimals_forced}));
+    push(@$tmp, $self->format_output('is_fixed_num_decimals_forced',$self->{is_fixed_num_decimals_forced}));
   }
 
   if( $self->{is_decimal_separator_comma} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'is_decimal_separator_comma',$self->{is_decimal_separator_comma}));
+    push(@$tmp, $self->format_output('is_decimal_separator_comma',$self->{is_decimal_separator_comma}));
   }
 
   if( $self->{is_thousand_separator_disabled} ne '' ) {
-    push(@$tmp, $self->format_output($output_type,'is_thousand_separator_disabled',$self->{is_thousand_separator_disabled}));
+    push(@$tmp, $self->format_output('is_thousand_separator_disabled',$self->{is_thousand_separator_disabled}));
   }
 
   my $count = 1;
   for my $set ( @{$self->{data_sets}} ) {
-    push(@$tmp, $set->toString( $output_type, $count>1?'_'.$count:'' ));
+    push(@$tmp, $set->toString( $count>1?'_'.$count:'' ));
     $count++;
   }
 
-  if($output_type eq 'js') {
-    push(@$tmp, 'so.write("my_chart' . $self->{occurence} . '");');
+  if($self->{output_type} eq 'js') {
+    push(@$tmp, 'so.write("' . $self->{unique_id} . '");');
     push(@$tmp, '</script>');
   }
 
@@ -1378,22 +1373,37 @@ sub render() {
 
 # URL-encode string
 sub url_escape {
-    my($toencode) = @_;
-    $toencode=~s/([^a-zA-Z0-9_\-. ])/uc sprintf("%%%02x",ord($1))/eg;
-    $toencode =~ tr/ /+/;    # spaces become pluses
-    return $toencode;
+  my($toencode) = @_;
+  $toencode=~s/([^a-zA-Z0-9_\-. ])/uc sprintf("%%%02x",ord($1))/eg;
+  $toencode =~ tr/ /+/;    # spaces become pluses
+  return $toencode;
 }
+
+# uniqid, simulating php builtin
+sub uniqid {
+  my $prefix = shift || 'ofc_';
+  my @chars = split("a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9");
+
+  srand();
+  my $id = '';
+  for (my $i=0; $i <= $12 ;$i++) {
+    $id .= $chars[int(rand 36)];
+  }
+  return $id;
+}
+
 
 sub swf_object {
   my ($width, $height, $url) = @_;
 
+  my $id = uniqid();
   my $html=qq^
   <object
     classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
     codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0"
     width="$width"
     height="$height"
-    id="graph_2"
+    id="$id"
     align="middle">
   <param name="allowScriptAccess" value="sameDomain" />
   <param name="movie" value="open-flash-chart.swf?width=$width&height=$height&data=$url"/>
@@ -1500,12 +1510,12 @@ sub _get_variable_list() {
 }
 
 sub toString() {
-	my ($self, $output_type, $set_num) = @_;
+	my ($self, $set_num) = @_;
 	
   my $values = join(',', @{$self->_get_variable_list()} );
 
   my @tmp;
-  if ($output_type eq 'js' ) {
+  if ($self->{output_type} eq 'js' ) {
     push(@tmp, 'so.addVariable("'. $self->{var} . $set_num .'","'. $values . '");');
 
     push(@tmp, 'so.addVariable("values'. $set_num .'","'. join(',', @{$self->{data}}) .'");');
