@@ -1382,11 +1382,11 @@ sub url_escape {
 # uniqid, simulating php builtin
 sub uniqid {
   my $prefix = shift || 'ofc_';
-  my @chars = split("a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9");
+  my @chars = split(" ", "a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9");
 
   srand();
   my $id = '';
-  for (my $i=0; $i <= $12 ;$i++) {
+  for (my $i=0; $i <= 12 ;$i++) {
     $id .= $chars[int(rand 36)];
   }
   return $id;
