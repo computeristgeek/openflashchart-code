@@ -93,6 +93,8 @@ class graph
 		$this->is_decimal_separator_comma='';
 		$this->is_thousand_separator_disabled='';
 		
+		$this->output_type = '';
+		
 		//
 		// set some default value incase the user forgets
 		// to set them, so at least they see *something*
@@ -173,6 +175,7 @@ class graph
 		// which is no good if we are splitting the
 		// string on commas.
 		$tmp = str_replace( ',', '#comma#', $text );
+		$tmp = utf8_encode( $tmp );
 		// now we urlescape all dodgy characters (like & % $ etc..)
 		return urlencode( $tmp );
 	}
@@ -317,7 +320,10 @@ class graph
 	 */
 	function set_x_labels( $a )
 	{
-		$this->x_labels = $a;
+		$tmp = array();
+		foreach( $a as $item )
+			$tmp[] = $this->esc( $item );
+		$this->x_labels = $tmp;
 	}
 
 	/**

@@ -159,7 +159,7 @@
 		// because this is a scatter chart, we may have
 		// many items for the same X axis value, so we 
 		// keep them all, then find the closest to the
-		// Y position (see data-33.txt for a test)
+		// Y position (see data-32.txt for a test)
 		//
 		var shortest:Number = Number.MAX_VALUE;
 		
@@ -183,6 +183,7 @@
 			if( dx == shortest )
 				points.push( this.ExPoints[i] );
 		}
+		var dist_x = shortest;
 		
 		//
 		// find the closest in the Y
@@ -202,7 +203,7 @@
 		}
 		
 		var dy:Number = Math.abs( y - point.y );
-		return { point:point, distance_x:0, distance_y:dy };
+		return { point:point, distance_x:dist_x, distance_y:dy };
 	}
 	
 	public function move_dot( val:Point, mc:MovieClip )

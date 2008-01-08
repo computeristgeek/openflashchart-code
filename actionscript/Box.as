@@ -266,7 +266,7 @@
 		return new PointBar(
 			left,
 			this.getY( y, right_axis ),
-			bar_width,
+			bar_width-0.001,	// <-- hack so bars don't quite touch
 			this.getYbottom( right_axis )
 			);
 	}

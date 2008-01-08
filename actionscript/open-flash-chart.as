@@ -53,33 +53,6 @@ function get_colour( col:String )
 function format( i:Number )
 {
 	return NumberUtils.formatNumber (i);
-	
-	//	var s:String = '';
-	//	if( i<0 )
-	//		var num:Array = String(-i).split('.');
-	//	else
-	//		var num:Array = String(i).split('.');
-	//	
-	//	var x:String = num[0];
-	//	var pos:Number=0;
-	//	for(c=x.length-1;c>-1;c--)
-	//	{
-	//		if( pos%3==0 && s.length>0 )
-	//		{
-	//			s=','+s;
-	//			pos=0;
-	//		}
-	//		pos++;
-	//			
-	//		s=x.substr(c,1)+s;
-	//	}
-	//	if( num[1] != undefined )
-	//		s += '.'+ num[1].substr(0,2);
-	//		
-	//	if( i<0 )
-	//		s = '-'+s;
-	//		
-	//	return s;
 }
 
 function formatTime( sval:String )
@@ -978,7 +951,7 @@ if( _root.data == undefined )
 		//
 		// We are in the IDE
 		//
-		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-47.txt";
+		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-50.txt";
 		//_root.data="http://www.stelteronline.de/index.php?option=com_joomleague&func=showStats_GetChartData&p=1";
 		lv.load(_root.data);
 	}
