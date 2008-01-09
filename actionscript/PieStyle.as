@@ -21,17 +21,17 @@ class PieStyle extends Style
 	private var label_line:Number;
 	private var easing:Function;
 	
-	public function PieStyle( lv:LoadVars, name:String )//, links:String )
+	public function PieStyle( lv:LoadVars, name:String )
 	{
 		this.labels = new Array();
 		this.links = new Array();
 		this.colours = new Array();
 		
-		this.name = name;
+		this.name = 'pie'+name;
 		
-		this.parse( lv.pie );
-		this.labels = lv.pie_labels.split(',');
-		this.links = lv.links.split(',');
+		this.parse( lv['pie'] );
+		this.labels = lv['pie_labels'].split(',');
+		this.links = lv['links'].split(',');
 		
 		var tmp:Array;
 		if( lv.colours != undefined )

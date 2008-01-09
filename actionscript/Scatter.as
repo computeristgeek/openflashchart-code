@@ -3,12 +3,15 @@
 	public var bgColour:Number=0;
 	private var mc:MovieClip;
 	private var mc2:MovieClip;
+	public var name:String;
 	
-	public function Scatter( val:String, bgColour:Number, name:String )
+	public function Scatter( lv:Object, name:String )
 	{
-		this.bgColour = bgColour;
+		this.bgColour =  _root.get_background_colour();
 		
-		var vals:Array = val.split(",");
+		this.name = 'scatter'+name;
+		var vals:Array = lv[this.name].split(",");
+		
 		this.line_width = Number( vals[0] );
 		this.colour = _root.get_colour( vals[1] );
 		
@@ -26,6 +29,8 @@
 		this.mc2.fillCircle( 0, 0, 7, 15, 0xFFFFFF );
 		this.mc2.fillCircle( 0, 0, 5, 15, this.colour );
 		this.mc2._visible = false;
+		
+		this.set_values( lv['values'+name] );
 	}
 	
 	// a group looks like "[x,y]"

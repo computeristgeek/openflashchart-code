@@ -4,7 +4,7 @@
 	
 	private var attach_right:Array;
 
-	public function Values( lv:LoadVars, bgColour:Number, x_axis_labels:Array )
+	public function Values( lv:LoadVars, x_axis_labels:Array )
 	{
 		this.styles = [];
 		var name:String = '';
@@ -16,47 +16,16 @@
 			
 			if( lv['values'+name ] != undefined )
 			{
-				this.styles[c-1] = this.make_style( lv, name, c, bgColour );
+				this.styles[c-1] = this.make_style( lv, name, c );
 			
 				//
-				// UGH -- quick fix for candle charts. Need to fix all bar charts
-				// these are slowly getting fixed...
+				// BUG: These need to be fixed at some point:
 				//
 				if( lv['candle'+name] != undefined )
 					this.styles[c-1].set_values( lv['values'+name], x_axis_labels, lv['links'+name] );
 				else if( lv['hlc'+name] != undefined )
 					this.styles[c-1].set_values( lv['values'+name], x_axis_labels, lv['links'+name] );
-				else if( lv['scatter'+name] != undefined )
-					this.styles[c-1].set_values( lv['values'+name] );
-				else if( lv['bar'+name] != undefined )
-				
-					var iiii=0;
-					//this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
-				
-				else if( lv['line_dot'+name] != undefined )
-				
-					var iiii=0;
-					
-				else if( lv['line_hollow'+name] != undefined )
-				
-					var iiii=0;
-				else if( lv['line'+name] != undefined )
-				
-					var iiii=0;
-					
-				else if( lv['filled_bar'+name] != undefined )
-					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
-				else if( lv['bar_3d'+name] != undefined )
-					var iiii=0;
-				else if( lv['bar_fade'+name] != undefined )
-					var iiii=0;
-				else if( lv['bar_sketch'+name] != undefined )
-					this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
-				else if( lv['bar_glass'+name] != undefined )
-				var iiii=0;
-					//this.styles[c-1].set_values( lv['values'+name], lv['links'+name] );
-				else
-					this.styles[c-1].set_values( this.parseVal( lv['values'+name] ) );
+
 			}
 			else
 				break;		// <-- stop loading data
@@ -85,30 +54,18 @@
 	
 	
 	
-	private function make_style( lv:LoadVars, name:String, c:Number, bgColour:Number )
+	private function make_style( lv:LoadVars, name:String, c:Number )
 	{
 		if( lv['line'+name] != undefined )
-			
-			//return new LineStyle(lv['line'+name],'bar_'+c);
 			return new LineStyle(lv,name);
-			
 		else if( lv['line_dot'+name] != undefined )
-		
-		
-			//return new LineDot(lv['line_dot'+name],bgColour,'bar_'+c);
 			return new LineDot(lv,name);
-			
-			
 		else if( lv['line_hollow'+name] != undefined )
-			//return new LineHollow(lv['line_hollow'+name],bgColour,'bar_'+c);
 			return new LineHollow(lv,name);
 		else if( lv['area_hollow'+name] != undefined )
-			return new AreaHollow(lv['area_hollow'+name],bgColour,'bar_'+c);
+			return new AreaHollow(lv,name);
 		else if( lv['bar'+name] != undefined )
-		
-//			return new BarStyle(lv['bar'+name],'bar_'+c);
 			return new BarStyle(lv,name);
-			
 		else if( lv['filled_bar'+name] != undefined )
 			return new FilledBarStyle(lv,name);
 		else if( lv['bar_glass'+name] != undefined )
@@ -122,15 +79,15 @@
 		else if( lv['bar_3d'+name] != undefined )
 			return new Bar3D(lv,name);
 		else if( lv['pie'+name] != undefined )
-			return new PieStyle(lv['pie'+name], lv.x_labels!=undefined ? lv['values'] : "", lv['links']);
+			return new PieStyle(lv,name);
 		else if( lv['candle'+name] != undefined )
-			return new CandleStyle(lv['candle'+name],'bar_'+c);
+			return new CandleStyle(lv,name);
 		else if( lv['scatter'+name] != undefined )
-			return new Scatter(lv['scatter'+name],bgColour,'bar_'+c);
+			return new Scatter(lv,name);
 		else if( lv['hlc'+name] != undefined )
-			return new HLCStyle(lv['hlc'+name],'bar_'+c);
+			return new HLCStyle(lv,name);
 		else if( lv['bar_sketch'+name] != undefined )
-			return new BarSketchStyle(lv['bar_sketch'+name],'bar_'+c);
+			return new BarSketchStyle(lv,name);
 			
 	}
 	

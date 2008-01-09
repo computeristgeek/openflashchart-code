@@ -2,10 +2,11 @@
 {
 	private var offset:Number;
 	
-	public function BarSketchStyle( val:String, name:String )
+	public function BarSketchStyle( lv:Object, name:String )
 	{
-		this.name = name;
-		this.parse( val );
+		this.name = 'bar_sketch'+name;
+		this.parse( lv[this.name] );
+		this.set_values( lv['values'+name], lv['links'+name], lv['tool_tips_set'+name] );
 	}
 	
 	public function parse( val:String )

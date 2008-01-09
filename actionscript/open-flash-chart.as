@@ -609,7 +609,7 @@ function make_chart()
 	}
 			
 	// The chart values are defined last and are on TOP of every thing else
-	_root.chartValues = new Values( this, _root._background.colour, _root._x_axis_labels.labels );
+	_root.chartValues = new Values( this, _root._x_axis_labels.labels );
 	
 	// tell the x axis where the grid lines are:
 	if( _root._min_max.has_x_range )
@@ -951,7 +951,7 @@ if( _root.data == undefined )
 		//
 		// We are in the IDE
 		//
-		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-50.txt";
+		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-13.txt";
 		//_root.data="http://www.stelteronline.de/index.php?option=com_joomleague&func=showStats_GetChartData&p=1";
 		lv.load(_root.data);
 	}

@@ -7,6 +7,7 @@
 	{
 		this.name = 'filled_bar'+name;
 		this.parse( lv[this.name] );
+		this.set_values( lv['values'+name], lv['links'+name], lv['tool_tips_set'+name] );
 	}
 	
 	public function parse( val:String )

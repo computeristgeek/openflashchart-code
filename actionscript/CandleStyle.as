@@ -9,11 +9,12 @@
 	
 	var links:Array;
 	
-	public function CandleStyle( val:String, name:String )
+	public function CandleStyle( lv:Object, name:String )
 	{
-		this.name = name;
+		this.name = 'candle'+name;
 		// this calls parent obj Style.Style first
-		this.parse_bar( val );
+		this.parse_bar( lv[this.name] );
+		//this.set_values( lv['values'+name], lv['links'+name], lv['tool_tips_set'+name] );
 		
 		this.links = new Array();
 	}

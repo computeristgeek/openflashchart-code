@@ -55,7 +55,6 @@ class BarStyle extends Style
 		{
 			for( var i:Number=0; i<this.bar_mcs.length; i++ )
 			{
-				trace('remove mc');
 				_root.removeMovieClip( this.bar_mcs[i]._name );
 			}
 		}

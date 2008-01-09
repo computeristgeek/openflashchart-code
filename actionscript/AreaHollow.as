@@ -5,13 +5,13 @@
 	private var mc_area:MovieClip
 	private var fill_colour:Number;
 	
-	public function AreaHollow( val:String, bgColour:Number, name:String )
+	public function AreaHollow( lv:Object, name:String )
 	{
 		//this.values = values;
-		this.bgColour = bgColour;
-		this.name = name;
+		this.bgColour =  _root.get_background_colour();
+		this.name = 'area_hollow'+name;
 		
-		var vals:Array = val.split(",");
+		var vals:Array = lv[this.name].split(",");
 		this.line_width = Number( vals[0] );
 		this.circle_size = Number( vals[1] );
 		this.alpha =  Number( vals[2] );
@@ -38,6 +38,8 @@
 		this.mc2.fillCircle( 0, 0, this.circle_size+2, 15, this.colour );
 		this.mc2.fillCircle( 0, 0, this.circle_size-this.line_width+2, 15, this.bgColour);
 		this.mc2._visible = false;
+		
+		this.set_values( lv['values'+name].split(",") );
 	}
 	
 	public function valPos( b:Box, right_axis:Boolean, min:Number )

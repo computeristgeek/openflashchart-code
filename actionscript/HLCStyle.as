@@ -12,11 +12,11 @@
 	
 	var links:Array;
 	
-	public function HLCStyle( val:String, name:String )
+	public function HLCStyle( lv:Object, name:String )
 	{
-		this.name = name;
+		this.name = 'hlc'+name;
 		// this calls parent obj Style.Style first
-		this.parse_bar( val );
+		this.parse_bar( lv[this.name] );
 		
 		this.links = new Array();
 	}
