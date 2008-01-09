@@ -1,5 +1,5 @@
 #
-# API ref: /php-ofc-library/open-flash-chart.php version 90
+# API ref: /php-ofc-library/open-flash-chart.php version 94
 #
 
 package open_flash_chart;
@@ -98,6 +98,8 @@ sub new() {
 	$self->{is_decimal_separator_comma}='';
 	$self->{is_thousand_separator_disabled}='';
 	
+	$self->{output_type} = '';
+	
   #
   # set some default value incase the user forgets
   # to set them, so at least they see *something*
@@ -176,6 +178,9 @@ sub esc() {
   # which is no good if we are splitting the
   # string on commas.
   $text =~ s/,/#comma#/g;
+
+  #$tmp = utf8_encode( $tmp ); perl claims to handle utf8 natively.  We'll see
+    
   # now we urlescape all dodgy characters (like & % $ etc..)
   return url_escape( $text );
 }
@@ -318,7 +323,13 @@ sub set_tool_tip() {
 #
 sub set_x_labels() {
   my ($self, $a) = @_;
-  $self->{x_labels} = $a;
+  
+  my @tmp;
+  for my $item ( @$a ) {
+    push(@tmp, $self->esc( $item ));
+  }
+
+  $self->{x_labels} = \@tmp;
 }
 
 
