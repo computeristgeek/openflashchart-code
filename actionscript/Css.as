@@ -21,6 +21,8 @@
 	private var stop_process:Number;  // Flag for disable checking
 	private var bg_colour:String;
 	
+	private var display:String;
+	
 	private function trim( txt:String )
 	{
 		var l = 0; var r = txt.length - 1;
@@ -78,6 +80,7 @@
 			case "font-family"			: return this.font_family;
 			case "color"				: return this.color;
 			case "background-color"		: return this.bg_colour;
+			case "display"				: return this.display;
 			default						: return 0;
 		}
 	}
@@ -116,6 +119,7 @@
 			case "background-color":
 				this.bg_colour = _root.get_colour( val);
 				break;
+			case "display"				: this.display = val; break;
 		}
 	}
 	
@@ -216,6 +220,7 @@
 		this.font_style		= undefined;
 		this.font_family		= undefined;
 		this.color				= undefined;
+		this.display			= undefined;
 	}
 	
 	public function Css( txt:String )

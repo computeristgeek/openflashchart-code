@@ -231,6 +231,18 @@ class graph:
 			
 		self.lines.append( tmp )
 
+	def bar_glass( self, alpha, colour, outline_colour, text='', size=-1 ):
+		tmp = '&bar_glass';
+
+		if( len( self.lines ) > 0 ):
+			tmp += '_%s' % (len( self.lines )+1)
+
+		tmp += '='
+		tmp += "%s,%s,%s,%s,%s" % (alpha,colour,outline_colour,text,size)
+		tmp += "&"
+			
+		self.lines.append( tmp )
+
 	def bar_filled( self, alpha, colour, colour_outline, text='', size=-1 ):
 		tmp = '&filled_bar'
 		
@@ -248,6 +260,19 @@ class graph:
 	def y_axis_colour( self, axis, grid='' ):
 		self.y_axis_colour = axis
 		self.y_grid_colour = grid
+
+	def pie(self, alpha, line_colour, label_colour ):
+		self.pie = str(alpha) + ',' + line_colour + ',' + label_colour
+
+	def pie_values(self, values, labels):
+		self.pie_values = ','.join([str(v) for v in values]) 
+		self.pie_labels = ','.join([str(v) for v in labels])		
+
+	def pie_slice_colours(self, colours):
+		self.pie_colours = ','.join([str(v) for v in colours])
+
+	def set_tool_tip(self, tip):
+		self.tool_tip = tip
 
 	def render( self,):
 		#tmp = "&padding=70,5,50,40&\r\n"
@@ -312,5 +337,11 @@ class graph:
 			if( len( self.inner_bg_colour_2 ) > 0 ):
 				tmp += ',%s,%s' % ( self.inner_bg_colour_2, self.inner_bg_angle )
 			tmp += "&\r\n"
+
+		if( len(self.pie) > 0 ):
+			tmp += '&pie=' + self.pie + '&'
+			tmp += '&values=' + self.pie_values + '&'
+			tmp += '&pie_labels=' + self.pie_labels + '&'
+			tmp += '&colours=' + self.pie_colours + '&'
 
 		return tmp

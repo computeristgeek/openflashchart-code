@@ -9,8 +9,6 @@ class PieStyle extends Style
 	var links:Array;
 	var colours:Array;
 	
-	var text_colour:Number;
-	
 	public var values:Array;
 	
 	private var pie_mcs:Array;
@@ -20,6 +18,7 @@ class PieStyle extends Style
 	private var border_width:Number = 1;
 	private var label_line:Number;
 	private var easing:Function;
+	private var style:Css;
 	
 	public function PieStyle( lv:LoadVars, name:String )
 	{
@@ -60,13 +59,15 @@ class PieStyle extends Style
 		
 		this.alpha = Number( vals[0] );
 		this.colour = _root.get_colour( vals[1] );
-		this.text_colour = _root.get_colour( vals[2] );
+		//this.text_colour = _root.get_colour( vals[2] );
+		this.style = new Css( vals[2] );
 		
 		if( vals.length > 3 )
 			this.gradientFill = vals[3]; 
 			
 		if( vals.length > 4 )
 			this.border_width = vals[4];
+
 	}
 	
 	private function parseVals( val:String ):Array
@@ -156,16 +157,17 @@ class PieStyle extends Style
 		this.clear_mcs( Stage.width/2, ((Stage.height-top)/2)+top );
 		
 		//radius for the pie
-		var rad:Number = (Stage.width<(Stage.height-top-60)) ? Stage.width/2 : (Stage.height-top-60)/2;
+		//var rad:Number = (Stage.width<(Stage.height-top-60)) ? Stage.width/2 : (Stage.height-top-60)/2;
+		var rad:Number = (Stage.width<Stage.height) ? Stage.width/2 : Stage.height/2;
 		var labelLineSize:Number = rad+this.label_line;
 		
-		if( this.labels.length>0 )
+		if( this.labels.length>0 && this.style.get( 'display' ) != 'none' )
 		{
 			this.init_labels();
 			
 			var tfs:Array = Array();
 			
-			// create the text field objects
+			// CSS style is NOT none, so create the text field objects
 			for( var i:Number=0; i < this.ExPoints.length; i++ )
 				tfs.push( this.create_label( i, this.labels[i] ) );
 				
@@ -229,12 +231,17 @@ class PieStyle extends Style
 			
 		} //end if( this.labels.length>0 )
 		
+		this.draw_all(rad);
+	}
+	
+	function draw_all(rad:Number)
+	{
 		for( var i:Number=0; i < this.ExPoints.length; i++ )
 		{
 			//this.draw_bits( rad, this.ExPoints[i], this.pie_mcs[i], , this.labels[i], this.links[i], i );
 			this.draw_slice( this.pie_mcs[i], rad, this.colours[i%this.colours.length], this.ExPoints[i].bar_width );
 			// draw the line from the slice to the label
-			if( this.labels.length>0 )
+			if( this.labels.length>0 && this.style.get( 'display' ) != 'none' )
 				this.draw_label_line( this.pie_mcs[i], rad, this.label_line, this.ExPoints[i].bar_width );
 				
 			//rotate slice to appropriate place in pie
@@ -286,16 +293,16 @@ class PieStyle extends Style
 		var tf:TextField = _root.createTextField("pie_text_"+num, _root.getNextHighestDepth(), 0, 0, 10, 10);
 		
 		tf.text = label;
-		tf.autoSize = true;
 		// legend_tf._rotation = 3.6*value.bar_bottom;
-				
+		
 		var fmt:TextFormat = new TextFormat();
-		fmt.color = this.text_colour;
+		fmt.color = this.style.get( 'color' );
 		fmt.font = "Verdana";
-		//fmt.size = this.size;
+		fmt.size = this.style.get( 'font-size' );
 		fmt.align = "center";
 		tf.setTextFormat(fmt);
-		
+		//tf.autoSize = true;
+		tf.autoSize = "left";
 		return tf;
 	}
 	

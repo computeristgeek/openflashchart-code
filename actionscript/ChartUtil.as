@@ -31,8 +31,14 @@ class ChartUtil {
 				);
 			
 			if(tooltip_follow) {
+				// for the pie chart
 				_root.tooltip._x = _root._xmouse+5;
+				if( _root.tooltip._x + _root.tooltip._width > Stage.width )
+					_root.tooltip._x = Stage.width - _root.tooltip._width;
+					
 				_root.tooltip._y = _root._ymouse-_root.tooltip._height-20;
+				if( _root.tooltip._y < 0 )
+					_root.tooltip._y = 0;
 			}
 			if( mc._alpha < 100 )
 			{
