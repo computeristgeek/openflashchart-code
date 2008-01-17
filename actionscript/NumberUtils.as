@@ -1,4 +1,4 @@
-class NumberUtils {
+﻿class NumberUtils {
 
 
 	public static function formatNumber (i:Number){
@@ -29,8 +29,12 @@ class NumberUtils {
 		isThousandSeparatorDisabled:Boolean 
 	) {
 		if ( isNaN (numDecimals )) {
-			numDecimals = 2;
+			numDecimals = 4;
 		}
+		
+		// round the number down to the number of
+		// decimals we want ( fixes the -1.11022302462516e-16 bug)
+		i = Math.round(i*Math.pow(10,numDecimals))/Math.pow(10,numDecimals);
 		
 		var s:String = '';
 		if( i<0 )

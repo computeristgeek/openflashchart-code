@@ -32,7 +32,12 @@
 		this.mc2.fillCircle( 0, 0, this.circle_size+1, 15, this.colour );
 		this.mc2._visible = false;
 		
+		// we need to remeber if the mouse
+		// is over this movie clip
+		this.mc2._is_over = false;
+		
 		this.set_values( lv['values'+name].split(",") );
+		this.set_links( lv['links'+name] );
 			
 	}
 	

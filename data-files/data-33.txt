@@ -1,11 +1,8 @@
 &pie=60,#9933CC,{font-size: 7px; color: #FF0000;}&
-&values=3,2,1,1,1,1,0.2&
 
-&X colours=#d01f3c,#356aa0,#C79810,#73880A,#D15600,#6BBA70&
-&colours=#d01f3c,#356aa0,#C79810&
+&values=10,20,0,10&
+&colours=#ff0000,#00ff00,#0000ff,#ff00ff&
 
-&links=javascript:alert('9'),javascript:alert('6'),javascript:alert('7'),javascript:alert('9'),javascript:alert('5'),javascript:alert('7'),javascript:alert('6'),javascript:alert('9'),javascript:alert('9')&
-
-&pie_labels=January,Feb,March,April,May,June,July,August,Sept&
+&pie_labels=10,20,0,1&
 
 &tool_tip=#x_label#<br>Value: #val#%25&

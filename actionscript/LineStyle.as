@@ -1,4 +1,11 @@
-﻿class LineStyle extends Style
+﻿//import mx.transitions.Tween;
+//import mx.transitions.easing.*;
+
+//import flash.filters.GlowFilter;
+import caurina.transitions.Tweener;
+
+
+class LineStyle extends Style
 {
 	private var mc:MovieClip;
 	private var mc2:MovieClip;
@@ -22,12 +29,21 @@
 			this.circle_size = Number( vals[4] );
 			
 		this.mc = _root.createEmptyMovieClip(name, _root.getNextHighestDepth());
-		this.mc2 = _root.createEmptyMovieClip(name, _root.getNextHighestDepth());
-		this.mc2.fillCircle( 0, 0, 7, 15, 0xFFFFFF );
+		this.make_highlight_dot();
+		this.set_values( lv['values'+name].split(",") );
+		this.set_links( lv['links'+name] );
+	}
+	
+	private function make_highlight_dot()
+	{
+		this.mc2 = _root.createEmptyMovieClip('highlight'+name, _root.getNextHighestDepth());
+		this.mc2.lineStyle( 0, 0, 0);
+		this.mc2.fillCircle( 0, 0, 6, 15, 0xFFFFFF );
 		this.mc2.fillCircle( 0, 0, 5, 15, this.colour );
 		this.mc2._visible = false;
-		
-		this.set_values( lv['values'+name].split(",") );
+		// we need to remeber if the mouse
+		// is over this movie clip
+		this.mc2._is_over = false;
 	}
 	
 	public function valPos( b:Box, right_axis:Boolean, min:Number )
@@ -178,7 +194,54 @@
 	public function is_over( x:Number, y:Number )
 	{
 		if( x<0 )
+		{
 			this.mc2._visible = false;
+			return;
+		}
+		
+		// is the mouse over our highlight dot?
+		if( this.mc2.hitTest(x,y) )
+		{
+			if( !this.mc2._is_over )
+			{
+				this.mc2._is_over = true;
+				
+				var i:Number=0;
+				for( i=0; i<this.ExPoints.length; i++)
+					if( this.ExPoints[i].is_tip )
+						break;
+					
+				if( this.links[i] != undefined )
+				{
+					// tell _root that the mouse is over us,
+					// and if it is clicked do this link
+					_root.is_over( this.links[i] );
+
+					// mouse over and it has a onClick event,
+					// so provide some feedback by pulsing the dot
+					this.pulse(this);
+				}
+				
+				
+			}
+		}
+		else
+		{
+			if( this.mc2._is_over )
+			{
+				this.mc2._is_over = false;
+				_root.is_out();
+				
+				Tweener.removeTweens(this.mc2);
+				Tweener.addTween(this.mc2, {_alpha:100, time:0.4, transition:"linear"} );
+			}
+		}
+	}
+	
+	function pulse( t:Object )
+	{
+		Tweener.addTween(t.mc2, {_alpha:50, time:0.4, transition:"linear"} );
+		Tweener.addTween(t.mc2, {_alpha:100, time:0.4, delay:0.4, onComplete:t.pulse, onCompleteParams:[t], transition:"linear"});
 	}
 	
 }

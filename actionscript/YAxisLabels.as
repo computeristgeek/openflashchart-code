@@ -39,6 +39,7 @@
 		for( var i:Number=min; i<=max; i+=every )
 		{
 			var title:String = _root.format_y_axis_label(i);
+			
 			var tmp = {
 				textfield: this.yAxisLabel( title, name+String(count++), y_label_style, nr ),
 				value: i

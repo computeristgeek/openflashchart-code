@@ -23,14 +23,18 @@
 		
 		if( length( vals ) > 4 )
 			this.circle_size = Number( vals[4] );
-			
+		
 		this.mc2 = _root.createEmptyMovieClip( name+'_hightlight', _root.getNextHighestDepth());
 		this.mc2.lineStyle( 0, 0, 0);
 		this.mc2.fillCircle( 0, 0, this.circle_size+2, 15, this.colour );
 		this.mc2.fillCircle( 0, 0, this.circle_size-this.line_width+2, 15, this.bgColour);
 		this.mc2._visible = false;
+		// we need to remeber if the mouse
+		// is over this movie clip
+		this.mc2._is_over = false;
 		
 		this.set_values( lv['values'+name].split(",") );
+		this.set_links( lv['links'+name] );
 	}
 	
 	public function draw()

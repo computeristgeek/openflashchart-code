@@ -282,9 +282,10 @@ class graph
 	}
 	
 	// UGH, these evil functions are making me fell ill
-	function set_links( $a )
+	function set_links( $links )
 	{
-		$this->links[] = implode(',',$a);
+		// TO DO escape commas:
+		$this->links[] = implode(',',$links);
 	}
 	
 	// $val is a boolean
@@ -962,8 +963,8 @@ class graph
 	 *
 	 * @param alpha an int argument.
 	 *   The percentage of transparency of the pie colour.
-	 * @param line_colour a string argument.
-	 *   The hex colour value of the outline.
+	 * @param $style a string argument.
+	 *   CSS style string
 	 * @param label_colour a string argument.
 	 *   The hex colour value of the label.
 	 * @param gradient a boolean argument.
@@ -971,9 +972,9 @@ class graph
 	 * @param border_size an int argument.
 	 *   Size of the border in pixels.
 	 */
-	function pie( $alpha, $line_colour, $label_colour, $gradient = true, $border_size = false )
+	function pie( $alpha, $line_colour, $style, $gradient = true, $border_size = false )
 	{
-		$this->pie = $alpha.','.$line_colour.','.$label_colour;
+		$this->pie = $alpha.','.$line_colour.','.$style;
 		if( !$gradient )
 		{
 			$this->pie .= ','.!$gradient;
@@ -1215,7 +1216,7 @@ class graph
 		$count = 1;
 		foreach( $this->data_sets as $set )
 		{
-			$tmp[] = $set->toString( $count>1?'_'.$count:'' );
+			$tmp[] = $set->toString( $this->output_type, $count>1?'_'.$count:'' );
 			$count++;
 		}
 		
@@ -1281,13 +1282,13 @@ class bar
 		return $values;
 	}
 	
-	function toString( $set_num )
+	function toString( $output_type, $set_num )
 	{
 		$values = implode( ',', $this->_get_variable_list() );
 		
 		$tmp = array();
 		
-		if( $this->output_type == 'js' )
+		if( $output_type == 'js' )
 		{
 			$tmp[] = 'so.addVariable("'. $this->var.$set_num .'","'. $values . '");'; 
 

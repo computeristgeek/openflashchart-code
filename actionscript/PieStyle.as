@@ -158,7 +158,7 @@ class PieStyle extends Style
 		
 		//radius for the pie
 		//var rad:Number = (Stage.width<(Stage.height-top-60)) ? Stage.width/2 : (Stage.height-top-60)/2;
-		var rad:Number = (Stage.width<Stage.height) ? Stage.width/2 : Stage.height/2;
+		var rad:Number = (Stage.width<Stage.height) ? Stage.width/2 : (Stage.height-top)/2;
 		var labelLineSize:Number = rad+this.label_line;
 		
 		if( this.labels.length>0 && this.style.get( 'display' ) != 'none' )

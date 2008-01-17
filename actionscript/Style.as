@@ -13,6 +13,8 @@
 	public var values:Array;
 	public var ExPoints:Array;
 	
+	// array to hold the on_click links
+	private var links:Array;
 	
 	public function Style( val:String, bar:Boolean )
 	{
@@ -43,5 +45,13 @@
 	
 	public function closest( x:Number, y:Number )
 	{}
+	
+	private function set_links( links:String )
+	{
+		if( links != undefined )
+			this.links = links.split(",");
+		else
+			this.links = Array();
+	}
 
 }

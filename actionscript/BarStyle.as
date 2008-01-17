@@ -9,9 +9,6 @@ class BarStyle extends Style
 	private var bar_mcs:Array;
 	public var name:String;
 	
-	// array to hold the on_click links
-	private var links:Array;
-	
 	// array to hold the extra tool tip info
 	private var tooltips:Array;
 	
@@ -72,14 +69,7 @@ class BarStyle extends Style
 		}
 	}
 	
-	// move to super:
-	private function set_links( links:String )
-	{
-		if( links != undefined )
-			this.links = links.split(",");
-		else
-			this.links = Array();
-	}
+	
 	
 	// move to super:
 	private function set_tooltips( tooltips:String )
