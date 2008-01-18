@@ -851,10 +851,16 @@ function hide_message():Void
 }
 
 ExternalInterface.addCallback("reload", null, reload);
-function reload( u:String ):Void
+function reload( u:String, show_loading:Boolean ):Void
 {
-	// inform the user we are reloading data:
-	_root.loading = new Loading('Loading data...');
+	if( show_loading == undefined )
+		show_loading = true;
+		
+	if( show_loading )
+	{
+		// inform the user we are reloading data:
+		_root.loading = new Loading('Loading data...');
+	}
 
 	var url:String = '';
 	
@@ -951,7 +957,7 @@ if( _root.data == undefined )
 		//
 		// We are in the IDE
 		//
-		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-33.txt";
+		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-54.txt";
 		//_root.data="http://www.stelteronline.de/index.php?option=com_joomleague&func=showStats_GetChartData&p=1";
 		lv.load(_root.data);
 	}

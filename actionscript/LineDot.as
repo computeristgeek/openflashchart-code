@@ -38,6 +38,7 @@
 		
 		this.set_values( lv['values'+name].split(",") );
 		this.set_links( lv['links'+name] );
+		this.set_tooltips( lv['tool_tips_set'+name] );
 			
 	}
 	

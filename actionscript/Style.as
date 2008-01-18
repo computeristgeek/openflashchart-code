@@ -15,6 +15,8 @@
 	
 	// array to hold the on_click links
 	private var links:Array;
+	// array to hold the extra tool tip info
+	private var tooltips:Array;
 	
 	public function Style( val:String, bar:Boolean )
 	{
@@ -52,6 +54,15 @@
 			this.links = links.split(",");
 		else
 			this.links = Array();
+	}
+	
+	// remember the extra tool tip info:
+	private function set_tooltips( tooltips:String )
+	{
+		if( tooltips != undefined )
+			this.tooltips = tooltips.split(",");
+		else
+			this.tooltips = Array();
 	}
 
 }

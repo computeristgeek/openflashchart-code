@@ -1,9 +1,4 @@
-﻿//import mx.transitions.Tween;
-//import mx.transitions.easing.*;
-
-//import flash.filters.GlowFilter;
-import caurina.transitions.Tweener;
-
+﻿import caurina.transitions.Tweener;
 
 class LineStyle extends Style
 {
@@ -32,6 +27,7 @@ class LineStyle extends Style
 		this.make_highlight_dot();
 		this.set_values( lv['values'+name].split(",") );
 		this.set_links( lv['links'+name] );
+		this.set_tooltips( lv['tool_tips_set'+name] );
 	}
 	
 	private function make_highlight_dot()
@@ -70,7 +66,8 @@ class LineStyle extends Style
 					this.key,
 					Number(this.values[i]),
 					_root.get_x_legend(),
-					_root.get_x_axis_label(i)
+					_root.get_x_axis_label(i),
+					this.tooltips[i]
 					);
 				
 				this.ExPoints.push( tmp );

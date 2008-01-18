@@ -9,9 +9,6 @@ class BarStyle extends Style
 	private var bar_mcs:Array;
 	public var name:String;
 	
-	// array to hold the extra tool tip info
-	private var tooltips:Array;
-	
 	public function BarStyle( lv:Object, name:String )
 	{
 		this.name = 'bar'+name;
@@ -67,17 +64,6 @@ class BarStyle extends Style
 			// add the MovieClip to our array:
 			this.bar_mcs[i] = mc;
 		}
-	}
-	
-	
-	
-	// move to super:
-	private function set_tooltips( tooltips:String )
-	{
-		if( tooltips != undefined )
-			this.tooltips = tooltips.split(",");
-		else
-			this.tooltips = Array();
 	}
 	
 	private function parse_list( val:String ):Array

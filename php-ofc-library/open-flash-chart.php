@@ -1230,6 +1230,145 @@ class graph
 	}
 }
 
+class line
+{
+	var $line_width;
+	var $colour;
+	var $_key;
+	var $key;
+	var $key_size;
+	// hold the data
+	var $data;
+	// extra tool tip info:
+	var $tips;
+	
+	function line( $line_width, $colour )
+	{
+		$this->var = 'line';
+		
+		$this->line_width = $line_width;
+		$this->colour = $colour;
+		$this->data = array();
+		$this->links = array();
+		$this->tips = array();
+		$this->_key = false;
+	}
+
+
+	function key( $key, $size )
+	{
+		$this->_key = true;
+		$this->key = graph::esc( $key );
+		$this->key_size = $size;
+	}
+	
+	function add( $data, $link, $tip )
+	{
+		$this->data[] = $data;
+		$this->links[] = $link;
+		$this->tips[] = graph::esc( $tip );
+	}
+	
+	function add_ex( $data, $tip )
+	{
+		$this->data[] = $data;
+		$this->tips[] = graph::esc( $tip );
+	}
+	
+	// return the variables for this chart
+	function _get_variable_list()
+	{
+		$values = array();
+		$values[] = $this->line_width;
+		$values[] = $this->colour;
+		
+		if( $this->_key )
+		{
+			$values[] = $this->key;
+			$values[] = $this->key_size;
+		}
+		
+		return $values;
+	}
+	
+	function toString( $output_type, $set_num )
+	{
+		$values = implode( ',', $this->_get_variable_list() );
+		
+		$tmp = array();
+		
+		if( $output_type == 'js' )
+		{
+			$tmp[] = 'so.addVariable("'. $this->var.$set_num .'","'. $values . '");'; 
+
+			$tmp[] = 'so.addVariable("values'. $set_num .'","'. implode( ',', $this->data ) .'");';
+			
+			if( count( $this->links ) > 0 )
+				$tmp[] = 'so.addVariable("links'. $set_num .'","'. implode( ',', $this->links ) .'");';
+				
+			if( count( $this->tips ) > 0 )
+				$tmp[] = 'so.addVariable("tool_tips_set'. $set_num .'","'. implode( ',', $this->tips ) .'");';
+
+		}
+		else
+		{
+			$tmp[]  = '&'. $this->var. $set_num .'='. $values .'&';
+			$tmp[] = '&values'. $set_num .'='. implode( ',', $this->data ) .'&';
+			
+			if( count( $this->links ) > 0 )
+				$tmp[] = '&links'. $set_num .'='. implode( ',', $this->links ) .'&';
+				
+			if( count( $this->tips ) > 0 )
+				$tmp[] = '&tool_tips_set'. $set_num .'='. implode( ',', $this->tips ) .'&';	
+		}
+
+		return implode( "\r\n", $tmp );
+	}
+}
+
+class line_hollow extends line
+{
+	var $dot_size;
+	
+	function line_hollow( $line_width, $dot_size, $colour )
+	{
+		parent::line( $line_width, $colour );
+		$this->var = 'line_hollow';
+		$this->dot_size = $dot_size;
+	}
+	
+	// return the variables for this chart
+	function _get_variable_list()
+	{
+		$values = array();
+		$values[] = $this->line_width;
+		$values[] = $this->colour;
+		
+		if( $this->_key )
+		{
+			$values[] = $this->key;
+			$values[] = $this->key_size;
+		}
+		else
+		{
+			$values[] = '';
+			$values[] = '';
+		}
+		$values[] = $this->dot_size;
+		
+		return $values;
+	}
+}
+
+class line_dot extends line_hollow
+{
+	function line_dot( $line_width, $dot_size, $colour )
+	{
+		parent::line_dot( $line_width, $colour );
+		$this->var = 'line_dot';
+	}
+}
+
 class bar
 {
 	var $colour;
