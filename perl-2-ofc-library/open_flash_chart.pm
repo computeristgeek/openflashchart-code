@@ -1,5 +1,5 @@
 #
-# API ref: /php-ofc-library/open-flash-chart.php version 94
+# API ref: /php-ofc-library/open-flash-chart.php version 99
 #
 
 package open_flash_chart;
@@ -286,8 +286,9 @@ sub set_data() {
 
 # UGH, these evil functions are making me fell ill
 sub set_links() {
-  my ($self, $a) = @_;
-  push(@{$self->{links}}, join(',', @$a));
+  my ($self, $links) = @_;
+  # TO DO escape commas:
+  push(@{$self->{links}}, join(',', @$links));
 }
 
 # $val is a boolean
@@ -1057,19 +1058,19 @@ sub scatter() {
 #   The percentage of transparency of the pie colour.
 # @param line_colour a string argument.
 #   The hex colour value of the outline.
-# @param label_colour a string argument.
-#   The hex colour value of the label.
+#	@param $style a string argument.
+#	  CSS style string
 # @param gradient a boolean argument.
 #   Use a gradient true or false.
 # @param border_size an int argument.
 #   Size of the border in pixels.
 #
 sub pie() {
-  my ($self, $alpha, $line_colour, $label_colour, $gradient, $border_size) = @_;
+  my ($self, $alpha, $line_colour, $style, $gradient, $border_size) = @_;
   $gradient = 'true' if !defined($gradient);
   $border_size = 'false' if !defined($border_size);
 
-  $self->{pie} = $alpha.','.$line_colour.','.$label_colour;
+  $self->{pie} = $alpha.','.$line_colour.','.$style;
   if( $gradient eq 'false' ) {
     $self->{pie} .= ','.!$gradient;
   }
@@ -1367,7 +1368,7 @@ sub render() {
 
   my $count = 1;
   for my $set ( @{$self->{data_sets}} ) {
-    push(@$tmp, $set->toString( $count>1?'_'.$count:'' ));
+    push(@$tmp, $set->toString($self->{output_type}, $count>1?'_'.$count:'' ));
     $count++;
   }
 
@@ -1468,6 +1469,146 @@ sub set_auto_y_max() {
 }
 
 
+package line;
+
+sub new() {
+  # Constructer for the line
+  # Sets our default variables
+  my ($proto, $line_width, $colour) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+
+	$self->{var} = 'line';
+		
+	$self->{line_width} = $line_width;
+	$self->{colour} = $colour;
+	$self->{data} = [];
+	$self->{links} = [];
+	$self->{tips} = [];
+	$self->{_key} = 0;
+}
+
+sub key() {
+	my ($self, $key, $size) = @_;
+	$self->{_key} = 1;
+	$self->{key} = graph->esc($key);
+	$self->{key_size} = $size;
+}
+	
+sub add() {
+  my ($self, $data, $link, $tip ) = @_;
+	push(@{$self->{data}}, $data);
+	push(@{$self->{links}}, $link);
+	push(@{$self->{tips}}, graph->esc($tip));
+}
+	
+sub add_ex() {
+  my ($self, $data, $tip ) = @_;
+	push(@{$self->{data}}, $data);
+	push(@{$self->{tips}}, graph->esc( $tip ));
+}
+	
+# return the variables for this chart
+sub	_get_variable_list() {
+	my ($self) = @_;
+	my @values;
+  push(@values, $self->{line_width});
+	push(@values, $self->{colour});
+		
+	if( $self->{_key} ) {
+		push(@values, $self->{key});
+		push(@values, $self->{key_size});
+	}
+	
+	return \@values;
+}
+	
+sub toString() {
+  my ($self,  $output_type, $set_num ) = @_;
+
+	my $values = join( ',', @{$self->_get_variable_list()} );
+		
+	my @tmp;
+		
+	if( $output_type eq 'js' ) {
+		push(@tmp, 'so.addVariable("'. $self->{var}.$set_num .'","'. $values . '");'); 
+
+		push(@tmp, 'so.addVariable("values'. $set_num .'","'. join( ',', @$self->{data} ) .'");');
+			
+		if( scalar(@$self->{links}) > 0 ) {
+			push(@tmp, 'so.addVariable("links'. $set_num .'","'. join( ',', @$self->{links} ) .'");');
+		}
+				
+		if( scalar(@$self->{tips} ) > 0 ) {
+		  push(@tmp, 'so.addVariable("tool_tips_set'. $set_num .'","'. join( ',', @$self->{tips} ) .'");');
+ 		}
+
+	} else {
+		push(@tmp, '&'. $self->{var}. $set_num .'='. $values .'&');
+		push(@tmp, '&values'. $set_num .'='. join( ',', @$self->{data} ) .'&');
+			
+		if( scalar(@$self->{links}) > 0 ) {
+		  push(@tmp, '&links'. $set_num .'='. join( ',', @$self->{links} ) .'&_');
+    }
+				
+		if( count( $self->{tips} ) > 0 ) {
+		  push(@tmp, '&tool_tips_set'. $set_num .'='. join( ',', @$self->{tips}) .'&');	
+		}
+	}
+
+	return join( "\r\n", @tmp );
+}
+
+package line_hollow;
+our @ISA = qw(line);
+sub new() {
+  # Constructer for the bar
+  # Sets our default variables
+  my ($proto, $line_width, $dot_size, $colour) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  bless $self, $class;
+  $self->SUPER::new($line_width, $colour);
+	$self->{var} = 'line_hollow';
+	$self->{dot_size} = $dot_size;
+
+  return $self;
+}
+
+# return the variables for this chart
+sub _get_variable_list() {
+  my ($self) = @_;
+	my @values;
+	push(@values, $self->{line_width});
+	push(@values, $self->{colour});
+		
+	if( $self->{_key} ) {
+		push(@values, $self->{key});
+		push(@values, $self->{key_size});
+	} else {
+		push(@values, '');
+		push(@values, '');
+	}
+	push(@values, $self->{dot_size});
+		
+	return \@values;
+}
+
+
+package line_dot;
+our @ISA = qw(line_hollow);
+sub new() {
+  # Constructer for the bar
+  # Sets our default variables
+  my ($proto, $line_width, $dot_size, $colour) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  bless $self, $class;
+  $self->SUPER::new($line_width, $dot_size, $colour);
+	$self->{var} = 'line_dot';
+
+  return $self;
+}
 
 
 
@@ -1521,12 +1662,12 @@ sub _get_variable_list() {
 }
 
 sub toString() {
-	my ($self, $set_num) = @_;
+	my ($self, $output_type, $set_num) = @_;
 	
   my $values = join(',', @{$self->_get_variable_list()} );
 
   my @tmp;
-  if ($self->{output_type} eq 'js' ) {
+  if ($output_type eq 'js' ) {
     push(@tmp, 'so.addVariable("'. $self->{var} . $set_num .'","'. $values . '");');
 
     push(@tmp, 'so.addVariable("values'. $set_num .'","'. join(',', @{$self->{data}}) .'");');
