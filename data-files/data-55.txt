@@ -1,4 +1,6 @@
-&title=Many data lines,{font-size: 30px;}&
+﻿&title=موضوع نمودار,{font-size: 20px; color: #736AFF}&
+
+&title=موضوع نمودار,{font-size: 20px; color: #736AFF}&
 &y_legend=Open Flash Chart,12,0x736AFF&
 &y_ticks=5,10,4&
 
@@ -18,4 +20,4 @@
 &y_min=0&
 &y_max=20&
 
-&tool_tip=#x_label#<br>#key#: �#val#.00<br>#val:time#<br>Set :#tip#&
+&tool_tip=#x_label#<br>#key#: £#val#.00<br>#val:time#<br>Set :#tip#&

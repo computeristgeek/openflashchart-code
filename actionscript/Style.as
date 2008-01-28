@@ -51,7 +51,11 @@
 	private function set_links( links:String )
 	{
 		if( links != undefined )
+		{
 			this.links = links.split(",");
+			for( var i=0; i<this.links.length; i++ )
+				this.links[i] = this.links[i].replace('#comma#',',');
+		}
 		else
 			this.links = Array();
 	}
@@ -60,9 +64,14 @@
 	private function set_tooltips( tooltips:String )
 	{
 		if( tooltips != undefined )
+		{
 			this.tooltips = tooltips.split(",");
+			for( var i=0; i<this.tooltips.length; i++ )
+				this.tooltips[i] = this.tooltips[i].replace('#comma#',',');
+		}
 		else
 			this.tooltips = Array();
+		
 	}
 
 }

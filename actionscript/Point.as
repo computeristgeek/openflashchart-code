@@ -38,7 +38,7 @@
 			// the user can add extra tooltips per
 			// data set (may be undefined):
 			if( tip_set != undefined )
-				tmp = tmp.replace('#set#',tip_set);
+				tmp = tmp.replace('#tip#',tip_set);
 		}
 		else
 		{

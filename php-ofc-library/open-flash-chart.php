@@ -175,7 +175,7 @@ class graph
 		// which is no good if we are splitting the
 		// string on commas.
 		$tmp = str_replace( ',', '#comma#', $text );
-		$tmp = utf8_encode( $tmp );
+		//$tmp = utf8_encode( $tmp );
 		// now we urlescape all dodgy characters (like & % $ etc..)
 		return urlencode( $tmp );
 	}
@@ -207,7 +207,7 @@ class graph
 	*/
 	function set_title( $title, $style='' )
 	{
-		$this->title = $title;
+		$this->title = $this->esc( $title );
 		if( strlen( $style ) > 0 )
 			$this->title_style = $style;
 	}
@@ -1024,6 +1024,9 @@ class graph
 	function render()
 	{
 		$tmp = array();
+		
+		//echo headers_sent() ?'yes':'no';
+		header('content-type: text; charset: utf-8');
 
 		if($this->output_type == 'js')
 		{
@@ -1262,16 +1265,27 @@ class line
 		$this->key_size = $size;
 	}
 	
-	function add( $data, $link, $tip )
+	function add( $data )
 	{
 		$this->data[] = $data;
-		$this->links[] = $link;
+	}
+	
+	function add_link( $data, $link )
+	{
+		$this->data[] = $data;
+		$this->links[] = graph::esc( $link );
+	}
+	
+	function add_data_tip( $data, $tip )
+	{
+		$this->data[] = $data;
 		$this->tips[] = graph::esc( $tip );
 	}
 	
-	function add_ex( $data, $tip )
+	function add_data_link_tip( $data, $link, $tip )
 	{
 		$this->data[] = $data;
+		$this->links[] = graph::esc( $link );
 		$this->tips[] = graph::esc( $tip );
 	}
 	
@@ -1379,6 +1393,8 @@ class bar
 	var $key;
 	var $key_size;
 	var $var;
+	// extra tool tip info:
+	var $tips;
 	
 	function bar( $alpha, $colour )
 	{
@@ -1388,6 +1404,7 @@ class bar
 		$this->colour = $colour;
 		$this->data = array();
 		$this->links = array();
+		$this->tips = array();
 		$this->_key = false;
 	}
 
@@ -1398,10 +1415,21 @@ class bar
 		$this->key_size = $size;
 	}
 	
-	function add( $data, $link )
+	function add( $data )
 	{
 		$this->data[] = $data;
-		$this->links[] = $link;
+	}
+
+	function add_link( $data, $link )
+	{
+		$this->data[] = $data;
+		$this->links[] = graph::esc( $link );
+	}
+	
+	function add_data_tip( $data, $tip )
+	{
+		$this->data[] = $data;
+		$this->tips[] = graph::esc( $tip );
 	}
 	
 	// return the variables for this
@@ -1435,6 +1463,9 @@ class bar
 			
 			if( count( $this->links ) > 0 )
 				$tmp[] = 'so.addVariable("links'. $set_num .'","'. implode( ',', $this->links ) .'");';
+				
+			if( count( $this->tips ) > 0 )
+				$tmp[] = 'so.addVariable("tool_tips_set'. $set_num .'","'. implode( ',', $this->tips ) .'");';
 
 		}
 		else
@@ -1443,7 +1474,10 @@ class bar
 			$tmp[] = '&values'. $set_num .'='. implode( ',', $this->data ) .'&';
 			
 			if( count( $this->links ) > 0 )
-				$tmp[] = '&links'. $set_num .'='. implode( ',', $this->links ) .'&';	
+				$tmp[] = '&links'. $set_num .'='. implode( ',', $this->links ) .'&';
+				
+			if( count( $this->tips ) > 0 )
+				$tmp[] = '&tool_tips_set'. $set_num .'='. implode( ',', $this->tips ) .'&';	
 		}
 
 		return implode( "\r\n", $tmp );
