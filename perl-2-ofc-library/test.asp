@@ -23,7 +23,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 	for( my $i=0; $i<12; $i++ ) {
 		push ( @data_1, rand(10) );
 		push ( @data_2, rand(20) );
-		push ( @data_3, rand(2000) );
+		push ( @data_3, rand(30) );
 	}
 
   my $g = graph->new();
@@ -35,18 +35,18 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 	$g->bar( 50, '0x0066CC', 'Me', 10 );
 
 	$g->set_data( \@data_2 );
-	$g->bar( 50, '0x9933CC', 'You', 10 );
+	$g->bar( 50, '0x9933CC', 'You', 12 );
 
 	$g->set_data( \@data_3 );
-	$g->bar( 50, '0x639F45', 'Them', 10 );
+	$g->bar( 50, '0x639F45', 'Them', 14 );
 
 
-	$g->set_x_labels( ['Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'] );
+	$g->set_x_labels( ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] );
 	#$g->set_y_max( 10 ); #not need with new auto y_max
 	$g->set_y_min( 0 );
 
-	$g->y_label_steps( 1 );
-	$g->set_y_legend( 'Open Flash Chart', 12, '0x736AFF' );
+	$g->y_label_steps( 10 );
+	$g->set_y_legend( 'Open Flash Chart', 16, '0x736AFF' );
 
 	$Response->write($g->render());
 } elsif ( $Request->QueryString("data")->Item == 2 ) {
@@ -59,7 +59,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 
   my $g = graph->new();
   $g->pie(60,'#505050','#000000');
-	$g->title( 'Open Flash Chart - Pie Test', '{font-size: 15px; color: #800000}' );
+	$g->title( 'Open Flash Chart - Pie Test', '{font-size: 18px; color: #800000}' );
 
 	$g->pie_values( \@pie_data, ['777', 'MD-11', '737', '747-400', 'Airbus'], [] );
   $g->pie_slice_colours( ['#ff0000','#ff6600','#ff9900','#ffcc00','#ffff00']);
