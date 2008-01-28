@@ -111,7 +111,7 @@ class graph
 	*/
 	function set_unique_id()
 	{
-		$this->unique_id = uniqid();
+		$this->unique_id = uniqid(rand(), true);
 	}
 	
 	/**
@@ -1026,7 +1026,8 @@ class graph
 		$tmp = array();
 		
 		//echo headers_sent() ?'yes':'no';
-		header('content-type: text; charset: utf-8');
+		if( !headers_sent() )
+			header('content-type: text; charset: utf-8');
 
 		if($this->output_type == 'js')
 		{
