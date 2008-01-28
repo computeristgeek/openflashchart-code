@@ -1,5 +1,5 @@
 #
-# API ref: /php-ofc-library/open-flash-chart.php version 99
+# API ref: /php-ofc-library/open-flash-chart.php version 102
 #
 
 package open_flash_chart;
@@ -208,7 +208,7 @@ sub format_output() {
 sub set_title() {
 	my ($self, $title, $style) = @_;
 	$style = '' if !defined($style);
-  $self->{title} = $title;
+  $self->{title} = $self->esc($title);
   if( $style ne '' ) {
     $self->{title_style} = $style;
   }
@@ -1182,6 +1182,12 @@ sub render() {
   my $tmp = [];
   my $values;
 
+  #probably need this somewhere else since render doesn't render the whole page.
+	#echo headers_sent() ?'yes':'no';
+	#if( !headers_sent() ) {
+	#	header('content-type: text; charset: utf-8');
+	#}
+
   if($self->{output_type} eq 'js') {
     $self->set_unique_id();
 
@@ -1494,18 +1500,29 @@ sub key() {
 	$self->{key} = graph->esc($key);
 	$self->{key_size} = $size;
 }
-	
+
 sub add() {
+  my ($self, $data) = @_;
+		push(@{$self->{data}}, $data);
+}
+
+sub add_link() {
+  my ($self, $data, $link) = @_;
+	push(@{$self->{data}}, $data);
+	push(@{$self->{links}}, $link);
+}
+	
+sub add_data_tip() {
+  my ($self, $data, $tip ) = @_;
+	push(@{$self->{data}}, $data);
+	push(@{$self->{tips}}, graph->esc($tip));
+}
+
+sub add_data_link_tip() {
   my ($self, $data, $link, $tip ) = @_;
 	push(@{$self->{data}}, $data);
 	push(@{$self->{links}}, $link);
 	push(@{$self->{tips}}, graph->esc($tip));
-}
-	
-sub add_ex() {
-  my ($self, $data, $tip ) = @_;
-	push(@{$self->{data}}, $data);
-	push(@{$self->{tips}}, graph->esc( $tip ));
 }
 	
 # return the variables for this chart
@@ -1625,6 +1642,7 @@ sub new() {
   $self->{colour} = $colour;
   $self->{data} = [];
   $self->{links} = [];
+  $self->{tips} = [];
   $self->{_key} = 0;
 
   bless $self, $class;
@@ -1639,9 +1657,20 @@ sub key() {
 }
 
 sub add() {
+	my ($self, $data) = @_;
+	push(@{$self->{data}}, $data);
+}
+
+sub add_link() {
 	my ($self, $data, $link) = @_;
 	push(@{$self->{data}}, $data);
-	push(@{$self->{links}}, $link);
+	push(@{$self->{links}}, graph->esc($link));
+}
+
+sub add_data_tip() {
+	my ($self, $data, $tip) = @_;
+	push(@{$self->{data}}, $data);
+	push(@{$self->{tips}}, graph->esc($tip));
 }
 
 # return the variables for this
@@ -1675,6 +1704,11 @@ sub toString() {
     if( scalar(@{$self->{links}}) > 0 ) {
       push(@tmp, 'so.addVariable("values'. $set_num .'","'. join(',', @{$self->{links}}) .'");');
     }
+    
+    if( scalar(@{$self->{tips}}) > 0 ) {
+      push(@tmp, 'so.addVariable("tool_tips_set'. $set_num .'","'. join(',', @{$self->{tips}}) .'");');
+    }
+    
   } else {
     push(@tmp, '&'. $self->{var}. $set_num .'='. $values .'&');
     push(@tmp, '&values'. $set_num .'='. join(',', @{$self->{data}}) .'&');
@@ -1682,6 +1716,11 @@ sub toString() {
     if( scalar(@{$self->{links}}) > 0 ) {
       push(@tmp, '&links'. $set_num .'='. join(',', @{$self->{links}}) .'&');
     }
+    
+    if( scalar(@{$self->{tips}}) > 0 ) {
+      push(@tmp, '&tool_tips_set'. $set_num .'='. join(',', @{$self->{tips}}) .'&');
+    }
+    
   }
 
   return join("\r\n", @tmp);
