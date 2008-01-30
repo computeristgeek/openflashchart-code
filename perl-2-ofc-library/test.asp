@@ -58,7 +58,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 	}
 
   my $g = graph->new();
-  $g->pie(60,'#505050','#000000');
+  $g->pie(60,'#505050','{font-size: 12px; color: #404040;}');
 	$g->title( 'Open Flash Chart - Pie Test', '{font-size: 18px; color: #800000}' );
 
 	$g->pie_values( \@pie_data, ['777', 'MD-11', '737', '747-400', 'Airbus'], [] );
