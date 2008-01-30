@@ -157,7 +157,11 @@ class PieStyle extends Style
 		this.clear_mcs( Stage.width/2, ((Stage.height-top)/2)+top );
 		
 		//radius for the pie
+		
+		//NOTE: still have a problem here when max radius pie chart has a label in the 12o'clock position.
+		//      it overwrites the title
 		//var rad:Number = (Stage.width<(Stage.height-top-60)) ? Stage.width/2 : (Stage.height-top-60)/2;
+		
 		var rad:Number = (Stage.width<Stage.height) ? Stage.width/2 : (Stage.height-top)/2;
 		var labelLineSize:Number = rad+this.label_line;
 		
