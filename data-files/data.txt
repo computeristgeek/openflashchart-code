@@ -1,4 +1,4 @@
-&title=Many data lines,{font-size: 20;}&
+&title=Many data lines,{font-size: 20px; font-family: Verdana; text-align: center;}&
 &y_legendx=Open Flash Chart,12,0x736AFF&
 &y_label_size=15&
 &y_ticks=5,10,4&
