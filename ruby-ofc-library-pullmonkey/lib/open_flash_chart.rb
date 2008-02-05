@@ -107,10 +107,6 @@ class Graph
 		@output_type = type
 	end
 
-	def increment_occurence
-		@occurence += 1
-	end
-
 	def next_line
 		line_num = ''
 		line_num = '_' + (@lines.size + 1).to_s if @lines.size > 0
@@ -118,12 +114,12 @@ class Graph
 	end
   
   def self.esc(text)
-		tmp = text.gsub(",","#comma#")
+		tmp = text.to_s.gsub(",","#comma#")
 		CGI::escape(tmp)
   end
 
-	def format_output(output_type, function, values)
-		if output_type == 'js'
+	def format_output(function, values)
+		if @output_type == 'js'
 			return "so.addVariable('#{function},#{values}');"
 		else
 			return "&#{function}=#{values}&"
@@ -147,7 +143,7 @@ class Graph
 
 	%w(data links).each do |method|
 		define_method("set_#{method}") do |a|
-      @data << a.join(',') if method == 'data'
+      @data  << a.join(',') if method == 'data'
       @links << a.join(',') if method == 'links'
 		end
   end
@@ -159,11 +155,16 @@ class Graph
   end
 
 	# create the set methods for these instance variables in a loop since they are all the same
-	%w(x_labels bg_color x_max x_min y_max y_min).each do |method|
+	%w(bg_color x_max x_min y_max y_min).each do |method|
 		define_method("set_#{method}") do |a|
 			self.instance_variable_set("@#{method}", a)
 		end
 	end
+
+  def set_x_labels(a)
+    @x_labels = a.map{|x| Graph.esc(x)} if a.class == Array
+    @x_lables = Graph.esc(a) if a.class == String 
+  end
 	
 	def set_y_label_steps(val)
 		@y_steps = val
@@ -203,7 +204,11 @@ class Graph
   	define_method("set_#{method}") do |size, color|
 			temp  = size.to_s
 			temp += ",#{color}" if color.size > 0
-			self.instance_variable_set("@#{method}", temp)
+      if method == "y_right_label_style"
+			  self.instance_variable_set("@y_label_style_right", temp)
+      else
+			  self.instance_variable_set("@#{method}", temp)
+      end
     end
 	end
 
@@ -215,7 +220,7 @@ class Graph
 	end
 
 	def set_title(title, style='')
-		@title       = title
+		@title       = Graph.esc(title)
 		@title_style = style  if style.size > 0
 	end
 
@@ -367,8 +372,8 @@ class Graph
 		@y2_axis_color = color
 	end
 
-	def pie(alpha, line_color, label_color, gradient = true, border_size = false)
-		@pie = "#{alpha},#{line_color},#{label_color}"
+	def pie(alpha, line_color, style, gradient = true, border_size = false)
+		@pie = "#{alpha},#{line_color},#{style}"
 		if !gradient
 			@pie += ",#{!gradient}"
 		end
@@ -388,15 +393,15 @@ class Graph
 		@pie_colors = colors.join(",")
 	end
 
-	def render(output_type = "")
+	def render
   	temp  = []
 		
-		if output_type == 'js'
-			increment_occurence
-			temp << '<div id="my_chart' + "#{@occurence}" + '"></div>'
-			temp << '<script type="text/javascript" src="' + "#{@base}/swfobject.js" + '"></script>'
+		if @output_type == 'js'
+			set_unique_id
+			temp << '<div id="my_chart' + "#{@unique_id}" + '"></div>'
+			temp << '<script type="text/javascript" src="' + "#{@js_path}/swfobject.js" + '"></script>'
 			temp << '<script type="text/javascript">'
-			temp << 'var so = new SWFObject("open-flash-chart.swf", "ofc", "' + width.to_s + '", "' + height.to_s + '", "9", "#FFFFFF");'
+			temp << 'var so = new SWFObject(' + @swf_path + '"open-flash-chart.swf", "ofc", "' + width.to_s + '", "' + height.to_s + '", "9", "#FFFFFF");'
 			temp << 'so.addVariable("variable","true");'
 		end
 
@@ -432,25 +437,25 @@ class Graph
 		}.each do |k,v|
 			next if v[0].nil?
 			next if (v[0].class == String ? v[0].size <= 0 : v[0] < 0)
-			temp << format_output(output_type, k, v.compact.join(","))
+			temp << format_output(k, v.compact.join(","))
 		end
 
-		temp << format_output(output_type, "y_ticks", "5,10,#{@y_steps}")
+		temp << format_output("y_ticks", "5,10,#{@y_steps}")
 
 		if @lines.size == 0 and @data_sets.size == 0
-			temp << format_output(output_type, @line_default['type'], @line_default['values'])
+			temp << format_output(@line_default['type'], @line_default['values'])
 		else
 			@lines.each do |type,description|
-				temp << format_output(output_type, type, description)
+				temp << format_output(type, description)
 			end
 		end
 		
 		num = 1
 		@data.each do |data|
 			if num == 1
-				temp << format_output(output_type, 'values', data)
+				temp << format_output('values', data)
 			else
-				temp << format_output(output_type, "values_#{num}", data)
+				temp << format_output("values_#{num}", data)
 			end
 			num += 1
 		end
@@ -458,44 +463,44 @@ class Graph
 		num = 1
 		@links.each do |link|
 			if num == 1
-				temp << format_output(output_type, 'links', data)
+				temp << format_output('links', data)
 			else
-				temp << format_output(output_type, "links_#{num}", data)
+				temp << format_output("links_#{num}", data)
 			end
 			num += 1
 		end
 
 		if @y2_lines.size > 0
-			temp << format_output(output_type, 'y2_lines', @y2_lines.join(','))
-			temp << format_output(output_type, 'show_y2', 'true')
+			temp << format_output('y2_lines', @y2_lines.join(','))
+			temp << format_output('show_y2', 'true')
 		end
 
 		if @x_labels.size > 0	
-			temp << format_output(output_type, 'x_labels', @x_labels.join(","))
+			temp << format_output('x_labels', @x_labels.join(","))
 		else
-			temp << format_output(output_type, 'x_min', @x_min) if @x_min.size > 0
-			temp << format_output(output_type, 'x_max', @x_max) if @x_max.size > 0
+			temp << format_output('x_min', @x_min) if @x_min.size > 0
+			temp << format_output('x_max', @x_max) if @x_max.size > 0
 		end
 
-		temp << format_output(output_type, 'y_min', @y_min)
-		temp << format_output(output_type, 'y_max', @y_max)
+		temp << format_output('y_min', @y_min)
+		temp << format_output('y_max', @y_max)
 
 		if @pie.size > 0
-			temp << format_output(output_type, 'pie', @pie)	
-			temp << format_output(output_type, 'values', @pie_values)	
-			temp << format_output(output_type, 'pie_labels', @pie_labels)	
-			temp << format_output(output_type, 'colours', @pie_colors)	
-			temp << format_output(output_type, 'links', @pie_links)	
+			temp << format_output('pie', @pie)	
+			temp << format_output('values', @pie_values)	
+			temp << format_output('pie_labels', @pie_labels)	
+			temp << format_output('colours', @pie_colors)	
+			temp << format_output('links', @pie_links)	
 		end
 
 		count = 1
 		@data_sets.each do |set|
-			temp << set.toString(output_type, count > 1 ? "_#{count}" : '')
+			temp << set.toString(@output_type, count > 1 ? "_#{count}" : '')
       count += 1
 		end
 
-		if output_type == "js"
-			temp << 'so.write("my_chart' + occurence.to_s + '");'
+		if @output_type == "js"
+			temp << 'so.write(' + @unique_id + ');'
 			temp << '</script>'
 		end	
 
@@ -503,8 +508,114 @@ class Graph
 	end
 end
 
+class Line
+  attr_accessor :line_width, :color, :_key, :key, :key_size, :data, :tips, :var
+  def initialize(line_width, color)
+    @var = 'line'
+    @line_width = line_width
+    @color = color
+    @data = []
+    @links = []
+    @tips = []
+    @_key = false
+  end
+
+  def key(key, size)
+    @_key = true
+    @key = Graph.esc(key)
+    @key_size = size
+  end
+
+  def add(data)
+    @data << data
+  end 
+
+  def add_link(data, link)
+    add(data)
+    @links << Graph.esc(link)
+  end
+
+  def add_data_tip(data,tip)
+    add(data)
+    @tips << Graph.esc(tip)
+  end
+
+  def add_data_link_tip(data, link, tip)
+    add_link(data, link)
+    @tips << Graph.esc(tip)
+  end
+
+  def _get_variable_list
+    values = []
+    values << @line_width
+    values << @color
+    if @_key
+      values << @key
+      values << @key_size
+    end
+    return values
+  end
+
+  def toString(output_type, set_num)
+    values = _get_variable_list.join(",")
+    tmp = []
+
+    if output_type == 'js'
+      tmp << 'so.addVariable("' + @var + set_num.to_s + '","' + values + '");'
+      tmp << 'so.addVariable("values' + set_num.to_s + '","' + @data.join(",") + '");'
+      if !@links.empty?
+        tmp << 'so.addVariable("links' + set_num.to_s + '","' + @links.join(",") + '");'
+      end
+      if !@tips.empty?
+        tmp << 'so.addVariable("tool_tips_set' + set_num.to_s + '","' + @tips.join(",") + '");'
+      end
+    else
+      tmp << '&' + @var + set_num.to_s + '=' + values + '&'
+      tmp << '&values' + set_num.to_s + '=' + @data.join(",") + '&'
+      if !@links.empty?
+        tmp << '&links' + set_num.to_s + '=' + @links.join(",") + '&'
+      end
+      if !@tips.empty?
+        tmp << '&tool_tips_set' + set_num.to_s + '=' + @tips.join(",") + '&'
+      end
+    end
+    return tmp.join("\r\n")
+  end
+end
+
+class LineHollow < Line
+  attr_accessor :dot_size, :var
+  def initialize(line_width, dot_size, color)
+    super(line_width, color)
+    @var = 'line_hollow'
+    @dot_size = dot_size
+  end
+
+  def _get_variable_list
+    values = []
+    values << @line_width
+    values << @color
+    if @_key
+      values << @key
+      values << @key_size
+    else
+      values << ''
+      values << ''
+    end
+    values << @dot_size
+    return values
+  end
+end
+
+class LineDot < LineHollow
+  def initialize(line_width, dot_size, color)
+    super(line_width, dot_size, color)
+    @var = 'line_dot'
+  end
+end
+
 class Bar
-	attr_accessor :color, :alpha, :data, :links, :_key, :key, :key_size, :var
+	attr_accessor :color, :alpha, :data, :links, :_key, :key, :key_size, :tips, :var
 
 	def initialize(alpha, color)
 		@var   = 'bar'
@@ -512,6 +623,7 @@ class Bar
     @color = color
     @data  = []
     @links = []
+    @tips  = []
     @_key  = false 
 	end
 
@@ -521,10 +633,19 @@ class Bar
     @key_size = size
 	end
 
-	def add(data, link)
+	def add(data)
 		@data  << data
-    @links << link
 	end	
+
+  def add_link(data, link)
+    @data << data
+    @links << Graph.esc(link)
+  end
+
+  def add_data_tip(data, tip)
+    @data << data
+    @tips << Graph.esc(tip)
+  end
 
 	def _get_variable_list
 		values = []
@@ -545,16 +666,22 @@ class Bar
 		temp = []
 
 		if output_type == 'js'
-			temp << 'so.addVariable("' + @var + '","' + values + '");'
+			temp << 'so.addVariable("' + @var + set_num.to_s + '","' + values + '");'
 			temp << 'so.addVariable("values' + set_num.to_s + '","' + @data.join(",") + '");'
-			if links.size > 0
-				temp << 'so.addVariable("values' + set_num.to_s + '","' + @links.join(",") + '");'
+			if @links.size > 0
+				temp << 'so.addVariable("links' + set_num.to_s + '","' + @links.join(",") + '");'
+			end
+			if @tips.size > 0
+				temp << 'so.addVariable("tool_tips_set' + set_num.to_s + '","' + @tips.join(",") + '");'
 			end
 		else
-			temp << '&' + @var + set_num + '=' + values + '&'
-			temp << '&values' + set_num + '=' + @data.join(",") + '&'
+			temp << '&' + @var + set_num.to_s + '=' + values + '&'
+			temp << '&values' + set_num.to_s + '=' + @data.join(",") + '&'
 			if @links.size > 0
-				temp << '&links' + set_num + '=' + @links.join(",") + '&'
+				temp << '&links' + set_num.to_s + '=' + @links.join(",") + '&'
+			end
+			if @tips.size > 0
+				temp << '&tool_tips_set' + set_num.to_s + '=' + @tips.join(",") + '&'
 			end
 		end
 
