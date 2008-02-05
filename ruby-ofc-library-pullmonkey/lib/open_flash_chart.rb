@@ -162,8 +162,7 @@ class Graph
 	end
 
   def set_x_labels(a)
-    @x_labels = a.map{|x| Graph.esc(x)} if a.class == Array
-    @x_lables = Graph.esc(a) if a.class == String 
+    @x_labels = a
   end
 	
 	def set_y_label_steps(val)
