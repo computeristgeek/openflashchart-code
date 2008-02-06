@@ -693,7 +693,15 @@ function LoadVarsOnLoad( success )
 	if( this.pie != undefined )
 		this.make_pie();
 	else
+	{ 
+		//clean up pie chart if it is there (e.g an ajax reload)
+		if(_root._pie != undefined)
+		{ 
+			_root._pie.draw( _root._title.height(), true); 
+			_root._pie = undefined; 
+		}
 		this.make_chart();
+	}
 
 	
 	if( this.tool_tip != undefined )
@@ -957,7 +965,7 @@ if( _root.data == undefined )
 		//
 		// We are in the IDE
 		//
-		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-47.txt";
+		_root.data="C:\\Users\\John\\Documents\\flash\\svn\\data-files\\data-56.txt";
 		//_root.data="http://www.stelteronline.de/index.php?option=com_joomleague&func=showStats_GetChartData&p=1";
 		lv.load(_root.data);
 	}
