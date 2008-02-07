@@ -1,4 +1,5 @@
 class Graph
+  require 'md5'
 	attr_accessor :data_sets, :data
   def initialize
 
@@ -88,7 +89,8 @@ class Graph
 
 	# new methods between 1.9.3 and 1.9.6
 	def set_unique_id()
-		@unique_id = uniqid()
+    md5 = Digest::MD5.new << Time.now.to_s << String(Time.now.usec) << String(rand(0)) << String($$) << "open_flash_chart"
+		@unique_id = md5.hexdigest 
 	end
 
 	def get_unique_id()
@@ -393,6 +395,7 @@ class Graph
 	end
 
 	def render
+    logger = Logger.new(STDERR)
   	temp  = []
 		
 		if @output_type == 'js'
@@ -400,10 +403,13 @@ class Graph
 			temp << '<div id="my_chart' + "#{@unique_id}" + '"></div>'
 			temp << '<script type="text/javascript" src="' + "#{@js_path}/swfobject.js" + '"></script>'
 			temp << '<script type="text/javascript">'
-			temp << 'var so = new SWFObject(' + @swf_path + '"open-flash-chart.swf", "ofc", "' + width.to_s + '", "' + height.to_s + '", "9", "#FFFFFF");'
+			temp << 'var so = new SWFObject("' + @swf_path + 'open-flash-chart.swf", "ofc", "' + @width.to_s + '", "' + @height.to_s + '", "9", "#FFFFFF");'
 			temp << 'so.addVariable("variable","true");'
 		end
 
+logger.error temp.inspect
+logger.error "DLSJFLSDJFLSDJLFJSDJS"
+logger.error "DLSJFLSDJFLSDJLFJSDJS"
 		{"title" 					=> [@title, @title_style],
 		 "x_legend"				=> [@x_legend, @x_legend_size, @x_legend_color],
      "x_label_style"  => [@x_label_style],
@@ -499,10 +505,11 @@ class Graph
 		end
 
 		if @output_type == "js"
-			temp << 'so.write(' + @unique_id + ');'
+			temp << 'so.write(my_chart"' + @unique_id + '");'
 			temp << '</script>'
 		end	
 
+logger.error temp.inspect
 		return temp.join("\r\n")
 	end
 end
@@ -559,7 +566,7 @@ class Line
     values = _get_variable_list.join(",")
     tmp = []
 
-    if output_type == 'js'
+    if @output_type == 'js'
       tmp << 'so.addVariable("' + @var + set_num.to_s + '","' + values + '");'
       tmp << 'so.addVariable("values' + set_num.to_s + '","' + @data.join(",") + '");'
       if !@links.empty?
@@ -664,7 +671,7 @@ class Bar
 
 		temp = []
 
-		if output_type == 'js'
+		if @output_type == 'js'
 			temp << 'so.addVariable("' + @var + set_num.to_s + '","' + values + '");'
 			temp << 'so.addVariable("values' + set_num.to_s + '","' + @data.join(",") + '");'
 			if @links.size > 0
@@ -790,7 +797,7 @@ end
 
 $open_flash_chart_seqno = nil
 
-def _ofc(width, height, url, use_swfobject,base="/")
+def _ofc(width, height, url, use_swfobject, base="/")
 	url = CGI::escape(url)
 	out = []
 
@@ -804,7 +811,7 @@ def _ofc(width, height, url, use_swfobject,base="/")
 
 	if !$open_flash_chart_seqno
 		$open_flash_chart_seqno = 1
-		out << '<script type="text/javascripts" src="' + base + 'js/ofc.js"></script>'
+		out << '<script type="text/javascripts" src="' + base + 'javascripts/swfobject.js"></script>'
 	else
 		$open_flash_chart_seqno += 1
 		obj_id   += "_#{$open_flash_chart_seqno}"
