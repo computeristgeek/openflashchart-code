@@ -462,9 +462,9 @@ class Graph
 		num = 1
 		@links.each do |link|
 			if num == 1
-				temp << format_output('links', data)
+				temp << format_output('links', link)
 			else
-				temp << format_output("links_#{num}", data)
+				temp << format_output("links_#{num}", link)
 			end
 			num += 1
 		end
