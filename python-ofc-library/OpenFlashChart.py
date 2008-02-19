@@ -376,7 +376,7 @@ class graph:
 			tmp += '_%s' % (len( self.lines )+1)
 				
 		tmp += '='
-		tmp += "%s,%s,%s,%s,%s" % (alpha,colour,outline_colour,text,size)
+		tmp += "%s,%s,%s,%s,%s" % (alpha,colour,colour_outline,text,size)
 		tmp += "&"
 			
 		self.lines.append( tmp )
