@@ -28,7 +28,7 @@ class graph
 		$this->y_steps = '';
 		$this->title = '';
 		$this->title_style = '';
-		$this->occurence = 0;
+      $this->unique_id = '';
 		
 		$this->x_offset = '';
 
