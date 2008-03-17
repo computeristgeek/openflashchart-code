@@ -1,5 +1,5 @@
 #
-# API ref: /php-ofc-library/open-flash-chart.php version 102
+# API ref: /php-ofc-library/open-flash-chart.php version 116
 #
 
 package open_flash_chart;
@@ -33,7 +33,7 @@ sub new() {
   $self->{y_steps} = '';
   $self->{title} = '';
   $self->{title_style} = '';
-  $self->{occurence} = 0;
+  $self->{unique_id} = '';
   $self->{x_offset} = '';
 
   $self->{x_tick_size} = -1;
