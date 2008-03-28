@@ -1,6 +1,6 @@
 #
-# API ref: /php-ofc-library/open-flash-chart.php version 116
-#
+# API ref: /php-ofc-library/open-flash-chart.php version 78
+# $Id: open_flash_chart.pm,v 1.16 2008/03/27 20:58:19 jvandervort Exp $
 
 package open_flash_chart;
 
@@ -22,8 +22,7 @@ sub new() {
   $self->{links} = [];
   $self->{width} = 250;
   $self->{height} = 200;
-  $self->{js_base} = 'js/';
-  $self->{swf_path} = '';
+  $self->{base} = 'js/';
   $self->{x_labels} = [];
   $self->{y_auto} = 1;
   $self->{y_min} = '';
@@ -33,7 +32,7 @@ sub new() {
   $self->{y_steps} = '';
   $self->{title} = '';
   $self->{title_style} = '';
-  $self->{unique_id} = '';
+  $self->{occurence} = 0;
   $self->{x_offset} = '';
 
   $self->{x_tick_size} = -1;
@@ -72,7 +71,7 @@ sub new() {
   $self->{line_default}->{values} = '3,#87421F';
   $self->{js_line_default} = 'so.addVariable("line","3,#87421F");';
 
-  $self->{bg_colour} = '';
+  $self->{bg_colour} = ''; # '#ebf4fa';
   $self->{bg_image} = '';
 
   $self->{inner_bg_colour} = '';
@@ -97,8 +96,6 @@ sub new() {
 	$self->{is_fixed_num_decimals_forced}='';
 	$self->{is_decimal_separator_comma}='';
 	$self->{is_thousand_separator_disabled}='';
-	
-	$self->{output_type} = '';
 	
   #
   # set some default value incase the user forgets
@@ -158,6 +155,11 @@ sub set_output_type() {
   $self->{output_type} = $type;
 }
 
+sub increment_occurence() {
+  my ($self) = @_;
+  $self->{occurence}++;
+}
+
 # returns the next line label for multiple lines.
 sub next_line() {
   my ($self) = @_;
@@ -178,18 +180,15 @@ sub esc() {
   # which is no good if we are splitting the
   # string on commas.
   $text =~ s/,/#comma#/g;
-
-  #$tmp = utf8_encode( $tmp ); perl claims to handle utf8 natively.  We'll see
-    
   # now we urlescape all dodgy characters (like & % $ etc..)
   return url_escape( $text );
 }
 
 # Format the text to the type of output.
 sub format_output() {
-  my ($self, $function, $values) = @_;
+  my ($self, $output_type, $function, $values) = @_;
   my $tmp='';
-  if($self->{output_type} eq 'js') {
+  if($output_type eq 'js') {
     $tmp = 'so.addVariable("'. $function .'","'. $values . '");';
   } else {
     $tmp = '&'. $function .'='. $values .'&';
@@ -208,7 +207,7 @@ sub format_output() {
 sub set_title() {
 	my ($self, $title, $style) = @_;
 	$style = '' if !defined($style);
-  $self->{title} = $self->esc($title);
+  $self->{title} = $title;
   if( $style ne '' ) {
     $self->{title_style} = $style;
   }
@@ -286,9 +285,8 @@ sub set_data() {
 
 # UGH, these evil functions are making me fell ill
 sub set_links() {
-  my ($self, $links) = @_;
-  # TO DO escape commas:
-  push(@{$self->{links}}, join(',', @$links));
+  my ($self, $a) = @_;
+  push(@{$self->{links}}, join(',', @$a));
 }
 
 # $val is a boolean
@@ -324,13 +322,7 @@ sub set_tool_tip() {
 #
 sub set_x_labels() {
   my ($self, $a) = @_;
-  
-  my @tmp;
-  for my $item ( @$a ) {
-    push(@tmp, $self->esc( $item ));
-  }
-
-  $self->{x_labels} = \@tmp;
+  $self->{x_labels} = $a;
 }
 
 
@@ -730,23 +722,23 @@ sub y_right_axis_colour() {
 #   Need to find out.
 #
 sub line() {
-  my ($self, $width, $colour, $text, $size, $circles) = @_;
+  my ($self, $line_width, $colour, $text, $font_size, $circles) = @_;
   $colour = '' if !defined($colour);
   $text = '' if !defined($text);
-  $size = -1 if !defined($size);
+  $font_size = -1 if !defined($font_size);
   $circles = -1 if !defined($circles);
 
   my $type = 'line'. $self->next_line();
 
   my $description = '';
-  if( $width > 0 ) {
-    $description .= $width;
+  if( $line_width > 0 ) {
+    $description .= $line_width;
     $description .= ','. $colour;
   }
 
   if( $text ne '' ) {
     $description.= ','. $text;
-    $description .= ','. $size;
+    $description .= ','. $font_size;
   }
 
   if( $circles > 0 )  {
@@ -771,13 +763,13 @@ sub line() {
 #   Font size of the label.
 #
 sub line_dot() {
-  my ($self, $width, $dot_size, $colour, $text, $font_size) = @_;
+  my ($self, $line_width, $dot_size, $colour, $text, $font_size) = @_;
   $text = '' if !defined($text);
   $font_size = '' if !defined($font_size);
 
   my $type = 'line_dot'. $self->next_line();
 
-  my $description = "$width,$colour,$text";
+  my $description = "$line_width,$colour,$text";
 
   if( $font_size ne '') {
     $description .= ",$font_size,$dot_size";
@@ -1058,19 +1050,19 @@ sub scatter() {
 #   The percentage of transparency of the pie colour.
 # @param line_colour a string argument.
 #   The hex colour value of the outline.
-#	@param $style a string argument.
-#	  CSS style string
+# @param label_colour a string argument.
+#   The hex colour value of the label.
 # @param gradient a boolean argument.
 #   Use a gradient true or false.
 # @param border_size an int argument.
 #   Size of the border in pixels.
 #
 sub pie() {
-  my ($self, $alpha, $line_colour, $style, $gradient, $border_size) = @_;
+  my ($self, $alpha, $line_colour, $label_colour, $gradient, $border_size) = @_;
   $gradient = 'true' if !defined($gradient);
   $border_size = 'false' if !defined($border_size);
 
-  $self->{pie} = $alpha.','.$line_colour.','.$style;
+  $self->{pie} = $alpha.','.$line_colour.','.$label_colour;
   if( $gradient eq 'false' ) {
     $self->{pie} .= ','.!$gradient;
   }
@@ -1095,71 +1087,74 @@ sub pie() {
 #
 sub pie_values() {
   my ($self, $values, $labels, $links ) = @_;
-  
-  if ( !defined($labels) ) {
-  	$labels = [];
-  	for ( my $i = 0; $i < scalar(@$values); $i++ ) {
-  		push(@$labels, '');
-  	}
-  }
 
-  if ( !defined($links) ) {
-  	$links = [];
-  	for ( my $i = 0; $i < scalar(@$values); $i++ ) {
-  		push(@$links, '');
-  	}
+  my @l_values = @$values if defined($values) || ();
+  my @l_labels = @$labels if defined($labels) || ();
+  my @l_links = @$links if defined($links) || ();
+  
+  while ( @l_labels < @l_values ) {
+ 		push(@l_labels, '');
+  }
+  while ( @l_links < @l_values ) {
+ 		push(@l_links, '');
   }
 
   #php divergence here.
   #make sure all labels are shown ie no zero values
   #make sure you add up to 100% exactly
   my $total=0;
-  for my $v ( @$values ) {
+  for my $v ( @l_values ) {
     $total=$total + $v;
   }
   my $pie_total = 0;
   my $biggest_pie_slice = 0;
   my $too_small_value = 0;
   my $too_small_label = '';
-  for ( my $i=0; $i < @$values; $i++) {
-    $values->[$i] = sprintf("%.1f", ($values->[$i] / $total) * 100.0);
+  for ( my $i=0; $i < @l_values; $i++) {
+    $l_values[$i] = sprintf("%.1f", ($l_values[$i] / $total) * 100.0);
     # you can't have a zero pie slice
-    if ( $values->[$i] == 0 ) {
-    	splice(@{$values}, $i, 1);
-    	splice(@{$labels}, $i, 1);
-    	splice(@{$links}, $i, 1);
+    if ( $l_values[$i] == 0.0 ) {
+    	splice(@l_values, $i, 1);
+    	splice(@l_labels, $i, 1);
+    	splice(@l_links, $i, 1);
     	$i--;
     	next;
-    } elsif ($values->[$i] < 3) {
-    	$pie_total += $values->[$i];
-    	$too_small_value = $too_small_value + $values->[$i];
-   		$too_small_label .= ' '  . $labels->[$i];
-    	splice(@{$values}, $i, 1);
-    	splice(@{$labels}, $i, 1);
-    	splice(@{$links}, $i, 1);
+    } elsif ($l_values[$i] < 3.0) {
+    	$pie_total += $l_values[$i];
+    	$too_small_value = $too_small_value + $l_values[$i];
+   		$too_small_label = $l_labels[$i] . '/' . $too_small_label;
+    	splice(@l_values, $i, 1);
+    	splice(@l_labels, $i, 1);
+    	splice(@l_links, $i, 1);
     	$i--;
     	next;
     }
     
-    $pie_total += $values->[$i];
-    if ( $values->[$i] > $values->[$biggest_pie_slice] ) {
+    $pie_total += $l_values[$i];
+    if ( $l_values[$i] > $l_values[$biggest_pie_slice] ) {
       $biggest_pie_slice = $i;
     }
   }
   
   #adjust for rounding errors, and fill to 100% on biggest pie slice
-  $values->[$biggest_pie_slice] += (100.0 - $pie_total);
+  $l_values[$biggest_pie_slice] += (100.0 - $pie_total);
 
-	if ( $too_small_value > 0 ) {
-		push(@$values, $too_small_value);
-		$too_small_label =~ s/ $//;
-		push(@$labels, $too_small_label);
-		push(@$links,'');
+	#get rid of the tailing / from the too small label
+	$too_small_label =~ s/\/$//;
+	if (length($too_small_label) > 20 ) {
+		$too_small_label = substr($too_small_label,0,25) . "...";
 	}
 
-  $self->{pie_values} = join(',',@$values);
-  $self->{pie_labels} = join(',',@$labels);
-  $self->{pie_links}  = join(',',@$links);
+	if ( $too_small_value > 0 ) {
+		push(@l_values, $too_small_value);
+		$too_small_label =~ s/ $//;
+		push(@l_labels, $too_small_label);
+		push(@l_links,'');
+	}
+
+  $self->{pie_values} = join(',',@l_values);
+  $self->{pie_labels} = join(',',@l_labels);
+  $self->{pie_links}  = join(',',@l_links);
 }
 
 #
@@ -1177,158 +1172,160 @@ sub pie_slice_colours() {
 # Render the output.
 #
 sub render() {
-  my ($self) = @_;
-
+  my ($self,$output_type) = @_;
+  $output_type = $self->{output_type} if !defined($output_type);
   my $tmp = [];
   my $values;
 
-  #probably need this somewhere else since render doesn't render the whole page.
-	#echo headers_sent() ?'yes':'no';
-	#if( !headers_sent() ) {
-	#	header('content-type: text; charset: utf-8');
-	#}
+  if($output_type eq 'js') {
+    $self->increment_occurence();
 
-  if($self->{output_type} eq 'js') {
-    $self->set_unique_id();
-
-    push(@$tmp, '<div id="' . $self->{unique_id} . '"></div>');
-    push(@$tmp, '<script type="text/javascript" src="' . $self->{js_path} . 'swfobject.js"></script>');
+    push(@$tmp, '<div id="my_chart' . $self->{occurence} . '"></div>');
+    #push(@$tmp, '<script type="text/javascript" src="' . $self->{base} . 'swfobject.js"></script>');
     push(@$tmp, '<script type="text/javascript">');
-    push(@$tmp, 'var so = new SWFObject("' . $self->{swf_path} . 'open-flash-chart.swf", "ofc", "'. $self->{width} . '", "' . $self->{height} . '", "9", "#FFFFFF");');
+    push(@$tmp, 'var so = new SWFObject("open-flash-chart.swf", "ofc", "'. $self->{width} . '", "' . $self->{height} . '", "9", "#FFFFFF");');
     push(@$tmp, 'so.addVariable("variables","true");');
   }
 
   if( $self->{title} ne '' ) {
     $values = $self->{title};
     $values .= ','. $self->{title_style};
-    push(@$tmp, $self->format_output('title',$values));
+    push(@$tmp, $self->format_output($output_type,'title',$values));
   }
 
   if( $self->{x_legend} ne '' ) {
     $values = $self->{x_legend};
     $values .= ','. $self->{x_legend_size};
     $values .= ','. $self->{x_legend_colour};
-    push(@$tmp, $self->format_output('x_legend',$values));
+    push(@$tmp, $self->format_output($output_type,'x_legend',$values));
   }
 
   if( $self->{x_label_style} ne '') {
-    push(@$tmp, $self->format_output('x_label_style',$self->{x_label_style}));
+    push(@$tmp, $self->format_output($output_type,'x_label_style',$self->{x_label_style}));
   }
 
   if( $self->{x_tick_size} > 0 ) {
-    push(@$tmp, $self->format_output('x_ticks',$self->{x_tick_size}));
+    push(@$tmp, $self->format_output($output_type,'x_ticks',$self->{x_tick_size}));
   }
 
   if( $self->{x_axis_steps} > 0 ) {
-    push(@$tmp, $self->format_output('x_axis_steps',$self->{x_axis_steps}));
+    push(@$tmp, $self->format_output($output_type,'x_axis_steps',$self->{x_axis_steps}));
   }
 
   if( $self->{x_axis_3d} ne '' ) {
-    push(@$tmp, $self->format_output('x_axis_3d',$self->{x_axis_3d}));
+    push(@$tmp, $self->format_output($output_type,'x_axis_3d',$self->{x_axis_3d}));
   }
 
   if( $self->{y_legend} ne '' ) {
-    push(@$tmp, $self->format_output('y_legend',$self->{y_legend}));
+    push(@$tmp, $self->format_output($output_type,'y_legend',$self->{y_legend}));
   }
 
   if( $self->{y_legend_right} ne '' ) {
-    push(@$tmp, $self->format_output('y2_legend',$self->{y_legend_right}));
+    push(@$tmp, $self->format_output($output_type,'y2_legend',$self->{y_legend_right}));
   }
 
   if( $self->{y_label_style} > 0 ) {
-    push (@$tmp, $self->format_output('y_label_style',$self->{y_label_style}));
+    push (@$tmp, $self->format_output($output_type,'y_label_style',$self->{y_label_style}));
   }
 
   $values = '5,10,'. $self->{y_steps};
-  push(@$tmp, $self->format_output('y_ticks',$values));
+  push(@$tmp, $self->format_output($output_type,'y_ticks',$values));
 
-  if( scalar(@{$self->{lines}}) == 0 && scalar(@{$self->{data_sets}}) == 0 ) {
-    push(@$tmp, $self->format_output($self->{line_default}->{type},$self->{line_default}->{values}));
-  } else {
-    for my $line ( @{$self->{lines}} ) {
-      push(@$tmp, $self->format_output($line->{type},$line->{description}));
+
+  if ( scalar(@{$self->{data_sets}}) == 0 ) {
+    #legacy api
+
+    if( scalar(@{$self->{lines}}) == 0 ) {
+      push(@$tmp, $self->format_output($output_type,$self->{line_default}->{type},$self->{line_default}->{values}));
+    } else {
+      for my $line ( @{$self->{lines}} ) {
+        push(@$tmp, $self->format_output($output_type,$line->{type},$line->{description}));
+      }
+    }
+    my $num = 1;
+    for my $data ( @{$self->{data}} ) {
+      if( $num==1 ) {
+        push(@$tmp, $self->format_output($output_type, 'values', $data));
+      } else  {
+        push(@$tmp, $self->format_output($output_type,'values_'. $num, $data));
+      }
+      $num++;
+    }
+    $num = 1;
+    for my $link ( @{$self->{links}} ) {
+      if( $num==1 ) {
+        push(@$tmp, $self->format_output($output_type, 'links', $link));
+      } else  {
+        push(@$tmp, $self->format_output($output_type,'links_'. $num, $link));
+      }
+      $num++;
     }
   }
 
-  my $num = 1;
-  for my $data ( @{$self->{data}} ) {
-    if( $num==1 ) {
-      push(@$tmp, $self->format_output('values', $data));
-    } else  {
-      push(@$tmp, $self->format_output('values_'. $num, $data));
-    }
-    $num++;
-  }
-
-  $num = 1;
-  for my $link ( @{$self->{links}} ) {
-    if( $num==1 ) {
-      push(@$tmp, $self->format_output('links', $link));
-    } else  {
-      push(@$tmp, $self->format_output('links_'. $num, $link));
-    }
-    $num++;
-  }
 
   if( scalar(@{$self->{y2_lines}} ) > 0 ) {
-    push(@$tmp, $self->format_output('y2_lines',join(',', @{$self->{y2_lines}})));
+    push(@$tmp, $self->format_output($output_type,'y2_lines',join(',', @{$self->{y2_lines}})));
     #
     # Should this be an option? I think so...
     #
-    push(@$tmp, $self->format_output('show_y2','true'));
+    push(@$tmp, $self->format_output($output_type,'show_y2','true'));
   }
 
+
+
+
+
   if( scalar( @{$self->{x_labels}}) > 0 ) {
-    push(@$tmp, $self->format_output('x_labels', join(',',@{$self->{x_labels}}) ));
+    push(@$tmp, $self->format_output($output_type,'x_labels', join(',',@{$self->{x_labels}}) ));
   } else {
     if( $self->{x_min} ne '' ) {
-      push(@$tmp, $self->format_output('x_min',$self->{x_min}));
+      push(@$tmp, $self->format_output($output_type,'x_min',$self->{x_min}));
     }
 
     if( $self->{x_max} ne '' ) {
-      push(@$tmp, $self->format_output('x_max',$self->{x_max}));
+      push(@$tmp, $self->format_output($output_type,'x_max',$self->{x_max}));
     }
   }
 
-  push(@$tmp, $self->format_output('y_min',$self->{y_min}));
+  push(@$tmp, $self->format_output($output_type,'y_min',$self->{y_min}));
   if ( $self->{y_auto} ) {
     $self->set_auto_y_max();  
   }
-  push(@$tmp, $self->format_output('y_max',$self->{y_max}));
+  push(@$tmp, $self->format_output($output_type,'y_max',$self->{y_max}));
 
   if( $self->{y2_min} ne '' ) {
-    push(@$tmp, $self->format_output('y2_min',$self->{y2_min}));
+    push(@$tmp, $self->format_output($output_type,'y2_min',$self->{y2_min}));
   }
 
   if( $self->{y2_max} ne '' ) {
-    push(@$tmp, $self->format_output('y2_max',$self->{y2_max}));
+    push(@$tmp, $self->format_output($output_type,'y2_max',$self->{y2_max}));
   }
 
   if( $self->{bg_colour} ne '' ) {
-    push(@$tmp, $self->format_output('bg_colour',$self->{bg_colour}));
+    push(@$tmp, $self->format_output($output_type,'bg_colour',$self->{bg_colour}));
   }
 
   if( $self->{bg_image} ne '' ) {
-    push(@$tmp, $self->format_output('bg_image',$self->{bg_image}));
-    push(@$tmp, $self->format_output('bg_image_x',$self->{bg_image_x}));
-    push(@$tmp, $self->format_output('bg_image_y',$self->{bg_image_y}));
+    push(@$tmp, $self->format_output($output_type,'bg_image',$self->{bg_image}));
+    push(@$tmp, $self->format_output($output_type,'bg_image_x',$self->{bg_image_x}));
+    push(@$tmp, $self->format_output($output_type,'bg_image_y',$self->{bg_image_y}));
   }
 
   if( $self->{x_axis_colour} ne '' ) {
-    push(@$tmp, $self->format_output('x_axis_colour',$self->{x_axis_colour}));
-    push(@$tmp, $self->format_output('x_grid_colour',$self->{x_grid_colour}));
+    push(@$tmp, $self->format_output($output_type,'x_axis_colour',$self->{x_axis_colour}));
+    push(@$tmp, $self->format_output($output_type,'x_grid_colour',$self->{x_grid_colour}));
   }
 
   if( $self->{y_axis_colour} ne '' ) {
-    push(@$tmp, $self->format_output('y_axis_colour',$self->{y_axis_colour}));
+    push(@$tmp, $self->format_output($output_type,'y_axis_colour',$self->{y_axis_colour}));
   }
 
   if( $self->{y_grid_colour} ne '' ) {
-    push(@$tmp, $self->format_output('y_grid_colour',$self->{y_grid_colour}));
+    push(@$tmp, $self->format_output($output_type,'y_grid_colour',$self->{y_grid_colour}));
   }
 
   if( $self->{y2_axis_colour} ne '' ) {
-    push(@$tmp, $self->format_output('y2_axis_colour',$self->{y2_axis_colour}));
+    push(@$tmp, $self->format_output($output_type,'y2_axis_colour',$self->{y2_axis_colour}));
   }
 
   if( $self->{inner_bg_colour} ne '' ) {
@@ -1337,49 +1334,49 @@ sub render() {
       $values .= ','. $self->{inner_bg_colour_2};
       $values .= ','. $self->{inner_bg_angle};
     }
-    push(@$tmp, $self->format_output('inner_background',$values));
+    push(@$tmp, $self->format_output($output_type,'inner_background',$values));
   }
 
   if( $self->{pie} ne '' ) {
-    push(@$tmp, $self->format_output('pie',$self->{pie}));
-    push(@$tmp, $self->format_output('values',$self->{pie_values}));
-    push(@$tmp, $self->format_output('pie_labels',$self->{pie_labels}));
-    push(@$tmp, $self->format_output('colours',$self->{pie_colours}));
-    push(@$tmp, $self->format_output('links',$self->{pie_links}));
+    push(@$tmp, $self->format_output($output_type,'pie',$self->{pie}));
+    push(@$tmp, $self->format_output($output_type,'values',$self->{pie_values}));
+    push(@$tmp, $self->format_output($output_type,'pie_labels',$self->{pie_labels}));
+    push(@$tmp, $self->format_output($output_type,'colours',$self->{pie_colours}));
+    push(@$tmp, $self->format_output($output_type,'links',$self->{pie_links}));
   }
 
   if( $self->{tool_tip} ne '' ) {
-    push(@$tmp, $self->format_output('tool_tip',$self->{tool_tip}));
+    push(@$tmp, $self->format_output($output_type,'tool_tip',$self->{tool_tip}));
   }
 
   if( $self->{y_format} ne '' ) {
-    push(@$tmp, $self->format_output('y_format',$self->{y_format}));
+    push(@$tmp, $self->format_output($output_type,'y_format',$self->{y_format}));
   }
 
   if( $self->{num_decimals} ne '' ) {
-    push(@$tmp, $self->format_output('num_decimals',$self->{num_decimals}));
+    push(@$tmp, $self->format_output($output_type,'num_decimals',$self->{num_decimals}));
   }
 
   if( $self->{is_fixed_num_decimals_forced} ne '' ) {
-    push(@$tmp, $self->format_output('is_fixed_num_decimals_forced',$self->{is_fixed_num_decimals_forced}));
+    push(@$tmp, $self->format_output($output_type,'is_fixed_num_decimals_forced',$self->{is_fixed_num_decimals_forced}));
   }
 
   if( $self->{is_decimal_separator_comma} ne '' ) {
-    push(@$tmp, $self->format_output('is_decimal_separator_comma',$self->{is_decimal_separator_comma}));
+    push(@$tmp, $self->format_output($output_type,'is_decimal_separator_comma',$self->{is_decimal_separator_comma}));
   }
 
   if( $self->{is_thousand_separator_disabled} ne '' ) {
-    push(@$tmp, $self->format_output('is_thousand_separator_disabled',$self->{is_thousand_separator_disabled}));
+    push(@$tmp, $self->format_output($output_type,'is_thousand_separator_disabled',$self->{is_thousand_separator_disabled}));
   }
 
   my $count = 1;
   for my $set ( @{$self->{data_sets}} ) {
-    push(@$tmp, $set->toString($self->{output_type}, $count>1?'_'.$count:'' ));
+    push(@$tmp, $set->toString( $output_type, $count>1?'_'.$count:'' ));
     $count++;
   }
 
-  if($self->{output_type} eq 'js') {
-    push(@$tmp, 'so.write("' . $self->{unique_id} . '");');
+  if($output_type eq 'js') {
+    push(@$tmp, 'so.write("my_chart' . $self->{occurence} . '");');
     push(@$tmp, '</script>');
   }
 
@@ -1391,37 +1388,22 @@ sub render() {
 
 # URL-encode string
 sub url_escape {
-  my($toencode) = @_;
-  $toencode=~s/([^a-zA-Z0-9_\-. ])/uc sprintf("%%%02x",ord($1))/eg;
-  $toencode =~ tr/ /+/;    # spaces become pluses
-  return $toencode;
+    my($toencode) = @_;
+    $toencode=~s/([^a-zA-Z0-9_\-. ])/uc sprintf("%%%02x",ord($1))/eg;
+    $toencode =~ tr/ /+/;    # spaces become pluses
+    return $toencode;
 }
-
-# uniqid, simulating php builtin
-sub uniqid {
-  my $prefix = shift || 'ofc_';
-  my @chars = split(" ", "a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9");
-
-  srand();
-  my $id = '';
-  for (my $i=0; $i <= 12 ;$i++) {
-    $id .= $chars[int(rand 36)];
-  }
-  return $id;
-}
-
 
 sub swf_object {
   my ($width, $height, $url) = @_;
 
-  my $id = uniqid();
   my $html=qq^
   <object
     classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
     codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0"
     width="$width"
     height="$height"
-    id="$id"
+    id="graph_2"
     align="middle">
   <param name="allowScriptAccess" value="sameDomain" />
   <param name="movie" value="open-flash-chart.swf?width=$width&height=$height&data=$url"/>
@@ -1445,21 +1427,52 @@ sub swf_object {
 }
 
 
+#
+# control how the auto y_max works
+#
+# @param $smooth_rounding an int argument.
+#   1 or 0: rounds the y_max to the nearest 10, 50, 100, 200, or 500
+# @param $head_room an decimal argument.
+#   defines how much extra y scale you want above your highest data point
+#   defaults to 0.1 (or 10%) extra space at the top of a chart
 sub set_auto_y_max() {
-  my ($self, $smooth_rounding) = @_;
+  my ($self, $smooth_rounding, $head_room) = @_;
   
   $smooth_rounding = 1 if !defined($smooth_rounding);
+  $head_room = 0.1 if !defined($head_room);
 
   my $max;
-  for my $data ( @{$self->{data}} ) {
-    for my $pt ( split(',',$data) ) {
-      if ( !defined($max) ) {
-        $max = $pt;
-      } elsif ( $pt > $max ) {
-        $max = $pt;
+  if ( @{$self->{data_sets}} > 0 ) {
+    
+    
+    
+    #use data_sets
+    for my $set ( @{$self->{data_sets}} ) {
+      #push(@$tmp, $set->toString( $output_type, $count>1?'_'.$count:'' ));
+      #$count++;
+      for my $pt ( @{$set->{data}} ) {
+        
+        if ( !defined($max) ) {
+          $max = $pt;
+        } elsif ( $pt > $max ) {
+          $max = $pt;
+        }
       }
-    }
-  }  
+    }  
+  } else {
+    #use data
+    for my $data ( @{$self->{data}} ) {
+      for my $pt ( split(',',$data) ) {
+        if ( !defined($max) ) {
+          $max = $pt;
+        } elsif ( $pt > $max ) {
+          $max = $pt;
+        }
+      }
+    }  
+  }
+ 
+  $max = $max * (1 + $head_room);
   
   if ( $smooth_rounding ) {
   	# round the max up a bit to a nice round number
@@ -1475,180 +1488,22 @@ sub set_auto_y_max() {
 }
 
 
-package line;
-
+#############################
+sub _____NEW_OBJECTS_____(){}
+#############################
+package dataset;
 sub new() {
-  # Constructer for the line
-  # Sets our default variables
-  my ($proto, $line_width, $colour) = @_;
+  my ($proto) = @_;
   my $class = ref($proto) || $proto;
   my $self  = {};
 
-	$self->{var} = 'line';
-		
-	$self->{line_width} = $line_width;
-	$self->{colour} = $colour;
-	$self->{data} = [];
-	$self->{links} = [];
-	$self->{tips} = [];
-	$self->{_key} = 0;
-}
-
-sub key() {
-	my ($self, $key, $size) = @_;
-	$self->{_key} = 1;
-	$self->{key} = graph->esc($key);
-	$self->{key_size} = $size;
-}
-
-sub add() {
-  my ($self, $data) = @_;
-		push(@{$self->{data}}, $data);
-}
-
-sub add_link() {
-  my ($self, $data, $link) = @_;
-	push(@{$self->{data}}, $data);
-	push(@{$self->{links}}, $link);
-}
-	
-sub add_data_tip() {
-  my ($self, $data, $tip ) = @_;
-	push(@{$self->{data}}, $data);
-	push(@{$self->{tips}}, graph->esc($tip));
-}
-
-sub add_data_link_tip() {
-  my ($self, $data, $link, $tip ) = @_;
-	push(@{$self->{data}}, $data);
-	push(@{$self->{links}}, $link);
-	push(@{$self->{tips}}, graph->esc($tip));
-}
-	
-# return the variables for this chart
-sub	_get_variable_list() {
-	my ($self) = @_;
-	my @values;
-  push(@values, $self->{line_width});
-	push(@values, $self->{colour});
-		
-	if( $self->{_key} ) {
-		push(@values, $self->{key});
-		push(@values, $self->{key_size});
-	}
-	
-	return \@values;
-}
-	
-sub toString() {
-  my ($self,  $output_type, $set_num ) = @_;
-
-	my $values = join( ',', @{$self->_get_variable_list()} );
-		
-	my @tmp;
-		
-	if( $output_type eq 'js' ) {
-		push(@tmp, 'so.addVariable("'. $self->{var}.$set_num .'","'. $values . '");'); 
-
-		push(@tmp, 'so.addVariable("values'. $set_num .'","'. join( ',', @$self->{data} ) .'");');
-			
-		if( scalar(@$self->{links}) > 0 ) {
-			push(@tmp, 'so.addVariable("links'. $set_num .'","'. join( ',', @$self->{links} ) .'");');
-		}
-				
-		if( scalar(@$self->{tips} ) > 0 ) {
-		  push(@tmp, 'so.addVariable("tool_tips_set'. $set_num .'","'. join( ',', @$self->{tips} ) .'");');
- 		}
-
-	} else {
-		push(@tmp, '&'. $self->{var}. $set_num .'='. $values .'&');
-		push(@tmp, '&values'. $set_num .'='. join( ',', @$self->{data} ) .'&');
-			
-		if( scalar(@$self->{links}) > 0 ) {
-		  push(@tmp, '&links'. $set_num .'='. join( ',', @$self->{links} ) .'&_');
-    }
-				
-		if( count( $self->{tips} ) > 0 ) {
-		  push(@tmp, '&tool_tips_set'. $set_num .'='. join( ',', @$self->{tips}) .'&');	
-		}
-	}
-
-	return join( "\r\n", @tmp );
-}
-
-package line_hollow;
-our @ISA = qw(line);
-sub new() {
-  # Constructer for the bar
-  # Sets our default variables
-  my ($proto, $line_width, $dot_size, $colour) = @_;
-  my $class = ref($proto) || $proto;
-  my $self  = {};
-  bless $self, $class;
-  $self->SUPER::new($line_width, $colour);
-	$self->{var} = 'line_hollow';
-	$self->{dot_size} = $dot_size;
-
-  return $self;
-}
-
-# return the variables for this chart
-sub _get_variable_list() {
-  my ($self) = @_;
-	my @values;
-	push(@values, $self->{line_width});
-	push(@values, $self->{colour});
-		
-	if( $self->{_key} ) {
-		push(@values, $self->{key});
-		push(@values, $self->{key_size});
-	} else {
-		push(@values, '');
-		push(@values, '');
-	}
-	push(@values, $self->{dot_size});
-		
-	return \@values;
-}
-
-
-package line_dot;
-our @ISA = qw(line_hollow);
-sub new() {
-  # Constructer for the bar
-  # Sets our default variables
-  my ($proto, $line_width, $dot_size, $colour) = @_;
-  my $class = ref($proto) || $proto;
-  my $self  = {};
-  bless $self, $class;
-  $self->SUPER::new($line_width, $dot_size, $colour);
-	$self->{var} = 'line_dot';
-
-  return $self;
-}
-
-
-
-package bar;
-
-sub new() {
-  # Constructer for the bar
-  # Sets our default variables
-  my ($proto, $alpha, $colour) = @_;
-  my $class = ref($proto) || $proto;
-  my $self  = {};
-
-  $self->{alpha} = $alpha;
-  $self->{colour} = $colour;
   $self->{data} = [];
   $self->{links} = [];
-  $self->{tips} = [];
   $self->{_key} = 0;
 
   bless $self, $class;
   return $self;
 }
-
 sub key() {
 	my ($self, $key, $size) = @_;
   $self->{_key} = 1;
@@ -1656,32 +1511,27 @@ sub key() {
   $self->{key_size} = $size;
 }
 
+# add a single data point and link
 sub add() {
-	my ($self, $data) = @_;
-	push(@{$self->{data}}, $data);
-}
-
-sub add_link() {
 	my ($self, $data, $link) = @_;
 	push(@{$self->{data}}, $data);
-	push(@{$self->{links}}, graph->esc($link));
+	push(@{$self->{links}}, $link);
 }
 
-sub add_data_tip() {
-	my ($self, $data, $tip) = @_;
-	push(@{$self->{data}}, $data);
-	push(@{$self->{tips}}, graph->esc($tip));
+# add all data points and links by array ref
+sub add_data() {
+	my ($self, $data_array, $links_array) = @_;
+	$self->{data} = $data_array;
+	$self->{links} = $links_array;
 }
+
 
 # return the variables for this
-# bar chart
+# data seris (usually overridden
 sub _get_variable_list() {
 	my ($self) = @_;
 	
   my @values;
-  push(@values, $self->{alpha});
-  push(@values, $self->{colour});
-
   if( $self->{_key} ) {
     push(@values, $self->{key});
     push(@values, $self->{key_size});
@@ -1704,11 +1554,6 @@ sub toString() {
     if( scalar(@{$self->{links}}) > 0 ) {
       push(@tmp, 'so.addVariable("values'. $set_num .'","'. join(',', @{$self->{links}}) .'");');
     }
-    
-    if( scalar(@{$self->{tips}}) > 0 ) {
-      push(@tmp, 'so.addVariable("tool_tips_set'. $set_num .'","'. join(',', @{$self->{tips}}) .'");');
-    }
-    
   } else {
     push(@tmp, '&'. $self->{var}. $set_num .'='. $values .'&');
     push(@tmp, '&values'. $set_num .'='. join(',', @{$self->{data}}) .'&');
@@ -1716,65 +1561,185 @@ sub toString() {
     if( scalar(@{$self->{links}}) > 0 ) {
       push(@tmp, '&links'. $set_num .'='. join(',', @{$self->{links}}) .'&');
     }
-    
-    if( scalar(@{$self->{tips}}) > 0 ) {
-      push(@tmp, '&tool_tips_set'. $set_num .'='. join(',', @{$self->{tips}}) .'&');
-    }
-    
   }
 
   return join("\r\n", @tmp);
 }
 
+#
+# Line Section
+#
+package line;
+our @ISA = qw(dataset);
+sub new() {
+  # Constructer for the bar
+  # Sets our default variables
+  my ($proto, $line_width, $colour, $text, $font_size, $circles) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  bless $self, $class;
+  $self = $self->SUPER::new();
 
+  $colour = ''    if !defined($colour);
+  $text = ''      if !defined($text);
+  $font_size = -1 if !defined($font_size);
+  $circles = -1   if !defined($circles);
+  
+  $self->{line_width} = $line_width;
+  $self->{colour} = $colour;
+  $self->{text} = $text;
+  $self->{font_size} = $font_size;
+  $self->{circles} = $circles;
+
+  $self->{var} = 'line';
+  return $self;
+}
+sub _get_variable_list() {
+	my ($self) = @_;
+	
+  my @values;
+  push(@values, $self->{line_width});
+  push(@values, $self->{colour});
+  push(@values, $self->{text});
+  push(@values, $self->{font_size});
+  push(@values, $self->{circles});
+
+  #if( $self->{_key} ) {
+  #  push(@values, $self->{key});
+  #  push(@values, $self->{key_size});
+  # }
+
+  return \@values;
+}
+
+package line_dot;
+our @ISA = qw(line);
+sub new() {
+  # Constructer for the bar
+  # Sets our default variables
+  my ($proto, $line_width, $dot_size, $colour, $text, $font_size) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  bless $self, $class;
+  $self = $self->SUPER::new($line_width, $colour, $text, $font_size);
+  $self->{dot_size} = $dot_size;
+  
+  $self->{var} = 'line_dot';
+  return $self;
+}
+sub _get_variable_list() {
+	my ($self) = @_;
+	
+  my @values;
+  push(@values, $self->{line_width});
+  push(@values, $self->{colour});
+  push(@values, $self->{text});
+  push(@values, $self->{font_size});
+  push(@values, $self->{dot_size});
+
+  if( $self->{_key} ) {
+    push(@values, $self->{key});
+    push(@values, $self->{key_size});
+   }
+
+  return \@values;
+}
+
+package line_hollow;
+our @ISA = qw(line_dot);
+sub new() {
+  # Constructer for the bar
+  # Sets our default variables
+  my ($proto, $line_width, $dot_size, $colour, $text, $font_size) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  bless $self, $class;
+  $self = $self->SUPER::new($line_width, $dot_size, $colour, $text, $font_size);
+  
+  $self->{var} = 'line_hollow';
+  return $self;
+}
+
+#
+# Bar Section
+#
+package bar;
+our @ISA = qw(dataset);
+sub new() {
+  # Constructer for the bar
+  # Sets our default variables
+  my ($proto, $alpha, $colour) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  bless $self, $class;
+  $self = $self->SUPER::new();
+  $self->{alpha} = $alpha;
+  $self->{colour} = $colour;
+
+  $self->{var} = 'bar';
+
+  return $self;
+}
+
+# return the variables for this
+# bar chart
+sub _get_variable_list() {
+	my ($self) = @_;
+	
+  my @values;
+  push(@values, $self->{alpha});
+  push(@values, $self->{colour});
+
+  if( $self->{_key} ) {
+    push(@values, $self->{key});
+    push(@values, $self->{key_size});
+   }
+
+  return \@values;
+}
 
 package bar_3d;
 our @ISA = qw(bar);
 sub new() {
   # Constructer for the bar
   # Sets our default variables
-  my $proto = shift;
+  my ($proto, $alpha, $colour) = @_;
   my $class = ref($proto) || $proto;
   my $self  = {};
   bless $self, $class;
-  $self->SUPER::new(@_);
+  $self = $self->SUPER::new($alpha, $colour);
   $self->{var} = 'bar_3d';
   return $self;
 }
-
-
 
 package bar_fade;
 our @ISA = qw(bar);
 sub new() {
   # Constructer for the bar
   # Sets our default variables
-  my $proto = shift;
+  my ($proto, $alpha, $colour) = @_;
   my $class = ref($proto) || $proto;
   my $self  = {};
   bless $self, $class;
-  $self->SUPER::new(@_);
+  $self = $self->SUPER::new($alpha, $colour);
   $self->{var} = 'bar_fade';
   return $self;
 }
 
 package bar_outline;
 our @ISA = qw(bar);
-
 sub new() {
   # Constructer for the bar
   # Sets our default variables
-  my $proto = shift;
-  my ($alpha, $colour, $outline_colour) = @_;
+  my ($proto, $alpha, $colour, $outline_colour) = @_;
   my $class = ref($proto) || $proto;
   my $self  = {};
   bless $self, $class;
-  $self->SUPER::new(@_);
+  $self = $self->SUPER::new($alpha, $colour);
   $self->{var} = 'filled_bar';
   $self->{outline_colour} = $outline_colour;
   return $self;
 }
-
 #/ override the base method
 sub _get_variable_list() {
 	my ($self) = @_;
@@ -1790,17 +1755,16 @@ sub _get_variable_list() {
   return \@values;
 }
 
-
 package bar_glass;
 our @ISA = qw(bar_outline);
 sub new() {
   # Constructer for the bar
   # Sets our default variables
-  my $proto = shift;
+  my ($proto, $alpha, $colour) = @_;
   my $class = ref($proto) || $proto;
   my $self  = {};
   bless $self, $class;
-  $self->SUPER::new(@_);
+  $self = $self->SUPER::new($alpha, $colour);
   $self->{var} = 'bar_glass';
   return $self;
 }
@@ -1811,7 +1775,6 @@ sub new() {
 #
 package bar_sketch;
 our @ISA = qw(bar_outline);
-
 sub new() {
   # Constructer for the bar
   # Sets our default variables
@@ -1819,12 +1782,11 @@ sub new() {
   my $class = ref($proto) || $proto;
   my $self  = {};
   bless $self, $class;
-  $self->SUPER::new($alpha, $colour, $outline_colour);
+  $self = $self->SUPER::new($alpha, $colour, $outline_colour);
   $self->{var} = 'bar_sketch';
   $self->{offset} = $offset;
   return $self;
 }
-
 # override the base method
 sub _get_variable_list() {
 	my ($self) = @_;

@@ -1,5 +1,5 @@
 <%@ Language="PerlScript"%>
-<html><head><title>Test Chart</title></head><body><h1>Test Chart</h1>
+<html><head><title>Test OpenFlashCharts</title></head><body><h1>Test OpenFlashCharts</h1>
 <% 
 
 # For this test you must have an iis webserver with the perlscript dll installed as a language.
@@ -12,40 +12,46 @@ use lib $Server->mappath('.');
 use open_flash_chart;
 
 if ( $Request->QueryString("data")->Item == 1 ) {
-	#
-	# NOTE: how we are filling 3 arrays full of data,
-	#       one for each bar on the graph
-	#
-	my @data_1;
-	my @data_2;
-	my @data_3;
-
-	for( my $i=0; $i<12; $i++ ) {
-		push ( @data_1, rand(10) );
-		push ( @data_2, rand(20) );
-		push ( @data_3, rand(2000) );
-	}
-
   my $g = graph->new();
+  $g->title( '2008 Hours Wasted Programming By Month', '{font-size: 20px;}' );
 
-	$g->title( 'Open Flash Chart - Bar Test', '{font-size: 15px; color: #800000}' );
-	$g->set_x_legend( 'By Hours Wasted', 12, '#000000' );
 
-	$g->set_data( \@data_1 );
-	$g->bar( 50, '0x0066CC', 'Me', 10 );
+  my $bar = bar_outline->new(50, '#9933CC', '#8010A0');
+  $bar->key('Java', 10);
+  my $data = [];
+  for( my $i=0; $i<12; $i++ ) {
+    $bar->add(int(rand(3600)), undef);
+  }
+  push(@{$g->{data_sets}}, $bar);
+ 
+  
+  $bar = bar_outline->new(50, '#639F45', '#000000');
+  $bar->key('Perl', 10);
+  my $data = [];
+  for( my $i=0; $i<12; $i++ ) {
+    $bar->add(int(rand(2100)), undef);
+  }
+  push(@{$g->{data_sets}}, $bar);  
+  
+  
+  my $line = line_hollow->new(6, 10, '#000000', 'Happiness', 14, 1);
+  # $width, $colour, $text, $size, $circles
+  #$line->key('Happiness', 10);
+  my $data = [];
+  for( my $i=0; $i<12; $i++ ) {
+    $line->add(1000 + int(rand(1000)), undef);
+  }
+  push(@{$g->{data_sets}}, $line);
+  
+  
+  
 
-	$g->set_data( \@data_2 );
-	$g->bar( 50, '0x9933CC', 'You', 10 );
-
-	$g->set_data( \@data_3 );
-	$g->bar( 50, '0x639F45', 'Them', 10 );
-
+	$g->set_x_legend( 'Bar Outline Chart', 14, '#000000' );
 
 	$g->set_x_labels( ['Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'] );
-	#$g->set_y_max( 10 ); #not need with new auto y_max
 	$g->set_y_min( 0 );
 
-	$g->y_label_steps( 1 );
+	$g->y_label_steps( 10 );
 	$g->set_y_legend( 'Open Flash Chart', 12, '0x736AFF' );
 
 	$Response->write($g->render());
@@ -68,11 +74,11 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   my $width = '100%';
   my $height = 600;
  	$Response->write('<div style="border: 1px solid #784016;">');
-  $Response->write( graph::swf_object( $width, $height, "test.asp?data=1" ));
+  $Response->write( graph::swf_object( $width, $height, "test_bar.asp?data=1" ));
   $Response->write("</div>");
 
  	$Response->write('<div style="margin-top: 20px; border: 1px solid #784016;">');
-  $Response->write( graph::swf_object( $width, $height, "test.asp?data=2" ));
+  $Response->write( graph::swf_object( $width, $height, "test_bar.asp?data=2" ));
   $Response->write("</div>");
   
 }
