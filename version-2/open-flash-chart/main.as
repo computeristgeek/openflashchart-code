@@ -117,6 +117,7 @@ package  {
 			}
 			
 			var parameters:Object = LoaderInfo(this.loaderInfo).parameters;
+			
 			if( parameters['data-file'] )
 			{
 				tr.ace( 'Found parameter:' + parameters['data-file'] );
