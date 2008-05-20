@@ -18,6 +18,8 @@ package  {
 	import flash.external.ExternalInterface;
 	import flash.ui.ContextMenu;
 	import flash.ui.ContextMenuItem;
+	import flash.events.IOErrorEvent;
+	import flash.events.ContextMenuEvent;
 	
 //	import flash.text.TextField;
 	
@@ -55,29 +57,36 @@ package  {
 		
 		public function main() {
 
-			//_root.loading = new Loading('Loading data...');
+			var loading:String = 'Loading data...';
+			var parameters:Object = LoaderInfo(this.loaderInfo).parameters;
+			if( parameters['loading'] )
+				loading = parameters['loading'];
+				
+			var l:Loading = new Loading(loading);
+			this.addChild( l );
 
 			// so we can rotate text:
 			//this.embedFonts = true;
 
-			//_root.chartValues = new Array();
-
-			this.ok = false;
-			this.set_the_stage();
-			
-			// NetVicious, June 2007
 			// Right click menu:
-//			setContextualMenu();
+//			var cm:ContextMenu = new ContextMenu();
+//			cm.addEventListener(ContextMenuEvent.MENU_SELECT, onContextMenuHandler);
+//			cm.hideBuiltInItems();
+//			var fs:ContextMenuItem = new ContextMenuItem("Show Full Screen" );
+//			//fs.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, onShowFullScreen);
+//			cm.customItems.push( fs );
+
+			
 
 			if( !this.find_data() )
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/data-3.txt";
+					var file:String = "../data-files/data-1.txt";
 					this.load_external_file( file );
 				}
-				catch (e:Error){
-					this.addChild( new ErrorMsg( 'Loading test data\n'+file+'\n'+e.message ) );
+				catch (e:Error) {
+					this.show_error( 'Loading test data\n'+file+'\n'+e.message );
 				}
 			}
 			
@@ -86,8 +95,16 @@ package  {
 			
 			// tell the web page that we are ready
 			ExternalInterface.call("ofc_ready");
+			
+			this.ok = false;
+			this.set_the_stage();
+			
 		}
-
+		
+		private function onContextMenuHandler(event:ContextMenuEvent):void
+		{
+		}
+		
 		//
 		// try to find some data to load,
 		// check the URL for a file name,
@@ -148,12 +165,24 @@ package  {
 			// LOAD THE DATA
 			//
 			var loader:URLLoader = new URLLoader();
+			loader.addEventListener( IOErrorEvent.IO_ERROR, this.ioError );
 			loader.addEventListener( Event.COMPLETE, xmlLoaded );
 			
 			var request:URLRequest = new URLRequest(file);
 			loader.load(request);
 		}
 		
+		private function ioError( e:IOErrorEvent ):void {
+			this.show_error( 'IO ERROR\nLoading test data\n' + e.text );
+		}
+		
+		private function show_error( msg:String ):void {
+			
+			// remove the 'loading data...' msg:
+			this.removeChildAt(0);
+			this.addChild( new ErrorMsg( msg ) );
+		}
+
 		public function get_x_legend() : XLegend {
 			return this.x_legend;
 		}
@@ -352,7 +381,11 @@ package  {
 			// don't catch these errors:
 			//
 			if( ok )
+			{
+				// remove 'loading data...' msg:
+				this.removeChildAt(0);
 				this.build_chart( json );
+			}
 		}
 		
 		private function build_chart( json:Object ):void {

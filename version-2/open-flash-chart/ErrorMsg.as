@@ -30,7 +30,7 @@ package {
 			title.border = true;
 			title.x = 5;
 			title.y = 5;
-
+			
 			this.addChild(title);
 		}
 	}

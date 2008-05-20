@@ -10,14 +10,14 @@
 			
 			// we are not passed a string value, the value
 			// is set by the parent collection later
-			super( index, '', colour, group);
+			super( index, 0, colour, group);
 		}
 		
 		public function set_vals( top:Number, bottom:Number ):void {
 			this.top = top;
 			this.bottom = bottom;
 		}
-		
+				
 		//
 		// BUG: we assume that all are positive numbers:
 		//

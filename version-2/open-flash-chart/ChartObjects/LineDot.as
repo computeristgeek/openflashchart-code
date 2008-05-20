@@ -1,6 +1,7 @@
 ﻿package ChartObjects {
 	//import caurina.transitions.Tweener;
 
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import ChartObjects.Elements.Element;
