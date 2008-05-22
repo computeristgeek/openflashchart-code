@@ -1,20 +1,21 @@
 
-package open_flash_chart;
-
 use strict;
+
 
 # This class manages all functions of the open flash chart api.
 package chart;
 sub new() {
   # Constructer for the open_flash_chart_api
   # Sets our default variables
-  my ($proto) = @_;
+  my ($proto, $bootstrap) = @_;
   my $class = ref($proto) || $proto;
   my $self  = {};
   bless $self, $class;
   
   $self->{'data_load_type'} = 'inline_js'; # or 'url_callback'  not sure if we still need both
-  $self->{'bootstrap'} = 0; # you can set this to 1 if you want to handle the js includes
+  
+  $self->{'bootstrap'} = 0; # you can set this to 1 if you want to handle the includes
+  $self->{'bootstrap'} = $bootstrap if defined($bootstrap);
   
   $self->{'chart_props'} = {
     "title"=>{
@@ -45,7 +46,7 @@ sub add_element() {
 sub render_chart_data() {
   my ($self) = @_;
 
-  my $tmp = $self->get_page_bootstrap();
+  my $tmp = ''; #$self->get_page_bootstrap();
   
   if ($self->{'chart_props'}->{'y_axis'}->{'max'} =~ /a/) {
     $self->{'chart_props'}->{'y_axis'}->{'max'} = $self->get_auto_y_max();
@@ -70,34 +71,17 @@ sub render_chart_data() {
 }
 
 
-#
-# get_bootstrap()
-# setup web page with stuff usually only need once.  ie includes etc...
-#
-sub get_page_bootstrap() {
-  my ($self) = @_;
-  return '' if $self->{'bootstrap'} == 1;
-  $self->{'bootstrap'} = 1;
-
-  my $tmp = '';
-  if ( $self->{'data_load_type'} eq 'url_callback' )  {
-    
-  } elsif (  $self->{'output_type'} eq 'inline_js' )  {
-    $tmp.='<script type="text/javascript" src="swfobject.js"></script>';
-    #$tmp.='<script type="text/javascript" src="json2.js"></script>';
-  }
-  return $tmp;
-}
-
-
 sub render_swf {
   my ($self, $width, $height, $data_url) = @_;
 
-  my $html;
+  my $html = '';
   
   if ( $self->{'data_load_type'} eq 'inline_js' ) {
-    $html = qq^
-    <script type="text/javascript" src="swfobject.js"></script>
+    if ($self->{'bootstrap'} == 0 ) {
+      $html.='<script type="text/javascript" src="swfobject.js"></script>';
+      $self->{'bootstrap'} = 1;
+    }
+    $html .= qq^
     <div id="my_chart"></div>
     <script type="text/javascript">
       var so = new SWFObject("open-flash-chart.swf", "ofc", "$width", "$height", "9", "#FFFFFF");
@@ -107,7 +91,7 @@ sub render_swf {
     </script>
     ^;
   } else {
-    $html = qq^
+    $html .= qq^
     <object
       classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
       codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0"
@@ -150,17 +134,15 @@ sub get_auto_y_max() {
   my ($self, $smooth_rounding, $head_room) = @_;
   $smooth_rounding = 1 if !defined($smooth_rounding);
   $head_room = 0.1 if !defined($head_room);
-  my $max = 1;
+  my $max = undef;
     
   for my $e ( @{$self->{'elements'}} ) {
-    for my $v ( @{$e->values()} ) {
-      if ( !defined($max) ) {
-        $max = $v;
-      } elsif ( $v > $max ) {
-        $max = $v;
-      }
+    my $e_max = $e->get_max_value();
+    $max = $e_max if !defined($max);
+    if ( $e_max > $max ) {
+        $max = $e_max;
     }
-  }  
+  }
  
   $max = $max * (1 + $head_room);
   
@@ -207,6 +189,8 @@ sub get_auto_y_max() {
 sub _____ELEMENTS_____(){}
 #############################
 package element;
+use Carp qw(cluck);
+
 our $AUTOLOAD;
 sub new() {
   my ($proto) = @_;
@@ -216,12 +200,25 @@ sub new() {
   $self->{'element_props'} =  {
     'type'      => '',
     'colour'    => main::random_color(),
-    'text'      => 'default name',
+    'text'      => 'text',
     'font-size' => 10,
     'values'    => [1.5,1.69,1.88,2.06,2.21],
   };
   return bless $self, $class;
 }
+
+sub get_max_value {
+  my ($self) = @_;
+  my $max = undef;
+  for ( @{$self->{'element_props'}->{'values'}} ) {
+    $max = $_ if !defined($max);
+    if ( $_ > $max ) {
+      $max = $_;
+    }
+  }
+  return $max || 10;  
+}
+
 sub to_json() {
   my ($self) = @_;
   my $json = main::to_json($self->{'element_props'});
@@ -236,7 +233,7 @@ sub AUTOLOAD {
 	$name =~ s/.*://;   # strip fully-qualified portion
 
 	unless (exists $self->{'element_props'}->{$name} ) {
-	  warn "Can't access `$name' field in class $type";
+	  cluck "'$name' is not a valid property in class $type";
 	  return undef;
 	}
 
@@ -246,6 +243,7 @@ sub AUTOLOAD {
     return $self->{'element_props'}->{$name};
 	}
 }
+sub DESTROY {  }
 
 
 #
@@ -379,7 +377,37 @@ sub new() {
   bless $self, $class;
   $self = $self->SUPER::new();
   $self->{'element_props'}->{'type'} = __PACKAGE__;
+  $self->{'element_props'}->{'text'} = __PACKAGE__ . ' ' . $self->{'element_props'}->{'text'};
+  $self->{'element_props'}->{'values'} = [
+                    [{"val"=>1},{"val"=>3}],
+                    [{"val"=>1},{"val"=>1},{"val"=>2.5}],
+                    [{"val"=>5},{"val"=>5},{"val"=>2},{"val"=>2},{"val"=>2,"colour"=>main::random_color()},{"val"=>2},{"val"=>2}]
+                   ];
+  
   return $self;
+}
+
+#stackbar must override get_max_value() because of nested value list
+sub get_max_value {
+  my ($self) = @_;
+  my $max;
+  for my $v ( @{$self->{'element_props'}->{'values'}} ) {
+    my $bar_max;
+    if (ref($v) eq 'ARRAY') {
+      for ( @$v ) {
+        next if !defined($_->{'val'});
+        if ( !defined($bar_max) ) {
+          $bar_max = $_->{'val'} ;
+        } else {
+          $bar_max += $_->{'val'};
+        }
+        }
+      }
+      if ( $bar_max > $max ) {
+        $max = $bar_max;
+      }
+   }
+  return $max;
 }
 
 
@@ -390,7 +418,6 @@ sub new() {
 # GENERAL HELPERS
 #
 #
-sub _____MAIN_____(){}
 package main;
 sub to_json {
   my ($data_structure, $name) = @_;

@@ -8,7 +8,7 @@
 use strict; 
 our ($Server, $Request, $Response);
 use lib $Server->mappath('.');
-use open_flash_chart;
+use open_flash_chart qw(random_color);
 
 my $g = chart->new();
 
@@ -16,23 +16,17 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 
   
   my $bar = bar_stack->new();
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(20) );
-	}
-  $bar->values($data);
+  
+  $bar->values([
+    [{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(40),"colour"=>random_color()}],
+    [{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(20),"colour"=>random_color()}],
+    [{"val"=>rand(10)},{"val"=>rand(20)},{"val"=>rand(30)}],
+    [{"val"=>rand(20)},{"val"=>rand(20)},{"val"=>rand(20)}],
+    [{"val"=>rand(5)},{"val"=>rand(10)},{"val"=>rand(5)},{"val"=>rand(20)},{"val"=>rand(5),"colour"=>random_color()},{"val"=>rand(5)},{"val"=>rand(5)}]
+   ]);  
+  
   $g->add_element($bar);
 
-  
-  $bar = bar_stack->new();
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(30) );
-	}
-  $bar->values($data);
-  $g->add_element($bar);  
-
- 
 	$Response->write($g->render_chart_data());
   $Response->exit();
 
