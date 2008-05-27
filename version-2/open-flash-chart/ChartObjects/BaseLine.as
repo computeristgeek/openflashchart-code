@@ -2,6 +2,7 @@
 	import ChartObjects.Elements.Element;
 	
 	import flash.display.Sprite;
+	import flash.display.BlendMode;
 	
 	public class BaseLine extends Base
 	{
@@ -11,12 +12,22 @@
 		public override function resize( sc:ScreenCoords ): void {
 			this.x = this.y = 0;
 
+			//
+			// so the mask child can punch a hole through the line
+			//
+			//this.blendMode = BlendMode.LAYER;
+			
 			this.graphics.clear();
 			this.graphics.lineStyle( this.line_width, this.colour );
 			
 			var first:Boolean = true;
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+				
+				var tmp:Sprite = this.getChildAt(i) as Sprite;
+				
+				if( tmp is Element )
+				{
 				var e:Element = this.getChildAt(i) as Element;
 							
 				// tell the point where it is on the screen
@@ -28,30 +39,9 @@
 					first = false;
 				}
 				else
-					this.graphics.lineTo(e.screen_x,e.screen_y);
+					this.graphics.lineTo(e.screen_x, e.screen_y);
+				}
 			}
-			
-			return;
-			
-			
-			// the mask erases parts of the line so the dots look sexy:
-			var s:Sprite = new Sprite();
-			s.x = s.y = 0;
-			s.graphics.lineStyle( 0, 0, 0 );
-			s.graphics.beginFill( 0, 0.4 );
-			s.graphics.drawRect(sc.left, sc.top, sc.width, sc.height);
-			
-			for ( var x:Number = 0; x < this.numChildren; x++ ) {
-				var ee:Element = this.getChildAt(x) as Element;
-				
-				s.graphics.beginFill( 0xffffff, 0 );
-				s.graphics.drawCircle(ee.screen_x, ee.screen_y, 7);
-				s.graphics.endFill();
-			}
-			
-			this.mask = s;
-			this.addChild( s );
-
 		}
 	}
 }

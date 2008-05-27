@@ -1,6 +1,7 @@
 ﻿package ChartObjects {
 	//import caurina.transitions.Tweener;
 
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import ChartObjects.Elements.Element;
@@ -36,7 +37,11 @@
 			//
 			// this allows the dots to erase part of the line
 			//
-			this.blendMode = BlendMode.LAYER;
+//			this.blendMode = BlendMode.LAYER;
+			//this.blendMode = BlendMode.ALPHA;
+			
+			
+
 		}
 		
 		
@@ -44,6 +49,8 @@
 		// called from the base object
 		//
 		protected override function get_element( x:Number, value:Object ): ChartObjects.Elements.Element {
+			
+			
 			return new ChartObjects.Elements.PointHollow( x, Number(value), this.circle_size, this.colour );
 		}
 			

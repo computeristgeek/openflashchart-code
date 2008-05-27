@@ -17,10 +17,14 @@
 			this.radius = size;
 			this.colour = colour;
 			
-			
-			this.graphics.lineStyle( 2, 0, 1 );
+			this.graphics.lineStyle( 0, 0, 0 );
+			this.graphics.beginFill( this.colour, 1 );
 			this.graphics.drawCircle( 0, 0, this.radius );
-
+			//
+			// punch out the hollow circle:
+			//
+			this.graphics.drawCircle( 0, 0, this.radius-2 );
+			this.graphics.endFill();
 			//
 			// HACK: we fill an invisible circle over
 			//       the hollow circle so the mouse over
@@ -31,14 +35,18 @@
 			this.graphics.beginFill(0, 0);
 			this.graphics.drawCircle( 0, 0, this.radius );
 			this.graphics.endFill();
-			
+
 			this.attach_events();
 			
-//			var s:Sprite = new Sprite();
-//			s.graphics.lineStyle( 0, 0, 0 );
-//			s.graphics.beginFill( 0, 0 );// this.bgColour );
-//			s.graphics.drawCircle( 0, 0, this.circle_size - 1 );
-			//s.blendMode = BlendMode.NORMAL;
+			
+			var s:Sprite = new Sprite();
+			s.graphics.lineStyle( 0, 0, 0 );
+			s.graphics.beginFill( 0, 1 );
+			s.graphics.drawCircle( 0, 0, this.radius+2 );
+			s.blendMode = BlendMode.ERASE;
+			
+			this.line_mask = s;
+			
 			
 			//this.addChild( s );
 			
@@ -50,6 +58,15 @@
 //			this.graphics.drawCircle( 0, 0, this.circle_size - 1 );
 
 			//this.blendMode = BlendMode.ALPHA;
+		}
+		
+		public override function resize( sc:ScreenCoords, axis:Number ):void {
+	
+			this.x = this.screen_x = sc.get_x_from_pos( this._x );
+			this.y = this.screen_y = sc.get_y_from_val( this._y, (axis == 2) );
+			
+			this.line_mask.x = this.x;
+			this.line_mask.y = this.y;
 		}
 		
 		public override function set_tip( b:Boolean ):void {

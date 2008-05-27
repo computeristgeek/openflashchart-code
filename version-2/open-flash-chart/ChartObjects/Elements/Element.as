@@ -23,6 +23,12 @@
 		
 		public var is_tip:Boolean;
 		
+		
+		
+		public var line_mask:Sprite;
+		
+		
+		
 		public function Element() {}
 		
 		public function resize( sc:ScreenCoords, axis:Number ):void {

@@ -26,10 +26,10 @@
     {
       "type":      "line_hollow",
       "colour":    "#80a033",
-      "width":     2,
+      "width":     8,
       "text":      "Bounces",
       "font-size": 10,
-      "dot-size":  6,
+      "dot-size":  8,
       "values" :   [5,7,9,7,4,6,1,2,5]
     }
   ],

@@ -205,6 +205,9 @@ package ChartObjects {
 					if( index < this.links.length )
 						tmp.set_link( this.links[index] );
 					
+					if( tmp.line_mask != null )
+						this.addChild( tmp.line_mask );
+						
 					this.addChild( tmp );
 				}
 				

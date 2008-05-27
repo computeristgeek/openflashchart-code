@@ -6,10 +6,21 @@ package {
 	
 	public class XAxisLabels extends Sprite {
 		public var labels:Array;
+		// JSON style:
+		private var style:Object;
+		
+		//
+		[Embed(systemFont='Arial', fontName='spArial', mimeType='application/x-font')]
+		public static var ArialFont:Class;
 
 		function XAxisLabels( json:Object, minmax:MinMax ) {
 			
 			var style:XLabelStyle = new XLabelStyle( json.x_labels );
+			
+			
+			this.style = {
+				rotate:		'diag'
+			};
 			
 			this.labels = new Array();
 
@@ -38,7 +49,7 @@ package {
 		{
 			this.labels.push( label );
 			
-			var l:TextField = this.make_label(label,style);
+			var l:TextField = this.make_label(label, style);
 			
 			//
 			// some labels will be invisible due to the step
@@ -62,6 +73,10 @@ package {
 				return '';
 		}
 		
+		//
+		// I don't think we'll use this any more
+		// used to be called by various JS functions
+		//
 		public function del() : void
 		{
 			this.labels.shift();
@@ -96,39 +111,32 @@ package {
 			//title.styleSheet = this.css;
 			title.text = label;
 			
-				
-			if( false )//style.vertical || style.diag )
-			{
-				// so we can rotate the text
-				//mc.txt.embedFonts = true;
-			}
-
 			var fmt:TextFormat = new TextFormat();
 			fmt.color = style.colour;
-
-//			if( style.vertical )
-//				fmt.font = "Verdana_embed";
-//			else
+		
+			if( this.style.rotate != 0 )
+			{
+				// so we can rotate the text
+				fmt.font = "spArial";
+				title.embedFonts = true;
+			}
+			else
+			{
 				fmt.font = "Verdana";
+			}
+
 			
 			fmt.size = style.size;
 			fmt.align = "left";
 			title.setTextFormat(fmt);
 			title.autoSize = "left";
 			
-			if( false )//style.vertical )
+			if( this.style.rotate == 'vertical' )
 			{
 				title.rotation = 270;
-				// LOOK: move registration point:
-				title.y = height;
-				title.x = -(title.width/2)
 			}
-			else if( false )//style.diag )
+			else if( this.style.rotate == 'diag' )
 			{
-				// shift the text so when we rotate the movie clip it rotates
-				// arround the last letter
-				title.x = -title.width;
-				title.y = -(title.height/2);
 				title.rotation = -45;
 			}
 			else
@@ -166,6 +174,13 @@ package {
 				var child:DisplayObject = this.getChildAt(pos);
 				child.x = sc.get_x_tick_pos(pos) - (child.width / 2);
 				child.y = yPos;
+				
+				if( this.style.rotate == 'vertical' )
+					child.y += child.height;
+				
+				if( this.style.rotate == 'diag' )
+					child.y += child.height;
+
 //				i+=this.style.step;
 			}
 		}
