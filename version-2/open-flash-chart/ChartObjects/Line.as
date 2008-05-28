@@ -13,24 +13,24 @@ package ChartObjects {
 		
 		public function Line( json:Object )
 		{
-			var style:Object = {
-				values: [],
-				width: 2,
-				colour: '#3030d0',
-				text: '',		// <-- default not display a key
-				'dot-size': 5,
-				'font-size': 12
+			this.style = {
+				values: 		[],
+				width:			2,
+				colour: 		'#3030d0',
+				text: 			'',		// <-- default not display a key
+				'dot-size': 	5,
+				'font-size': 	12
 			};
 			
-			object_helper.merge_2( json, style );
+			object_helper.merge_2( json, this.style );
 			
-			this.line_width = style.width;
-			this.colour		= string.Utils.get_colour( style.colour );
-			this.key		= style.text;
-			this.font_size	= style['font-size'];
-			this.circle_size = style['dot-size'];
+			this.style.colour = string.Utils.get_colour( this.style.colour );
+			
+			this.key		= this.style.text;
+			this.font_size	= this.style['font-size'];
 				
-			this.values = style.values;
+			this.values = this.style.values;
+			tr.ace( this.values );
 			this.set_links( null );
 //			this.set_links( data['links'+append] );
 			this.make();
@@ -44,7 +44,7 @@ package ChartObjects {
 		protected override function get_element( index:Number, value:Object ): Element {
 			tr.ace( x );
 			tr.ace( value );
-			return new ChartObjects.Elements.Point( index, Number(value), this.colour, this.circle_size );
+			return new ChartObjects.Elements.Point( index, Number(value), this.style.colour, this.style['dot-size'] );
 		}
 	}
 }

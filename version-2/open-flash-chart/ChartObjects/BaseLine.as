@@ -6,19 +6,18 @@
 	
 	public class BaseLine extends Base
 	{
+		// JSON style:
+		protected var style:Object;
+		
+		
 		public function BaseLine() {}
 		
 		// Draw lines...
 		public override function resize( sc:ScreenCoords ): void {
 			this.x = this.y = 0;
 
-			//
-			// so the mask child can punch a hole through the line
-			//
-			//this.blendMode = BlendMode.LAYER;
-			
 			this.graphics.clear();
-			this.graphics.lineStyle( this.line_width, this.colour );
+			this.graphics.lineStyle( this.style.width, this.style.colour );
 			
 			var first:Boolean = true;
 			
@@ -26,20 +25,23 @@
 				
 				var tmp:Sprite = this.getChildAt(i) as Sprite;
 				
+				//
+				// filter out the line masks
+				//
 				if( tmp is Element )
 				{
-				var e:Element = this.getChildAt(i) as Element;
-							
-				// tell the point where it is on the screen
-				// we will use this info to place the tooltip
-				e.resize( sc, 0 );
-				if( first )
-				{
-					this.graphics.moveTo(e.screen_x,e.screen_y);
-					first = false;
-				}
-				else
-					this.graphics.lineTo(e.screen_x, e.screen_y);
+					var e:Element = this.getChildAt(i) as Element;
+								
+					// tell the point where it is on the screen
+					// we will use this info to place the tooltip
+					e.resize( sc, 0 );
+					if( first )
+					{
+						this.graphics.moveTo(e.screen_x,e.screen_y);
+						first = false;
+					}
+					else
+						this.graphics.lineTo(e.screen_x, e.screen_y);
 				}
 			}
 		}

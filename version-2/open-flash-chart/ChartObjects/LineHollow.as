@@ -11,28 +11,40 @@
 	
 	public class LineHollow extends BaseLine
 	{
+		
 		public function LineHollow( json:Object )
 		{
+			this.style = {
+				values: 		[],
+				width:			2,
+				colour:			'#80a033',
+				text:			'',
+				'font-size':	10,
+				'dot-size':		6
+			};
 			
-			// may be line_dot, line_dot_2, line_dot_3 etc...
-			var vals:Array = json['values'];
+			this.style = object_helper.merge( json, this.style );
 			
-			this.line_width = json.width;
-			this.colour = string.Utils.get_colour( json.colour );
+			this.style.colour = string.Utils.get_colour( this.style.colour );
+			this.values = style.values;
 			
-			this.key = json.text;
-			this.font_size = json['font-size'];
-			this.circle_size = json['dot-size'];
+			this.key = style.text;
+			this.font_size = style['font-size'];
+			
 			
 //			this.axis = which_axis_am_i_attached_to(data, num);
 			tr.ace( name );
 			tr.ace( 'axis : ' + this.axis );
 				
-//			this.make_highlight_dot();
-			this.values = this.parse_list( json['values'] );
+			//this.values = this.parse_list( json['values'] );
 			this.set_links( null );
 //			this.set_links( data['links'+append] );
 			this.make();
+			
+			//
+			// so the mask child can punch a hole through the line
+			//
+			this.blendMode = BlendMode.LAYER;
 			
 			//
 			// this allows the dots to erase part of the line
@@ -50,8 +62,11 @@
 		//
 		protected override function get_element( x:Number, value:Object ): ChartObjects.Elements.Element {
 			
-			
-			return new ChartObjects.Elements.PointHollow( x, Number(value), this.circle_size, this.colour );
+			var tmp:Object = {
+				val: Number(value),
+				width: 4
+			}
+			return new ChartObjects.Elements.PointHollow( x, tmp, this.style['dot-size'], this.style.colour );
 		}
 			
 	}

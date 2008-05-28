@@ -10,28 +10,26 @@
 		
 		public function AreaHollow( json:Object ) {
 			
-			var style:Object = {
-				values: [],
-				width: 2,
-				colour: '#3030d0',
-				fill: '',
-				text: '',		// <-- default not display a key
-				'dot-size': 5,
-				'font-size': 12,
-				'fill-alpha': 0.6
+			this.style = {
+				values:			[],
+				width:			2,
+				colour:			'#3030d0',
+				fill:			'',
+				text:			'',		// <-- default not display a key
+				'dot-size':		5,
+				'font-size':	10,
+				'fill-alpha':	0.6
 			};
 			
-			object_helper.merge_2( json, style );
+			object_helper.merge_2( json, this.style );
 			
-			this.line_width = style.width;;
-			this.circle_size = style['dot-size'];
-			this.fill_alpha =  style['fill-alpha'];
+			this.fill_alpha =  this.style['fill-alpha'];
+
+			if( this.style.fill == '' )
+				this.style.fill = this.style.colour;
 				
-			this.colour = string.Utils.get_colour( style.colour );
-			if( style.fill == '' )
-				style.fill = style.colour;
-				
-			this.fill_colour = string.Utils.get_colour( style.fill );
+			this.style.colour = string.Utils.get_colour( this.style.colour );
+			this.style.fill = string.Utils.get_colour( this.style.fill );
 			
 			this.key = style.text;
 			this.font_size = style['font-size'];
@@ -44,7 +42,12 @@
 		// called from the base object
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
-			return new ChartObjects.Elements.PointHollow( index, value, this.circle_size, this.colour );
+			var tmp:Object = {
+				val: Number(value),
+				width: 4
+			}
+			
+			return new ChartObjects.Elements.PointHollow( index, tmp, this.style['dot-size'], this.style.colour );
 		}
 		
 		public override function resize(sc:ScreenCoords):void {

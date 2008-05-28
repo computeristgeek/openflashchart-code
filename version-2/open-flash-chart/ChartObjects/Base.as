@@ -98,12 +98,19 @@ package ChartObjects {
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
-				var e:Element = this.getChildAt(i) as Element;
+				//
+				// some of the children will will mask
+				// Sprites, so filter those out:
+				//
+				if( this.getChildAt(i) is Element ) {
+					
+					var e:Element = this.getChildAt(i) as Element;
 
-				if( e.inside(x) )
-				{
-					ret = e;
-					break;
+					if( e.inside(x) )
+					{
+						ret = e;
+						break;
+					}
 				}
 			}
 			
@@ -120,14 +127,22 @@ package ChartObjects {
 			var dx:Number;
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				var e:Element = this.getChildAt(i) as Element;
-				e.set_tip( false );
-				
-				dx = Math.abs( x -e.screen_x );
 			
-				if( dx < shortest )	{
-					shortest = dx;
-					closest = e;
+				//
+				// some of the children will will mask
+				// Sprites, so filter those out:
+				//
+				if( this.getChildAt(i) is Element ) {
+					
+					var e:Element = this.getChildAt(i) as Element;
+					e.set_tip( false );
+				
+					dx = Math.abs( x -e.screen_x );
+				
+					if( dx < shortest )	{
+						shortest = dx;
+						closest = e;
+					}
 				}
 			}
 			

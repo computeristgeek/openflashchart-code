@@ -82,7 +82,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/data-3.txt";
+					var file:String = "../data-files/data-4.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -173,7 +173,7 @@ package  {
 		}
 		
 		private function ioError( e:IOErrorEvent ):void {
-			this.show_error( 'IO ERROR\nLoading test data\n' + e.text );
+			this.show_error( 'Open Flash Chart\nIO ERROR\nLoading test data\n' + e.text );
 		}
 		
 		private function show_error( msg:String ):void {
