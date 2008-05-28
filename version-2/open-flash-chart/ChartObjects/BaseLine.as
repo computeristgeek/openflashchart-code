@@ -45,5 +45,9 @@
 				}
 			}
 		}
+		
+		public override function get_colour(): Number {
+			return this.style.colour;
+		}
 	}
 }

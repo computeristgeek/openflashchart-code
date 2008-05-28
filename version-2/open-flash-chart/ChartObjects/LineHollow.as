@@ -14,6 +14,11 @@
 		
 		public function LineHollow( json:Object )
 		{
+			//
+			// so the mask child can punch a hole through the line
+			//
+			this.blendMode = BlendMode.LAYER;
+			
 			this.style = {
 				values: 		[],
 				width:			2,
@@ -41,10 +46,7 @@
 //			this.set_links( data['links'+append] );
 			this.make();
 			
-			//
-			// so the mask child can punch a hole through the line
-			//
-			this.blendMode = BlendMode.LAYER;
+			
 			
 			//
 			// this allows the dots to erase part of the line
@@ -55,7 +57,6 @@
 			
 
 		}
-		
 		
 		//
 		// called from the base object

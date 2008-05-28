@@ -137,7 +137,12 @@
 			//
 			// the mouse is *near* our stack, so show the 'total' tooltip
 			//
-			return super.get_tooltip();
+			super.get_tooltip();
+			
+			var tmp:String = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.total ));
+			this.tooltip = tmp;
+			
+			return this.tooltip;
 		}
 	}
 }

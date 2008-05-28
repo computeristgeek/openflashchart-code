@@ -31,14 +31,8 @@ package ChartObjects {
 		public function Base()
 		{}
 		
-		//
-		// return an Array of string values which may be:
-		// - numeric
-		// - 'null'
-		// - complex e.g, [1,2,3,4]
-		//
-		protected function parse_list( values:String ):Array {
-			return values.split(",");
+		public function get_colour(): Number {
+			return this.colour;
 		}
 		
 		//

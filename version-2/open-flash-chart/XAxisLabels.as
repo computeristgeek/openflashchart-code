@@ -19,7 +19,7 @@ package {
 			
 			
 			this.style = {
-				rotate:		'diag'
+				rotate:		''//'diag'
 			};
 			
 			this.labels = new Array();

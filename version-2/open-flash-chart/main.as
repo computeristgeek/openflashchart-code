@@ -82,7 +82,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/data-4.txt";
+					var file:String = "../data-files/data-58.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -373,7 +373,9 @@ package  {
 				var json:Object = JSON.deserialize( json_string );
 				ok = true;
 			}
-			catch (e:Error){
+			catch (e:Error) {
+				// remove the 'loading data...' msg:
+				this.removeChildAt(0);
 				this.addChild( new JsonErrorMsg( json_string as String, e ) );
 			}
 			

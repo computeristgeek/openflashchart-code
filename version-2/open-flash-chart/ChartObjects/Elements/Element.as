@@ -70,8 +70,7 @@
 		// it reduces the complexity of passing all the
 		// data in through the methods
 		//
-		public function make_tooltip( key:String ):void
-		{
+		public function make_tooltip( key:String ):void {
 			var tmp:String = '';
 			//
 			// Warning: this is our global singleton

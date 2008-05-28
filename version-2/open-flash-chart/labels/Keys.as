@@ -22,7 +22,7 @@ package labels {
 				if( (b.font_size > 0) && (b.key != '' ) )
 				{
 					this.make_key( b, key );
-					this.colours.push( b.colour );
+					this.colours.push( b.get_colour() );
 					key++;
 				}
 			}
@@ -45,7 +45,7 @@ package labels {
 			
 			tf.text = st.key;
 			var fmt:TextFormat = new TextFormat();
-			fmt.color = st.colour;
+			fmt.color = st.get_colour();
 			fmt.font = "Verdana";
 			fmt.size = 12;// st.font_size;
 			fmt.align = "left";

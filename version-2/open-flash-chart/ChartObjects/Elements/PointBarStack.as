@@ -17,6 +17,13 @@
 			this.top = top;
 			this.bottom = bottom;
 		}
+		
+		public override function make_tooltip( key:String ):void {
+			super.make_tooltip( key );
+			
+			var tmp:String = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.top-this.bottom ));
+			this.tooltip = tmp;
+		}
 				
 		//
 		// BUG: we assume that all are positive numbers:

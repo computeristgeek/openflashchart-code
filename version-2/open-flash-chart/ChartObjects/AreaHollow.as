@@ -5,8 +5,6 @@
 	import flash.display.BlendMode;
 	
 	public class AreaHollow extends BaseLine {
-		private var fill_colour:Number;
-		private var fill_alpha:Number;
 		
 		public function AreaHollow( json:Object ) {
 			
@@ -22,8 +20,6 @@
 			};
 			
 			object_helper.merge_2( json, this.style );
-			
-			this.fill_alpha =  this.style['fill-alpha'];
 
 			if( this.style.fill == '' )
 				this.style.fill = this.style.colour;
@@ -36,6 +32,11 @@
 			this.values = style['values'];
 			this.set_links( null );
 			this.make();
+			
+			//
+			// so the mask child can punch a hole through the line
+			//
+			this.blendMode = BlendMode.LAYER;
 		}
 		
 		//
@@ -61,25 +62,32 @@
 			var first:Boolean = true;
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				var e:PointHollow = this.getChildAt(i) as PointHollow;
 				
-				// tell the point where it is on the screen
-				// we will use this info to place the tooltip
-				x = sc.get_x_from_pos(e._x);
-				y = sc.get_y_from_val(e._y);
-				if( first )
-				{
-					// draw line from Y=0 up to Y pos
-					this.graphics.moveTo( x, sc.get_y_bottom(false) );
-					this.graphics.lineStyle(0,0,0);
-					this.graphics.beginFill( this.fill_colour, this.fill_alpha );
-					this.graphics.lineTo( x, y );
-					first = false;
-				}
-				else
-				{
-					this.graphics.lineTo( x, y );
-					last = e;
+				//
+				// filter out the masks
+				//
+				if( this.getChildAt(i) is PointHollow ) {
+					
+					var e:PointHollow = this.getChildAt(i) as PointHollow;
+					
+					// tell the point where it is on the screen
+					// we will use this info to place the tooltip
+					x = sc.get_x_from_pos(e._x);
+					y = sc.get_y_from_val(e._y);
+					if( first )
+					{
+						// draw line from Y=0 up to Y pos
+						this.graphics.moveTo( x, sc.get_y_bottom(false) );
+						this.graphics.lineStyle(0,0,0);
+						this.graphics.beginFill( this.style.fill, this.style['fill-alpha'] );
+						this.graphics.lineTo( x, y );
+						first = false;
+					}
+					else
+					{
+						this.graphics.lineTo( x, y );
+						last = e;
+					}
 				}
 			}
 			

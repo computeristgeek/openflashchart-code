@@ -58,6 +58,7 @@
 			super.make_tooltip( key );
 			
 			var tmp:String = this.tooltip.replace('#top#',NumberUtils.formatNumber( this.top ));
+			tmp = tmp.replace('#val#',NumberUtils.formatNumber( this.top ));
 			tmp = tmp.replace('#bottom#',NumberUtils.formatNumber( this.bottom ));
 			this.tooltip = tmp;
 		}
