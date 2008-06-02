@@ -40,11 +40,23 @@
 				// is this a null stacked bar group?
 				if( item != null )
 				{
-					top += item.val;
-					if( item.colour )
-						c = string.Utils.get_colour(item.colour);
+					c = odd?this.colour:0x909090;
+					tr.ace( item );
+					//
+					// a valid item is one of [ Number, Object, null ]
+					//
+					if( item is Number ) {
+						tr.ace( item );
+						tr.ace( top );
+						top += item;
+						tr.ace( top );
+					}
 					else
-						c = odd?this.colour:0x909090;
+					{
+						top += item.val;
+						if( item.colour )
+							c = string.Utils.get_colour(item.colour);
+					}
 						
 					var p:PointBarStack = new PointBarStack( index, c, group );
 					
@@ -66,7 +78,10 @@
 			//
 			this.total = 0;
 			for (prop in this.vals)
-				this.total += this.vals[prop].val;
+				if( this.vals[prop] is Number )
+					this.total += this.vals[prop];
+				else
+					this.total += this.vals[prop].val;
 				
 				
 			super.make_tooltip( 'key' );

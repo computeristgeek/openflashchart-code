@@ -8,25 +8,12 @@ include_once 'title.php';
 include_once 'y_axis.php';
 include_once 'x_axis.php';
 include_once 'area_hollow.php';
+include_once 'pie.php';
+include_once 'bar.php';
+include_once 'bar_glass.php';
+include_once 'bar_stack.php';
+include_once 'bar_3d.php';
 
-class bar
-{
-	function bar()
-	{
-		$this->type      = "bar";
-		$this->alpha     = 0.5;
-		$this->colour    = "#9933CC";
-		$this->text      = "Page views";;
-		$tmp = 'font-size';
-		$this->$tmp = 10;
-		$this->values    = array(9,6,7,9,5,7,6,9,7);
-	}
-	
-	function set_values( $v )
-	{
-		$this->values = $v;		
-	}
-}
 
 class hbar
 {
@@ -90,6 +77,11 @@ class open_flash_chart
 	function set_title( $t )
 	{
 		$this->title = $t;
+	}
+	
+	function set_x_axis( $x )
+	{
+		$this->x_axis = $x;	
 	}
 	
 	function add_y_axis( $y )
