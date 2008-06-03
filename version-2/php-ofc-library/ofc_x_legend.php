@@ -1,8 +1,8 @@
 <?php
 
-class title
+class x_legend
 {
-	function title( $text='' )
+	function x_legend( $text='' )
 	{
 		$this->text = $text;
 	}

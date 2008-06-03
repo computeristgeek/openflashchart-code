@@ -1,69 +1,24 @@
 <?php
 
+// var_dump(debug_backtrace());
+
 include_once 'JSON.php';
 include_once 'json_format.php';
 
 // ofc classes
-include_once 'title.php';
-include_once 'y_axis.php';
-include_once 'x_axis.php';
-include_once 'area_hollow.php';
-include_once 'pie.php';
-include_once 'bar.php';
-include_once 'bar_glass.php';
-include_once 'bar_stack.php';
-include_once 'bar_3d.php';
+include_once 'ofc_title.php';
+include_once 'ofc_y_axis.php';
+include_once 'ofc_x_axis.php';
+include_once 'ofc_area_hollow.php';
+include_once 'ofc_pie.php';
+include_once 'ofc_bar.php';
+include_once 'ofc_bar_glass.php';
+include_once 'ofc_bar_stack.php';
+include_once 'ofc_bar_3d.php';
+include_once 'ofc_hbar.php';
+include_once 'ofc_line_dot.php';
+include_once 'ofc_x_legend.php';
 
-
-class hbar
-{
-	function hbar()
-	{
-		$this->type      = "hbar";
-		$this->colour    = "#9933CC";
-		$this->text      = "Page views";;
-		$tmp = 'font-size';
-		$this->$tmp = 10;
-		$this->values    = array();
-	}
-	
-	function append_value( $v )
-	{
-		$this->values[] = $v;		
-	}
-}
-
-class hbar_value
-{
-	function hbar_value( $right, $left=null )
-	{
-		$this->right = $right;
-		if( isset( $left ) )
-			$this->left = $left;
-	}
-}
-
-class line_dot
-{
-	function line_dot()
-	{
-		$this->type      = "line_dot";
-		$this->colour    = "#736AFF";
-		$this->text      = "Page views";
-		$this->width     = 2;
-		$tmp = 'font-size';
-		$this->$tmp = 10;
-		
-		$tmp = 'dot-size';
-		$this->$tmp = 4;
-		$this->values    = array(9,6,7,9,5,7,6,9,7);
-	}
-	
-	function set_values( $v )
-	{
-		$this->values = $v;		
-	}
-}
 
 class open_flash_chart
 {
@@ -92,6 +47,11 @@ class open_flash_chart
 	function add_element( $e )
 	{
 		$this->elements[] = $e;
+	}
+	
+	function set_x_legend( $x )
+	{
+		$this->x_legend = $x;
 	}
 	
 	function toString()

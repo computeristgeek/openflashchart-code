@@ -12,15 +12,16 @@ class y_axis
 		//$this->labels      		= array( "slashdot.org","digg.com","reddit.com" );
 	}
 	
-	function set_range( $min, $max )
+	function set_range( $min, $max, $steps )
 	{
 		$this->min = $min;
 		$this->max = $max;
+		$this->steps = $steps;
 	}
 	
 	function set_offset( $off )
 	{
-		$this->offset = $off?1:0;	
+		$this->offset = $off?1:0;
 	}
 	
 	function set_labels( $labels )

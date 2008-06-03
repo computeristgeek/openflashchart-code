@@ -6,9 +6,6 @@ class area_hollow
 	{
 		$this->type      = "area_hollow";
 		$this->colour    = "#CC3399";
-		$this->text      = "Page views";;
-		$tmp = 'font-size';
-		$this->$tmp = 10;
 		
 		$this->width     = 2;
 		
@@ -21,8 +18,20 @@ class area_hollow
 		$this->values    = array();
 	}
 	
+	function set_colour( $colour )
+	{
+		$this->colour = $colour;
+	}
+	
 	function set_values( $v )
 	{
 		$this->values = $v;		
+	}
+	
+	function set_key( $text, $font_size )
+	{
+		$this->text      = $text;
+		$tmp = 'font-size';
+		$this->$tmp = $font_size;
 	}
 }

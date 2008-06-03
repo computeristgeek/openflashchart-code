@@ -1,6 +1,6 @@
 <?php
 
-include_once 'bar_base.php';
+include_once 'ofc_bar_base.php';
 
 class bar_glass extends bar_base
 {

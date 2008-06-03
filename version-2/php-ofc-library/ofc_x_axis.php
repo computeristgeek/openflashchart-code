@@ -4,12 +4,29 @@ class x_axis
 {
 	function x_axis()
 	{
-		$this->stroke      		= 1;
-		$this->tick_height      = 10;
-		$this->colour      		= "#d000d0";
-		$this->grid_colour      = "#00ff00";
-		$this->labels      		= array( "January","February","March","April","May","June","July","August","Spetember" );
-		
+		$this->labels = array();
+	}
+
+	function set_stroke( $stroke )
+	{
+		$this->stroke = $stroke;	
+	}
+	
+	function set_colour( $colour )
+	{
+		$this->colour = $colour;	
+	}
+	
+	function set_tick_height( $height )
+	{
+		$tmp = 'tick-height';
+		$this->$tmp      		= $height;
+	}
+	
+	function set_grid_colour( $colour )
+	{
+		$tmp = 'grid-colour';
+		$this->$tmp = $colour;
 	}
 	
 	function set_offset( $o )
@@ -17,9 +34,9 @@ class x_axis
 		$this->offset = $o?1:0;	
 	}
 	
-	function set_step( $step )
+	function set_steps( $steps )
 	{
-		$this->step = $step;
+		$this->steps = $steps;
 	}
 	
 	function set_3d( $val )
