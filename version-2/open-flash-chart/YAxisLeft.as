@@ -33,11 +33,11 @@
 			var min:Number = Math.min(this.minmax.y_min, this.minmax.y_max);
 			var max:Number = Math.max(this.minmax.y_min, this.minmax.y_max);
 			
-			for( i = min; i <= max; i++ ) {
+			for( i = min; i <= max; i+=every ) {
 				
 				// don't draw i = minmax.y_min
 				// because it draws over the X axis line
-				if( i != this.minmax.y_min ) {
+//				if( i != this.minmax.y_min ) {
 					
 					y = sc.get_y_from_val(i);
 					if(i2 == 0)
@@ -49,7 +49,7 @@
 					if(i2 == 0)
 						this.graphics.lineStyle(1,this.grid_colour,1);
 					i2 += 1;
-				}
+//				}
 			}
 			var left:Number = sc.left - this.stroke;
 			
@@ -61,7 +61,7 @@
 			
 			// ticks..
 			var width:Number;
-			for( i = min; i <= max; i++ ) {
+			for( i = min; i <= max; i+=every ) {
 				
 				// start at the bottom and work up:
 				y = sc.get_y_from_val(i, false);

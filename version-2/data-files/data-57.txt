@@ -27,8 +27,10 @@
 
   "x_axis":{
     "max":4,
-    "steps": 2,
-    "labels":["January","February","March","April"]
+    "steps": 5,
+    "labels":["January","February","March","April"],
+    "stroke": 12,
+    "tick-height": 6
   },
 
   "y_axis":{

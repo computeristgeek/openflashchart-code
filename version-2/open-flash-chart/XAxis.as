@@ -209,7 +209,7 @@ package {
 			{
 				var x:Number = sc.get_x_tick_pos(i);
 				this.graphics.beginFill(this.colour, 1);
-				this.graphics.drawRect( x, sc.bottom + this.stroke, this.stroke, this.tick_height );
+				this.graphics.drawRect( x-(this.stroke/2), sc.bottom + this.stroke, this.stroke, this.tick_height );
 				this.graphics.endFill();
 			}
 		}
