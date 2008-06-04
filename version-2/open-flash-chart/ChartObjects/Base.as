@@ -154,8 +154,13 @@ package ChartObjects {
 		//
 		public function mouse_out():void {
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				var e:Element = this.getChildAt(i) as Element;
-				e.set_tip(false);
+				
+				// filter out the mask elements in line charts
+				if( this.getChildAt(i) is Element ) {
+					
+					var e:Element = this.getChildAt(i) as Element;
+					e.set_tip(false);
+				}
 			}
 		}
 		
