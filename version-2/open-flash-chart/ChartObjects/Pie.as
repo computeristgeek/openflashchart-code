@@ -1,4 +1,5 @@
 ﻿package ChartObjects {
+	import ChartObjects.Elements.PieLabel;
 	import flash.external.ExternalInterface;
 //	import mx.transitions.Tween;
 //	import mx.transitions.easing.*;
@@ -129,15 +130,44 @@
 		
 		
 		public override function resize( sc:ScreenCoords ): void {
+
+			var radius:Number = ( Math.min( sc.width, sc.height ) / 2.0 );
+			var radius_offsets:Object = {top:0, right:0, bottom:0, left:0};
 			
-			//NOTE: still have a problem here when max radius pie chart has a label in the 12o'clock position.
-			//      it overwrites the title
-			//var rad:Number = (Stage.width<(Stage.height-top-60)) ? Stage.width/2 : (Stage.height-top-60)/2;
+			var i:Number;
+			var pie:PieSliceContainer;
 			
-			for ( var i:Number = 0; i < this.numChildren; i++ )
+			// loop to gather and merge offsets
+			for ( i = 0; i < this.numChildren; i++ )
 			{
-				var pie:PieSliceContainer = this.getChildAt(i) as PieSliceContainer;
-				pie.resize(sc,0);
+				pie = this.getChildAt(i) as PieSliceContainer;
+				
+				var label:PieLabel = pie.getChildAt(1) as PieLabel;
+				tr.ace(label.text);
+				
+				var pie_offsets:Object = pie.get_radius_offsets();
+				
+				for (var key:Object in radius_offsets) 
+				{
+					if ( pie_offsets[key] > radius_offsets[key] ) {
+						tr.ace(pie_offsets[key]);
+						radius_offsets[key] = pie_offsets[key];
+					}
+				}
+			}
+
+			if ( (radius_offsets.top + radius_offsets.bottom) > (radius_offsets.left + radius_offsets.right) )
+			{
+				tr.ace('shrinking radius by ' + (radius_offsets.top + radius_offsets.bottom));
+				radius = radius - (radius_offsets.top + radius_offsets.bottom);
+			}
+			tr.ace('radius=' + radius);
+			
+			// loop and resize
+			for ( i = 0; i < this.numChildren; i++ )
+			{
+				pie = this.getChildAt(i) as PieSliceContainer;
+				pie.pie_resize(sc, radius);
 			}
 		}
 		

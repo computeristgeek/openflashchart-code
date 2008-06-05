@@ -13,7 +13,6 @@
 		
 		private var TO_RADIANS:Number = Math.PI / 180;
 		private var colour:Number;
-		public var rad:Number;
 		public var slice_angle:Number;
 		private var border_width:Number;
 		public var angle:Number;
@@ -23,7 +22,6 @@
 		public function PieSlice( slice_start:Number, slice_angle:Number, colour:Number, animate:Boolean ) {
 			
 			this.colour = colour;
-			this.rad = 60;// rad;
 			this.slice_angle = slice_angle;
 			this.border_width = 1;
 			this.angle = slice_start;
@@ -69,14 +67,18 @@
 			var p:flash.geom.Point = this.localToGlobal( new flash.geom.Point(this.mouseX, this.mouseY) );
 			return {x:p.x,y:p.y};
 		}
+
 		
-		public override function resize( sc:ScreenCoords, axis:Number ): void {
+		//
+		// the axis makes no sense here, let's override with null and write our own.
+		//
+		public override function resize( sc:ScreenCoords, axis:Number ): void { }
+		public function pie_resize( sc:ScreenCoords, radius:Number): void {
 			
 			this.x = sc.get_center_x();
 			this.y = sc.get_center_y();
 			
 			var label_line_length:Number = 10;
-			this.rad = ( Math.min( sc.width, sc.height )/2.0 ) - (2.5*label_line_length); // need to shrink radius for labels
 			
 			this.graphics.clear();
 			
@@ -97,7 +99,7 @@
 				this.graphics.beginFill(this.colour, 1);
 			
 			this.graphics.moveTo(0, 0);
-			this.graphics.lineTo(this.rad, 0);
+			this.graphics.lineTo(radius, 0);
 			
 			var angle:Number = 4;
 			var a:Number = Math.tan((angle/2)*TO_RADIANS);
@@ -110,10 +112,10 @@
 				
 			//draw curve segments spaced by angle
 			for ( i = 0; i + angle < this.slice_angle; i += angle) {
-				endx = this.rad*Math.cos((i+angle)*TO_RADIANS);
-				endy = this.rad*Math.sin((i+angle)*TO_RADIANS);
-				ax = endx+this.rad*a*Math.cos(((i+angle)-90)*TO_RADIANS);
-				ay = endy+this.rad*a*Math.sin(((i+angle)-90)*TO_RADIANS);
+				endx = radius*Math.cos((i+angle)*TO_RADIANS);
+				endy = radius*Math.sin((i+angle)*TO_RADIANS);
+				ax = endx+radius*a*Math.cos(((i+angle)-90)*TO_RADIANS);
+				ay = endy+radius*a*Math.sin(((i+angle)-90)*TO_RADIANS);
 				this.graphics.curveTo(ax, ay, endx, endy);
 			}
 			
@@ -123,10 +125,10 @@
 			a = Math.tan((angle/2)*TO_RADIANS);
 			
 			for ( ; i+angle < slice_angle; i+=angle) {
-				endx = this.rad*Math.cos((i+angle)*TO_RADIANS);
-				endy = this.rad*Math.sin((i+angle)*TO_RADIANS);
-				ax = endx+this.rad*a*Math.cos(((i+angle)-90)*TO_RADIANS);
-				ay = endy+this.rad*a*Math.sin(((i+angle)-90)*TO_RADIANS);
+				endx = radius*Math.cos((i+angle)*TO_RADIANS);
+				endy = radius*Math.sin((i+angle)*TO_RADIANS);
+				ax = endx+radius*a*Math.cos(((i+angle)-90)*TO_RADIANS);
+				ay = endy+radius*a*Math.sin(((i+angle)-90)*TO_RADIANS);
 				this.graphics.curveTo(ax, ay, endx, endy);
 			}
 	
@@ -134,7 +136,7 @@
 			this.graphics.endFill();
 			this.graphics.lineTo(0, 0);
 			
-			this.draw_label_line( this.rad, label_line_length, this.slice_angle );
+			this.draw_label_line( radius, label_line_length, this.slice_angle );
 			// return;
 			
 			if( this.animate )
