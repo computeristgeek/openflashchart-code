@@ -55,6 +55,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 <%
   $Response->write($g->render_swf(600, 400, 'http://mets-outbounddev.web.boeing.com/portal/page/charts/test/test_line.asp?data=1'));
 %>
+<!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>
 </html>
 <%  

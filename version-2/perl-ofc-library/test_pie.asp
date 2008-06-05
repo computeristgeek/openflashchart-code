@@ -14,25 +14,9 @@ my $g = chart->new();
 
 if ( $Request->QueryString("data")->Item == 1 ) {
 
+  my $p = pie->new();
+  $g->add_element($p);
   
-  my $bar = bar->new();
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(20) );
-	}
-  $bar->values($data);
-  $g->add_element($bar);
-
-  
-  $bar = bar_outline->new();
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(30) );
-	}
-  $bar->values($data);
-  $g->add_element($bar);  
-
- 
 	$Response->write($g->render_chart_data());
   $Response->exit();
 
@@ -41,15 +25,14 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 %>
 <html>
   <head>
-    <title>OFC Bar Test</title>
+    <title>OFC Pie Test</title>
   </head>
   <body>
-    <h1>OFC Bar Test</h1>
+    <h1>OFC Pie Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400, 'http://mets-outbounddev.web.boeing.com/portal/page/charts/test/test_bar.asp?data=1'));
+  $Response->write($g->render_swf(600, 400, 'http://mets-outbounddev.web.boeing.com/portal/page/charts/test/test_pie.asp?data=1'));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
-
 </body>
 </html>
 <%  

@@ -199,9 +199,6 @@ sub new() {
 
   $self->{'element_props'} =  {
     'type'      => '',
-    'colour'    => main::random_color(),
-    'text'      => 'text',
-    'font-size' => 10,
     'values'    => [1.5,1.69,1.88,2.06,2.21],
   };
   return bless $self, $class;
@@ -246,13 +243,31 @@ sub AUTOLOAD {
 sub DESTROY {  }
 
 
+package bar_and_line_base;
+our @ISA = qw(element);
+sub new() {
+  my ($proto) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  bless $self, $class;
+  $self = $self->SUPER::new();
+  $self->{'element_props'}->{'colour'} = main::random_color();
+  $self->{'element_props'}->{'text'} = 'text';
+  $self->{'element_props'}->{'font-size'} = 10;
+  return $self;
+}
+
+
+
+
+
 #
 #
 # LINE TYPES
 #
 #
 package line;
-our @ISA = qw(element);
+our @ISA = qw(bar_and_line_base);
 sub new() {
   my ($proto) = @_;
   my $class = ref($proto) || $proto;
@@ -295,7 +310,7 @@ sub new() {
 #
 #
 package bar;
-our @ISA = qw(element);
+our @ISA = qw(bar_and_line_base);
 sub new() {
   my ($proto) = @_;
   my $class = ref($proto) || $proto;
@@ -411,6 +426,29 @@ sub get_max_value {
 }
 
 
+package pie;
+our @ISA = qw(element);
+sub new() {
+  my ($proto) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  bless $self, $class;
+  $self = $self->SUPER::new();
+  $self->{'element_props'}->{'type'} = __PACKAGE__;
+  $self->{'element_props'}->{'alpha'} = 0.5;
+  $self->{'element_props'}->{'colours'} = [main::random_color(), main::random_color(), main::random_color(), main::random_color(), main::random_color()];
+  $self->{'element_props'}->{'border'} = 2;
+  $self->{'element_props'}->{'animate'} = 1;
+  $self->{'element_props'}->{'start-angle'} = 0;	#not working?
+  
+  $self->{'element_props'}->{'values'} = [ {'value'=>rand(255), 'text'=>'linux'}, {'value'=>rand(255), 'text'=>'windows'}, {'value'=>rand(255), 'text'=>'vax'}, {'value'=>rand(255), 'text'=>'NexT'}, {'value'=>rand(255), 'text'=>'solaris'}];
+
+  return $self;
+}
+
+
+
+
 
 
 #
@@ -425,6 +463,7 @@ sub to_json {
   my $tmp='';
   
   if ( defined($name) && $name ne '' ) {
+  	$name =~ s/\"/\'/gi;
     $tmp.= "\n\"$name\" : ";
   }
   
@@ -449,6 +488,7 @@ sub to_json {
       $tmp.= $data_structure;
     } else {
       #not number
+      $data_structure =~ s/\"/\'/gi;
       $tmp.= "\"$data_structure\"";
     }
   } 
