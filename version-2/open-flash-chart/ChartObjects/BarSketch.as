@@ -13,13 +13,13 @@
 		
 		public override function parse_bar( json:Object ):void {
 			var style:Object = {
-				values: [],
-				colour: '#3030d0',
-				outline_colour: "#000000",
-				text: '',		// <-- default not display a key
-				'font-size': 12,
-				offset: 3,
-				width: 2
+				values:				[],
+				colour:				'#3030d0',
+				'outline-colour':	"#000000",
+				text:				'',		// <-- default not display a key
+				'font-size':		12,
+				offset:				3,
+				width:				2
 			};
 			
 			object_helper.merge_2( json, style );

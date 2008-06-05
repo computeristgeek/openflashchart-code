@@ -7,8 +7,9 @@
   "elements":[
     {
       "type":      "bar_sketch",
-      "colour":    "#909000",
-      "text":      "Purple Bar",
+      "colour":    "#81AC00",
+      "outline-colour": "#567300",
+      "text":      "Sketch",
       "font-size": 10,
       "offset":    6,
       "values" :   [3,8,-5,5,4,5,-2,2,7.5]

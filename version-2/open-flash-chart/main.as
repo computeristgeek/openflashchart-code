@@ -82,7 +82,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/data-57.txt";
+					var file:String = "../data-files/data-39.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
