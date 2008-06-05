@@ -75,7 +75,8 @@
 			this.x = sc.get_center_x();
 			this.y = sc.get_center_y();
 			
-			this.rad = Math.min( sc.width, sc.height )/2.2;
+			var label_line_length:Number = 10;
+			this.rad = ( Math.min( sc.width, sc.height )/2.0 ) - (2.5*label_line_length); // need to shrink radius for labels
 			
 			this.graphics.clear();
 			
@@ -133,7 +134,7 @@
 			this.graphics.endFill();
 			this.graphics.lineTo(0, 0);
 			
-			this.draw_label_line( this.rad, 10, this.slice_angle );
+			this.draw_label_line( this.rad, label_line_length, this.slice_angle );
 			// return;
 			
 			if( this.animate )
