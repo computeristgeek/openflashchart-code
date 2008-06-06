@@ -18,6 +18,8 @@ include_once 'ofc_bar_3d.php';
 include_once 'ofc_hbar.php';
 include_once 'ofc_line_dot.php';
 include_once 'ofc_x_legend.php';
+include_once 'ofc_bar_sketch.php';
+include_once 'ofc_scatter.php';
 
 
 class open_flash_chart
@@ -26,7 +28,6 @@ class open_flash_chart
 	{
 		$this->title = new title( "Many data lines" );
 		$this->elements = array();
-		$this->x_axis = new x_axis();
 	}
 	
 	function set_title( $t )

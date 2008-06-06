@@ -2,17 +2,29 @@
 
 class y_axis
 {
-	function y_axis()
+	function y_axis(){}
+	
+	function set_stroke( $s )
 	{
-		$this->stroke      		= 2;
-		$this->tick_length      = 5;
-		$this->colour      		= "#d09090";
-		$this->grid_colour      = "#00ff00";
-		//$this->offset           = 1;
-		//$this->labels      		= array( "slashdot.org","digg.com","reddit.com" );
+		$this->stroke = $s;
 	}
 	
-	function set_range( $min, $max, $steps )
+	function set_tick_length( $val )
+	{
+		$this->tick_length = $val;
+	}
+	
+	function set_colour( $colour )
+	{
+		$this->clour = $clour;
+	}
+	
+	function set_grid_colour( $colour )
+	{
+		$this->grid_colour = $colour;
+	}
+	
+	function set_range( $min, $max, $steps=1 )
 	{
 		$this->min = $min;
 		$this->max = $max;

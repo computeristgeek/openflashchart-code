@@ -2,10 +2,7 @@
 
 class x_axis
 {
-	function x_axis()
-	{
-		$this->labels = array();
-	}
+	function x_axis(){}
 
 	function set_stroke( $stroke )
 	{
@@ -29,9 +26,10 @@ class x_axis
 		$this->$tmp = $colour;
 	}
 	
+	// $o is a boolean
 	function set_offset( $o )
 	{
-		$this->offset = $o?1:0;	
+		$this->offset = $o?true:false;	
 	}
 	
 	function set_steps( $steps )
@@ -48,5 +46,11 @@ class x_axis
 	function set_labels( $v )
 	{
 		$this->labels = $v;		
+	}
+	
+	function set_range( $min, $max )
+	{
+		$this->min = $min;
+		$this->max = $max;
 	}
 }

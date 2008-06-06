@@ -26,7 +26,7 @@
 			
 			this.line_width = style.width;
 			this.colour		= string.Utils.get_colour( style.colour );
-			this.outline_colour = string.Utils.get_colour( style.outline_colour );
+			this.outline_colour = string.Utils.get_colour( style['outline-colour'] );
 			this.key		= style.text;
 			this.font_size	= style['font-size'];
 			this.offset     = style.offset;

@@ -1,7 +1,7 @@
 {
   "title":{
     "text":  "Sketch",
-    "style": "{font-size:35px; color: #800000}"
+    "style": "{font-size:35px; color: #567300}"
   },
 
   "elements":[

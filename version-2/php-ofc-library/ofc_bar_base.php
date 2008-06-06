@@ -23,5 +23,10 @@ class bar_base
 	{
 		$this->values[] = $v;		
 	}
+	
+	function set_colour( $colour )
+	{
+		$this->colour = $colour;	
+	}
 }
 
