@@ -50,8 +50,11 @@ package {
 			//
 			// TODO: remove this hack
 			//
-			minmax.set_x_max( x_axis_range.max );
-			minmax.x_min = x_axis_range.min;
+			if ( minmax != null ) 
+			{
+				minmax.set_x_max( x_axis_range.max );
+				minmax.x_min = x_axis_range.min;
+			}
 			//
 			this.minmax = minmax;
 			//
