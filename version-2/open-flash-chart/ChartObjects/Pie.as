@@ -94,6 +94,7 @@
 					tmp = new PieSliceContainer(
 						slice_start,
 						slice_angle,
+						value,
 						this.colours[(i % this.colours.length)],
 						label,
 						(this.style.animate==1) );

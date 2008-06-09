@@ -18,8 +18,9 @@
 		public var angle:Number;
 		public var is_over:Boolean;
 		private var animate:Boolean;
+		public var value:Number;
 		
-		public function PieSlice( slice_start:Number, slice_angle:Number, colour:Number, animate:Boolean ) {
+		public function PieSlice( slice_start:Number, slice_angle:Number, slice_value:Number, colour:Number, animate:Boolean ) {
 			
 			this.colour = colour;
 			this.slice_angle = slice_angle;
@@ -27,6 +28,7 @@
 			this.angle = slice_start;
 			this.alpha = 0.5;
 			this.animate = animate;
+			this.value = slice_value;
 			
 			this.attach_events();
 		}
@@ -68,6 +70,14 @@
 			return {x:p.x,y:p.y};
 		}
 
+
+		public override function make_tooltip( key:String ):void 
+		{
+			super.make_tooltip( key );
+			
+			var tmp:String = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.value ));
+			this.tooltip = tmp;
+		}
 		
 		//
 		// the axis makes no sense here, let's override with null and write our own.
