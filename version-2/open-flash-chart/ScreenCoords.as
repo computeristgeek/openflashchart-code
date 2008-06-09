@@ -24,6 +24,7 @@ package {
 		
 		public function ScreenCoords( top:Number, left:Number, right:Number, bottom:Number,
 							minmax:MinMax,
+							x_axis_range:Range,
 							x_left_label_width:Number, x_right_label_width:Number,
 							three_d:Boolean,
 							x_offset:Boolean, y_offset:Boolean )
@@ -33,8 +34,8 @@ package {
 			
 			if( minmax != null )
 			{
-				right = this.jiggle( left, right, x_right_label_width, minmax.x_range() );
-				tmp_left = this.shrink_left( left, right, x_left_label_width, minmax.x_range() );
+				right = this.jiggle( left, right, x_right_label_width, x_axis_range.count() );
+				tmp_left = this.shrink_left( left, right, x_left_label_width, x_axis_range.count() );
 			}
 			
 			this.top = top;
@@ -46,7 +47,18 @@ package {
 			this.width = this.right-this.left;
 			this.height = bottom-top;
 			
+			//
+			// TODO: remove this hack
+			//
+			minmax.set_x_max( x_axis_range.max );
+			minmax.x_min = x_axis_range.min;
+			//
 			this.minmax = minmax;
+			//
+			//
+			//
+			
+			
 			
 			if( three_d )
 			{

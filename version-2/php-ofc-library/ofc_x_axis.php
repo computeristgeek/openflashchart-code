@@ -9,6 +9,12 @@ class x_axis
 		$this->stroke = $stroke;	
 	}
 	
+	function set_colours( $colour, $grid_colour )
+	{
+		$this->set_colour( $colour );
+		$this->set_grid_colour( $grid_colour );
+	}
+	
 	function set_colour( $colour )
 	{
 		$this->colour = $colour;	

@@ -14,7 +14,14 @@ package ChartObjects {
 			this.sets.push( set );
 		}
 		
-		public function length():Number {
+		//
+		// TODO: for scatter charts we can't assume 0
+		//
+		public function get_min_x():Number {
+			return 0;
+		}
+		
+		public function get_max_x():Number {
 			var max:Number = -1;
 
 			for each( var o:Base in this.sets )

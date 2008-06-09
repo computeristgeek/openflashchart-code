@@ -5,10 +5,11 @@ package {
 	import string.Utils;
 	import ChartObjects.Elements.PointBar3D;
 	import com.serialization.json.JSON;
+	import Range;
 	
 	
 	public class XAxis extends Sprite {
-		private var grid_count:Number;
+		//private var grid_count:Number;
 		private var steps:Number;
 		private var alt_axis_colour:Number;
 		private var alt_axis_step:Number;
@@ -21,38 +22,42 @@ package {
 		public var offset:Boolean;
 		private var grid_colour:Number;
 		
+		private var style:Object;
+		
 		function XAxis( json:Object )
 		{
 			// default values
-			var style:Object = {
-				stroke:        2,
-				'tick-height': 3,
-				colour:        '#784016',
-				offset:        true,
-				'grid-colour': '#F5E1AA',
-				'3d':          0,
-				steps:         1
+			this.style = {
+				stroke:			2,
+				'tick-height':	3,
+				colour:			'#784016',
+				offset:			true,
+				'grid-colour':	'#F5E1AA',
+				'3d':			0,
+				steps:			1,
+				min:			0,
+				max:			null
 			};
 			
 			if( json != null )
-				object_helper.merge_2( json, style );
+				object_helper.merge_2( json, this.style );
 			
 			
-			this.stroke = style.stroke;
-			this.tick_height = style['tick-height'];
-			this.colour = style.colour;
+			this.stroke = this.style.stroke;
+			this.tick_height = this.style['tick-height'];
+			this.colour = this.style.colour;
 			// is the axis offset (see ScreenCoords)
-			this.offset = style.offset;
-			this.grid_colour = style.grid_colour;
+			this.offset = this.style.offset;
+			this.grid_colour = this.style.grid_colour;
 
-			this.colour = Utils.get_colour( style.colour );
-			this.grid_colour = Utils.get_colour( style['grid-colour'] );
+			this.colour = Utils.get_colour( this.style.colour );
+			this.grid_colour = Utils.get_colour( this.style['grid-colour'] );
 			
 				
 			if( style['3d'] > 0 )
 			{
 				this.three_d = true;
-				this.three_d_height = int( style['3d'] );
+				this.three_d_height = int( this.style['3d'] );
 			}
 			else
 				this.three_d = false;
@@ -72,26 +77,39 @@ package {
 			//
 			// this is set later when the chart has more information
 			//
-			this.grid_count = 1;
+			//this.grid_count = 1;
 			
 			// tick every X value?
-			if ( style.steps == null )
+			if ( this.style.steps == null )
 				this.steps = 1;
 			else
-				this.steps = style.steps;
+				this.steps = this.style.steps;
 			
 		}
 		
-		// grid lines, depends on number of values,
-		// the X Axis labels and X min and X max
-		public function set_grid_count( val:Number ):void
-		{
-			this.grid_count = val;
+		//
+		// have we been passed a range? (min and max?)
+		//
+		public function range_set():Boolean {
+			return this.style.max;
 		}
 		
-		public function get_grid_count():Number
+		//
+		// We don't have a range, so we need to calculate it.
+		// grid lines, depends on number of values,
+		// the X Axis labels and X min and X max
+		//
+		public function set_range( min:Number, max:Number ):void
 		{
-			return this.grid_count;
+			this.style.min = min;
+			this.style.max = max;
+		}
+		
+		//
+		// how many items in the X axis?
+		//
+		public function get_range():Range {
+			return new Range( this.style.min, this.style.max );
 		}
 		
 		public function resize( sc:ScreenCoords ):void
@@ -101,7 +119,7 @@ package {
 			//
 			// Grid lines
 			//
-			for( var i:Number=0; i < this.grid_count; i+=this.steps )
+			for( var i:Number=0; i < this.style.max; i+=this.steps )
 			{
 				if( ( this.alt_axis_step > 1 ) && ( i % this.alt_axis_step == 0 ) )
 					this.graphics.beginFill(this.alt_axis_colour, 1);
@@ -129,13 +147,14 @@ package {
 			
 			//
 			// ticks
-			var item_width:Number = sc.width / this.grid_count;
+			var item_width:Number = sc.width / this.style.max;
 		
 			// turn off out lines:
 			this.graphics.lineStyle(0,0,0);
 			
 			var w:Number = 1;
-			for( var i:Number=0; i < this.grid_count; i+=this.steps )
+
+			for( var i:Number=0; i < this.style.max; i+=this.steps )
 			{
 				var pos:Number = sc.get_x_tick_pos(i);
 				
@@ -195,7 +214,7 @@ package {
 		{
 			//
 			// ticks
-			var item_width:Number = sc.width / this.grid_count;
+			var item_width:Number = sc.width / this.style.max;
 			var left:Number = sc.left+(item_width/2);
 		
 			//this.graphics.clear();
@@ -205,7 +224,12 @@ package {
 			this.graphics.drawRect( sc.left, sc.bottom, sc.width, this.stroke );
 			this.graphics.endFill();
 			
-			for( var i:Number=0; i < this.grid_count; i+=this.steps )
+						
+			tr.ace('gc');
+			tr.ace(this.style.max);
+			tr.ace(this.steps);
+			
+			for( var i:Number=0; i < this.style.max; i+=this.steps )
 			{
 				var x:Number = sc.get_x_tick_pos(i);
 				this.graphics.beginFill(this.colour, 1);

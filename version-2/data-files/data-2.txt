@@ -1,6 +1,6 @@
 {
 
-  "title_":{
+  "title":{
     "text":"Portreath beach",
     "style":"{color: #736AFF; font-size: 25;}"
   },
@@ -28,10 +28,13 @@
   ],
 
   "y_axis":{
-    "max":   3
+    "max":   3,
+    "colour":       "#FF0000",
+    "grid-colour":  "#FF0000"
   },
 
-  "x_axis":{
+  "x_axis--":{
     "max": 40
-  }
+  },
+  "bg_colour":  "#E0E0FF"
 }

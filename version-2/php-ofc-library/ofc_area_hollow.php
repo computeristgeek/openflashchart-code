@@ -9,9 +9,6 @@ class area_hollow
 		
 		$this->width     = 2;
 		
-		$tmp = 'dot-size';
-		$this->$tmp = 4;
-		
 		$tmp = 'fill-alpha';
 		$this->$tmp = 0.35;
 		
@@ -26,6 +23,12 @@ class area_hollow
 	function set_values( $v )
 	{
 		$this->values = $v;		
+	}
+	
+	function set_dot_size( $size )
+	{
+		$tmp = 'dot-size';
+		$this->$tmp = $size;
 	}
 	
 	function set_key( $text, $font_size )

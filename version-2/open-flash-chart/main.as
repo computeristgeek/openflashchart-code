@@ -82,7 +82,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/data-39.txt";
+					var file:String = "../data-files/data-2.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -270,7 +270,7 @@ package  {
 			// this object is used in the mouseMove method
 			this.sc = new ScreenCoords(
 				this.title.get_height(), 0, this.stage.stageWidth, this.stage.stageHeight,
-				null, 0, 0, false, false, false );
+				null, null, 0, 0, false, false, false );
 			this.obs.resize( sc );
 			
 			// TODO: hook into the mouse move events for tooltips
@@ -311,6 +311,7 @@ package  {
 			this.sc = new ScreenCoords(
 				top, left, right, bottom,
 				this.minmax,
+				this.x_axis.get_range(),
 				this.x_labels.first_label_width(),
 				this.x_labels.last_label_width(),
 				false,
@@ -462,17 +463,26 @@ package  {
 			this.y_labels_2	= new YAxisLabelsRight( this.minmax, y_ticks.steps, json );
 			
 			// tell the x axis where the grid lines are:
-			if( this.minmax.has_x_range )
-			{
-				// the user has specified the X axis min and max
-				// this is used in scatter charts
-				this.x_axis.set_grid_count( this.minmax.x_max-this.minmax.x_min+1 );
-			}
-			else
+//			if( this.x_axis.range_set() )
+//			{
+//				// the user has specified the X axis min and max
+//				// this is used in scatter charts
+//				this.x_axis.set_grid_count( this.minmax.x_max-this.minmax.x_min+1 );
+//			}
+//			else
+			if( !this.x_axis.range_set() )
 			{
 				// the user has not told us how long the X axis
 				// is, so we figure it out:
-				this.x_axis.set_grid_count( Math.max( this.x_labels.count(), this.obs.length() ) );
+				tr.ace('!!!');
+				tr.ace( this.obs.get_max_x() );
+				
+				//
+				//
+				//
+				this.x_axis.set_range(
+					this.obs.get_min_x(),
+					Math.max( this.x_labels.count(), this.obs.get_max_x() ) );
 			}
 			
 			this.keys = new Keys( this.obs );

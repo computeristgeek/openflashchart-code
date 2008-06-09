@@ -11,17 +11,25 @@ class y_axis
 	
 	function set_tick_length( $val )
 	{
-		$this->tick_length = $val;
+		$tmp = 'tick-length';
+		$this->$tmp = $val;
+	}
+	
+	function set_colours( $colour, $grid_colour )
+	{
+		$this->set_colour( $colour );
+		$this->set_grid_colour( $grid_colour );
 	}
 	
 	function set_colour( $colour )
 	{
-		$this->clour = $clour;
+		$this->colour = $colour;
 	}
 	
 	function set_grid_colour( $colour )
 	{
-		$this->grid_colour = $colour;
+		$tmp = 'grid-colour';
+		$this->$tmp = $colour;
 	}
 	
 	function set_range( $min, $max, $steps=1 )
@@ -39,5 +47,10 @@ class y_axis
 	function set_labels( $labels )
 	{
 		$this->labels = $labels;	
+	}
+	
+	function set_steps( $steps )
+	{
+		$this->steps = $steps;	
 	}
 }

@@ -18,6 +18,7 @@ include_once 'ofc_bar_3d.php';
 include_once 'ofc_hbar.php';
 include_once 'ofc_line_dot.php';
 include_once 'ofc_x_legend.php';
+include_once 'ofc_y_legend.php';
 include_once 'ofc_bar_sketch.php';
 include_once 'ofc_scatter.php';
 
@@ -40,6 +41,11 @@ class open_flash_chart
 		$this->x_axis = $x;	
 	}
 	
+	function set_y_axis( $y )
+	{
+		$this->y_axis = $y;
+	}
+	
 	function add_y_axis( $y )
 	{
 		$this->y_axis = $y;
@@ -53,6 +59,16 @@ class open_flash_chart
 	function set_x_legend( $x )
 	{
 		$this->x_legend = $x;
+	}
+
+	function set_y_legend( $y )
+	{
+		$this->y_legend = $y;
+	}
+	
+	function set_bg_colour( $colour )
+	{
+		$this->bg_colour = $colour;	
 	}
 	
 	function toString()

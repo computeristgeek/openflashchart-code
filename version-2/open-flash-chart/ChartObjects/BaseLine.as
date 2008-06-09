@@ -49,5 +49,18 @@
 		public override function get_colour(): Number {
 			return this.style.colour;
 		}
+		
+		public override function get_length():Number {
+			
+			var c:Number = 0;
+			//
+			// count the non-mask items:
+			//
+			for ( var i:Number = 0; i < this.numChildren; i++ )
+				if( this.getChildAt(i) is Element )
+					c++;
+	
+			return c;
+		}
 	}
 }
