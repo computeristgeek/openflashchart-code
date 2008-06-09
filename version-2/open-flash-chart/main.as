@@ -82,7 +82,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/data-2.txt";
+					var file:String = "../data-files/x-axis-labels-2.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -449,9 +449,9 @@ package  {
 			
 			this.minmax = new MinMax( json );
 			
-			this.x_labels = new XAxisLabels( json, this.minmax );
+//			this.x_labels = new XAxisLabels( json, this.minmax );
 			// this is needed by all the elements tooltip
-			g.x_labels = this.x_labels;
+//			g.x_labels = this.x_labels;
 			
 			this.x_axis = new XAxis( json.x_axis );
 			
@@ -481,9 +481,15 @@ package  {
 				//
 				//
 				this.x_axis.set_range(
-					this.obs.get_min_x(),
-					Math.max( this.x_labels.count(), this.obs.get_max_x() ) );
+					this.obs.get_min_x(), this.obs.get_max_x() );
+					//Math.max( this.x_labels.count(), this.obs.get_max_x() ) );
 			}
+
+			tr.ace( this.x_axis.get_range() );
+			this.x_labels = new XAxisLabels( json, this.x_axis.get_range() );
+			// this is needed by all the elements tooltip
+			g.x_labels = this.x_labels;
+			
 			
 			this.keys = new Keys( this.obs );
 			

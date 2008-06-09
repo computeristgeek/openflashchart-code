@@ -3,6 +3,8 @@ package {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.display.DisplayObject;
+	import string.Utils;
+	import com.serialization.json.JSON;
 	
 	public class XAxisLabels extends Sprite {
 		public var labels:Array;
@@ -10,46 +12,70 @@ package {
 		private var style:Object;
 		
 		//
+		// Ugh, ugly code so we can rotate the text:
+		//
 		[Embed(systemFont='Arial', fontName='spArial', mimeType='application/x-font')]
 		public static var ArialFont:Class;
 
-		function XAxisLabels( json:Object, minmax:MinMax ) {
+		function XAxisLabels( json:Object, range:Range ) {
 			
 			var style:XLabelStyle = new XLabelStyle( json.x_labels );
 			
 			
 			this.style = {
-				rotate:		''//'diag'
+				rotate:		null,
+				visible:	true,
+				labels:		null,
+				steps:		1,
+				size:		10,
+				colour:		'#000000'
 			};
 			
+			// cache the text for tooltips
 			this.labels = new Array();
-
+			
 			if( ( json.x_axis != null ) && ( json.x_axis.labels != null ) )
+				object_helper.merge_2( json.x_axis.labels, this.style );
+			
+			this.style.colour = Utils.get_colour( this.style.colour );
+			
+			if( ( this.style.labels is Array ) && ( this.style.labels.length > 0 ) )
 			{
+				// we WERE passed labels,
 				// what if there are more values than labels?
-				for each( var s:String in json.x_axis.labels )
-					this.add( s, style );
+				for each( var s:String in this.style.labels )
+					this.add( s, this.style );
 				
 				//
 				// alter the MinMax object:
 				//
-				minmax.set_x_max( json.x_axis.labels.length );
+//				minmax.set_x_max( json.x_axis.labels.length )
 			}
 			else
 			{
-				// they *may* have used x_min and x_max to set
-				// the X Axis labels
-				if( style.show_labels )
-					for( var i:Number=minmax.x_min; i<=minmax.x_max; i++ )
-						this.add( NumberUtils.formatNumber( i ), style );
+				// we were NOT passed labels:
+
+				if( this.style.visible )
+					for( var i:Number = range.min; i <= range.max; i++ )
+						this.add( NumberUtils.formatNumber( i ), this.style );
 			}
 		}
 		
-		public function add( label:String, style:XLabelStyle ) : void
+		public function add( label:Object, style:Object ) : void
 		{
-			this.labels.push( label );
+			var text:String;
+			if( label is String )
+				text = label as String;
+			else
+				text = label.text;
 			
-			var l:TextField = this.make_label(label, style);
+			tr.ace( "***" );
+			tr.ace(JSON.serialize(label) );
+			
+			tr.ace( text );
+			this.labels.push( text );
+			
+			var l:TextField = this.make_label(text, style);
 			
 			//
 			// some labels will be invisible due to the step
@@ -57,7 +83,7 @@ package {
 			// AJAX may del() a point and all the labels will
 			// move around, some will become visible...
 			//
-			if ( ( (this.labels.length - 1) % style.step ) == 0 )
+			if ( ( (this.labels.length - 1) % style.steps ) == 0 )
 				l.visible = true;
 			else
 				l.visible = false;
@@ -99,7 +125,7 @@ package {
 				
 		}
 		
-		public function make_label( label:String, style:XLabelStyle ):TextField {
+		public function make_label( label:String, style:Object ):TextField {
 			// we create the text in its own movie clip, so when
 			// we rotate it, we can move the regestration point
 			
@@ -114,7 +140,7 @@ package {
 			var fmt:TextFormat = new TextFormat();
 			fmt.color = style.colour;
 		
-			if( this.style.rotate != 0 )
+			if( this.style.rotate is String )
 			{
 				// so we can rotate the text
 				fmt.font = "spArial";
@@ -135,7 +161,7 @@ package {
 			{
 				title.rotation = 270;
 			}
-			else if( this.style.rotate == 'diag' )
+			else if( this.style.rotate == 'diagonal' )
 			{
 				title.rotation = -45;
 			}

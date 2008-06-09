@@ -38,7 +38,7 @@
 					this.step = json.x_label_style.step;
 			}
 			else
-				this.show_labels = false;
+				this.show_labels = true;
 		}
 	}
 }

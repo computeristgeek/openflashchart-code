@@ -91,7 +91,7 @@ package {
 		// have we been passed a range? (min and max?)
 		//
 		public function range_set():Boolean {
-			return this.style.max;
+			return this.style.max != null;
 		}
 		
 		//

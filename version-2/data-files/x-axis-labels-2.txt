@@ -5,15 +5,6 @@
     "style":"{color: #736AFF; font-size: 25;}"
   },
 
-  "x_legend":{
-    "text":   "Waves in Feburary",
-    "style": "{color: #736AFF; font-size: 25;}"
-  },
-
-  "y_legend":{
-    "text":   "Wave height (cm)",
-    "style": "{color: #736AFF; font-size: 15;}"
-  },
 
   "elements":[
     {
@@ -34,7 +25,15 @@
   },
 
   "x_axis":{
-    "steps": 4
+    "steps": 4,
+
+    "labels":{
+      "visible": true,
+      "rotate": "vertical",
+      "steps":  2,
+      "labels": ["1","2",{"text":"3","colour":"#00FF00"}]
+    }
   },
-  "bg_colour":  "#E0E0FF"
+
+  "bg_colour":  "#F8F8F8"
 }
