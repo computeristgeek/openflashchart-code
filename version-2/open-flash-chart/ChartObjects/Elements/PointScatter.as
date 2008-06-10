@@ -22,6 +22,15 @@
 			this.graphics.endFill();
 
 		}
+
+		public override function make_tooltip( key:String ):void 
+		{
+			super.make_tooltip( key );
+			
+			var tmp:String = this.tooltip.replace('#val#', '(' + NumberUtils.formatNumber(this._x) + ', ' + NumberUtils.formatNumber(this._y) + ')=' + NumberUtils.formatNumber(this.radius));
+			this.tooltip = tmp;
+		}
+		
 		
 		public override function set_tip( b:Boolean ):void {
 			if ( b )
