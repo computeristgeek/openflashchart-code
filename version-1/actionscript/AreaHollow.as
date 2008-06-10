@@ -63,7 +63,7 @@
 		this.mc_area.beginFill(this.fill_colour, this.alpha );
     	
 		var pos:Number = 0;
-		while( this.ExPoints[pos] == null )
+		while( this.ExPoints[pos] == null && pos < this.ExPoints.length)
 			pos++;
 			
 		this.mc_area.moveTo( this.ExPoints[pos].x, this.bottom );
