@@ -31,7 +31,15 @@
       "visible": true,
       "rotate": "vertical",
       "steps":  2,
-      "labels": ["1","2",{"text":"3","colour":"#00FF00"}]
+      "labels": [
+        "1",
+        "2",
+        {"text":"3","colour":"#00D000"},
+        "4",
+        "5 Hello",
+        {"text":"Long text","colour":"#00D0D0", "rotate": "diagonal"},
+        {"text":"Long text","colour":"#00D0D0", "rotate": "diagonal", "size":30}
+      ]
     }
   },
 
