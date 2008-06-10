@@ -5,8 +5,8 @@ use open_flash_chart;
 
 my $g = chart->new();
   
-my $bar = bar_stack->new();
-$g->add_element($bar);
+my $e = $g->get_element('bar');
+$g->add_element($e);
 
 
 

@@ -15,22 +15,22 @@ my $g = chart->new();
 if ( $Request->QueryString("data")->Item == 1 ) {
 
   
-  my $bar = bar->new();
+  my $e = $g->get_element('bar');
   my $data = [];
 	for( my $i=0; $i<5; $i++ ) {
 		push ( @$data, rand(20) );
 	}
-  $bar->values($data);
-  $g->add_element($bar);
+  $e->values($data);
+  $g->add_element($e);
 
   
-  $bar = bar_outline->new();
+  $e = $g->get_element('bar_outline');
   my $data = [];
 	for( my $i=0; $i<5; $i++ ) {
 		push ( @$data, rand(30) );
 	}
-  $bar->values($data);
-  $g->add_element($bar);  
+  $e->values($data);
+  $g->add_element($e);  
 
  
 	$Response->write($g->render_chart_data());
@@ -46,7 +46,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   <body>
     <h1>OFC Bar Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400, 'http://mets-outbounddev.web.boeing.com/portal/page/charts/test/test_bar.asp?data=1'));
+  $Response->write($g->render_swf(600, 400, '?data=1'));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 

@@ -14,8 +14,8 @@ my $g = chart->new();
 
 if ( $Request->QueryString("data")->Item == 1 ) {
 
-  my $p = pie->new();
-  $g->add_element($p);
+  my $e = $g->get_element('pie');
+  $g->add_element($e);
   
 	$Response->write($g->render_chart_data());
   $Response->exit();
@@ -30,7 +30,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   <body>
     <h1>OFC Pie Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400, 'http://mets-outbounddev.web.boeing.com/portal/page/charts/test/test_pie.asp?data=1'));
+  $Response->write($g->render_swf(600, 400, '?data=1'));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>

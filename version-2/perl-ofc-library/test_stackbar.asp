@@ -15,9 +15,9 @@ my $g = chart->new();
 if ( $Request->QueryString("data")->Item == 1 ) {
 
   
-  my $bar = bar_stack->new();
+  my $e = $g->get_element('bar_stack');
   
-  $bar->values([
+  $e->values([
     [{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(40),"colour"=>random_color()}],
     [{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(20),"colour"=>random_color()}],
     [{"val"=>rand(10)},{"val"=>rand(20)},{"val"=>rand(30)}],
@@ -25,7 +25,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
     [{"val"=>rand(5)},{"val"=>rand(10)},{"val"=>rand(5)},{"val"=>rand(20)},{"val"=>rand(5),"colour"=>random_color()},{"val"=>rand(5)},{"val"=>rand(5)}]
    ]);  
   
-  $g->add_element($bar);
+  $g->add_element($e);
 
   $Response->{'ContentType'} = "text/javascript";
 	$Response->write($g->render_chart_data());
@@ -41,7 +41,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   <body>
     <h1>OFC Stack Bar Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400, 'http://mets-outbounddev.web.boeing.com/portal/page/charts/test/test_stackbar.asp?data=1'));
+  $Response->write($g->render_swf(600, 400, '?data=1'));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>

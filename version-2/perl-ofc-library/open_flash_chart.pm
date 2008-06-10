@@ -1,5 +1,5 @@
 
-use strict;
+use strict; use warnings;
 
 
 # This class manages all functions of the open flash chart api.
@@ -36,6 +36,15 @@ sub new() {
   return $self;
 }
 
+sub get_element() {
+  my ($self, $element_name) = @_;
+  
+  my $e=undef;
+  eval("\$e = ${element_name}->new();");
+  if ( defined($e) ) {
+    return $e;
+  } 
+}
 
 sub add_element() {
   my ($self, $element) = @_;
@@ -138,6 +147,7 @@ sub get_auto_y_max() {
     
   for my $e ( @{$self->{'elements'}} ) {
     my $e_max = $e->get_max_value();
+    next if !defined($e_max);
     $max = $e_max if !defined($max);
     if ( $e_max > $max ) {
         $max = $e_max;
@@ -208,6 +218,9 @@ sub get_max_value {
   my ($self) = @_;
   my $max = undef;
   for ( @{$self->{'element_props'}->{'values'}} ) {
+    if ( ref($_) eq 'HASH' || ref($_) eq 'ARRAY' ) {
+      return undef;
+    }
     $max = $_ if !defined($max);
     if ( $_ > $max ) {
       $max = $_;
@@ -447,6 +460,38 @@ sub new() {
 }
 
 
+package scatter;
+our @ISA = qw(element);
+sub new() {
+  my ($proto) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  bless $self, $class;
+  $self = $self->SUPER::new();
+  $self->{'element_props'}->{'type'} = __PACKAGE__;
+  $self->{'element_props'}->{'values'} = [
+    {"x"=>-5,  "y"=>-5 },
+    {"x"=>0,   "y"=>0  },
+    {"x"=>5,   "y"=>5,  "dot-size"=>20},
+    {"x"=>5,   "y"=>-5, "dot-size"=>5},
+    {"x"=>-5,  "y"=>5,  "dot-size"=>5},
+    {"x"=>0.5, "y"=>1,  "dot-size"=>15}
+  ];
+
+  return $self;
+}
+sub get_max_value {
+  my ($self, $axis) = @_;
+  my $max = undef;
+  for ( @{$self->{'element_props'}->{'values'}} ) {
+    $max = $_->{$axis} if !defined($max);
+    if ( $_->{$axis} > $max ) {
+      $max = $_->{$axis};
+    }
+  }
+  return $max || 10;  
+}
+
 
 
 
@@ -483,7 +528,7 @@ sub to_json {
     $tmp.= "}" if defined($name);
   
   } else {
-    if ( $data_structure =~ /^[\d.]+$/ ) {
+    if ( $data_structure =~ /^-{0,1}[\d.]+$/ ) {
       #number
       $tmp.= $data_structure;
     } else {

@@ -14,32 +14,8 @@ my $g = chart->new();
 
 if ( $Request->QueryString("data")->Item == 1 ) {
 
-  my $e = $g->get_element('line');
-  
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(20) );
-	}
-  $e->values($data);
+  my $e = $g->get_element('scatter');
   $g->add_element($e);
-  
-  $e = $g->get_element('line_dot');
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(30) );
-	}
-  $e->values($data);
-  $g->add_element($e);
-
-
-  $e = $g->get_element('line_hollow');
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(40) );
-	}
-  $e->values($data);
-  $g->add_element($e);
-  
   
 	$Response->write($g->render_chart_data());
   $Response->exit();
@@ -49,10 +25,10 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 %>
 <html>
   <head>
-    <title>OFC Line Test</title>
+    <title>OFC Scatter Test</title>
   </head>
   <body>
-    <h1>OFC Line Test</h1>
+    <h1>OFC Scatter Test</h1>
 <%
   $Response->write($g->render_swf(600, 400, '?data=1'));
 %>
