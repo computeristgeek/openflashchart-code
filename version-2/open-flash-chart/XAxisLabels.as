@@ -43,7 +43,7 @@ package {
 			{
 				// we WERE passed labels,
 				// what if there are more values than labels?
-				for each( var s:String in this.style.labels )
+				for each( var s:Object in this.style.labels )
 					this.add( s, this.style );
 				
 				//
@@ -63,19 +63,35 @@ package {
 		
 		public function add( label:Object, style:Object ) : void
 		{
-			var text:String;
+			var label_style:Object = {
+				colour:		style.colour,
+				text:		'',
+				rotate:		style.rotate,
+				size:		style.size,
+				colour:		style.colour
+			};
+
+			
+			//
+			// inherit some properties from
+			// our parents 'globals'
+			//
 			if( label is String )
-				text = label as String;
-			else
-				text = label.text;
+				label_style.text = label as String;
+			else {
+				object_helper.merge_2( label, label_style );
+			}
 			
-			tr.ace( "***" );
-			tr.ace(JSON.serialize(label) );
+			// our parent colour is a number, but
+			// we may have our own colour:
+			if( label_style.colour is String )
+				label_style.colour = Utils.get_colour( label_style.colour );
 			
-			tr.ace( text );
-			this.labels.push( text );
+			tr.ace( JSON.serialize( label_style ) );
 			
-			var l:TextField = this.make_label(text, style);
+			this.labels.push( label_style.text );
+			
+			var l:TextField = this.make_label( label_style );
 			
 			//
 			// some labels will be invisible due to the step
@@ -125,7 +141,7 @@ package {
 				
 		}
 		
-		public function make_label( label:String, style:Object ):TextField {
+		public function make_label( label_style:Object ):TextField {
 			// we create the text in its own movie clip, so when
 			// we rotate it, we can move the regestration point
 			
@@ -135,12 +151,12 @@ package {
 			
 			//this.css.parseCSS(this.style);
 			//title.styleSheet = this.css;
-			title.text = label;
+			title.text = label_style.text;
 			
 			var fmt:TextFormat = new TextFormat();
-			fmt.color = style.colour;
+			fmt.color = label_style.colour;
 		
-			if( this.style.rotate is String )
+			if( label_style.rotate is String )
 			{
 				// so we can rotate the text
 				fmt.font = "spArial";
@@ -152,16 +168,16 @@ package {
 			}
 
 			
-			fmt.size = style.size;
+			fmt.size = label_style.size;
 			fmt.align = "left";
 			title.setTextFormat(fmt);
 			title.autoSize = "left";
 			
-			if( this.style.rotate == 'vertical' )
+			if( label_style.rotate == 'vertical' )
 			{
 				title.rotation = 270;
 			}
-			else if( this.style.rotate == 'diagonal' )
+			else if( label_style.rotate == 'diagonal' )
 			{
 				title.rotation = -45;
 			}
