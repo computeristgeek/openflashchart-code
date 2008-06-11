@@ -111,7 +111,8 @@ class graph
 	*/
 	function set_unique_id()
 	{
-		$this->unique_id = uniqid(rand(), true);
+		// valid HTML id attribute
+		$this->unique_id = 'i' . md5(uniqid(rand(), true));
 	}
 	
 	/**
@@ -1025,10 +1026,6 @@ class graph
 	{
 		$tmp = array();
 		
-		//echo headers_sent() ?'yes':'no';
-		if( !headers_sent() )
-			header('content-type: text; charset: utf-8');
-
 		if($this->output_type == 'js')
 		{
 			$this->set_unique_id();
@@ -1038,6 +1035,11 @@ class graph
 			$tmp[] = '<script type="text/javascript">';
 			$tmp[] = 'var so = new SWFObject("' . $this->swf_path . 'open-flash-chart.swf", "ofc", "'. $this->width . '", "' . $this->height . '", "9", "#FFFFFF");';
 			$tmp[] = 'so.addVariable("variables","true");';
+		}
+		else
+		{
+			if( !headers_sent() )
+				header('Content-Type: text/plain; charset=utf-8');
 		}
 
 		if( strlen( $this->title ) > 0 )
