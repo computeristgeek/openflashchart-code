@@ -49,9 +49,21 @@ class x_axis
 		$this->$tmp				= $val;		
 	}
 	
-	function set_labels( $v )
+	function set_labels( $x_axis_labels )
 	{
-		$this->labels = $v;		
+		//$this->labels = $v;
+		$this->labels = $x_axis_labels;
+	}
+	
+	//
+	// helper function to make the examples
+	// simpler.
+	//
+	function set_labels_from_array( $a )
+	{
+		$x_axis_labels = new x_axis_labels();
+		$x_axis_labels->set_labels( $a );
+		$this->labels = $x_axis_labels;
 	}
 	
 	function set_range( $min, $max )

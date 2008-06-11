@@ -69,6 +69,7 @@ package {
 				rotate:		style.rotate,
 				size:		style.size,
 				colour:		style.colour
+				//,visible:    true		// style.visible
 			};
 
 			
@@ -87,23 +88,27 @@ package {
 			if( label_style.colour is String )
 				label_style.colour = Utils.get_colour( label_style.colour );
 			
-			tr.ace( JSON.serialize( label_style ) );
+			// tr.ace( JSON.serialize( label_style ) );
 			
 			this.labels.push( label_style.text );
+
+			//
+			// inheriting the 'visible' attribute
+			// is complext due to the 'steps' value
+			// only some labels will be visible
+			//
+			if( label_style.visible == null )
+			{
+				//
+				// some labels will be invisible due to our parents step value
+				//
+				if ( ( (this.labels.length - 1) % style.steps ) == 0 )
+					label_style.visible = true;
+				else
+					label_style.visible = false;
+			}
 			
 			var l:TextField = this.make_label( label_style );
-			
-			//
-			// some labels will be invisible due to the step
-			// value, but we want to make them all because
-			// AJAX may del() a point and all the labels will
-			// move around, some will become visible...
-			//
-			if ( ( (this.labels.length - 1) % style.steps ) == 0 )
-				l.visible = true;
-			else
-				l.visible = false;
-				
 			this.addChild( l );
 		}
 		
@@ -114,32 +119,7 @@ package {
 			else
 				return '';
 		}
-		
-		//
-		// I don't think we'll use this any more
-		// used to be called by various JS functions
-		//
-		public function del() : void
-		{
-			this.labels.shift();
-
-			// delete all the MovieClips, and recreate them
-			// we have to do this because of the 'step' value
-			//
-			// I expect there is a better way of doing this...
-			//
-//			for( var i:Number=0; i<this.mcs.length; i++ )
-//				removeMovieClip(this.mcs[i]._name);
-				
-//			this.mcs = [];
-			
-			// now we have deleted all the labels, re-create them
-			// note we use the step value so only create *some*
-//			for( var i:Number=0; i<this.labels.length; i++ )
-//				if( ( i % style.step ) == 0 )
-//					this.show_label( this.labels[i], 'x_label_'+i );
-				
-		}
+	
 		
 		public function make_label( label_style:Object ):TextField {
 			// we create the text in its own movie clip, so when
@@ -186,6 +166,8 @@ package {
 				title.x = -(title.width/2);
 			}
 			// we don't know the x & y locations yet...
+			
+			title.visible = label_style.visible;
 			
 			return title;
 		}

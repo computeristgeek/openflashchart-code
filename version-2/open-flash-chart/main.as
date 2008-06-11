@@ -82,7 +82,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/x-axis-labels-2.txt";
+					var file:String = "../data-files/x-axis-labels-3.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {

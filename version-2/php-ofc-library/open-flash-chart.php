@@ -21,6 +21,8 @@ include_once 'ofc_x_legend.php';
 include_once 'ofc_y_legend.php';
 include_once 'ofc_bar_sketch.php';
 include_once 'ofc_scatter.php';
+include_once 'ofc_x_axis_labels.php';
+include_once 'ofc_x_axis_label.php';
 
 
 class open_flash_chart
