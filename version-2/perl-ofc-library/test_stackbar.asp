@@ -17,7 +17,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   
   my $e = $g->get_element('bar_stack');
   
-  $e->values([
+  $e->set_values([
     [{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(40),"colour"=>random_color()}],
     [{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(20),"colour"=>random_color()}],
     [{"val"=>rand(10)},{"val"=>rand(20)},{"val"=>rand(30)}],

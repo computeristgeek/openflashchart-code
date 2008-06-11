@@ -15,6 +15,17 @@ my $g = chart->new();
 if ( $Request->QueryString("data")->Item == 1 ) {
 
   my $e = $g->get_element('scatter');
+
+  $e->set_values([
+    {"x"=>-5,  "y"=>10 },
+    {"x"=>-4,   "y"=>8  },
+    {"x"=>-3,   "y"=>5,  "dot-size"=>20},
+    {"x"=>-2,   "y"=>2, "dot-size"=>5},
+    {"x"=>1,  "y"=>0,  "dot-size"=>5},
+    {"x"=>2, "y"=>5,  "dot-size"=>15}
+  ]);
+  
+  #$e->set_extremes();
   $g->add_element($e);
   
 	$Response->write($g->render_chart_data());

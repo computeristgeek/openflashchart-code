@@ -20,7 +20,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 	for( my $i=0; $i<5; $i++ ) {
 		push ( @$data, rand(20) );
 	}
-  $e->values($data);
+  $e->set_values($data);
   $g->add_element($e);
 
   
@@ -29,7 +29,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 	for( my $i=0; $i<5; $i++ ) {
 		push ( @$data, rand(30) );
 	}
-  $e->values($data);
+  $e->set_values($data);
   $g->add_element($e);  
 
  
