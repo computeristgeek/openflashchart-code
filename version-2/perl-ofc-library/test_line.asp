@@ -54,7 +54,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   <body>
     <h1>OFC Line Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400, '?data=1'));
+  $Response->write($g->render_swf(600, 400, '?data=1&'.time()));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>

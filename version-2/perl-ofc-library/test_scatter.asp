@@ -24,8 +24,6 @@ if ( $Request->QueryString("data")->Item == 1 ) {
     {"x"=>1,  "y"=>0,  "dot-size"=>5},
     {"x"=>2, "y"=>5,  "dot-size"=>15}
   ]);
-  
-  #$e->set_extremes();
   $g->add_element($e);
   
 	$Response->write($g->render_chart_data());
@@ -41,7 +39,7 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   <body>
     <h1>OFC Scatter Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400, '?data=1'));
+  $Response->write($g->render_swf(600, 400, '?data=1&'.time()));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>

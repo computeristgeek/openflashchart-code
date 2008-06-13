@@ -23,6 +23,8 @@ sub new() {
       "style"=>"{font-size:20px; font-family:Verdana; text-align:center;}"
     },
     "x_axis"=>{
+      "min"=>     undef,
+      "max"=>     undef,
       "labels"=> ["a","b","c","d","e"]
     },
     "y_axis"=>{
@@ -48,24 +50,44 @@ sub get_element() {
 
 sub add_element() {
   my ($self, $element) = @_;
+  if ( $element->{'use_extremes'} == 1 ) {
+  	$self->use_extremes();
+  }
   push(@{$self->{'elements'}}, $element);
 }
 
+sub use_extremes {
+  my ($self) = @_;
+
+	$self->{'chart_props'}->{'x_axis'}->{'min'} = 'a';
+	$self->{'chart_props'}->{'x_axis'}->{'max'} = 'a';
+	$self->{'chart_props'}->{'y_axis'}->{'min'} = 'a';
+	$self->{'chart_props'}->{'y_axis'}->{'max'} = 'a';
+}
 
 sub render_chart_data() {
   my ($self) = @_;
 
   my $tmp = ''; #$self->get_page_bootstrap();
+
+  my $ext = $self->get_auto_extremes();
   
   if ($self->{'chart_props'}->{'y_axis'}->{'max'} =~ /a/) {
-    my $ext = $self->get_auto_extremes();
-    $self->{'chart_props'}->{'y_axis'}->{'max'} = $ext->{'y_max'};
-    $self->{'chart_props'}->{'y_axis'}->{'min'} = $ext->{'y_min'};
-    $self->{'chart_props'}->{'x_axis'}->{'max'} = $ext->{'x_max'};
-    $self->{'chart_props'}->{'x_axis'}->{'min'} = $ext->{'x_min'};
-  } else {
-    $self->{'chart_props'}->{'y_axis'}->{'max'} = 100;
+    $self->{'chart_props'}->{'y_axis'}->{'max'} = main::smoother($ext->{'y_max'});
   }
+
+  if ($self->{'chart_props'}->{'x_axis'}->{'max'} =~ /a/) {
+    $self->{'chart_props'}->{'x_axis'}->{'max'} = $ext->{'x_max'};
+  }
+
+  if ($self->{'chart_props'}->{'y_axis'}->{'min'} =~ /a/) {
+    $self->{'chart_props'}->{'y_axis'}->{'min'} = $ext->{'y_min'};
+  }
+
+  if ($self->{'chart_props'}->{'x_axis'}->{'min'} =~ /a/) {
+    $self->{'chart_props'}->{'x_axis'}->{'min'} = $ext->{'x_min'};
+  }
+
   
   $tmp .= "{";
   $tmp .= main::to_json($self->{'chart_props'});
@@ -152,40 +174,28 @@ sub get_auto_extremes() {
     
   for my $e ( @{$self->{'elements'}} ) {
 
-    $extremes->{'x_max'} = $e->{'element_props'}->{'extremes'}->{'x_max'} if !defined($extremes->{'x_max'});
-    if ( $e->{'element_props'}->{'extremes'}->{'x_max'} > $extremes->{'x_max'} ) {
-        $extremes->{'x_max'} = $e->{'element_props'}->{'extremes'}->{'x_max'};
+    $extremes->{'x_max'} = $e->{'extremes'}->{'x_max'} if !defined($extremes->{'x_max'});
+    if ( $e->{'extremes'}->{'x_max'} > $extremes->{'x_max'} ) {
+        $extremes->{'x_max'} = $e->{'extremes'}->{'x_max'};
     }
 
-    $extremes->{'y_max'} = $e->{'element_props'}->{'extremes'}->{'y_max'} if !defined($extremes->{'y_max'});
-    if ( $e->{'element_props'}->{'extremes'}->{'y_max'} > $extremes->{'y_max'} ) {
-        $extremes->{'y_max'} = $e->{'element_props'}->{'extremes'}->{'y_max'};
+    $extremes->{'y_max'} = $e->{'extremes'}->{'y_max'} if !defined($extremes->{'y_max'});
+    if ( $e->{'extremes'}->{'y_max'} > $extremes->{'y_max'} ) {
+        $extremes->{'y_max'} = $e->{'extremes'}->{'y_max'};
     }
 
-    $extremes->{'x_min'} = $e->{'element_props'}->{'extremes'}->{'x_min'} if !defined($extremes->{'x_min'});
-    if ( $e->{'element_props'}->{'extremes'}->{'x_min'} < $extremes->{'x_min'} ) {
-        $extremes->{'x_min'} = $e->{'element_props'}->{'extremes'}->{'x_min'};
+    $extremes->{'x_min'} = $e->{'extremes'}->{'x_min'} if !defined($extremes->{'x_min'});
+    if ( $e->{'extremes'}->{'x_min'} < $extremes->{'x_min'} ) {
+        $extremes->{'x_min'} = $e->{'extremes'}->{'x_min'};
     }
 
-    $extremes->{'y_min'} = $e->{'element_props'}->{'extremes'}->{'y_min'} if !defined($extremes->{'y_min'});
-    if ( $e->{'element_props'}->{'extremes'}->{'y_min'} < $extremes->{'y_min'} ) {
-        $extremes->{'y_min'} = $e->{'element_props'}->{'extremes'}->{'y_min'};
+    $extremes->{'y_min'} = $e->{'extremes'}->{'y_min'} if !defined($extremes->{'y_min'});
+    if ( $e->{'extremes'}->{'y_min'} < $extremes->{'y_min'} ) {
+        $extremes->{'y_min'} = $e->{'extremes'}->{'y_min'};
     }
 
   }
  
-#  $max = $max * (1 + $head_room);
-#  
-#  if ( $smooth_rounding ) {
-#  	# round the max up a bit to a nice round number
-#  	if ( $max < 100 ) { $max = $max + (-$max % 10) }
-#  	elsif ( $max < 500 ) { $max = $max + (-$max % 50) }
-#  	elsif ( $max < 1000 ) { $max = $max + (-$max % 100) }
-#  	elsif ( $max < 10000 ) { $max = $max + (-$max % 200) }
-#  	else { $max = $max + (-$max % 500) }
-#    $max = int($max);
-#  }  
-#  
   return $extremes;
 }
 
@@ -227,6 +237,7 @@ sub new() {
   my $class = ref($proto) || $proto;
   my $self  = {};
 
+	$self->{'extremes'} = {};
   $self->{'element_props'} =  {
     'type'      => '',
     'values'    => [1.5,1.69,1.88,2.06,2.21],
@@ -252,11 +263,11 @@ sub set_extremes {
       $extremes->{'y_max'} = $_;
     }
     $extremes->{'y_min'} = $_ if !defined($extremes->{'y_min'});
-    if ( $_ > $extremes->{'y_min'} ) {
+    if ( $_ < $extremes->{'y_min'} ) {
       $extremes->{'y_min'} = $_;
     }
   }
-  $self->{'element_props'}->{'extremes'} = $extremes;
+  $self->{'extremes'} = $extremes;
 }
 
 sub to_json() {
@@ -474,7 +485,7 @@ sub set_extremes {
       $extremes->{'y_max'} = $bar_ext->{'y_max'};
     }
   }
-  $self->{'element_props'}->{'extremes'} = $extremes;
+  $self->{'extremes'} = $extremes;
 }
 
 
@@ -507,6 +518,7 @@ sub new() {
   my $self  = {};
   bless $self, $class;
   $self = $self->SUPER::new();
+  $self->{'use_extremes'} = 1;	# scatter needs x-y min-maxes to print
   $self->{'element_props'}->{'type'} = __PACKAGE__;
   $self->{'element_props'}->{'values'} = [
     {"x"=>-5,  "y"=>-5 },
@@ -542,21 +554,8 @@ sub set_extremes {
     }
 
   }
-  $self->{'element_props'}->{'extremes'} = $extremes;
+  $self->{'extremes'} = $extremes;
 }
-
-sub get_max_value {
-  my ($self, $axis) = @_;
-  my $max = undef;
-  for ( @{$self->{'element_props'}->{'values'}} ) {
-    $max = $_->{$axis} if !defined($max);
-    if ( $_->{$axis} > $max ) {
-      $max = $_->{$axis};
-    }
-  }
-  return $max || 10;  
-}
-
 
 
 
@@ -593,6 +592,11 @@ sub to_json {
     $tmp.= "}" if defined($name);
   
   } else {
+  	
+  	if ( !defined($data_structure) ) {
+  		return;
+  	}
+  	
     if ( $data_structure =~ /^-{0,1}[\d.]+$/ ) {
       #number
       $tmp.= $data_structure;
@@ -630,6 +634,23 @@ sub url_escape {
     $toencode=~s/([^a-zA-Z0-9_\-. ])/uc sprintf("%%%02x",ord($1))/eg;
     $toencode =~ tr/ /+/;    # spaces become pluses
     return $toencode;
+}
+
+
+# round the number up a bit to a nice round number
+# also changes number to an int
+sub smoother {
+	my $number = shift;
+	my $n = $number;
+  
+ 	if ( $n < 100 ) { $n = $n + (-$n % 10) }
+ 	elsif ( $n < 500 ) { $n = $n + (-$n % 50) }
+ 	elsif ( $n < 1000 ) { $n = $n + (-$n % 100) }
+ 	elsif ( $n < 10000 ) { $n = $n + (-$n % 200) }
+ 	else { $n = $n + (-$n % 500) }
+  $n = int($n);
+  
+	return $n;
 }
 
 1;
