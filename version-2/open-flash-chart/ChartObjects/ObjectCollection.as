@@ -25,7 +25,7 @@ package ChartObjects {
 			var max:Number = -1;
 
 			for each( var o:Base in this.sets )
-				max = Math.max( max, o.get_length() );
+				max = Math.max( max, o.get_max_x_value() );
 
 			return max;
 		}

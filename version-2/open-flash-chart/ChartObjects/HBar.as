@@ -51,6 +51,23 @@
 				p.resize( sc, this.axis );
 			}
 		}
+		
+		public override function get_max_x_value():Number {
+			
+			var x:Number = 0;
+			//
+			// count the non-mask items:
+			//
+			for ( var i:Number = 0; i < this.numChildren; i++ )
+				if( this.getChildAt(i) is PointHBar ) {
+					
+					var h:PointHBar = this.getChildAt(i) as PointHBar;
+					x = Math.max( x, h.get_max_x_value() );
+					
+				}
+	
+			return x;
+		}
 
 	}
 }

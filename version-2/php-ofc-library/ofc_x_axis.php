@@ -64,6 +64,9 @@ class x_axis
 		$x_axis_labels = new x_axis_labels();
 		$x_axis_labels->set_labels( $a );
 		$this->labels = $x_axis_labels;
+		
+		if( isset( $this->steps ) )
+			$x_axis_labels->set_steps( $this->steps );
 	}
 	
 	function set_range( $min, $max )

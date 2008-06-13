@@ -50,7 +50,11 @@
 			return this.style.colour;
 		}
 		
-		public override function get_length():Number {
+		//
+		// TODO this is so wrong. We need to query all the Elements
+		//      for thier X value
+		//
+		public override function get_max_x_value():Number {
 			
 			var c:Number = 0;
 			//

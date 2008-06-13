@@ -72,7 +72,7 @@ package ChartObjects {
 			this.values.shift();
 		}
 		
-		public function get_length():Number {
+		public function get_max_x_value():Number {
 			return this.numChildren;
 		}
 		

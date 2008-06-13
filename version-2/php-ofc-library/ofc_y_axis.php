@@ -36,7 +36,7 @@ class y_axis
 	{
 		$this->min = $min;
 		$this->max = $max;
-		$this->steps = $steps;
+		$this->set_steps( $steps );
 	}
 	
 	function set_offset( $off )

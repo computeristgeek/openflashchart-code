@@ -37,6 +37,8 @@
 		// the axis makes no sense here, let's override with null and write our own.
 		//
 		public override function resize( sc:ScreenCoords, axis:Number ): void { }
+		
+		
 		public function pie_resize( sc:ScreenCoords, slice_radius:Number ): void {
 			var p:PieSlice = this.getChildAt(0) as PieSlice;
 			p.pie_resize(sc, slice_radius);
@@ -53,11 +55,11 @@
 			
 			tr.ace('p.slice_angle=' + p.slice_angle + ' p.angle' + p.angle + ' tick_angle=' + tick_angle);
 			
-			if (tick_angle > 90 - offset_threshold && tick_angle < 90 + offset_threshold) 
+			if (tick_angle > 90 - offset_threshold && tick_angle < 90 + offset_threshold)
 			{
 				offset.bottom = (10 * Math.abs(Math.sin(tick_angle * TO_RADIANS))) + 14; // 14 is pad for label height
 			}
-			else if (tick_angle > 270 - offset_threshold && tick_angle < 270 + offset_threshold) 
+			else if (tick_angle > 270 - offset_threshold && tick_angle < 270 + offset_threshold)
 			{
 				offset.top = (10 * Math.abs(Math.sin(tick_angle * TO_RADIANS))) + 14; // 14 is pad for label height
 			}

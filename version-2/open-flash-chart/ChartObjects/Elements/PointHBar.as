@@ -67,5 +67,9 @@
 			this.x = left;
 			this.y = tmp.y;
 		}
+		
+		public function get_max_x_value():Number {
+			return this._right;
+		}
 	}
 }

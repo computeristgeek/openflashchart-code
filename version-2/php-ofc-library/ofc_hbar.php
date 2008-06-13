@@ -2,11 +2,10 @@
 
 class hbar_value
 {
-	function hbar_value( $right, $left=null )
+	function hbar_value( $left, $right )
 	{
+		$this->left = $left;
 		$this->right = $right;
-		if( isset( $left ) )
-			$this->left = $left;
 	}
 }
 
