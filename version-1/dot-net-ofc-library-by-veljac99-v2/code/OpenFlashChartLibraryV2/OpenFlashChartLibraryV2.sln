@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenFlashChartASPNETLibraryV2", "OpenFlashChartASPNETLibraryV2\OpenFlashChartASPNETLibraryV2.csproj", "{87F062F0-83B9-4EA1-9690-193F7959E3BB}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TestWebCSharp", "TestWebCSharp", "{C66E456A-A2D3-4619-8F8C-8F442A363F68}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFramework = "3.5"
+		ProjectReferences = "{87F062F0-83B9-4EA1-9690-193F7959E3BB}|OpenFlashChartASPNETLibraryV2.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/TestWebCSharp"
+		Debug.AspNetCompiler.PhysicalPath = "TestWebCSharp\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\TestWebCSharp\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/TestWebCSharp"
+		Release.AspNetCompiler.PhysicalPath = "TestWebCSharp\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\TestWebCSharp\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "51575"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|.NET = Debug|.NET
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Release|.NET = Release|.NET
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87F062F0-83B9-4EA1-9690-193F7959E3BB}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{87F062F0-83B9-4EA1-9690-193F7959E3BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87F062F0-83B9-4EA1-9690-193F7959E3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87F062F0-83B9-4EA1-9690-193F7959E3BB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{87F062F0-83B9-4EA1-9690-193F7959E3BB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{87F062F0-83B9-4EA1-9690-193F7959E3BB}.Release|.NET.ActiveCfg = Release|Any CPU
+		{87F062F0-83B9-4EA1-9690-193F7959E3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87F062F0-83B9-4EA1-9690-193F7959E3BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87F062F0-83B9-4EA1-9690-193F7959E3BB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{87F062F0-83B9-4EA1-9690-193F7959E3BB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C66E456A-A2D3-4619-8F8C-8F442A363F68}.Debug|.NET.ActiveCfg = Debug|.NET
+		{C66E456A-A2D3-4619-8F8C-8F442A363F68}.Debug|.NET.Build.0 = Debug|.NET
+		{C66E456A-A2D3-4619-8F8C-8F442A363F68}.Debug|Any CPU.ActiveCfg = Debug|.NET
+		{C66E456A-A2D3-4619-8F8C-8F442A363F68}.Debug|Mixed Platforms.ActiveCfg = Debug|.NET
+		{C66E456A-A2D3-4619-8F8C-8F442A363F68}.Debug|Mixed Platforms.Build.0 = Debug|.NET
+		{C66E456A-A2D3-4619-8F8C-8F442A363F68}.Release|.NET.ActiveCfg = Debug|.NET
+		{C66E456A-A2D3-4619-8F8C-8F442A363F68}.Release|.NET.Build.0 = Debug|.NET
+		{C66E456A-A2D3-4619-8F8C-8F442A363F68}.Release|Any CPU.ActiveCfg = Debug|.NET
+		{C66E456A-A2D3-4619-8F8C-8F442A363F68}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
+		{C66E456A-A2D3-4619-8F8C-8F442A363F68}.Release|Mixed Platforms.Build.0 = Debug|.NET
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

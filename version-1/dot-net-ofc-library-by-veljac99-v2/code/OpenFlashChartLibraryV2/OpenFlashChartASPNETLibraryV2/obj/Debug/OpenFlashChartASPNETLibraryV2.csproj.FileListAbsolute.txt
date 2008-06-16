@@ -1,0 +1,8 @@
+D:\Code\Flash\OpenFlashChart\OpenFlashChartLibrary\OpenFlashChartLibraryV2\OpenFlashChartASPNETLibraryV2\bin\Debug\OpenFlashChartASPNETLibraryV2.dll
+D:\Code\Flash\OpenFlashChart\OpenFlashChartLibrary\OpenFlashChartLibraryV2\OpenFlashChartASPNETLibraryV2\bin\Debug\OpenFlashChartASPNETLibraryV2.pdb
+D:\Code\Flash\OpenFlashChart\OpenFlashChartLibrary\OpenFlashChartLibraryV2\OpenFlashChartASPNETLibraryV2\obj\Debug\ResolveAssemblyReference.cache
+D:\Code\Flash\OpenFlashChart\OpenFlashChartLibrary\OpenFlashChartLibraryV2\OpenFlashChartASPNETLibraryV2\obj\Debug\OpenFlashChartASPNETLibraryV2.dll
+D:\Code\Flash\OpenFlashChart\OpenFlashChartLibrary\OpenFlashChartLibraryV2\OpenFlashChartASPNETLibraryV2\obj\Debug\OpenFlashChartASPNETLibraryV2.pdb
+D:\Code\Flash\OpenFlashChart\OpenFlashChartLibrary\OpenFlashChartLibraryV2\OpenFlashChartASPNETLibraryV2\bin\Debug\Newtonsoft.Json.dll
+D:\Code\Flash\OpenFlashChart\OpenFlashChartLibrary\OpenFlashChartLibraryV2\OpenFlashChartASPNETLibraryV2\bin\Debug\Newtonsoft.Json.pdb
+D:\Code\Flash\OpenFlashChart\OpenFlashChartLibrary\OpenFlashChartLibraryV2\OpenFlashChartASPNETLibraryV2\bin\Debug\Newtonsoft.Json.xml

@@ -1,0 +1,40 @@
+====================================================
+2008-06-16 =========================================
+====================================================
+
+dot-net-ofc-library-by-veljac99-v2 is c# code based on dot-net-ofc-library-by-veljac99
+(which was VB code)
+
+You can find some documentation related to dot-net-ofc-library-by-veljac99 
+(BUT NOT YET FOR dot-net-ofc-library-by-veljac99-v2)
+at:
+
+
+
+		http://www.ludegljive.com/Public/Open%20Flash%20Chart/
+
+
+
+v2 is very similar to v1, and at the moment only OFC version-1 
+(http://openflashchart.svn.sourceforge.net/viewvc/openflashchart/version-1/actionscript) 
+is supported, but I also started adding suport for OFC version-2.
+
+You can also find some samples in subdirectory named "code" - under test web project.
+
+
+PLEASE post your examples of usage and all those fancy graphs you create at
+
+	veljac@ludegljive.com
+
+
+so I can create some advanced usage samples, which will be published here.
+
+
+FOR NOW PLEASE CONSIDER THIS VERSION AS "ALPHA" since additrional name cganges are possible
+(I am still cleaning the code).
+
+If you would like to help with coding, ideas or whatever please send me an e-mail
+
+veljac
+
+
