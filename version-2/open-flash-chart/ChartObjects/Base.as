@@ -93,7 +93,7 @@ package ChartObjects {
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
 				//
-				// some of the children will will mask
+				// some of the children will be mask
 				// Sprites, so filter those out:
 				//
 				if( this.getChildAt(i) is Element ) {

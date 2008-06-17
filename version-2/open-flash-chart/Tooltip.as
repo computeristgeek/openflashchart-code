@@ -84,8 +84,8 @@ package {
 		
 		public function make_tip( e:Element ):void {
 			
-			if( this.cached_element == e )
-				return;
+//			if( this.cached_element == e )
+//				return;
 
 			// this is a new tooltip, get the
 			// text and recreate it
@@ -174,7 +174,7 @@ package {
 				return;
 				
 			this.make_tip( e );
-			
+
 			var p:flash.geom.Point = this.get_pos( e );
 			
 			this.visible = true;

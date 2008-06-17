@@ -143,11 +143,20 @@
 			//
 			// is the mouse over one of the bars in this stack?
 			//
+			
+			tr.ace( this.numChildren );
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
 				var e:Element = this.getChildAt(i) as Element;
 				if ( e.is_tip )
+				{
+					tr.ace( 'TIP' );
 					return e.get_tooltip();
+				}
+				
+				tr.ace( i );
+				tr.ace( e.is_tip );
+				tr.ace('---');
 			}
 			//
 			// the mouse is *near* our stack, so show the 'total' tooltip
@@ -156,6 +165,8 @@
 			
 			var tmp:String = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.total ));
 			this.tooltip = tmp;
+			
+			tr.ace('!!!');
 			
 			return this.tooltip;
 		}
