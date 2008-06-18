@@ -7,6 +7,8 @@ package {
 	import com.serialization.json.JSON;
 	
 	public class XAxisLabels extends Sprite {
+		
+		public var need_labels:Boolean;
 		public var labels:Array;
 		// JSON style:
 		private var style:Object;
@@ -17,7 +19,9 @@ package {
 		[Embed(systemFont='Arial', fontName='spArial', mimeType='application/x-font')]
 		public static var ArialFont:Class;
 
-		function XAxisLabels( json:Object, range:Range ) {
+		function XAxisLabels( json:Object ) {
+			
+			this.need_labels = true;
 			
 			var style:XLabelStyle = new XLabelStyle( json.x_labels );
 			
@@ -41,24 +45,29 @@ package {
 			
 			if( ( this.style.labels is Array ) && ( this.style.labels.length > 0 ) )
 			{
-				// we WERE passed labels,
-				// what if there are more values than labels?
+				//
+				// we WERE passed labels
+				//
+				this.need_labels = false;
+				
 				for each( var s:Object in this.style.labels )
 					this.add( s, this.style );
-				
-				//
-				// alter the MinMax object:
-				//
-//				minmax.set_x_max( json.x_axis.labels.length )
 			}
-			else
-			{
-				// we were NOT passed labels:
-
+		}
+		
+		//
+		// we were not passed labels and need to make
+		// them from the X Axis range
+		//
+		public function auto_label( range:Range ):void {
+			
+			//
+			// if the user has passed labels we don't do this
+			//
+			if( this.need_labels )
 				if( this.style.visible )
 					for( var i:Number = range.min; i <= range.max; i++ )
 						this.add( NumberUtils.formatNumber( i ), this.style );
-			}
 		}
 		
 		public function add( label:Object, style:Object ) : void

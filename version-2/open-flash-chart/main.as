@@ -31,11 +31,6 @@ package  {
 	
 	public class main extends Sprite {
 		
-		//[Embed(source = "C:\WINDOWS\Fonts\Verdana.ttf")]
-		[Embed(source = "C:\\Windows\\Fonts\\Verdana.ttf", fontFamily = "foo", fontName = '_Verdana')]
-		private static var EMBEDDED_FONT:String;
-		//[Embed(source="C:\WINDOWS\Fonts\Verdana.ttf", fontName = '_Verdana', fontFamily="foo")]
-		
 		private var title:Title = null;
 		private var x_labels:XAxisLabels;
 		private var y_labels:YAxisLabelsBase;
@@ -82,7 +77,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/stack-bar-1.txt";
+					var file:String = "../data-files/area-1.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -462,31 +457,33 @@ package  {
 			this.y_labels	= new YAxisLabelsLeft( this.minmax, y_ticks.steps, json );
 			this.y_labels_2	= new YAxisLabelsRight( this.minmax, y_ticks.steps, json );
 			
-			// tell the x axis where the grid lines are:
-//			if( this.x_axis.range_set() )
-//			{
-//				// the user has specified the X axis min and max
-//				// this is used in scatter charts
-//				this.x_axis.set_grid_count( this.minmax.x_max-this.minmax.x_min+1 );
-//			}
-//			else
+			this.x_labels = new XAxisLabels( json );
+			
 			if( !this.x_axis.range_set() )
 			{
+				//
 				// the user has not told us how long the X axis
 				// is, so we figure it out:
-				tr.ace('!!!');
-				tr.ace( this.obs.get_max_x() );
-				
 				//
-				//
-				//
-				this.x_axis.set_range(
-					this.obs.get_min_x(), this.obs.get_max_x() );
-					//Math.max( this.x_labels.count(), this.obs.get_max_x() ) );
+				if( this.x_labels.need_labels ) {
+					//
+					// No X Axis labels set:
+					//
+					this.x_axis.set_range( this.obs.get_min_x(), this.obs.get_max_x() );
+					this.x_labels.auto_label( this.x_axis.get_range() );
+				}
+				else
+				{
+					//
+					// X Axis labels used, even so, make the chart
+					// big enough to show all values
+					//
+					this.x_axis.set_range(
+						this.obs.get_min_x(),
+						Math.max( this.x_labels.count(), this.obs.get_max_x() ) );
+				}
 			}
 
-			tr.ace( this.x_axis.get_range() );
-			this.x_labels = new XAxisLabels( json, this.x_axis.get_range() );
 			// this is needed by all the elements tooltip
 			g.x_labels = this.x_labels;
 			

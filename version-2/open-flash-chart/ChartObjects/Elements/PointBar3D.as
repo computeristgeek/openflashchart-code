@@ -25,12 +25,12 @@
 			
 			this.graphics.clear();
 			
-			this.top( h.width, h.height );
-			this.front( h.width, h.height );
-			this.side( h.width, h.height );
+			this.draw_top( h.width, h.height );
+			this.draw_front( h.width, h.height );
+			this.draw_side( h.width, h.height );
 		}
 		
-		private function top( w:Number, h:Number ):void {
+		private function draw_top( w:Number, h:Number ):void {
 			
 			this.graphics.lineStyle(0, 0, 0);
 			//set gradient fill
@@ -56,7 +56,7 @@
 			this.graphics.endFill();
 		}
 		
-		private function front( w:Number, h:Number ):void {
+		private function draw_front( w:Number, h:Number ):void {
 			//
 			var rad:Number = 7;
 			
@@ -81,7 +81,7 @@
 			this.graphics.endFill();
 		}
 		
-		private function side( w:Number, h:Number ):void {
+		private function draw_side( w:Number, h:Number ):void {
 			//
 			var rad:Number = 7;
 			

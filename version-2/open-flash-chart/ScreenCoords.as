@@ -50,7 +50,7 @@ package {
 			//
 			// TODO: remove this hack
 			//
-			if ( minmax != null ) 
+			if ( minmax != null )
 			{
 				minmax.set_x_max( x_axis_range.max );
 				minmax.x_min = x_axis_range.min;
@@ -60,6 +60,9 @@ package {
 			//
 			//
 			//
+			tr.ace('---');
+			tr.ace( minmax.x_min );
+			tr.ace( minmax.x_max );
 			
 			
 			

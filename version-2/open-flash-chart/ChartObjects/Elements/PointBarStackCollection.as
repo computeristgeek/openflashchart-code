@@ -19,10 +19,23 @@
 			// over and mouse out events
 			this.index = index;
 			
+			var item:Object;
+			
 			// a stacked bar has n Y values
 			// so this is an array of objects
 			this.vals = value as Array;
 			
+			this.total = 0;
+			for each( item in this.vals ) {
+				if( item != null ) {
+					if( item is Number )
+						this.total += item;
+					else
+						this.total += item.val;
+				}
+			}
+			
+		
 			this.colour = colour;
 			this.group = group;
 			this.visible = true;
@@ -35,33 +48,36 @@
 			var odd:Boolean = false;
 			var c:Number;
 
-			for each( var item:Object in this.vals )
+			for each( item in this.vals )
 			{
 				// is this a null stacked bar group?
 				if( item != null )
 				{
 					c = odd?this.colour:0x909090;
-					tr.ace( item );
+					
+					var value:Object = {
+						top:		0,		// <-- set this later
+						bottom:		bottom,
+						colour:		c,		// <-- default colour (may be overriden later)
+						total:		this.total
+					}
+
 					//
 					// a valid item is one of [ Number, Object, null ]
 					//
 					if( item is Number ) {
-						tr.ace( item );
-						tr.ace( top );
 						top += item;
-						tr.ace( top );
 					}
 					else
 					{
 						top += item.val;
 						if( item.colour )
-							c = string.Utils.get_colour(item.colour);
+							value.colour = string.Utils.get_colour(item.colour);
 					}
-						
-					var p:PointBarStack = new PointBarStack( index, c, group );
 					
-					p.set_vals( top, bottom );
+					value.top = top;
 					
+					var p:PointBarStack = new PointBarStack( index, value, group );
 					p.make_tooltip( 'key' );
 					
 					this.addChild( p );
@@ -71,38 +87,23 @@
 				}
 			}
 			
+				
+			//
+			// TODO: Fix tooltips
+			//
+//			super.get_tooltip();
+//			var tmp:String = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.total ));
+//			this.tooltip = tmp;
+//			var tmp:String = this.tooltip.replace('#val#', NumberUtils.formatNumber( this.top ));
+			
 			//
 			// now, make our 'total' tooltip
 			// which is displayed when the mouse
 			// is *near* the bar stack
 			//
-			this.total = 0;
-			for (prop in this.vals)
-				if( this.vals[prop] is Number )
-					this.total += this.vals[prop];
-				else
-					this.total += this.vals[prop].val;
-				
-				
-			super.make_tooltip( 'key' );
+			this.tooltip = 'Total : '+ this.total;
 		}
 		
-		//
-		
-		//
-		// NOTE: sort of JSON object passed in
-		//
-		protected function parse_value( value:Object ):void {
-			
-			//var result:* = JSON.deserialize( '['+value+']' ) ;
-			
-			// for (var prop:String in result)
-			//	tr.ace(prop + " : " + result[prop]);
-			
-			//this.vals = value;
-			
-			// this.vals = value.split(',');
-		}
 
 		public override function resize( sc:ScreenCoords, axis:Number ):void {
 			for ( var i:Number = 0; i < this.numChildren; i++ )
@@ -115,15 +116,40 @@
 		//
 		// is the mouse above, inside or below this bar?
 		//
-		public override function inside( x:Number ):Boolean {
+		public function inside_2( x:Number ):Element {
+			var e:Element;
+			//
+			// is the mouse over any of the bars in the stack?
+			//
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
-				var e:Element = this.getChildAt(i) as Element;
-				if ( e.inside( x ) )
-					return true;
+				e = this.getChildAt(i) as Element;
+				if( e.is_tip ) {
+					//
+					// LOOK
+					//
+					return e;
+				}
 			}
 			
-			return false;
+			//
+			// is the mouse above or below any of them?
+			// We only need to check one Element
+			//
+			
+			e = this.getChildAt(0) as Element;
+			if ( e.inside( x ) ) {
+				//
+				// we return "this" collection so the
+				// tooltip displays the total
+				//
+				return this;
+			}
+
+			//
+			// the mouse is not over us
+			//
+			return null;
 		}
 		
 		public override function get_tip_pos():Object {
@@ -144,30 +170,19 @@
 			// is the mouse over one of the bars in this stack?
 			//
 			
-			tr.ace( this.numChildren );
+			// tr.ace( this.numChildren );
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
 				var e:Element = this.getChildAt(i) as Element;
 				if ( e.is_tip )
 				{
-					tr.ace( 'TIP' );
+					//tr.ace( 'TIP' );
 					return e.get_tooltip();
 				}
-				
-				tr.ace( i );
-				tr.ace( e.is_tip );
-				tr.ace('---');
 			}
 			//
 			// the mouse is *near* our stack, so show the 'total' tooltip
 			//
-			super.get_tooltip();
-			
-			var tmp:String = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.total ));
-			this.tooltip = tmp;
-			
-			tr.ace('!!!');
-			
 			return this.tooltip;
 		}
 	}

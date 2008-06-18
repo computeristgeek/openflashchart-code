@@ -148,7 +148,7 @@
 				
 				var pie_offsets:Object = pie.get_radius_offsets();
 				
-				for (var key:Object in radius_offsets) 
+				for (var key:Object in radius_offsets)
 				{
 					if ( pie_offsets[key] > radius_offsets[key] ) {
 						tr.ace(pie_offsets[key]);

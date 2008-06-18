@@ -84,8 +84,8 @@ package {
 		
 		public function make_tip( e:Element ):void {
 			
-//			if( this.cached_element == e )
-//				return;
+			if( this.cached_element == e )
+				return;
 
 			// this is a new tooltip, get the
 			// text and recreate it
@@ -100,7 +100,7 @@ package {
 			if( lines.length > 1 )
 				this.title.text = lines.shift();
 			else
-				this.text.text = '';
+				this.title.text = '';
 				
 			var fmt:TextFormat = new TextFormat();
 			fmt.color = this.style.title.color;

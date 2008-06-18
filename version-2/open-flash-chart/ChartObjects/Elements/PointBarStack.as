@@ -3,26 +3,19 @@
 	import flash.geom.Point;
 	
 	public class PointBarStack extends PointBarBase {
-		private var top:Number;
-		private var bottom:Number;
+		private var total:Number;
 		
-		public function PointBarStack( index:Number, colour:Number, group:Number ) {
+		public function PointBarStack( index:Number, value:Object, group:Number ) {
 			
 			// we are not passed a string value, the value
 			// is set by the parent collection later
-			super( index, 0, colour, group);
+			super( index, value, value.colour, group );
+			this.total = value.total;
 		}
-		
-		public function set_vals( top:Number, bottom:Number ):void {
-			this.top = top;
-			this.bottom = bottom;
-		}
+
 		
 		public override function make_tooltip( key:String ):void {
-			super.make_tooltip( key );
-			
-			var tmp:String = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.top-this.bottom ));
-			this.tooltip = tmp;
+			this.tooltip = 'Total : '+ this.total + '<br>' + NumberUtils.formatNumber( this.top-this.bottom );
 		}
 				
 		//

@@ -44,8 +44,8 @@
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
 			var tmp:Object = {
-				val: Number(value),
-				width: 4
+				val:		Number(value),
+				width:		this.style.width
 			}
 			
 			return new ChartObjects.Elements.PointHollow( index, tmp, this.style['dot-size'], this.style.colour );

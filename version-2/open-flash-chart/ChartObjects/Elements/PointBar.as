@@ -3,12 +3,10 @@ package ChartObjects.Elements {
 	import flash.geom.Point;
 	import org.flashdevelop.utils.FlashConnect;
 	
-	public class PointBar extends PointBarBase
-	{
-		
-		public function PointBar( x:Number, value:Object, colour:Number, group:Number )
-		{
-			super(x,value,colour,group);
+	public class PointBar extends PointBarBase {
+	
+		public function PointBar( x:Number, value:Object, colour:Number, group:Number ) {
+			super(x, value, colour, group);
 		}
 		
 		public override function resize( sc:ScreenCoords, axis:Number ):void {
@@ -23,6 +21,12 @@ package ChartObjects.Elements {
 			this.graphics.lineTo( 0, h.height );
 			this.graphics.lineTo( 0, 0 );
 			this.graphics.endFill();
+		}
+		
+		public override function make_tooltip( key:String ):void {
+			
+			super.make_tooltip( key );
+			this.tooltip = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.top ));
 		}
 	}
 }

@@ -5,14 +5,16 @@ class area_hollow
 	function area_hollow()
 	{
 		$this->type      = "area_hollow";
-		$this->colour    = "#CC3399";
-		
-		$this->width     = 2;
 		
 		$tmp = 'fill-alpha';
 		$this->$tmp = 0.35;
 		
 		$this->values    = array();
+	}
+	
+	function set_width( $w )
+	{
+		$this->width     = $w;
 	}
 	
 	function set_colour( $colour )

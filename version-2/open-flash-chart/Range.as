@@ -14,5 +14,9 @@
 		public function count():Number {
 			return this.max - this.min;
 		}
+		
+		public function toString():String {
+			return 'Range : ' + this.min +', ' + this.max;
+		}
 	}
 }

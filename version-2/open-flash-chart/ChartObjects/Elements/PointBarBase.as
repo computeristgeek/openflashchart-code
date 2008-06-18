@@ -10,10 +10,10 @@
 	public class PointBarBase extends Element
 	{
 		protected var tip_pos:flash.geom.Point;
-		public var colour:Number;
+		protected var colour:Number;
 		protected var group:Number;
-		private var top:Number;
-		private var bottom:Number;
+		protected var top:Number;
+		protected var bottom:Number;
 		
 		public function PointBarBase( index:Number, value:Object, colour:Number, group:Number )
 		{
@@ -21,6 +21,7 @@
 			this.index = index;
 			this.parse_value(value);
 			this.colour = colour;
+			
 			this.group = group;
 			this.visible = true;
 			
@@ -57,8 +58,14 @@
 		{
 			super.make_tooltip( key );
 			
-			var tmp:String = this.tooltip.replace('#top#',NumberUtils.formatNumber( this.top ));
-			tmp = tmp.replace('#val#',NumberUtils.formatNumber( this.top ));
+			var tmp:String = this.tooltip.replace('#top#', NumberUtils.formatNumber( this.top ));
+			
+			//
+			// TODO do not uncomment without fixing PointBarStack
+			//
+			// tmp = tmp.replace('#val#',NumberUtils.formatNumber( this.top ));
+			
+			
 			tmp = tmp.replace('#bottom#',NumberUtils.formatNumber( this.bottom ));
 			this.tooltip = tmp;
 		}
