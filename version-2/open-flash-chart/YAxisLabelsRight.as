@@ -4,11 +4,37 @@
 	public class YAxisLabelsRight extends YAxisLabelsBase {
 		
 		public function YAxisLabelsRight( m:MinMax, steps:Number, json:Object ) {
-			if ( ( json['show_y2'] != undefined ) && (json['show_y2'] == 'true') )
+			
+			var values:Array;
+			var ok:Boolean = false;
+			
+			if( json.y_axis_right )
 			{
-				var values:Array = make_labels( m, true, steps );
-				super( values, steps, json, 'y_label_2_', 'y2');
+				if( json.y_axis_right.labels )
+				{
+					values = [];
+					var i:Number = 0;
+					for each( var s:String in json.y_axis_right.labels )
+					{
+						values.push( { val:s, pos:i } );
+						i++;
+					}
+					
+					//
+					// alter the MinMax object:
+					//
+					m.set_y_max( values.length - 1 );
+					ok = true;
+				}
 			}
+			
+			if( !ok )
+			{
+				values = make_labels( m, true, steps );
+			}
+			
+			super( values, steps, json, 'y_label_2_', 'y2');
+			
 		}
 
 		// move y axis labels to the correct x pos

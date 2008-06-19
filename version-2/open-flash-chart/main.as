@@ -34,11 +34,11 @@ package  {
 		private var title:Title = null;
 		private var x_labels:XAxisLabels;
 		private var y_labels:YAxisLabelsBase;
-		private var y_labels_2:YAxisLabelsBase;
+		private var y_labels_right:YAxisLabelsBase;
 		private var x_axis:XAxis;
 		private var x_legend:XLegend;
 		private var y_axis:YAxisBase;
-		private var y_axis_2:YAxisBase;
+		private var y_axis_right:YAxisBase;
 		private var y_legend:YLegendBase;
 		private var y_legend_2:YLegendBase;
 		private var minmax:MinMax;
@@ -77,7 +77,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/area-1.txt";
+					var file:String = "../data-files/y-axis-right.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -298,9 +298,15 @@ package  {
 			
 			this.keys.resize( left, this.title.get_height() );
 				
-			var top:Number    = this.title.get_height() + this.keys.get_height();
-			var bottom:Number = this.stage.stageHeight - (this.x_labels.get_height() + this.x_legend.get_height() + this.x_axis.get_height());
-			var right:Number  = this.stage.stageWidth - this.y_legend_2.get_width() - this.y_labels_2.get_width() - this.y_axis_2.get_width();
+			var top:Number = this.title.get_height() + this.keys.get_height();
+			
+			var bottom:Number = this.stage.stageHeight;
+			bottom -= (this.x_labels.get_height() + this.x_legend.get_height() + this.x_axis.get_height());
+			
+			var right:Number = this.stage.stageWidth;
+			right -= this.y_legend_2.get_width();
+			right -= this.y_labels_right.get_width();
+			right -= this.y_axis_right.get_width();
 			
 			// this object is used in the mouseMove method
 			this.sc = new ScreenCoords(
@@ -321,9 +327,9 @@ package  {
 				
 			this.x_axis.resize( sc );
 			this.y_labels.resize( this.y_legend.get_width(), sc );
-			this.y_labels_2.resize( this.stage.stageWidth-(this.y_legend_2.get_width()+this.y_labels_2.get_width()), sc );
+			this.y_labels_right.resize( this.stage.stageWidth-(this.y_legend_2.get_width()+this.y_labels_right.get_width()), sc );
 			this.y_axis.resize( sc );
-			this.y_axis_2.resize( sc );
+			this.y_axis_right.resize( sc );
 			this.x_legend.resize( sc );
 			this.y_legend.resize();
 			this.y_legend_2.resize();
@@ -452,10 +458,10 @@ package  {
 			
 			var y_ticks:YTicks = new YTicks( json );
 			
-			this.y_axis		= new YAxisLeft( y_ticks, json, this.minmax );
-			this.y_axis_2	= new YAxisRight( y_ticks, json, this.minmax );
-			this.y_labels	= new YAxisLabelsLeft( this.minmax, y_ticks.steps, json );
-			this.y_labels_2	= new YAxisLabelsRight( this.minmax, y_ticks.steps, json );
+			this.y_axis			= new YAxisLeft( y_ticks, json, this.minmax );
+			this.y_axis_right	= new YAxisRight( y_ticks, json, this.minmax );
+			this.y_labels		= new YAxisLabelsLeft( this.minmax, y_ticks.steps, json );
+			this.y_labels_right	= new YAxisLabelsRight( this.minmax, y_ticks.steps, json );
 			
 			this.x_labels = new XAxisLabels( json );
 			
@@ -496,9 +502,9 @@ package  {
 			this.addChild( this.x_labels );
 			this.addChild( this.x_axis );
 			this.addChild( this.y_axis );
-			this.addChild( this.y_axis_2 );
+			this.addChild( this.y_axis_right );
 			this.addChild( this.y_labels );
-			this.addChild( this.y_labels_2 );
+			this.addChild( this.y_labels_right );
 			this.addChild( this.keys );
 		}
 		

@@ -4,18 +4,35 @@
 	public class YAxisRight extends YAxisBase {
 
 		function YAxisRight( y_ticks:YTicks, json:Object, minmax:MinMax ) {
-			if ( ( json['show_y2'] != undefined ) && (json['show_y2']=='true') )
-				super( y_ticks, json, minmax, 'y' );
-			else
-			{
-				this._width = 0;
-				this.visible = false;
+			
+			//
+			// default values for a right axis (turned off)
+			//
+			var style:Object = {
+				stroke:			2,
+				'tick-length':	3,
+				colour:			'#784016',
+				offset:			false,
+				'grid-colour':	'#F5E1AA',
+				'3d':			0,
+				steps:			1,
+				visible:		false
+			};
+			
+			//
+			// OK, the user has set the right Y axis,
+			// but forgot to specifically set visible to
+			// true, I think we can forgive them:
+			//
+			if( json.y_axis_right )
+				style.visible = true;
 				
-			}
+			
+			super( y_ticks, json, minmax, 'y_axis_right', style );
 		}
 		
 		public override function resize( sc:ScreenCoords ):void {
-			if ( !this.visible )
+			if ( !this.style.visible )
 				return;
 				
 			this.graphics.clear();

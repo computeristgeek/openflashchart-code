@@ -26,15 +26,16 @@ package {
 				
 			
 			// y 2
-			if( json.y2_max == undefined )
-				this.y2_max = 10;
-			else
-				this.y2_max = json.y2_max;
-				
-			if( json.y2_min == undefined )
-				this.y2_min = 0;
-			else
-				this.y2_min = json.y2_min;
+			this.y2_max = 10;
+			if( json.y_axis_right != null )
+				if( json.y_axis_right.max != null )
+					this.y2_max = json.y_axis_right.max;
+			
+			this.y2_min = 0;
+			if( json.y_axis_right != null )
+				if( json.y_axis_right.min != null )
+					this.y2_min = json.y_axis_right.min;
+					
 				
 			//
 			// what do you do if Y min=0 and Y max = 0?

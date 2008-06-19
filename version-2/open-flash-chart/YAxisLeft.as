@@ -8,10 +8,28 @@
 		public var max:Number;
 		
 		function YAxisLeft( y_ticks:YTicks, json:Object, minmax:MinMax ) {
-			super( y_ticks, json, minmax, 'y' );
+			
+			//
+			// default values for a left axis
+			//
+			var style:Object = {
+				stroke:			2,
+				'tick-length':	3,
+				colour:			'#784016',
+				offset:			false,
+				'grid-colour':	'#F5E1AA',
+				'3d':			0,
+				steps:			1,
+				visible:		true
+			};
+			
+			super( y_ticks, json, minmax, 'y_axis', style );
 		}
 		
 		public override function resize( sc:ScreenCoords ):void {
+			if ( !this.style.visible )
+				return;
+				
 			// this should be an option:
 			this.graphics.clear();
 
