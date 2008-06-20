@@ -11,19 +11,24 @@ package {
 		public var width:Number;
 		public var height:Number;
 		
+		private var x_range:Range;
+		private var y_range:Range;
+		private var y_right_range:Range;
+		
 		// position of the zero line
 		//public var zero:Number=0;
 		//public var steps:Number=0;
 		
 		// set by 3D axis
 		public var tick_offset:Number;
-		private var minmax:MinMax;
 		private var x_offset:Boolean;
 		private var y_offset:Boolean;
 		private var bar_groups:Number;
+	
 		
 		public function ScreenCoords( top:Number, left:Number, right:Number, bottom:Number,
-							minmax:MinMax,
+							y_axis_range:Range,
+							y_axis_right_range:Range,
 							x_axis_range:Range,
 							x_left_label_width:Number, x_right_label_width:Number,
 							three_d:Boolean,
@@ -32,11 +37,12 @@ package {
 			
 			var tmp_left:Number = left;
 			
-			if( minmax != null )
-			{
-				right = this.jiggle( left, right, x_right_label_width, x_axis_range.count() );
-				tmp_left = this.shrink_left( left, right, x_left_label_width, x_axis_range.count() );
-			}
+			this.x_range = x_axis_range;
+			this.y_range = y_axis_range;
+			this.y_right_range = y_axis_right_range;
+			
+			right = this.jiggle( left, right, x_right_label_width, x_axis_range.count() );
+			tmp_left = this.shrink_left( left, right, x_left_label_width, x_axis_range.count() );
 			
 			this.top = top;
 			this.left = Math.max(left,tmp_left);
@@ -46,25 +52,6 @@ package {
 			this.bottom = bottom;
 			this.width = this.right-this.left;
 			this.height = bottom-top;
-			
-			//
-			// TODO: remove this hack
-			//
-			if ( minmax != null )
-			{
-				minmax.set_x_max( x_axis_range.max );
-				minmax.x_min = x_axis_range.min;
-			}
-			//
-			this.minmax = minmax;
-			//
-			//
-			//
-			tr.ace('---');
-			tr.ace( minmax.x_min );
-			tr.ace( minmax.x_max );
-			
-			
 			
 			if( three_d )
 			{
@@ -172,8 +159,10 @@ package {
 			// may have min=10, max=20, or
 			// min = 20, max = -20 (upside down chart)
 			//
-			var min:Number = this.minmax.get_y_min( right_axis );
-			var max:Number = this.minmax.get_y_max( right_axis );
+			var r:Range = right_axis ? this.y_right_range : this.y_range;
+			
+			var min:Number = r.min;
+			var max:Number = r.max;
 			min = Math.min( min, max );
 			
 			return this.get_y_from_val( Math.max(0,min), right_axis );
@@ -182,10 +171,12 @@ package {
 		// takes a value and returns the screen Y location
 		public function getY_old( i:Number, right_axis:Boolean ):Number
 		{
-			var steps:Number = this.height/(this.minmax.y_range( right_axis ));
+			var r:Range = right_axis ? this.y_right_range : this.y_range;
+			
+			var steps:Number = this.height / (r.count());// ( right_axis ));
 			
 			// find Y pos for value=zero
-			var y:Number = this.bottom-(steps*(this.minmax.get_y_min( right_axis )*-1));
+			var y:Number = this.bottom-(steps*(r.min*-1));
 			
 			// move up (-Y) to our point (don't forget that y_min will shift it down)
 			y -= i*steps;
@@ -206,19 +197,19 @@ package {
 			//  Z -|========
 			//     +--+--+--+--+--+--
 			//
+			// as are scatter and all other charts...
+			//
+
+			var r:Range = right_axis ? this.y_right_range : this.y_range;
 			
-			var range:Number = this.minmax.y_range( right_axis );
-			if( this.y_offset )
-				range++;
-				
-			var steps:Number = this.height / range;
+			var steps:Number = (this.height / (r.count()+1)) + ( this.y_offset?1:0);
 			
 			var tmp:Number = 0;
 			if( this.y_offset )
 				tmp = (steps / 2);
 				
 			// move up (-Y) to our point (don't forget that y_min will shift it down)
-			return this.bottom-tmp-(this.minmax.get_y_min( right_axis )-i)*steps*-1;
+			return this.bottom-tmp-(r.min-i)*steps*-1;
 		}
 		
 		public function width_():Number
@@ -240,9 +231,9 @@ package {
 		//
 		public function get_x_from_val( i:Number ):Number {
 
-			var item_width:Number = this.width_() / this.minmax.x_range();
+			var item_width:Number = this.width_() / this.x_range.count();
 			
-			var pos:Number = i-this.minmax.x_min;
+			var pos:Number = i-this.x_range.min;
 			
 			var tmp:Number = 0;
 			if( this.x_offset )
@@ -256,7 +247,7 @@ package {
 		//
 		public function get_x_from_pos( i:Number ):Number
 		{
-			var item_width:Number = this.width_() / this.minmax.x_range();
+			var item_width:Number = this.width_() / this.x_range.count();
 			
 			var tmp:Number = 0;
 			if( this.x_offset )
@@ -296,7 +287,7 @@ package {
 		// index: the n'th bar from the left
 		//
 		public function get_bar_coords( index:Number, group:Number ):Object {
-			var item_width:Number = this.width_() / this.minmax.x_range();
+			var item_width:Number = this.width_() / this.x_range.count();
 			
 			// the bar(s) have gaps between them:
 			var bar_set_width:Number = item_width*0.8;
@@ -320,7 +311,7 @@ package {
 		public function get_horiz_bar_coords( index:Number, group:Number ):Object {
 			
 			// split the height into equal heights for each bar
-			var bar_width:Number = this.height / (this.minmax.y_range(false)+1);
+			var bar_width:Number = this.height / (this.y_range.count()+1);
 			
 			// the bar(s) have gaps between them:
 			var bar_set_width:Number = bar_width*0.8;
@@ -367,7 +358,7 @@ package {
 		public function make_point_candle( x:Number, high:Number, open:Number, close:Number, low:Number, right_axis:Boolean, group:Number, group_count:Number )
 		:PointCandle {
 			
-			var item_width:Number = this.width_() / this.minmax.x_range();
+			var item_width:Number = this.width_() / this.x_range.count();
 			
 			// the bar(s) have gaps between them:
 			var bar_set_width:Number = item_width*0.8;
@@ -396,7 +387,7 @@ package {
 		public function makePointHLC( x:Number, high:Number, close:Number, low:Number, right_axis:Boolean, group:Number, group_count:Number )
 		:PointHLC {
 	
-			var item_width:Number = this.width_() / this.minmax.x_range();
+			var item_width:Number = this.width_() / this.x_range.count();
 			// the bar(s) have gaps between them:
 			var bar_set_width:Number = item_width*1;
 

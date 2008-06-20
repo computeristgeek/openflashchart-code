@@ -33,15 +33,12 @@ package  {
 		
 		private var title:Title = null;
 		private var x_labels:XAxisLabels;
-		private var y_labels:YAxisLabelsBase;
-		private var y_labels_right:YAxisLabelsBase;
 		private var x_axis:XAxis;
 		private var x_legend:XLegend;
 		private var y_axis:YAxisBase;
 		private var y_axis_right:YAxisBase;
 		private var y_legend:YLegendBase;
 		private var y_legend_2:YLegendBase;
-		private var minmax:MinMax;
 		private var keys:Keys;
 		private var obs:ObjectCollection;
 		public var tool_tip_wrapper:String;
@@ -265,7 +262,7 @@ package  {
 			// this object is used in the mouseMove method
 			this.sc = new ScreenCoords(
 				this.title.get_height(), 0, this.stage.stageWidth, this.stage.stageHeight,
-				null, null, 0, 0, false, false, false );
+				null, null, null, 0, 0, false, false, false );
 			this.obs.resize( sc );
 			
 			// TODO: hook into the mouse move events for tooltips
@@ -294,7 +291,7 @@ package  {
 			this.background.resize();
 			this.title.resize();
 			
-			var left:Number   = this.y_legend.get_width() + this.y_labels.get_width() + this.y_axis.get_width();
+			var left:Number   = this.y_legend.get_width() /*+ this.y_labels.get_width()*/ + this.y_axis.get_width();
 			
 			this.keys.resize( left, this.title.get_height() );
 				
@@ -305,13 +302,14 @@ package  {
 			
 			var right:Number = this.stage.stageWidth;
 			right -= this.y_legend_2.get_width();
-			right -= this.y_labels_right.get_width();
+			//right -= this.y_labels_right.get_width();
 			right -= this.y_axis_right.get_width();
 			
 			// this object is used in the mouseMove method
 			this.sc = new ScreenCoords(
 				top, left, right, bottom,
-				this.minmax,
+				this.y_axis.get_range(),
+				this.y_axis_right.get_range(),
 				this.x_axis.get_range(),
 				this.x_labels.first_label_width(),
 				this.x_labels.last_label_width(),
@@ -326,10 +324,8 @@ package  {
 				);
 				
 			this.x_axis.resize( sc );
-			this.y_labels.resize( this.y_legend.get_width(), sc );
-			this.y_labels_right.resize( this.stage.stageWidth-(this.y_legend_2.get_width()+this.y_labels_right.get_width()), sc );
-			this.y_axis.resize( sc );
-			this.y_axis_right.resize( sc );
+			this.y_axis.resize( this.y_legend.get_width(), sc );
+			this.y_axis_right.resize( 0, sc );
 			this.x_legend.resize( sc );
 			this.y_legend.resize();
 			this.y_legend_2.resize();
@@ -448,9 +444,6 @@ package  {
 			this.y_legend		= new YLegendLeft( json );
 			this.y_legend_2		= new YLegendRight( json );
 			
-			this.minmax = new MinMax( json );
-			
-//			this.x_labels = new XAxisLabels( json, this.minmax );
 			// this is needed by all the elements tooltip
 //			g.x_labels = this.x_labels;
 			
@@ -458,12 +451,9 @@ package  {
 			
 			// var y_ticks:YTicks = new YTicks( json );
 			
-			this.y_axis			= new YAxisLeft( json, this.minmax );
-			this.y_axis_right	= new YAxisRight( json, this.minmax );
-			this.y_labels		= new YAxisLabelsLeft( this.minmax, json );
-			this.y_labels_right	= new YAxisLabelsRight( this.minmax, json );
-			
-			this.x_labels = new XAxisLabels( json );
+			this.y_axis			= new YAxisLeft( json );
+			this.y_axis_right	= new YAxisRight( json );
+			this.x_labels		= new XAxisLabels( json );
 			
 			if( !this.x_axis.range_set() )
 			{
@@ -503,8 +493,6 @@ package  {
 			this.addChild( this.x_axis );
 			this.addChild( this.y_axis );
 			this.addChild( this.y_axis_right );
-			this.addChild( this.y_labels );
-			this.addChild( this.y_labels_right );
 			this.addChild( this.keys );
 		}
 		

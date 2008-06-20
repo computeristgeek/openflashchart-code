@@ -35,28 +35,18 @@
 		// use Y Min, Y Max and Y Steps to create an array of
 		// Y labels:
 		//
-		protected function make_labels( m:MinMax, right:Boolean, steps:Number ):Array {
+		protected function make_labels( min:Number, max:Number, right:Boolean, steps:Number ):Array {
 			var values:Array = [];
 			
-			var min:Number = Math.min( m.get_y_min(right), m.get_y_max(right) );
-			var max:Number = Math.max( m.get_y_min(right), m.get_y_max(right) );
+			var min_:Number = Math.min( min, max );
+			var max_:Number = Math.max( min, max );
 			
-			var every:Number = (max - min) / steps;
-			
-			tr.ace('every ' + every);
-			tr.ace('min ' + min);
-			tr.ace('min ' + m.get_y_min(right));
-			tr.ace('min ' + m.get_y_max(right));
-			
-			for( var i:Number = min; i <= max; i++ ) {
+			for( var i:Number = min_; i <= max_; i++ ) {
 				
-				tr.ace(i);
-				tr.ace(i % every == 0);
-				if( i % every == 0 )
+				if( i % steps == 0 )
 				{
 					// TODO: number format i
 					values.push( { val:i, pos:i } );
-					tr.ace(i);
 				}
 			}
 			return values;

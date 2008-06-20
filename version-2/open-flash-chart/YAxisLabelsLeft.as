@@ -3,7 +3,7 @@ package {
 	
 	public class YAxisLabelsLeft extends YAxisLabelsBase {
 
-		public function YAxisLabelsLeft( m:MinMax, json:Object ) {
+		public function YAxisLabelsLeft( parent:YAxisLeft, json:Object ) {
 			
 			var values:Array;
 			var ok:Boolean = false;
@@ -23,14 +23,14 @@ package {
 					//
 					// alter the MinMax object:
 					//
-					m.set_y_max( values.length - 1 );
+					parent.set_y_max( values.length - 1 );
 					ok = true;
 				}
 			}
 			
 			if( !ok )
 			{
-				values = make_labels( m, false, 1 );
+				values = make_labels( parent.style.min, parent.style.max, false, 1 );
 			}
 			
 			

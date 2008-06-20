@@ -3,12 +3,15 @@
 	
 	public class YAxisLeft extends YAxisBase {
 
-		// TODO: remove this
-		public var min:Number;
-		public var max:Number;
-		
-		function YAxisLeft( json:Object, minmax:MinMax ) {
+		function YAxisLeft( json:Object ) {
 			
+			super( json, 'y_axis' );
+			
+			this.labels = new YAxisLabelsLeft( this, json );
+			this.addChild( this.labels );
+		}
+		
+		public override function get_style():Object {
 			//
 			// default values for a left axis
 			//
@@ -20,23 +23,28 @@
 				'grid-colour':	'#F5E1AA',
 				'3d':			0,
 				steps:			1,
-				visible:		true
+				visible:		true,
+				min:			0,
+				max:			10
 			};
 			
-			super( json, minmax, 'y_axis', style );
+			return style;
 		}
 		
-		public override function resize( sc:ScreenCoords ):void {
+		public override function resize( label_pos:Number, sc:ScreenCoords ):void {
+			
+			this.labels.resize( label_pos, sc );
+			
 			if ( !this.style.visible )
 				return;
-				
+			
 			this.graphics.clear();
 
 			// Grid lines
 			this.graphics.lineStyle(1,this.grid_colour,1);
 
 			// y axel grid lines
-			var every:Number = (this.minmax.y_max - this.minmax.y_min) / this.steps;
+			//var every:Number = (this.minmax.y_max - this.minmax.y_min) / this.steps;
 			
 			// Set opacity for the first line to 0 (otherwise it overlaps the x-axel line)
 			//
@@ -46,10 +54,10 @@
 			var i:Number;
 			var y:Number;
 			
-			var min:Number = Math.min(this.minmax.y_min, this.minmax.y_max);
-			var max:Number = Math.max(this.minmax.y_min, this.minmax.y_max);
+			var min:Number = Math.min(this.style.min, this.style.max);
+			var max:Number = Math.max(this.style.min, this.style.max);
 			
-			for( i = min; i <= max; i+=every ) {
+			for( i = min; i <= max; i+=this.steps ) {
 				
 				// don't draw i = minmax.y_min
 				// because it draws over the X axis line
@@ -77,7 +85,7 @@
 			
 			// ticks..
 			var width:Number;
-			for( i = min; i <= max; i+=every ) {
+			for( i = min; i <= max; i+=this.style.steps ) {
 				
 				// start at the bottom and work up:
 				y = sc.get_y_from_val(i, false);
