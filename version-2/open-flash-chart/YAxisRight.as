@@ -3,7 +3,7 @@
 	
 	public class YAxisRight extends YAxisBase {
 
-		function YAxisRight( y_ticks:YTicks, json:Object, minmax:MinMax ) {
+		function YAxisRight( json:Object, minmax:MinMax ) {
 			
 			//
 			// default values for a right axis (turned off)
@@ -28,7 +28,7 @@
 				style.visible = true;
 				
 			
-			super( y_ticks, json, minmax, 'y_axis_right', style );
+			super( json, minmax, 'y_axis_right', style );
 		}
 		
 		public override function resize( sc:ScreenCoords ):void {
@@ -36,23 +36,32 @@
 				return;
 				
 			this.graphics.clear();
-			this.graphics.lineStyle( this.stroke, this.colour, 100 );
-		
-			this.graphics.moveTo( sc.right, sc.top );
-			this.graphics.lineTo( sc.right, sc.bottom );
 			
-			// create new ticks..
-			var every:Number = (this.minmax.y2_max-this.minmax.y2_min)/this.steps;
-			for( var i:Number=this.minmax.y2_min; i<=this.minmax.y2_max; i+=every )
-			{
+			// Axis line:
+			this.graphics.lineStyle( 0, 0, 0 );
+			this.graphics.beginFill( this.colour, 1 );
+			this.graphics.drawRect( sc.right, sc.top, this.stroke, sc.height );
+			this.graphics.endFill();
+//			return;
+			
+
+			// ticks..
+
+			var min:Number = Math.min(this.minmax.y2_min, this.minmax.y2_max);
+			var max:Number = Math.max(this.minmax.y2_min, this.minmax.y2_max);
+			var every:Number = (this.minmax.y2_max - this.minmax.y2_min) / this.steps;
+			var left:Number = sc.right + this.stroke;
+			var width:Number;
+			for( var i:Number = min; i <= max; i+=every ) {
+				
 				// start at the bottom and work up:
-				var y:Number = sc.get_y_from_val(i);
-				this.graphics.moveTo( sc.right, y );
-				if( i % this.ticks.steps == 0 )
-					this.graphics.lineTo( sc.right+this.ticks.big, y );
-				else
-					this.graphics.lineTo( sc.right+this.ticks.small, y );
+				var y:Number = sc.get_y_from_val(i, false);
+				this.graphics.beginFill( this.colour, 1 );
+				this.graphics.drawRect( left, y-(this.stroke/2), this.tick_length, this.stroke );
+				this.graphics.endFill();
+					
 			}
+			
 		}
 	}
 }

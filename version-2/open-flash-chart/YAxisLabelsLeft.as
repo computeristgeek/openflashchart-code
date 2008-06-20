@@ -3,7 +3,7 @@ package {
 	
 	public class YAxisLabelsLeft extends YAxisLabelsBase {
 
-		public function YAxisLabelsLeft( m:MinMax, steps:Number, json:Object ) {
+		public function YAxisLabelsLeft( m:MinMax, json:Object ) {
 			
 			var values:Array;
 			var ok:Boolean = false;
@@ -30,11 +30,11 @@ package {
 			
 			if( !ok )
 			{
-				values = make_labels( m, false, steps );
+				values = make_labels( m, false, 1 );
 			}
 			
 			
-			super(values,steps,json,'y_label_','y');
+			super(values,1,json,'y_label_','y');
 		}
 
 		// move y axis labels to the correct x pos

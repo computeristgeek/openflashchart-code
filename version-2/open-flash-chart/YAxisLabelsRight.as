@@ -3,7 +3,7 @@
 	
 	public class YAxisLabelsRight extends YAxisLabelsBase {
 		
-		public function YAxisLabelsRight( m:MinMax, steps:Number, json:Object ) {
+		public function YAxisLabelsRight( m:MinMax, json:Object ) {
 			
 			var values:Array;
 			var ok:Boolean = false;
@@ -30,10 +30,10 @@
 			
 			if( !ok )
 			{
-				values = make_labels( m, true, steps );
+				values = make_labels( m, true, 1 );
 			}
 			
-			super( values, steps, json, 'y_label_2_', 'y2');
+			super( values, 1, json, 'y_label_2_', 'y2');
 			
 		}
 

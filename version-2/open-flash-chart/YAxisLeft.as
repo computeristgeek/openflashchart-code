@@ -7,7 +7,7 @@
 		public var min:Number;
 		public var max:Number;
 		
-		function YAxisLeft( y_ticks:YTicks, json:Object, minmax:MinMax ) {
+		function YAxisLeft( json:Object, minmax:MinMax ) {
 			
 			//
 			// default values for a left axis
@@ -23,14 +23,13 @@
 				visible:		true
 			};
 			
-			super( y_ticks, json, minmax, 'y_axis', style );
+			super( json, minmax, 'y_axis', style );
 		}
 		
 		public override function resize( sc:ScreenCoords ):void {
 			if ( !this.style.visible )
 				return;
 				
-			// this should be an option:
 			this.graphics.clear();
 
 			// Grid lines
@@ -39,7 +38,6 @@
 			// y axel grid lines
 			var every:Number = (this.minmax.y_max - this.minmax.y_min) / this.steps;
 			
-			tr.ace( 'every ' + every );
 			// Set opacity for the first line to 0 (otherwise it overlaps the x-axel line)
 			//
 			// Bug? Does this work on graphs with minus values?
@@ -84,11 +82,6 @@
 				// start at the bottom and work up:
 				y = sc.get_y_from_val(i, false);
 				
-				if ( i % this.ticks.steps == 0 )
-					width = this.ticks.big;
-				else
-					width = this.ticks.small;
-		
 				this.graphics.beginFill( this.colour, 1 );
 				this.graphics.drawRect( left-this.tick_length, y-(this.stroke/2), this.tick_length, this.stroke );
 				this.graphics.endFill();

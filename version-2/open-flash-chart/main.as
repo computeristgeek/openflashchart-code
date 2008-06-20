@@ -456,12 +456,12 @@ package  {
 			
 			this.x_axis = new XAxis( json.x_axis );
 			
-			var y_ticks:YTicks = new YTicks( json );
+			// var y_ticks:YTicks = new YTicks( json );
 			
-			this.y_axis			= new YAxisLeft( y_ticks, json, this.minmax );
-			this.y_axis_right	= new YAxisRight( y_ticks, json, this.minmax );
-			this.y_labels		= new YAxisLabelsLeft( this.minmax, y_ticks.steps, json );
-			this.y_labels_right	= new YAxisLabelsRight( this.minmax, y_ticks.steps, json );
+			this.y_axis			= new YAxisLeft( json, this.minmax );
+			this.y_axis_right	= new YAxisRight( json, this.minmax );
+			this.y_labels		= new YAxisLabelsLeft( this.minmax, json );
+			this.y_labels_right	= new YAxisLabelsRight( this.minmax, json );
 			
 			this.x_labels = new XAxisLabels( json );
 			

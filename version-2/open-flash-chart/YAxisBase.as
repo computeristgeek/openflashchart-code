@@ -4,7 +4,6 @@ package {
 	
 	public class YAxisBase extends Sprite {
 		protected var _width:Number=0;
-		protected var ticks:YTicks;
 		protected var minmax:MinMax;
 		protected var steps:Number;
 		
@@ -19,7 +18,7 @@ package {
 		// TODO: remove when we sort out the labels problem
 		public var labels:Object;
 		
-		function YAxisBase( y_ticks:YTicks, json:Object, minmax:MinMax, name:String, style:Object )
+		function YAxisBase( json:Object, minmax:MinMax, name:String, style:Object )
 		{
 			
 			this.style = style;
@@ -32,13 +31,10 @@ package {
 			this.grid_colour = Utils.get_colour( style['grid-colour'] );
 			this.stroke = style.stroke;
 			this.tick_length = style['tick-length'];
-			// ticks: thin and wide ticks
-			this.ticks = y_ticks;
 			
 			this.offset = style.offset;
 
 			this.minmax = minmax;
-			this.steps = y_ticks.steps;
 			
 			this._width = this.stroke + this.tick_length;// Math.max( this.ticks.small, this.ticks.big );
 		}
