@@ -51,7 +51,7 @@
 			var offset:Object = {top:0, right:0, bottom:0, left:0};
 			var p:PieSlice = this.getChildAt(0) as PieSlice;
 			var tick_angle:Number = (p.slice_angle / 2) + p.angle;
-            var offset_threshold:Number = 20;
+            var offset_threshold:Number = 30;
 			
 			tr.ace('p.slice_angle=' + p.slice_angle + ' p.angle' + p.angle + ' tick_angle=' + tick_angle);
 			

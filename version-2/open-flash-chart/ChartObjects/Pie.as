@@ -157,10 +157,10 @@
 				}
 			}
 
-			if ( (radius_offsets.top + radius_offsets.bottom) > (radius_offsets.left + radius_offsets.right) )
+			if ( Math.max(radius_offsets.top,radius_offsets.bottom) > (radius_offsets.left + radius_offsets.right) )
 			{
 				tr.ace('shrinking radius by ' + (radius_offsets.top + radius_offsets.bottom));
-				radius = radius - (radius_offsets.top + radius_offsets.bottom);
+				radius = radius - Math.max(radius_offsets.top,radius_offsets.bottom);
 			}
 			tr.ace('radius=' + radius);
 			
