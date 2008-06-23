@@ -40,9 +40,11 @@ package {
 			this.x_range = x_axis_range;
 			this.y_range = y_axis_range;
 			this.y_right_range = y_axis_right_range;
-			
-			right = this.jiggle( left, right, x_right_label_width, x_axis_range.count() );
-			tmp_left = this.shrink_left( left, right, x_left_label_width, x_axis_range.count() );
+			if ( x_axis_range != null )
+			{
+				right = this.jiggle( left, right, x_right_label_width, x_axis_range.count() );
+				tmp_left = this.shrink_left( left, right, x_left_label_width, x_axis_range.count() );
+			}
 			
 			this.top = top;
 			this.left = Math.max(left,tmp_left);
