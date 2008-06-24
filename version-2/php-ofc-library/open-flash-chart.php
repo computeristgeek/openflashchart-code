@@ -7,7 +7,9 @@ include_once 'json_format.php';
 
 // ofc classes
 include_once 'ofc_title.php';
+include_once 'ofc_y_axis_base.php';
 include_once 'ofc_y_axis.php';
+include_once 'ofc_y_axis_right.php';
 include_once 'ofc_x_axis.php';
 include_once 'ofc_area_hollow.php';
 include_once 'ofc_pie.php';
@@ -16,7 +18,10 @@ include_once 'ofc_bar_glass.php';
 include_once 'ofc_bar_stack.php';
 include_once 'ofc_bar_3d.php';
 include_once 'ofc_hbar.php';
+include_once 'ofc_line_base.php';
+include_once 'ofc_line.php';
 include_once 'ofc_line_dot.php';
+include_once 'ofc_line_hollow.php';
 include_once 'ofc_x_legend.php';
 include_once 'ofc_y_legend.php';
 include_once 'ofc_bar_sketch.php';
@@ -51,6 +56,11 @@ class open_flash_chart
 	function add_y_axis( $y )
 	{
 		$this->y_axis = $y;
+	}
+
+	function set_y_axis_right( $y )
+	{
+		$this->y_axis_right = $y;
 	}
 	
 	function add_element( $e )
