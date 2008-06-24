@@ -40,8 +40,8 @@ package {
 			this.x_range = x_axis_range;
 			this.y_range = y_axis_range;
 			this.y_right_range = y_axis_right_range;
-			if ( x_axis_range != null )
-			{
+			
+			if( x_range ) {
 				right = this.jiggle( left, right, x_right_label_width, x_axis_range.count() );
 				tmp_left = this.shrink_left( left, right, x_left_label_width, x_axis_range.count() );
 			}
@@ -204,7 +204,8 @@ package {
 
 			var r:Range = right_axis ? this.y_right_range : this.y_range;
 			
-			var steps:Number = (this.height / (r.count()+1)) + ( this.y_offset?1:0);
+			//var steps:Number = (this.height / (r.count()+1)) + ( this.y_offset?1:0);
+			var steps:Number = this.height / ( r.count() + ( this.y_offset?1:0) );
 			
 			var tmp:Number = 0;
 			if( this.y_offset )
