@@ -28,13 +28,10 @@
 				}
 			}
 			
-			if( !ok )
-			{
+			if( !ok && parent.style.visible )
 				values = make_labels( parent.style.min, parent.style.max, true, 1 );
-			}
 			
 			super( values, 1, json, 'y_label_2_', 'y2');
-			
 		}
 
 		// move y axis labels to the correct x pos

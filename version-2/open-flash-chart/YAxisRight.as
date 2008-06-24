@@ -40,13 +40,15 @@
 		}
 		
 		public override function resize( label_pos:Number, sc:ScreenCoords ):void {
-			
-			this.labels.resize( sc.right + this.stroke + this.tick_length, sc );
-			tr.ace('this.labels.resize');
-			
+					
 			if ( !this.style.visible )
 				return;
-				
+			
+			//
+			// what if the user wants labes but no axis?
+			//
+			this.labels.resize( sc.right + this.stroke + this.tick_length, sc );
+			
 			this.graphics.clear();
 			
 			// Axis line:

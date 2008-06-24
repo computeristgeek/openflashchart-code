@@ -490,9 +490,9 @@ package  {
 			this.addChild( this.y_legend );
 			this.addChild( this.y_legend_2 );
 			this.addChild( this.x_labels );
-			this.addChild( this.x_axis );
 			this.addChild( this.y_axis );
 			this.addChild( this.y_axis_right );
+			this.addChild( this.x_axis );
 			this.addChild( this.keys );
 		}
 		
