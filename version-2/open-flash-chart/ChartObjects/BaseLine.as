@@ -30,8 +30,11 @@
 				//
 				if( tmp is Element )
 				{
-					var e:Element = this.getChildAt(i) as Element;
-								
+					var e:Element = tmp as Element;
+					
+					tr.ace("!!!");
+					tr.ace(e.screen_x);
+					
 					// tell the point where it is on the screen
 					// we will use this info to place the tooltip
 					e.resize( sc, 0 );

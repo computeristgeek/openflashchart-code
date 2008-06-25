@@ -15,6 +15,7 @@
 				fill:			'',
 				text:			'',		// <-- default not display a key
 				'dot-size':		5,
+				'halo-size':	2,
 				'font-size':	10,
 				'fill-alpha':	0.6
 			};
@@ -43,12 +44,16 @@
 		// called from the base object
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
-			var tmp:Object = {
-				val:		Number(value),
-				width:		this.style.width
+			
+			var style:Object = {
+				value:			Number(value),
+				'dot-size':		this.style['dot-size'],
+				colour:			this.style.colour,
+				'halo-size':	this.style['halo-size'],
+				width:			this.style.width
 			}
 			
-			return new ChartObjects.Elements.PointHollow( index, tmp, this.style['dot-size'], this.style.colour );
+			return new ChartObjects.Elements.PointHollow( index, style );
 		}
 		
 		public override function resize(sc:ScreenCoords):void {

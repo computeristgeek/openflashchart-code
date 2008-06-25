@@ -30,7 +30,7 @@ package {
 			
 			if( !ok )
 			{
-				values = make_labels( parent.style.min, parent.style.max, false, 1 );
+				values = make_labels( parent.style.min, parent.style.max, false, parent.style.steps );
 			}
 			
 			

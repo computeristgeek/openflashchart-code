@@ -32,4 +32,10 @@ class line_base
 		$tmp = 'dot-size';
 		$this->$tmp = $size;		
 	}
+	
+	function set_halo_size( $size )
+	{
+		$tmp = 'halo-size';
+		$this->$tmp = $size;		
+	}
 }

@@ -1,27 +1,41 @@
 package ChartObjects.Elements {
 	import flash.display.Sprite;
+	import flash.display.BlendMode;
 	
-	public class Point extends Element {
-		public var radius:Number;
+	
+	public class Point extends PointDotBase {
 		
-		public function Point( x:Number, y:Number, colour:Number, size:Number )
+		public function Point( index:Number, style:Object )
 		{
-			this._x = x;
-			this._y = y;
+			super( style['dot-size'] );
+			
+			this._x = index;
+			this._y = Number(style.value);
 			this.is_tip = false;
 			this.visible = false;
 			
-			this.radius = size;
-			
-			this.graphics.beginFill( colour, 1 );
-			this.graphics.drawCircle( 0, 0, size );
+			this.graphics.lineStyle( 0, 0, 0 );
+			this.graphics.beginFill( style.colour, 1 );
+			this.graphics.drawCircle( 0, 0, style['dot-size'] );
 			this.attach_events();
+			
+			var s:Sprite = new Sprite();
+			s.graphics.lineStyle( 0, 0, 0 );
+			s.graphics.beginFill( 0, 1 );
+			s.graphics.drawCircle( 0, 0, style['dot-size']+style['halo-size'] );
+			s.blendMode = BlendMode.ERASE;
+			s.visible = false;
+			
+			this.line_mask = s;
 		}
 		
 		public override function set_tip( b:Boolean ):void {
 			this.visible = b;
+			this.line_mask.visible = b;
 		}
 		
+		/*
+		 *
 		public override function make_tooltip( key:String ):void
 		{
 			super.make_tooltip( key );
@@ -39,5 +53,6 @@ package ChartObjects.Elements {
 		public override function inside( x:Number ):Boolean {
 			return (x > (this.x-(this.radius/2))) && (x < (this.x+(this.radius/2)));
 		}
+		*/
 	}
 }

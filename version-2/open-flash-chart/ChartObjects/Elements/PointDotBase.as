@@ -10,7 +10,9 @@
 		protected var radius:Number;
 		protected var colour:Number;
 		
-		public function PointDotBase() {}
+		public function PointDotBase( radius:Number ) {
+			this.radius = radius;
+		}
 		
 		//
 		// all dot share the same resize code:

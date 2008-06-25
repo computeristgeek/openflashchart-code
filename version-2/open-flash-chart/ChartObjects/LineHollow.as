@@ -25,7 +25,8 @@
 				colour:			'#80a033',
 				text:			'',
 				'font-size':	10,
-				'dot-size':		6
+				'dot-size':		6,
+				'halo-size':	2
 			};
 			
 			this.style = object_helper.merge( json, this.style );
@@ -38,8 +39,8 @@
 			
 			
 //			this.axis = which_axis_am_i_attached_to(data, num);
-			tr.ace( name );
-			tr.ace( 'axis : ' + this.axis );
+//			tr.ace( name );
+//			tr.ace( 'axis : ' + this.axis );
 				
 			//this.values = this.parse_list( json['values'] );
 			this.set_links( null );
@@ -63,11 +64,15 @@
 		//
 		protected override function get_element( x:Number, value:Object ): ChartObjects.Elements.Element {
 			
-			var tmp:Object = {
-				val: Number(value),
-				width: 4
+			var style:Object = {
+				value:			Number(value),
+				'dot-size':		this.style['dot-size'],
+				colour:			this.style.colour,
+				'halo-size':	this.style['halo-size'],
+				width:			this.style.width
 			}
-			return new ChartObjects.Elements.PointHollow( x, tmp, this.style['dot-size'], this.style.colour );
+			
+			return new ChartObjects.Elements.PointHollow( x, style );
 		}
 			
 	}

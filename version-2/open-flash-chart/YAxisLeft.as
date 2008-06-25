@@ -63,7 +63,7 @@
 					
 					y = sc.get_y_from_val(i);
 					this.graphics.beginFill( this.grid_colour, 1 );
-					this.graphics.drawRect( sc.left, y, sc.right, 1 );
+					this.graphics.drawRect( sc.left, y, sc.width, 1 );
 					this.graphics.endFill();
 //				}
 			}

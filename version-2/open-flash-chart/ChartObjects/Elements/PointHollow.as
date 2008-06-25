@@ -5,22 +5,23 @@
 	
 	public class PointHollow extends PointDotBase {
 		
-		public function PointHollow( index:Number, val:Object, size:Number, colour:Number ) {
+		public function PointHollow( index:Number, style:Object ) {
+			
+			super( this.radius );
+			
 			this._x = index;
-			this._y = val.val;
+			this._y = style.value;
 			this.is_tip = false;
 			this.visible = true;
-			
-			this.radius = size;
-			this.colour = colour;
+		
 			
 			this.graphics.lineStyle( 0, 0, 0 );
-			this.graphics.beginFill( this.colour, 1 );
-			this.graphics.drawCircle( 0, 0, this.radius );
+			this.graphics.beginFill( style.colour, 1 );
+			this.graphics.drawCircle( 0, 0, style['dot-size']);
 			//
 			// punch out the hollow circle:
 			//
-			this.graphics.drawCircle( 0, 0, this.radius-val.width );
+			this.graphics.drawCircle( 0, 0, style['dot-size']-style.width);
 			this.graphics.endFill();
 			//
 			// HACK: we fill an invisible circle over
@@ -30,19 +31,22 @@
 			//
 			this.graphics.lineStyle( 0, 0, 0 );
 			this.graphics.beginFill(0, 0);
-			this.graphics.drawCircle( 0, 0, this.radius );
+			this.graphics.drawCircle( 0, 0, style['dot-size'] );
 			this.graphics.endFill();
 
-			this.attach_events();
-			
-			
+			//
+			// MASK
+			//
 			var s:Sprite = new Sprite();
 			s.graphics.lineStyle( 0, 0, 0 );
 			s.graphics.beginFill( 0, 1 );
-			s.graphics.drawCircle( 0, 0, this.radius+2 );
+			s.graphics.drawCircle( 0, 0, style['dot-size'] + style['halo-size'] );
 			s.blendMode = BlendMode.ERASE;
 			
 			this.line_mask = s;
+			
+			this.attach_events();
+			
 		}
 	}
 }

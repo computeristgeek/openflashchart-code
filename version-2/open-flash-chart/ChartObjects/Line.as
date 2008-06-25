@@ -6,7 +6,7 @@ package ChartObjects {
 	import ChartObjects.Elements.Element;
 	import ChartObjects.Elements.Point;
 	import string.Utils;
-	
+	import flash.display.BlendMode;
 	
 	public class Line extends BaseLine
 	{
@@ -19,6 +19,7 @@ package ChartObjects {
 				colour: 		'#3030d0',
 				text: 			'',		// <-- default not display a key
 				'dot-size': 	5,
+				'halo-size':	2,
 				'font-size': 	12
 			};
 			
@@ -35,6 +36,12 @@ package ChartObjects {
 //			this.set_links( data['links'+append] );
 			this.make();
 //			this.set_tooltips( lv['tool_tips_set'+name] );
+
+			//
+			// this allows the dots to erase part of the line
+			//
+			this.blendMode = BlendMode.LAYER;
+			
 		}
 		
 
@@ -42,9 +49,15 @@ package ChartObjects {
 		// called from the base object
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
-			tr.ace( x );
-			tr.ace( value );
-			return new ChartObjects.Elements.Point( index, Number(value), this.style.colour, this.style['dot-size'] );
+			
+			var style:Object = {
+				value:			value,
+				'dot-size':		this.style['dot-size'],
+				colour:			this.style.colour,
+				'halo-size':	this.style['halo-size']
+			}
+			
+			return new ChartObjects.Elements.Point( index, style );
 		}
 	}
 }

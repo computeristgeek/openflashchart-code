@@ -21,6 +21,7 @@
 				colour:			'#3030d0',
 				text:			'',		// <-- default not display a key
 				'dot-size':		5,
+				'halo-size':	2,
 				'font-size':	12
 			};
 			
@@ -32,8 +33,8 @@
 			this.font_size = style['font-size'];
 			
 //			this.axis = which_axis_am_i_attached_to(data, num);
-			tr.ace( name );
-			tr.ace( 'axis : ' + this.axis );
+//			tr.ace( name );
+//			tr.ace( 'axis : ' + this.axis );
 				
 //			this.make_highlight_dot();
 			this.values = style['values'];
@@ -54,8 +55,15 @@
 		//
 		// called from the BaseLine object
 		//
-		protected override function get_element( x:Number, value:Object ): Element {
-			return new PointDot( x, value, this.style['dot-size'], this.style.colour );
+		protected override function get_element( index:Number, value:Object ): Element {
+			var style:Object = {
+				value:			value,
+				'dot-size':		this.style['dot-size'],
+				colour:			this.style.colour,
+				'halo-size':	this.style['halo-size']
+			}
+			
+			return new PointDot( index, style );
 		}
 	}
 }
