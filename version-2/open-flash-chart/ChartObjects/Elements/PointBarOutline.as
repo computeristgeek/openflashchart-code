@@ -24,5 +24,11 @@
 			this.graphics.endFill();
 			
 		}
+		public override function make_tooltip( key:String ):void {
+			
+			super.make_tooltip( key );
+			this.tooltip = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.top ));
+		}
+		
 	}
 }
