@@ -22,9 +22,11 @@
 		private var border_width:Number = 1;
 		private var label_line:Number;
 		private var easing:Function;
+		
 //		private var style:Css;
 
 		public var style:Object;
+		public var total_value:Number = 0;
 		
 		public function Pie( json:Object )
 		{
@@ -79,6 +81,7 @@
 				else
 					total += val.value;
 			}
+			this.total_value = total;
 			
 			i = 0;
 			for each ( val in this.values ) {
@@ -99,9 +102,9 @@
 						label,
 						(this.style.animate==1) );
 					
-					tmp.make_tooltip( this.key );
-					
 					this.addChild( tmp );
+
+					tmp.make_tooltip( this.key );
 				}
 				i++;
 				slice_start += slice_angle;

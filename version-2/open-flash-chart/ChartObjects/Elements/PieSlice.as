@@ -8,6 +8,7 @@
 	import flash.events.MouseEvent;
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
+	import ChartObjects.Pie;
 	
 	public class PieSlice extends Element {
 		
@@ -21,7 +22,9 @@
 		public var value:Number;
 		
 		public function PieSlice( slice_start:Number, slice_angle:Number, slice_value:Number, colour:Number, animate:Boolean ) {
-			
+			super();
+			this.tooltip_template = '#val# of #total# or #percent#';
+
 			this.colour = colour;
 			this.slice_angle = slice_angle;
 			this.border_width = 1;
@@ -74,8 +77,14 @@
 		public override function make_tooltip( key:String ):void 
 		{
 			super.make_tooltip( key );
-			
-			var tmp:String = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.value ));
+			var tmp:String = this.tooltip;
+			if ( this.parent.parent is Pie ) 
+			{
+				var p:Pie = this.parent.parent as Pie;
+				tmp = tmp.replace('#total#', NumberUtils.formatNumber( p.total_value ));
+				tmp = tmp.replace('#percent#', NumberUtils.formatNumber( this.value / p.total_value * 100 ) + '%');
+			} 
+			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.value ));
 			this.tooltip = tmp;
 		}
 		

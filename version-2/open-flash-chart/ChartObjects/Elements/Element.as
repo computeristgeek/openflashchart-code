@@ -22,14 +22,17 @@
 		public var link:String;
 		
 		public var is_tip:Boolean;
-		
+		public var tooltip_template:String;
 		
 		
 		public var line_mask:Sprite;
 		
 		
 		
-		public function Element() {}
+		public function Element() 
+		{
+			this.tooltip_template = '#val#';
+		}
 		
 		public function resize( sc:ScreenCoords, axis:Number ):void {
 	
