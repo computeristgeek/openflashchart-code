@@ -12,6 +12,8 @@ package ChartObjects {
 		// called from the base object
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
+			
+			
 			return new PointBar( index, value, this.colour, this.group );
 		}
 	}

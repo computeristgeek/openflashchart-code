@@ -74,7 +74,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/line-hollow.txt";
+					var file:String = "../data-files/bar-3d.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {

@@ -5,8 +5,8 @@ package ChartObjects.Elements {
 	
 	public class PointBar extends PointBarBase {
 	
-		public function PointBar( x:Number, value:Object, colour:Number, group:Number ) {
-			super(x, value, colour, group);
+		public function PointBar( index:Number, value:Object, colour:Number, group:Number ) {
+			super(index, value, colour, group);
 		}
 		
 		public override function resize( sc:ScreenCoords, axis:Number ):void {

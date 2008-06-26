@@ -11,6 +11,10 @@
 			super( json, group );
 		}
 		
+/*
+ *
+ * FIX THIS::
+ *
 		public override function parse_bar( json:Object ):void {
 			var style:Object = {
 				values:				[],
@@ -31,6 +35,7 @@
 			this.font_size	= style['font-size'];
 			this.offset     = style.offset;
 		}
+*/
 		
 		//
 		// called from the base object

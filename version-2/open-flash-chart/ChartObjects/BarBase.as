@@ -10,7 +10,11 @@
 		
 		public function BarBase( json:Object, group:Number )
 		{
-			this.parse_bar( json );
+			// this.parse_bar( json );
+			
+			this.colour = string.Utils.get_colour( json.colour );
+			this.key = json.text;
+			this.font_size = json['font-size'];
 			
 //			this.axis = which_axis_am_i_attached_to(data, num);
 			
@@ -34,14 +38,10 @@
 		//
 		// remove this when we move to JSON
 		//
-		public function parse_bar( json:Object ):void {
+//		public function parse_bar( json:Object ):void {
 		
 			//this.alpha = Number( vals[0] );
-			this.colour = string.Utils.get_colour( json.colour );
-			this.key = json.text;
-			this.font_size = json['font-size'];
-			
-		}
+//		}
 		
 		//
 		// called from the base object

@@ -5,9 +5,10 @@
 	public class PointBarGlass extends PointBarBase
 	{
 		
-		public function PointBarGlass( index:Number, value:Object, colour:Number, group:Number )
-		{
-			super(index, value, colour, group);
+		public function PointBarGlass( index:Number, style:Object, colour:Number, group:Number ) {
+			
+			
+			super(index, style.value, style.colour, group);
 			
 			var dropShadow:DropShadowFilter = new flash.filters.DropShadowFilter();
 			dropShadow.blurX = 5;
