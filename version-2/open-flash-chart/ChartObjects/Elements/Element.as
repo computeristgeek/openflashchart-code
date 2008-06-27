@@ -22,17 +22,14 @@
 		public var link:String;
 		
 		public var is_tip:Boolean;
-		public var tooltip_template:String;
+		public var tooltip_template:String = '#val#'
 		
 		
 		public var line_mask:Sprite;
 		
 		
 		
-		public function Element() 
-		{
-			this.tooltip_template = '#val#';
-		}
+		public function Element() {}
 		
 		public function resize( sc:ScreenCoords, axis:Number ):void {
 	
@@ -86,27 +83,23 @@
 			// ---
 			//
 			
-			var tip_obj:Object = {x_label:this.tooltip, value:'-99', key:'moo'};
+			//var tip_obj:Object = {x_label:this.tooltip, value:'-99', key:'moo'};
 			//
 			// Dirty hack. Takes a tool_tip_wrapper, and replaces the #val# with the
 			// tool_tip text, so noew you can do: "My Val = $#val#%", which turns into:
 			// "My Val = $12.00%"
 			//
-			if( tip.length>0 )
+			if( tip.length>0 && tip != "_default")
 			{
 				tmp = tip.replace('#key#',key);
 				tmp = tmp.replace('#x_label#',x_axis_label);
 //				tmp = tmp.replace('#val:time#',_root.formatTime(val));
 				tmp = tmp.replace('#x_legend#',x_legend);
-				
-			}
-			else
+				this.tooltip = tmp;
+			} else 
 			{
-				if( x_axis_label!=null )
-					tmp = x_axis_label + '<br>';
+				this.tooltip = tip;
 			}
-				
-			this.tooltip = tmp;
 		}
 		
 		public function set_link( s:String ):void {

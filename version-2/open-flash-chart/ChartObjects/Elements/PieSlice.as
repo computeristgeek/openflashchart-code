@@ -22,9 +22,7 @@
 		public var value:Number;
 		
 		public function PieSlice( slice_start:Number, slice_angle:Number, slice_value:Number, colour:Number, animate:Boolean ) {
-			super();
 			this.tooltip_template = '#val# of #total# or #percent#';
-
 			this.colour = colour;
 			this.slice_angle = slice_angle;
 			this.border_width = 1;
@@ -78,7 +76,8 @@
 		{
 			super.make_tooltip( key );
 			var tmp:String = this.tooltip;
-			tmp = this.tooltip_template;
+			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
+
 			if ( this.parent.parent is Pie ) 
 			{
 				var p:Pie = this.parent.parent as Pie;

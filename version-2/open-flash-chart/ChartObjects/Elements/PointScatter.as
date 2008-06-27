@@ -8,7 +8,7 @@
 		public var radius:Number;
 		
 		public function PointScatter( value:Object, colour:Number, size:Number ) {
-
+			this.tooltip_template = '(#x#,#y#) at #size#';
 			this._x = value.x;
 			this._y = value.y;
 			this.is_tip = false;
@@ -26,8 +26,11 @@
 		public override function make_tooltip( key:String ):void 
 		{
 			super.make_tooltip( key );
-			
-			var tmp:String = this.tooltip.replace('#val#', '(' + NumberUtils.formatNumber(this._x) + ', ' + NumberUtils.formatNumber(this._y) + ')=' + NumberUtils.formatNumber(this.radius));
+			var tmp:String = this.tooltip;
+			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
+			tmp = tmp.replace('#x#', NumberUtils.formatNumber(this._x));
+			tmp = tmp.replace('#y#', NumberUtils.formatNumber(this._y));
+			tmp = tmp.replace('#size#', NumberUtils.formatNumber(this.radius));
 			this.tooltip = tmp;
 		}
 		

@@ -51,7 +51,7 @@ package {
 				title:		"color: #0000F0; font-weight: bold; font-size: 12;",
 				body:		"color: #000000; font-weight: normal; font-size: 12;",
 				mouse:		Tooltip.CLOSEST,
-				text:		"#val#"
+				text:		"_default"
 			};
 
 			if( json )

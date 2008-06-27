@@ -19,6 +19,7 @@
 		public function PointHBar( index:Number, value:Object, colour:Number, group:Number )
 		{
 			super();
+			this.tooltip_template = '#val#';
 			//
 			// we use the index of this bar to find its Y position
 			//
@@ -41,6 +42,15 @@
 			this.addEventListener(MouseEvent.MOUSE_OVER, this.mouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT, this.mouseOut);
 			
+		}
+
+		public override function make_tooltip( key:String ):void
+		{
+			super.make_tooltip( key );
+			var tmp:String = this.tooltip;
+			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
+			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this._right - this._left ));
+			this.tooltip = tmp;
 		}
 		
 		public override function mouseOver(event:Event):void {

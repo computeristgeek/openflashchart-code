@@ -57,18 +57,11 @@
 		public override function make_tooltip( key:String ):void
 		{
 			super.make_tooltip( key );
-			
-			var tmp:String = this.tooltip.replace('#top#', NumberUtils.formatNumber( this.top ));
-			
-			//
-			// TODO do not uncomment without fixing PointBarStack
-			//
-			// tmp = tmp.replace('#val#',NumberUtils.formatNumber( this.top ));
-			
-			
+			var tmp:String = this.tooltip;
+			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
+			tmp = tmp.replace('#top#', NumberUtils.formatNumber( this.top ));
 			tmp = tmp.replace('#bottom#', NumberUtils.formatNumber( this.bottom ));
-			
-			
+			//tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.top ));
 			this.tooltip = tmp;
 		}
 		
