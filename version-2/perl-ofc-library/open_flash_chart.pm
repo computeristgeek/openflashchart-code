@@ -39,9 +39,12 @@ sub new() {
   $x->set_max(undef);
   $x->set_labels(["a","b","c","d","e"]);
   
+  my $y = axis->new('y_axis');
+  $y->set_steps(5);
+  
   $self->{'axis'} = {
   	'x_axis' => $x,
-  	'y_axis' => axis->new('y_axis')
+  	'y_axis' => $y
   };
   $self->{'elements'} = [];
   
@@ -230,21 +233,11 @@ sub get_auto_extremes() {
 
 
 
-
+#Not Yet Supported
 #"area_hollow",
-#"bar",
-#"bar_3d",
-#"bar_fade",
-#"bar_glass",
-#"bar_sketch",
-#"bar_stack",
-#"filled_bar",
 #"hbar",
-#"line",
-#"line_dot",
-#"line_hollow",
-#"pie",
-#"scatter",
+
+
 
 #############################
 sub _____ELEMENT_OBJECTS_____(){}
@@ -389,6 +382,23 @@ sub new() {
   $self = $self->SUPER::new();
   $self->{'element_props'}->{'type'} = __PACKAGE__;
   $self->{'element_props'}->{'dot-size'} = 8;
+  return $self;
+}
+package area_hollow;
+our @ISA = qw(bar_and_line_base);
+sub new() {
+  my ($proto) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  bless $self, $class;
+  $self = $self->SUPER::new();
+  $self->{'element_props'}->{'type'} = __PACKAGE__;
+  $self->{'element_props'}->{'width'} = 2;
+  $self->{'element_props'}->{'fill'} = '';
+  $self->{'element_props'}->{'text'} = '';
+  $self->{'element_props'}->{'dot-size'} = 5;
+  $self->{'element_props'}->{'halo-size'} = 2;
+  $self->{'element_props'}->{'fill-alpha'} = 0.6;
   return $self;
 }
 
@@ -603,7 +613,7 @@ sub new() {
 		'offset' =>				'false',
 		'grid-colour' =>	'#F5E1AA',
 		'3d' =>						0,
-		'steps' =>				4,
+		'steps' =>				1,
 		'visible' =>			'true',
 		'min' =>					0,
 		'max' =>					'a'

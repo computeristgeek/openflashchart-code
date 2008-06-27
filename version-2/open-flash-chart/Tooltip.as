@@ -98,10 +98,20 @@ package {
 			var lines:Array = tt.split( '<br>' );
 			
 			if( lines.length > 1 )
-				this.title.text = lines.shift();
+				this.title.htmlText = lines.shift();
 			else
-				this.title.text = '';
+				this.title.htmlText = '';
+
 				
+			/*
+			 * 
+			 * Start thinking about just using html formatting 
+			 * instead of text format below.  We could do away
+			 * with the title textbox entirely and let the user
+			 * use:
+			 * <b>title stuff</b><br>Here is the value
+			 * 
+			 */
 			var fmt:TextFormat = new TextFormat();
 			fmt.color = this.style.title.color;
 			fmt.font = "Verdana";
@@ -113,7 +123,7 @@ package {
 		
 			this.text.y = this.title.height;
 			
-			this.text.text = lines.join( '\n' );
+			this.text.htmlText = lines.join( '\n' );
 			var fmt2:TextFormat = new TextFormat();
 			fmt2.color = this.style.body.color;
 			fmt2.font = "Verdana";
