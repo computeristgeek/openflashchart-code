@@ -138,8 +138,8 @@
 			return this.tooltip;
 		}
 		
-		public override function toString():String {
-			return "x :"+ this._x;
-		}
+		//public override function toString():String {
+		//	return "x :"+ this._x;
+		//}
 	}
 }

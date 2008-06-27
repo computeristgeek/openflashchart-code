@@ -78,6 +78,7 @@
 		{
 			super.make_tooltip( key );
 			var tmp:String = this.tooltip;
+			tmp = this.tooltip_template;
 			if ( this.parent.parent is Pie ) 
 			{
 				var p:Pie = this.parent.parent as Pie;
