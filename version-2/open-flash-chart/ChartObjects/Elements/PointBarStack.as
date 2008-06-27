@@ -11,12 +11,19 @@
 			// is set by the parent collection later
 			super( index, value, value.colour, group );
 			this.total = value.total;
+			this.tooltip_template = 'Total: #total#<br>#val#';
 		}
 
 		
-		public override function make_tooltip( key:String ):void {
-			this.tooltip = 'Total : '+ this.total + '<br>' + NumberUtils.formatNumber( this.top-this.bottom );
+		public override function make_tooltip( key:String ):void
+		{
+			super.make_tooltip( key );
+			var tmp:String = this.tooltip;
+			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
+			tmp = tmp.replace('#total#', NumberUtils.formatNumber( this.total ));
+			this.tooltip = tmp;
 		}
+		
 				
 		//
 		// BUG: we assume that all are positive numbers:

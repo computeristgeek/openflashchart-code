@@ -61,7 +61,7 @@
 			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
 			tmp = tmp.replace('#top#', NumberUtils.formatNumber( this.top ));
 			tmp = tmp.replace('#bottom#', NumberUtils.formatNumber( this.bottom ));
-			//tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.top ));
+			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.top - this.bottom ));
 			this.tooltip = tmp;
 		}
 		

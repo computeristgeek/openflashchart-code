@@ -13,6 +13,7 @@
 		private var total:Number;
 		
 		public function PointBarStackCollection( index:Number, value:Object, colour:Number, group:Number ) {
+			this.tooltip_template = 'Total: #val#';
 			
 			// this is very similar to a normal
 			// PointBarBase but without the mouse
@@ -86,22 +87,6 @@
 					odd = !odd;
 				}
 			}
-			
-				
-			//
-			// TODO: Fix tooltips
-			//
-//			super.get_tooltip();
-//			var tmp:String = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.total ));
-//			this.tooltip = tmp;
-//			var tmp:String = this.tooltip.replace('#val#', NumberUtils.formatNumber( this.top ));
-			
-			//
-			// now, make our 'total' tooltip
-			// which is displayed when the mouse
-			// is *near* the bar stack
-			//
-			this.tooltip = 'Total : '+ this.total;
 		}
 		
 
@@ -157,13 +142,15 @@
 			return e.get_tip_pos();
 		}
 		
-		//
-		// TODO: remove this as it is a dirty hack
-		//
-		public override function make_tooltip( key:String ):void
+		public override function make_tooltip( key:String ):void 
 		{
-			// ignore what Base is passing us as it is rubbish
+			super.make_tooltip( key );
+			var tmp:String = this.tooltip;
+			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
+			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.total ));
+			this.tooltip = tmp;
 		}
+		
 		
 		public override function get_tooltip():String {
 			//
