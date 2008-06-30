@@ -30,7 +30,7 @@
   },
 
   "tooltip":{
-    "text": "#top#<br>#bottom#"
+    "text": "My Tip<br>#top#,#bottom# = #val#"
   }
 
 }

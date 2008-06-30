@@ -13,6 +13,7 @@
 		
 		
 		protected override function get_element( x:Number, value:Object ): Element {
+			
 			return new PointBarStackCollection( x, value, this.colour, this.group );
 		}
 		

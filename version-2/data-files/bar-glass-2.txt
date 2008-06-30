@@ -14,9 +14,19 @@
       "type":      "bar_glass",
       "alpha":     0.5,
       "colour":    "#9933CC",
+      "tip":       "Tip for purple bars<br>val=#val#, top=#top#",
       "text--":      "Page views",
       "font-size--": 10,
-      "values" :   [9,6,7,9,5,{"value":7,"colour":"#FF0000", "tip": "Mooo<br>#val#"},6,9,7]
+      "values" :   [9,6,7,9,5,{"value":7,"colour":"#FF0000", "tip": "RED<br>Mooo<br>#val#"},6,9,7]
+    },
+    {
+      "type":      "bar_glass",
+      "alpha":     0.5,
+      "colour":    "#44FF44",
+      "tip":       "Tip for green bars<br>val=#val#, top=#top#",
+      "text--":      "Page views",
+      "font-size--": 10,
+      "values" :   [6,7,9,5,9,{"value":7,"colour":"#FF0000", "tip": "RED<br>W000t<br>#val#"},6,5,2]
     }
   ],
 
@@ -40,7 +50,7 @@
   },
 
   "tooltip":{
-    "text": "My Tip<br>val=#val#, top=#top#"
+    "text": "Global Tooltip<br>val=#val#, top=#top#"
   }
 
 /* &x_axis_steps=2& */

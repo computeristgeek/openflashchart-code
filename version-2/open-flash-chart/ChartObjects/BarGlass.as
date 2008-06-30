@@ -2,6 +2,8 @@ package ChartObjects {
 	import ChartObjects.Elements.Element;
 	import ChartObjects.Elements.PointBarGlass;
 	import string.Utils;
+	import global.Global;
+	
 	
 	
 	public class BarGlass extends BarBase {
@@ -9,11 +11,15 @@ package ChartObjects {
 		
 		public function BarGlass( json:Object, group:Number ) {
 			
+			// Warning: this is our global singleton
+			var g:Global = Global.getInstance();
+			
 			this.style = {
 				values:				[],
 				colour:				'#3030d0',
 				text:				'',		// <-- default not display a key
-				'font-size':		12
+				'font-size':		12,
+				tip:				g.get_tooltip_string()
 			};
 			
 			object_helper.merge_2( json, style );
@@ -28,7 +34,8 @@ package ChartObjects {
 		protected override function get_element( index:Number, value:Object ): Element {
 			
 			var default_style:Object = {
-					colour:		this.style.colour
+					colour:		this.style.colour,
+					tip:		this.style.tip
 			};
 					
 			if( value is Number )
