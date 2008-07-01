@@ -15,13 +15,16 @@
 			
 			// Warning: this is our global singleton
 			var g:Global = Global.getInstance();
+			var tip:String = g.get_tooltip_string();
+			if( tip == "_default" )
+				tip = '#val#';
 			
 			this.style = {
 				values:				[],
 				colour:				'#3030d0',
 				text:				'',		// <-- default not display a key
 				'font-size':		12,
-				tip:				g.get_tooltip_string()
+				tip:				tip
 			};
 			
 			object_helper.merge_2( json, style );

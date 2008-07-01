@@ -4,16 +4,15 @@
 
 class bar_base
 {
-	function bar_base()
+	function bar_base(){}
+
+	function set_key( $text, $size )
 	{
-		$this->alpha     = 0.5;
-		$this->colour    = "#9933CC";
-		$this->text      = "Page views";;
+		$this->text = $text;
 		$tmp = 'font-size';
-		$this->$tmp = 10;
-		$this->values    = array();
+		$this->$tmp = $size;
 	}
-	
+
 	function set_values( $v )
 	{
 		$this->values = $v;		
@@ -28,5 +27,10 @@ class bar_base
 	{
 		$this->colour = $colour;	
 	}
+
+	function set_alpha( $alpha )
+	{
+		$this->alpha = $alpha;	
+	}	
 }
 
