@@ -8,7 +8,7 @@
 		public function PointBarGlass( index:Number, style:Object, group:Number ) {
 			
 			
-			super(index, style.value, style.colour, group);
+			super(index, style.top, style.colour, group);
 			
 			//
 			//

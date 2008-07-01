@@ -22,7 +22,7 @@ package ChartObjects {
 			};
 					
 			if( value is Number )
-				default_style.value = value;
+				default_style.top = value;
 			else
 				object_helper.merge_2( value, default_style );
 				
