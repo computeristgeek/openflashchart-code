@@ -16,7 +16,7 @@
       "colour":    "#9933CC",
       "text--":      "Page views",
       "font-size--": 10,
-      "values" :   [9,6,7,9,5,{"value":7,"colour":"#FF0000"},6,9,7]
+      "values" :   [9,6,7,9,5,{"top":7,"colour":"#A03030","tip":"#top#<br>hello"},6,9,7]
     }
   ],
 

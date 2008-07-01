@@ -36,8 +36,7 @@
 			}
 			
 			this.values = style.values;
-			this.set_links( null );
-			// this.set_links( data['links'+append] );
+
 			this.make();
 		}
 		

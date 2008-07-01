@@ -36,10 +36,8 @@
 //			tr.ace( name );
 //			tr.ace( 'axis : ' + this.axis );
 				
-//			this.make_highlight_dot();
 			this.values = style['values'];
-			this.set_links( null );
-//			this.set_links( data['links'+append] );
+
 			this.make();
 			
 			//
@@ -47,8 +45,6 @@
 			//
 			this.blendMode = BlendMode.LAYER;
 			
-//			this.set_links( lv['links'+name] );
-//			this.set_tooltips( lv['tool_tips_set'+name] );
 		}
 		
 		

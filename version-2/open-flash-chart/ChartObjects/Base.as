@@ -21,11 +21,6 @@ package ChartObjects {
 		//
 		public var values:Array;
 		
-		// array to hold the on_click links
-		private var links:Array;
-		// array to hold the extra tool tip info
-		internal var tooltips:Array;
-		
 		protected var axis:Number;
 		
 		public function Base()
@@ -164,29 +159,6 @@ package ChartObjects {
 			}
 		}
 		
-		public function set_links( links:String ):void {
-			if( links != null )
-			{
-				this.links = links.split(",");
-				for( var i:Number=0; i<this.links.length; i++ )
-					this.links[i] = this.links[i].replace('#comma#',',');
-			}
-			else
-				this.links = new Array();
-		}
-		
-		// remember the extra tool tip info:
-		public function set_tooltips( tooltips:String ):void {
-			if( tooltips != null )
-			{
-				this.tooltips = tooltips.split(",");
-				for( var i:Number=0; i<this.tooltips.length; i++ )
-					this.tooltips[i] = this.tooltips[i].replace('#comma#',',');
-			}
-			else
-				this.tooltips = new Array();
-			
-		}
 		
 		//
 		// index of item (bar, point, pie slice, horizontal bar) may be used
@@ -215,9 +187,6 @@ package ChartObjects {
 						this.key
 						);
 					
-					// ugh - relic of bad data file design
-					if( index < this.links.length )
-						tmp.set_link( this.links[index] );
 					
 					if( tmp.line_mask != null )
 						this.addChild( tmp.line_mask );

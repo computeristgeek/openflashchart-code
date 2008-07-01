@@ -5,7 +5,7 @@
 	public class PointBarGlass extends PointBarBase
 	{
 		
-		public function PointBarGlass( index:Number, style:Object, colour:Number, group:Number ) {
+		public function PointBarGlass( index:Number, style:Object, group:Number ) {
 			
 			
 			super(index, style.value, style.colour, group);

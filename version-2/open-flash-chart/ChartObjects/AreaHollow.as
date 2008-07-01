@@ -31,7 +31,6 @@
 			this.key = style.text;
 			this.font_size = style['font-size'];
 			this.values = style['values'];
-			this.set_links( null );
 			this.make();
 			
 			//

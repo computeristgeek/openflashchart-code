@@ -31,11 +31,8 @@ package ChartObjects {
 			this.font_size	= this.style['font-size'];
 				
 			this.values = this.style.values;
-			tr.ace( this.values );
-			this.set_links( null );
-//			this.set_links( data['links'+append] );
+
 			this.make();
-//			this.set_tooltips( lv['tool_tips_set'+name] );
 
 			//
 			// this allows the dots to erase part of the line

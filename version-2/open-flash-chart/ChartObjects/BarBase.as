@@ -7,14 +7,31 @@
 	public class BarBase extends Base
 	{
 		protected var group:Number;
+		protected var style:Object;
+		
 		
 		public function BarBase( json:Object, group:Number )
 		{
-			// this.parse_bar( json );
 			
-			this.colour = string.Utils.get_colour( json.colour );
-			this.key = json.text;
-			this.font_size = json['font-size'];
+			// Warning: this is our global singleton
+			var g:Global = Global.getInstance();
+			
+			this.style = {
+				values:				[],
+				colour:				'#3030d0',
+				text:				'',		// <-- default not display a key
+				'font-size':		12,
+				tip:				g.get_tooltip_string()
+			};
+			
+			object_helper.merge_2( json, style );
+			
+			
+			this.colour		= string.Utils.get_colour( this.style.colour );
+			this.key		= this.style.text;
+			this.font_size	= this.style['font-size'];
+
+			
 			
 //			this.axis = which_axis_am_i_attached_to(data, num);
 			
@@ -26,29 +43,12 @@
 			//
 			this.group = group;
 			
-			this.values = json['values'];
-			
-			super.set_links( null );
-//			super.set_links( data['links'+append] );
-//			super.set_tooltips( data['tool_tips_set'+append] );
-			
+			this.values = this.style.values;
+
+
 			this.make();
 		}
 		
-		//
-		// remove this when we move to JSON
-		//
-//		public function parse_bar( json:Object ):void {
-		
-			//this.alpha = Number( vals[0] );
-//		}
-		
-		//
-		// called from the base object
-		//
-		protected override function get_element( x:Number, val:Object ): ChartObjects.Elements.Element {
-			return new ChartObjects.Elements.PointBar( x, val, this.colour, this.group );// right_axis, bar, bar_count );
-		}
 		
 		//
 		// hello people in the future! I was doing OK until I found some red wine. Now I can't figure stuff out,

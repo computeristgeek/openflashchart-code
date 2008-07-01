@@ -27,10 +27,6 @@
 			
 			this.values = json['values'];
 			
-			super.set_links( null );
-//			super.set_links( data['links'+append] );
-//			super.set_tooltips( data['tool_tips_set'+append] );
-			
 			this.make();
 		}
 		

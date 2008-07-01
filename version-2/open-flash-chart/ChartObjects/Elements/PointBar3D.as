@@ -5,8 +5,19 @@
 	
 	public class PointBar3D extends PointBarBase {
 		
-		public function PointBar3D( index:Number, value:Object, colour:Number, group:Number ) {
-			super(index, value, colour, group);
+		public function PointBar3D( index:Number, style:Object, group:Number ) {
+			
+			
+			super(index, style.top, style.colour, group);
+			
+			//
+			//
+			//
+			this.tooltip_template = style.tip;
+			//
+			//
+			//
+			
 			
 			var dropShadow:DropShadowFilter = new flash.filters.DropShadowFilter();
 			dropShadow.blurX = 5;
@@ -18,6 +29,23 @@
 			// apply shadow filter
 			this.filters = [dropShadow];
 		}
+		
+		
+		//
+		// dirty hack, this will be moved to element when all the objects
+		// support tooltips correctly
+		//
+		public override function make_tooltip( key:String ):void {
+		
+			var tmp:String = this.tooltip_template;
+			
+//			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
+			tmp = tmp.replace('#top#', NumberUtils.formatNumber( this.top ));
+			tmp = tmp.replace('#bottom#', NumberUtils.formatNumber( this.bottom ));
+			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.top - this.bottom ));
+			this.tooltip = tmp;
+		}
+		
 		
 		public override function resize( sc:ScreenCoords, axis:Number  ):void {
 			

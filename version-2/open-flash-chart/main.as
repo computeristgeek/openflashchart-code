@@ -74,7 +74,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/bar-glass.txt";
+					var file:String = "../data-files/bar-sketch.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {

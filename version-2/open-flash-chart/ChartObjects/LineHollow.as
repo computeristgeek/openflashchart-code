@@ -41,10 +41,7 @@
 //			this.axis = which_axis_am_i_attached_to(data, num);
 //			tr.ace( name );
 //			tr.ace( 'axis : ' + this.axis );
-				
-			//this.values = this.parse_list( json['values'] );
-			this.set_links( null );
-//			this.set_links( data['links'+append] );
+
 			this.make();
 			
 			

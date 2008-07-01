@@ -16,12 +16,12 @@
       "colour":    "#9933CC",
       "text":      "Page views",
       "font-size": 10,
-      "values" :   [9,6,7,9,5,7,6,-9,{"top":4,"bottom":-5}]
+      "values" :   [9,9,5,7,{"top":4,"bottom":-4,"tip":"LOOK<br>#top#,#bottom# = #val#"},-9,{"top":4,"bottom":-5}]
     }
   ],
 
   "x_axis":{
-    "labels": ["January","February","March","April","May","June","July","August","Spetember"]
+    "labels": ["January","February","March","April","May","June","July"]
    },
 
   "y_axis":{
