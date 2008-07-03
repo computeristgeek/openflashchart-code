@@ -15,12 +15,13 @@
 		protected var top:Number;
 		protected var bottom:Number;
 		
-		public function PointBarBase( index:Number, value:Object, colour:Number, group:Number )
+		public function PointBarBase( index:Number, value:Object, colour:Number, tooltip:String, group:Number )
 		{
 			super();
 			this.index = index;
 			this.parse_value(value);
 			this.colour = colour;
+			this.tooltip = this.replace_magic_values( tooltip );
 			
 			this.group = group;
 			this.visible = true;
@@ -54,6 +55,21 @@
 			}
 		}
 		
+		private function replace_magic_values( t:String ): String {
+			
+			t = t.replace('#top#', NumberUtils.formatNumber( this.top ));
+			t = t.replace('#bottom#', NumberUtils.formatNumber( this.bottom ));
+			t = t.replace('#val#', NumberUtils.formatNumber( this.top - this.bottom ));
+			
+			return t;
+		}
+		
+		//
+		// TODO: get rid of this -- see 'base.as'
+		//
+		public override function make_tooltip( key:String ):void {}
+		
+/*
 		public override function make_tooltip( key:String ):void
 		{
 			super.make_tooltip( key );
@@ -64,6 +80,7 @@
 			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.top - this.bottom ));
 			this.tooltip = tmp;
 		}
+*/
 		
 		public override function mouseOver(event:Event):void {
 			this.is_tip = true;

@@ -183,9 +183,8 @@ package ChartObjects {
 				{
 					tmp = this.get_element( index, val );
 					
-					tmp.make_tooltip(
-						this.key
-						);
+					// TODO: remove this
+					tmp.make_tooltip( this.key );
 					
 					
 					if( tmp.line_mask != null )

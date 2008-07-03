@@ -6,7 +6,7 @@
 		
 		public function PointBarFade( index:Number, value:Object, colour:Number, group:Number )
 		{
-			super(index,value,colour,group);
+			super(index,value,colour,'',group);
 		}
 		
 		public override function resize( sc:ScreenCoords, axis:Number ):void {

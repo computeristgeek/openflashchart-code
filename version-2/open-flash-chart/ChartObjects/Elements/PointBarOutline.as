@@ -4,9 +4,10 @@
 	public class PointBarOutline extends PointBarBase {
 		private var outline:Number;
 		
-		public function PointBarOutline( index:Number, value:Object, colour:Number, outline:Number, group:Number )	{
-			super(index, value, colour, group);
-			this.outline = outline;
+		public function PointBarOutline( index:Number, style:Object, group:Number )	{
+			
+			super( index, style.top, style.colour, style.tip, group );
+			this.outline = style['outline-colour'];
 		}
 		
 		public override function resize( sc:ScreenCoords, axis:Number ):void {
@@ -24,11 +25,5 @@
 			this.graphics.endFill();
 			
 		}
-		public override function make_tooltip( key:String ):void {
-			
-			super.make_tooltip( key );
-			this.tooltip = this.tooltip.replace('#val#',NumberUtils.formatNumber( this.top ));
-		}
-		
 	}
 }

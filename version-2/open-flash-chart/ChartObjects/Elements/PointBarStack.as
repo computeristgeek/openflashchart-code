@@ -5,12 +5,12 @@
 	public class PointBarStack extends PointBarBase {
 		private var total:Number;
 		
-		public function PointBarStack( index:Number, value:Object, group:Number ) {
+		public function PointBarStack( index:Number,  style:Object, group:Number ) {
 			
 			// we are not passed a string value, the value
 			// is set by the parent collection later
-			super( index, value, value.colour, group );
-			this.total = value.total;
+			super( index,  style,  style.colour, style.tip, group );
+			this.total =  style.total;
 			this.tooltip_template = 'Total: #total#<br>#val#';
 		}
 
