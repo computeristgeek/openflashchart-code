@@ -17,6 +17,43 @@
 			return new PointBarStackCollection( x, value, this.colour, this.group );
 		}
 		
+		
+		public override function closest( x:Number, y:Number ): Object {
+			var shortest:Number = Number.MAX_VALUE;
+			var ex:Element = null;
+			
+			for ( var i:Number = 0; i < this.numChildren; i++ )
+			{
+				var e:Element = this.getChildAt(i) as PointBarStackCollection;
+
+				e.is_tip = false;
+				
+				if( (x > e.x) && (x < e.x+e.width) )
+				{
+					// mouse is in position 1
+					shortest = Math.min( Math.abs( x - e.x ), Math.abs( x - (e.x+e.width) ) );
+					ex = e;
+					break;
+				}
+				else
+				{
+					// mouse is in position 2
+					// get distance to left side and right side
+					var d1:Number = Math.abs( x - e.x );
+					var d2:Number = Math.abs( x - (e.x+e.width) );
+					var min:Number = Math.min( d1, d2 );
+					if( min < shortest )
+					{
+						shortest = min;
+						ex = e;
+					}
+				}
+			}
+			var dy:Number = Math.abs( y - ex.y );
+			
+			return { element:ex, distance_x:shortest, distance_y:dy };
+		}
+		
 		//
 		// stacked bar charts will need the Y to figure out which
 		// bar in the stack to return
