@@ -38,4 +38,11 @@ class line_base
 		$tmp = 'halo-size';
 		$this->$tmp = $size;		
 	}
+	
+	function set_key( $text, $font_size )
+	{
+		$this->text      = $text;
+		$tmp = 'font-size';
+		$this->$tmp = $font_size;
+	}
 }

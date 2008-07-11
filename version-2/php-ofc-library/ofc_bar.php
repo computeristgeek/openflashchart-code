@@ -4,10 +4,12 @@ include_once 'ofc_bar_base.php';
 
 class bar_value
 {
-	function bar_value( $top )
+	function bar_value( $top, $bottom=null )
 	{
 		$this->top = $top;
-//		$this->bottom = $bottom;
+		
+		if( isset( $bottom ) )
+			$this->bottom = $bottom;
 	}
 	
 	function set_colour( $colour )

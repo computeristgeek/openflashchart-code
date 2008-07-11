@@ -6,7 +6,7 @@
 		
 		public function PointBarOutline( index:Number, style:Object, group:Number )	{
 			
-			super( index, style.top, style.colour, style.tip, group );
+			super( index, style, style.colour, style.tip, group );
 			this.outline = style['outline-colour'];
 		}
 		

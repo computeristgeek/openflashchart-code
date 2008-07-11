@@ -14,6 +14,7 @@ include_once 'ofc_x_axis.php';
 include_once 'ofc_area_hollow.php';
 include_once 'ofc_pie.php';
 include_once 'ofc_bar.php';
+include_once 'ofc_bar_filled.php';
 include_once 'ofc_bar_glass.php';
 include_once 'ofc_bar_stack.php';
 include_once 'ofc_bar_3d.php';

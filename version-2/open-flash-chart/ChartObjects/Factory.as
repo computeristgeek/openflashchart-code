@@ -82,7 +82,7 @@ package ChartObjects {
 						bar_group++;
 						break;
 					
-					case 'filled_bar':
+					case 'bar_filled':
 						collection.add( new BarOutline( elements[i], bar_group ) );
 						bar_group++;
 						break;

@@ -68,7 +68,25 @@ package ChartObjects {
 		}
 		
 		public function get_max_x_value():Number {
-			return this.numChildren;
+			
+			var max_index:Number = Number.MIN_VALUE;
+			
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+				
+				//
+				// some of the children will be mask
+				// Sprites, so filter those out:
+				//
+				if( this.getChildAt(i) is Element ) {
+					
+					var e:Element = this.getChildAt(i) as Element;
+					max_index = Math.max( max_index, e.index );
+
+				}
+			}
+			
+			// 0 is a position, so count it:
+			return max_index+1;
 		}
 		
 		//
@@ -85,8 +103,8 @@ package ChartObjects {
 		public function inside( x:Number, y:Number ):Object {
 			var ret:Element = null;
 			
-			for ( var i:Number = 0; i < this.numChildren; i++ )
-			{
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+				
 				//
 				// some of the children will be mask
 				// Sprites, so filter those out:
