@@ -10,9 +10,14 @@
 		protected var radius:Number;
 		protected var colour:Number;
 		
-		public function PointDotBase( radius:Number ) {
-			this.tooltip_template = '#val#';
-			this.radius = radius;
+		public function PointDotBase( index:Number, style:Object ) {
+			
+			this.is_tip = false;
+			this.visible = false;
+			this._x = index;
+			this._y = Number( style.value );
+			this.radius = style['dot-size'];
+			this.tooltip = this.replace_magic_values( style.tip );
 		}
 		
 		//
@@ -38,6 +43,13 @@
 				this.scaleY = this.scaleX = 1;
 				this.line_mask.scaleY = this.line_mask.scaleX = 1;
 			}
+		}
+		
+		private function replace_magic_values( t:String ): String {
+			
+			t = t.replace('#val#', NumberUtils.formatNumber( this._y ));
+			
+			return t;
 		}
 		
 		public override function make_tooltip( key:String ):void

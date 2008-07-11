@@ -26,7 +26,8 @@
 				text:			'',
 				'font-size':	10,
 				'dot-size':		6,
-				'halo-size':	2
+				'halo-size':	2,
+				tip:			'#val#'
 			};
 			
 			this.style = object_helper.merge( json, this.style );
@@ -44,32 +45,20 @@
 
 			this.make();
 			
-			
-			
-			//
-			// this allows the dots to erase part of the line
-			//
-//			this.blendMode = BlendMode.LAYER;
-			//this.blendMode = BlendMode.ALPHA;
-			
-			
-
 		}
 		
 		//
 		// called from the base object
 		//
-		protected override function get_element( x:Number, value:Object ): ChartObjects.Elements.Element {
+		protected override function get_element( index:Number, value:Object ): ChartObjects.Elements.Element {
 			
-			var style:Object = {
-				value:			Number(value),
-				'dot-size':		this.style['dot-size'],
-				colour:			this.style.colour,
-				'halo-size':	this.style['halo-size'],
-				width:			this.style.width
-			}
+			var s:Object = this.merge_us_with_value_object( value );
+			//
+			// the width of the hollow circle is the same as the width of the line
+			//
+			s.width = this.style.width;
 			
-			return new ChartObjects.Elements.PointHollow( x, style );
+			return new ChartObjects.Elements.PointHollow( index, s );
 		}
 			
 	}

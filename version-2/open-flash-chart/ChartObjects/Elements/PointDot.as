@@ -7,12 +7,8 @@
 		
 		public function PointDot( index:Number, style:Object ) {
 			
-			super( style['dot-size'] );
+			super( index, style );
 			
-			this._x = index;
-			this._y = Number(style.value);
-			
-			this.is_tip = false;
 			this.visible = true;
 			
 			this.graphics.lineStyle( 0, 0, 0 );

@@ -200,10 +200,9 @@ package ChartObjects {
 				if( val != null )
 				{
 					tmp = this.get_element( index, val );
-					
+
 					// TODO: remove this
 					tmp.make_tooltip( this.key );
-					
 					
 					if( tmp.line_mask != null )
 						this.addChild( tmp.line_mask );

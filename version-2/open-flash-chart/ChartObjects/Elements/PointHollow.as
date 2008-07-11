@@ -7,13 +7,9 @@
 		
 		public function PointHollow( index:Number, style:Object ) {
 			
-			super( this.radius );
+			super( index, style );
 			
-			this._x = index;
-			this._y = style.value;
-			this.is_tip = false;
 			this.visible = true;
-		
 			
 			this.graphics.lineStyle( 0, 0, 0 );
 			this.graphics.beginFill( style.colour, 1 );

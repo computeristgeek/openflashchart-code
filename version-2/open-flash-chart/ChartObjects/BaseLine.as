@@ -1,8 +1,9 @@
 ﻿package ChartObjects {
 	import ChartObjects.Elements.Element;
-	
 	import flash.display.Sprite;
 	import flash.display.BlendMode;
+	import string.Utils;
+	
 	
 	public class BaseLine extends Base
 	{
@@ -32,7 +33,6 @@
 				{
 					var e:Element = tmp as Element;
 					
-					tr.ace("!!!");
 					tr.ace(e.screen_x);
 					
 					// tell the point where it is on the screen
@@ -47,6 +47,28 @@
 						this.graphics.lineTo(e.screen_x, e.screen_y);
 				}
 			}
+		}
+		
+		protected function merge_us_with_value_object( value:Object ): Object {
+			
+			var default_style:Object = {
+				'dot-size':		this.style['dot-size'],
+				colour:			this.style.colour,
+				'halo-size':	this.style['halo-size'],
+				tip:			this.style.tip
+			}
+			
+			if( value is Number )
+				default_style.value = value;
+			else
+				object_helper.merge_2( value, default_style );
+			
+			// our parent colour is a number, but
+			// we may have our own colour:
+			if( default_style.colour is String )
+				default_style.colour = Utils.get_colour( default_style.colour );
+			
+			return default_style;
 		}
 		
 		public override function get_colour(): Number {

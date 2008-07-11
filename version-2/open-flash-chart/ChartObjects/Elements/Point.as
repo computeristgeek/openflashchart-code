@@ -7,12 +7,7 @@ package ChartObjects.Elements {
 		
 		public function Point( index:Number, style:Object )
 		{
-			super( style['dot-size'] );
-			
-			this._x = index;
-			this._y = Number(style.value);
-			this.is_tip = false;
-			this.visible = false;
+			super( index, style );
 			
 			this.graphics.lineStyle( 0, 0, 0 );
 			this.graphics.beginFill( style.colour, 1 );
