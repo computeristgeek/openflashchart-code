@@ -27,7 +27,7 @@
 			
 			this.values = json['values'];
 			
-			this.make();
+			this.add_values();
 		}
 		
 		//

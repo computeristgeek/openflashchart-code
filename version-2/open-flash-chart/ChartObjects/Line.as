@@ -11,8 +11,8 @@ package ChartObjects {
 	public class Line extends BaseLine
 	{
 		
-		public function Line( json:Object )
-		{
+		public function Line( json:Object ) {
+		
 			this.style = {
 				values: 		[],
 				width:			2,
@@ -32,8 +32,7 @@ package ChartObjects {
 			this.font_size	= this.style['font-size'];
 				
 			this.values = this.style.values;
-
-			this.make();
+			this.add_values();
 
 			//
 			// this allows the dots to erase part of the line
@@ -49,7 +48,7 @@ package ChartObjects {
 		protected override function get_element( index:Number, value:Object ): Element {
 			
 			var s:Object = this.merge_us_with_value_object( value );
-				
+
 			return new ChartObjects.Elements.Point( index, s );
 		}
 	}

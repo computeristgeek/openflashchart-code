@@ -71,23 +71,23 @@
 			return {x:p.x,y:p.y};
 		}
 
-
-		public override function make_tooltip( key:String ):void 
+/* TODO: fix this
+		public override function make_tooltip( key:String ):void
 		{
 			super.make_tooltip( key );
 			var tmp:String = this.tooltip;
 			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
 
-			if ( this.parent.parent is Pie ) 
+			if ( this.parent.parent is Pie )
 			{
 				var p:Pie = this.parent.parent as Pie;
 				tmp = tmp.replace('#total#', NumberUtils.formatNumber( p.total_value ));
 				tmp = tmp.replace('#percent#', NumberUtils.formatNumber( this.value / p.total_value * 100 ) + '%');
-			} 
+			}
 			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.value ));
 			this.tooltip = tmp;
 		}
-		
+*/
 		//
 		// the axis makes no sense here, let's override with null and write our own.
 		//

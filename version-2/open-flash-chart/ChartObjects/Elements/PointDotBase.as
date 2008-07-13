@@ -14,7 +14,7 @@
 			
 			this.is_tip = false;
 			this.visible = false;
-			this._x = index;
+			this.index = this._x = index;
 			this._y = Number( style.value );
 			this.radius = style['dot-size'];
 			this.tooltip = this.replace_magic_values( style.tip );
@@ -45,20 +45,16 @@
 			}
 		}
 		
+		//
+		// Dirty hack. Takes tooltip text, and replaces the #val# with the
+		// tool_tip text, so noew you can do: "My Val = $#val#%", which turns into:
+		// "My Val = $12.00%"
+		//
 		private function replace_magic_values( t:String ): String {
 			
 			t = t.replace('#val#', NumberUtils.formatNumber( this._y ));
-			
+			t = this.tooltip_replace_global_magics( t );
 			return t;
-		}
-		
-		public override function make_tooltip( key:String ):void
-		{
-			super.make_tooltip( key );
-			var tmp:String = this.tooltip;
-			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
-			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this._y ));
-			this.tooltip = tmp;
 		}
 		
 		//

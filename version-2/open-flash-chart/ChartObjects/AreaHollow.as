@@ -31,7 +31,7 @@
 			this.key = style.text;
 			this.font_size = style['font-size'];
 			this.values = style['values'];
-			this.make();
+			this.add_values();
 			
 			//
 			// so the mask child can punch a hole through the line

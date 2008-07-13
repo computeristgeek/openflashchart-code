@@ -43,7 +43,7 @@
 //			tr.ace( name );
 //			tr.ace( 'axis : ' + this.axis );
 
-			this.make();
+			this.add_values();
 			
 		}
 		

@@ -55,14 +55,14 @@
 			this.label_line = 10;
 
 			this.values = json.values;
-			this.make();
+			this.add_values();
 		}
 		
 		
 		//
 		// Pie chart make is quite different to a noraml make
 		//
-		public override function make():void {
+		public override function add_values():void {
 //			this.Elements= new Array();
 			
 			//
@@ -104,7 +104,8 @@
 					
 					this.addChild( tmp );
 
-					tmp.make_tooltip( this.key );
+					// TODO: fix this and remove
+					// tmp.make_tooltip( this.key );
 				}
 				i++;
 				slice_start += slice_angle;

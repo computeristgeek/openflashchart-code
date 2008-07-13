@@ -22,7 +22,8 @@
 				text:			'',		// <-- default not display a key
 				'dot-size':		5,
 				'halo-size':	2,
-				'font-size':	12
+				'font-size':	12,
+				tip:			'#val#'
 			};
 			
 			object_helper.merge_2( json, style );
@@ -37,8 +38,7 @@
 //			tr.ace( 'axis : ' + this.axis );
 				
 			this.values = style['values'];
-
-			this.make();
+			this.add_values();
 			
 			//
 			// this allows the dots to erase part of the line
@@ -52,14 +52,9 @@
 		// called from the BaseLine object
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
-			var style:Object = {
-				value:			value,
-				'dot-size':		this.style['dot-size'],
-				colour:			this.style.colour,
-				'halo-size':	this.style['halo-size']
-			}
-			
-			return new PointDot( index, style );
+
+			var s:Object = this.merge_us_with_value_object( value );
+			return new PointDot( index, s );
 		}
 	}
 }

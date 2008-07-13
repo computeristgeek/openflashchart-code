@@ -44,6 +44,8 @@
 			
 		}
 
+	/* TODO: fix this
+	 *
 		public override function make_tooltip( key:String ):void
 		{
 			super.make_tooltip( key );
@@ -52,6 +54,7 @@
 			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this._right - this._left ));
 			this.tooltip = tmp;
 		}
+	*/
 		
 		public override function mouseOver(event:Event):void {
 			Tweener.addTween(this, { alpha:1, time:0.6, transition:Equations.easeOutCirc } );

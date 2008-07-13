@@ -37,7 +37,7 @@
 			
 			this.values = style.values;
 
-			this.make();
+			this.add_values();
 		}
 		
 		public override function closest( x:Number, y:Number ): Object {

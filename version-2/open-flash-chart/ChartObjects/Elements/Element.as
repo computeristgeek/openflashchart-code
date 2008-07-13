@@ -70,36 +70,25 @@
 		// it reduces the complexity of passing all the
 		// data in through the methods
 		//
-		public function make_tooltip( key:String ):void {
-			var tmp:String = '';
+		public function tooltip_replace_global_magics( tip:String ):String {
+			var tmp:String = tip;
 			//
 			// Warning: this is our global singleton
 			//
 			var g:Global = Global.getInstance();
-			var tip:String = g.get_tooltip_string();
+			//
+			// do we want a global tooltip default? I don't think so...
+			//
+//			var tip:String = g.get_tooltip_string();
 			var x_legend:String = g.get_x_legend();
 			var x_axis_label:String = g.get_x_label( this.index );
-			//
-			// ---
-			//
+
+//			tmp = tmp.replace('#key#',key);
+			tmp = tmp.replace('#x_label#',x_axis_label);
+//			tmp = tmp.replace('#val:time#',_root.formatTime(val));
+			tmp = tmp.replace('#x_legend#', x_legend);
 			
-			//var tip_obj:Object = {x_label:this.tooltip, value:'-99', key:'moo'};
-			//
-			// Dirty hack. Takes a tool_tip_wrapper, and replaces the #val# with the
-			// tool_tip text, so noew you can do: "My Val = $#val#%", which turns into:
-			// "My Val = $12.00%"
-			//
-			if( tip.length>0 && tip != "_default")
-			{
-				tmp = tip.replace('#key#',key);
-				tmp = tmp.replace('#x_label#',x_axis_label);
-//				tmp = tmp.replace('#val:time#',_root.formatTime(val));
-				tmp = tmp.replace('#x_legend#',x_legend);
-				this.tooltip = tmp;
-			} else 
-			{
-				this.tooltip = tip;
-			}
+			return tmp;
 		}
 		
 		public function set_link( s:String ):void {

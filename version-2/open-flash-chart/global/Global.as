@@ -23,6 +23,13 @@ package global {
 		public function get_x_label( pos:Number ):String {
 			
 			// PIE charts don't have X Labels
+			
+			tr.ace('xxx');
+			tr.ace( this.x_labels == null )
+			tr.ace(pos);
+//			tr.ace( this.x_labels.get(pos))
+			
+			
 			if ( this.x_labels == null )
 				return null;
 			else

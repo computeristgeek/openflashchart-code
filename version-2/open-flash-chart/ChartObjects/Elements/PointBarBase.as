@@ -64,10 +64,6 @@
 			return t;
 		}
 		
-		//
-		// TODO: get rid of this -- see 'base.as'
-		//
-		public override function make_tooltip( key:String ):void {}
 		
 /*
 		public override function make_tooltip( key:String ):void

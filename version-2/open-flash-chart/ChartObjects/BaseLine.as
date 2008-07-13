@@ -67,6 +67,9 @@
 			// we may have our own colour:
 			if( default_style.colour is String )
 				default_style.colour = Utils.get_colour( default_style.colour );
+				
+			// Minor hack, replace all #key# with this LINEs key text:
+			default_style.tip = default_style.tip.replace('#key#', this.style.text);
 			
 			return default_style;
 		}

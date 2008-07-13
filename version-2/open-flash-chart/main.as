@@ -443,11 +443,8 @@ package  {
 			
 			this.y_legend		= new YLegendLeft( json );
 			this.y_legend_2		= new YLegendRight( json );
+			this.x_axis			= new XAxis( json.x_axis );
 			
-			// this is needed by all the elements tooltip
-//			g.x_labels = this.x_labels;
-			
-			this.x_axis = new XAxis( json.x_axis );
 			
 			// var y_ticks:YTicks = new YTicks( json );
 			

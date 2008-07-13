@@ -49,7 +49,7 @@
 			this.values = this.style.values;
 
 
-			this.make();
+			this.add_values();
 		}
 		
 		

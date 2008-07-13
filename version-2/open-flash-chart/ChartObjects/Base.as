@@ -187,7 +187,7 @@ package ChartObjects {
 			return null;
 		}
 		
-		public function make():void {
+		public function add_values():void {
 			
 			// keep track of the X position (column)
 			var index:Number = 0;
@@ -200,9 +200,6 @@ package ChartObjects {
 				if( val != null )
 				{
 					tmp = this.get_element( index, val );
-
-					// TODO: remove this
-					tmp.make_tooltip( this.key );
 					
 					if( tmp.line_mask != null )
 						this.addChild( tmp.line_mask );

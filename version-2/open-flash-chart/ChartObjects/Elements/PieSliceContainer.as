@@ -27,11 +27,11 @@
 		// because we hold the slice inside this element, pass
 		// along the tooltip info:
 		//
-		public override function make_tooltip( key:String ):void
-		{
-			var tmp:PieSlice = this.getChildAt(0) as PieSlice;
-			tmp.make_tooltip( key );
-		}
+//		public override function make_tooltip( key:String ):void
+//		{
+//			var tmp:PieSlice = this.getChildAt(0) as PieSlice;
+//			tmp.make_tooltip( key );
+//		}
 		
 		//
 		// the axis makes no sense here, let's override with null and write our own.

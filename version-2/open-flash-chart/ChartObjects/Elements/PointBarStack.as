@@ -14,7 +14,8 @@
 			this.tooltip_template = 'Total: #total#<br>#val#';
 		}
 
-		
+		/*
+		 * TODO fix this
 		public override function make_tooltip( key:String ):void
 		{
 			super.make_tooltip( key );
@@ -23,7 +24,7 @@
 			tmp = tmp.replace('#total#', NumberUtils.formatNumber( this.total ));
 			this.tooltip = tmp;
 		}
-		
+		*/
 				
 		//
 		// BUG: we assume that all are positive numbers:

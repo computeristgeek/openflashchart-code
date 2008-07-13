@@ -79,7 +79,7 @@
 					value.top = top;
 					
 					var p:PointBarStack = new PointBarStack( index, value, group );
-					p.make_tooltip( 'key' );
+					//p.make_tooltip( 'key' );
 					
 					this.addChild( p );
 					
@@ -142,7 +142,9 @@
 			return e.get_tip_pos();
 		}
 		
-		public override function make_tooltip( key:String ):void 
+/*
+ * TODO: fix this
+		public override function make_tooltip( key:String ):void
 		{
 			super.make_tooltip( key );
 			var tmp:String = this.tooltip;
@@ -150,7 +152,7 @@
 			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.total ));
 			this.tooltip = tmp;
 		}
-		
+*/
 		
 		public override function get_tooltip():String {
 			//
