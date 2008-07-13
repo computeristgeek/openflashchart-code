@@ -31,6 +31,11 @@ class bar_base
 	function set_alpha( $alpha )
 	{
 		$this->alpha = $alpha;	
-	}	
+	}
+	
+	function set_tooltip( $tip )
+	{
+		$this->tip = $tip;	
+	}
 }
 
