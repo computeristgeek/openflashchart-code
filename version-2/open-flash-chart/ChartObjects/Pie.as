@@ -35,13 +35,14 @@
 			this.colours = new Array();
 			
 			this.style = {
-				alpha: 0.5,
-				'start-angle': 90,
-				colour: 0x900000,
-				'gradient-fill': 1,
-				stroke: 1,
-				colours: ["#900000", "#009000"],
-				animate: 1
+				alpha:			0.5,
+				'start-angle':	90,
+				colour:			0x900000,
+				'gradient-fill':1,
+				stroke:			1,
+				colours:		["#900000", "#009000"],
+				animate:		1,
+				tip:			'#val# of #total#'	// #percent#
 			}
 			
 			object_helper.merge_2( json, this.style );
@@ -60,7 +61,7 @@
 		
 		
 		//
-		// Pie chart make is quite different to a noraml make
+		// Pie chart make is quite different to a normal make
 		//
 		public override function add_values():void {
 //			this.Elements= new Array();
@@ -93,11 +94,14 @@
 				{
 					var label:String = val is Number ? val.toString() : val.text;
 					
-					var tmp:PieSliceContainer;
-					tmp = new PieSliceContainer(
+					var t:String = this.style.tip.replace('#total#', NumberUtils.formatNumber( this.total_value ));
+					t = t.replace('#percent#', NumberUtils.formatNumber( value / this.total_value * 100 ) + '%');
+				
+					var tmp:PieSliceContainer = new PieSliceContainer(
 						slice_start,
 						slice_angle,
 						value,
+						t,
 						this.colours[(i % this.colours.length)],
 						label,
 						(this.style.animate==1) );

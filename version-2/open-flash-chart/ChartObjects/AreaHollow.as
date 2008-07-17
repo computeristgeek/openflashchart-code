@@ -17,7 +17,8 @@
 				'dot-size':		5,
 				'halo-size':	2,
 				'font-size':	10,
-				'fill-alpha':	0.6
+				'fill-alpha':	0.6,
+				tip:			'#val#'
 			};
 			
 			object_helper.merge_2( json, this.style );
@@ -49,7 +50,8 @@
 				'dot-size':		this.style['dot-size'],
 				colour:			this.style.colour,
 				'halo-size':	this.style['halo-size'],
-				width:			this.style.width
+				width:			this.style.width,
+				tip:			this.style.tip
 			}
 			
 			return new ChartObjects.Elements.PointHollow( index, style );

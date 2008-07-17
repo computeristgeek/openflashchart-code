@@ -21,15 +21,16 @@
 		private var animate:Boolean;
 		public var value:Number;
 		
-		public function PieSlice( slice_start:Number, slice_angle:Number, slice_value:Number, colour:Number, animate:Boolean ) {
-			this.tooltip_template = '#val# of #total# or #percent#';
+		public function PieSlice( slice_start:Number, slice_angle:Number, value:Number, tip:String, colour:Number, animate:Boolean ) {
 			this.colour = colour;
 			this.slice_angle = slice_angle;
 			this.border_width = 1;
 			this.angle = slice_start;
 			this.alpha = 0.5;
 			this.animate = animate;
-			this.value = slice_value;
+			this.value = value;
+			
+			this.tooltip = this.replace_magic_values( tip );
 			
 			this.attach_events();
 		}
@@ -71,23 +72,13 @@
 			return {x:p.x,y:p.y};
 		}
 
-/* TODO: fix this
-		public override function make_tooltip( key:String ):void
-		{
-			super.make_tooltip( key );
-			var tmp:String = this.tooltip;
-			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
-
-			if ( this.parent.parent is Pie )
-			{
-				var p:Pie = this.parent.parent as Pie;
-				tmp = tmp.replace('#total#', NumberUtils.formatNumber( p.total_value ));
-				tmp = tmp.replace('#percent#', NumberUtils.formatNumber( this.value / p.total_value * 100 ) + '%');
-			}
-			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.value ));
-			this.tooltip = tmp;
+		private function replace_magic_values( t:String ): String {
+			
+			t = t.replace('#val#', NumberUtils.formatNumber( this.value ));
+			t = this.tooltip_replace_global_magics( t );
+			return t;
 		}
-*/
+		
 		//
 		// the axis makes no sense here, let's override with null and write our own.
 		//

@@ -36,6 +36,8 @@
 				}
 			}
 			
+			var tmp:String = this.tooltip.replace('#total#', NumberUtils.formatNumber( this.total ));
+			this.tooltip = tmp;
 		
 			this.colour = colour;
 			this.group = group;
@@ -80,8 +82,6 @@
 					value.top = top;
 					
 					var p:PointBarStack = new PointBarStack( index, value, group );
-					//p.make_tooltip( 'key' );
-					
 					this.addChild( p );
 					
 					bottom = top;

@@ -9,22 +9,17 @@
 			
 			// we are not passed a string value, the value
 			// is set by the parent collection later
-			super( index,  style,  style.colour, style.tip, group );
 			this.total =  style.total;
-			//this.tooltip_template = 'Total: #total#<br>#val#';
+			super( index,  style,  style.colour, style.tip, group );
 		}
 
-		/*
-		 * TODO fix this
-		public override function make_tooltip( key:String ):void
-		{
-			super.make_tooltip( key );
-			var tmp:String = this.tooltip;
-			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
-			tmp = tmp.replace('#total#', NumberUtils.formatNumber( this.total ));
-			this.tooltip = tmp;
+		protected override function replace_magic_values( t:String ): String {
+			
+			t = super.replace_magic_values(t);
+			t = t.replace('#total#', NumberUtils.formatNumber( this.total ));
+			
+			return t;
 		}
-		*/
 				
 		//
 		// BUG: we assume that all are positive numbers:

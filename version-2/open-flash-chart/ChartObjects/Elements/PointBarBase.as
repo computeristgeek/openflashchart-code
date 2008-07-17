@@ -55,7 +55,7 @@
 			}
 		}
 		
-		private function replace_magic_values( t:String ): String {
+		protected function replace_magic_values( t:String ): String {
 			
 			t = t.replace('#top#', NumberUtils.formatNumber( this.top ));
 			t = t.replace('#bottom#', NumberUtils.formatNumber( this.bottom ));

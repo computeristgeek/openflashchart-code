@@ -17,13 +17,17 @@ class pie
 		$this->colours     		= array("#d01f3c","#356aa0","#C79810");
 		$this->alpha			= 0.6;
 		$this->border			= 2;
-		$this->values			= array(2,3,new pie_value(6.5, "hello (6.5)"));
+	}
+	
+	function set_values( $v )
+	{
+		$this->values = $v;		
 	}
 	
 	// boolean
-	function set_animate( $v )
+	function set_animate( $animate )
 	{
-		$this->animate = $v;
+		$this->animate = $animate;
 	}
 	
 	// real
@@ -31,5 +35,10 @@ class pie
 	{
 		$tmp = 'start-angle';
 		$this->$tmp = $angle;
+	}
+	
+	function set_tooltip( $tip )
+	{
+		$this->tip = $tip;
 	}
 }

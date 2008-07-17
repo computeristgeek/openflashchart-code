@@ -28,7 +28,7 @@
 				var stack:Element = this.getChildAt(i) as PointBarStackCollection;
 				
 				// get the first bar in the stack
-				var e:Element = stack.getChildAt(i) as Element;
+				var e:Element = stack.getChildAt(0) as Element;
 				
 				e.is_tip = false;
 				

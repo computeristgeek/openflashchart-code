@@ -8,9 +8,9 @@
 		// we want to rotate the slice, but not the text, so
 		// this container holds both
 		//
-		public function PieSliceContainer( slice_start:Number, slice_angle:Number, slice_value:Number, colour:Number, label:String, animate:Boolean )
+		public function PieSliceContainer( slice_start:Number, slice_angle:Number, value:Number, tip:String, colour:Number, label:String, animate:Boolean )
 		{
-			this.addChild( new PieSlice( slice_start, slice_angle, slice_value, colour, animate ) );
+			this.addChild( new PieSlice( slice_start, slice_angle, value, tip, colour, animate ) );
 			this.addChild( new PieLabel( label ) );
 		}
 		
