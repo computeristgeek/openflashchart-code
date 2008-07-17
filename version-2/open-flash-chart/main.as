@@ -27,6 +27,12 @@ package  {
 	import flash.display.LoaderInfo;
 //	import flash.display.Loader;
 	
+	import com.adobe.images.JPGEncoder;
+	import flash.display.BitmapData;
+	import flash.utils.ByteArray;
+	import flash.net.URLRequestHeader;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLLoaderDataFormat;
 	
 	
 	public class main extends Sprite {
@@ -68,13 +74,12 @@ package  {
 //			//fs.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, onShowFullScreen);
 //			cm.customItems.push( fs );
 
-			
 
 			if( !this.find_data() )
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/line-2.txt";
+					var file:String = "../data-files/stack-bar-1.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -85,13 +90,54 @@ package  {
 			// inform javascript that it can call our load method
 			ExternalInterface.addCallback("load", load);
 			
+			// inform javascript that it can call our save_image method
+			ExternalInterface.addCallback("save_image", save_image);
+			
 			// tell the web page that we are ready
 			ExternalInterface.call("ofc_ready");
 			
 			this.ok = false;
 			this.set_the_stage();
-			
 		}
+		
+		//
+		// External interface called by Javascript to
+		// save the flash as an image
+		//
+		public function save_image( debug:Boolean ):void {
+			
+			tr.ace('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+
+			var fileName:String = 'tmp';
+			var quality:Number = 90;
+
+			var jpgSource:BitmapData = new BitmapData(this.width, this.height);
+			jpgSource.draw(this);
+			var jpgEncoder:JPGEncoder = new JPGEncoder(quality);
+			var jpgStream:ByteArray = jpgEncoder.encode(jpgSource);
+			var header:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");
+
+			//Make sure to use the correct path to jpg_encoder_download.php
+			var jpgURLRequest:URLRequest =
+				new URLRequest("http://eden/open-flash-chart-2/php-ofc-library/ofc_upload_image.php?name=" + fileName + ".jpg");
+			
+			jpgURLRequest.requestHeaders.push(header);
+			jpgURLRequest.method = URLRequestMethod.POST;
+			jpgURLRequest.data = jpgStream;
+
+			if( debug )
+			{
+				// debug the PHP:
+				flash.net.navigateToURL(jpgURLRequest, "_blank");
+			}
+			else
+			{
+				var loader:URLLoader = new URLLoader();
+				loader.dataFormat = URLLoaderDataFormat.BINARY;
+				loader.load( jpgURLRequest );
+			}
+		}
+
 		
 		private function onContextMenuHandler(event:ContextMenuEvent):void
 		{

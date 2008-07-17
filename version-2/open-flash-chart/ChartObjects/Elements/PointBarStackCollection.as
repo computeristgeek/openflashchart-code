@@ -13,8 +13,8 @@
 		private var total:Number;
 		
 		public function PointBarStackCollection( index:Number, value:Object, colour:Number, group:Number ) {
-			this.tooltip_template = '<b>Total: #val#</b>';
 			
+			this.tooltip = '#total#';
 			// this is very similar to a normal
 			// PointBarBase but without the mouse
 			// over and mouse out events
@@ -60,7 +60,8 @@
 						top:		0,		// <-- set this later
 						bottom:		bottom,
 						colour:		c,		// <-- default colour (may be overriden later)
-						total:		this.total
+						total:		this.total,
+						tip:		'Total: #total#<br>#val#'
 					}
 
 					//

@@ -12,9 +12,9 @@
 		}
 		
 		
-		protected override function get_element( x:Number, value:Object ): Element {
+		protected override function get_element( index:Number, value:Object ): Element {
 			
-			return new PointBarStackCollection( x, value, this.colour, this.group );
+			return new PointBarStackCollection( index, value, this.colour, this.group );
 		}
 		
 		
@@ -24,15 +24,19 @@
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
-				var e:Element = this.getChildAt(i) as PointBarStackCollection;
-
+				// get the collection
+				var stack:Element = this.getChildAt(i) as PointBarStackCollection;
+				
+				// get the first bar in the stack
+				var e:Element = stack.getChildAt(i) as Element;
+				
 				e.is_tip = false;
 				
 				if( (x > e.x) && (x < e.x+e.width) )
 				{
 					// mouse is in position 1
 					shortest = Math.min( Math.abs( x - e.x ), Math.abs( x - (e.x+e.width) ) );
-					ex = e;
+					ex = stack;
 					break;
 				}
 				else
@@ -45,7 +49,7 @@
 					if( min < shortest )
 					{
 						shortest = min;
-						ex = e;
+						ex = stack;
 					}
 				}
 			}

@@ -11,7 +11,7 @@
 			// is set by the parent collection later
 			super( index,  style,  style.colour, style.tip, group );
 			this.total =  style.total;
-			this.tooltip_template = 'Total: #total#<br>#val#';
+			//this.tooltip_template = 'Total: #total#<br>#val#';
 		}
 
 		/*
