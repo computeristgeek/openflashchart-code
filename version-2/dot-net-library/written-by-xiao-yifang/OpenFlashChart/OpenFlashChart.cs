@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using Newtonsoft.Json;
+using JsonFx.Json;
+using OpenFlashChart;
 
 namespace OpenFlashChart
 {
@@ -17,6 +18,8 @@ namespace OpenFlashChart
         private Legend x_legend;
         private Legend y_legend;
         private string bgcolor;
+
+        private ToolTip tooltip;
 
         public OpenFlashChart()
         {
@@ -94,15 +97,31 @@ namespace OpenFlashChart
             get { return bgcolor; }
             set { bgcolor = value; }
         }
+        [JsonProperty("tooltip")]
+        public ToolTip Tooltip
+        {
+            get { return tooltip; }
+            set { tooltip = value; }
+        }
+
         public override string ToString()
         {
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.NullValueHandling = NullValueHandling.Ignore;
             StringWriter sw = new StringWriter(CultureInfo.InvariantCulture);
-
-            using (JsonWriter writer = new JsonTextWriter(sw))
+            using (JsonWriter writer = new JsonWriter(sw))
             {
-                serializer.Serialize(writer, this);
+                writer.SkipNullValue = true;
+                writer.Write(this);
+            }
+            return sw.ToString();
+        }
+        public string ToPrettyString()
+        {
+            StringWriter sw = new StringWriter(CultureInfo.InvariantCulture);
+            using (JsonWriter writer = new JsonWriter(sw))
+            {
+                writer.SkipNullValue = true;
+                writer.PrettyPrint = true;
+                writer.Write(this);
             }
             return sw.ToString();
         }

@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
+using JsonFx.Json;
+
 
 namespace OpenFlashChart
 {
@@ -12,6 +13,15 @@ namespace OpenFlashChart
         private int size;
         private string rotate;
         private bool visible = true;
+        public AxisLabel()
+        {
+            this.visible = true;
+        }
+        public AxisLabel(string text)
+        {
+            this.text = text;
+            this.visible = true;
+        }
         public AxisLabel(string text, string colour, int size, string rotate)
         {
             this.text = text;
@@ -45,7 +55,7 @@ namespace OpenFlashChart
             set { this.rotate = value; }
             get { return this.rotate; }
         }
-        [JsonProperty("vertical")]
+        [JsonIgnore]
         public bool Vertical
         {
             set {

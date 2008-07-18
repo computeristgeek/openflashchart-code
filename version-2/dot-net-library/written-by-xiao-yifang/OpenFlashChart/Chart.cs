@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
+using JsonFx.Json;
+
 
 namespace OpenFlashChart
 {
-    public  class Chart<T> :ChartBase
+    public  class Chart<T>:ChartBase
     {
         private string type;
         private IList<T> values;

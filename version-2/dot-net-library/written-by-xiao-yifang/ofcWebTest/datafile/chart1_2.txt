@@ -13,8 +13,8 @@
 					"labels": 
 						[
 							"中文测试"
-						],
-					"rotate": "vertical"
+						]
+					
 				},
 			"steps": 1
 		},

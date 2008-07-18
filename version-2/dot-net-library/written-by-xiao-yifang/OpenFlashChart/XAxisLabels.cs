@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
+using JsonFx.Json;
+
 
 namespace OpenFlashChart
 {
@@ -40,7 +41,7 @@ namespace OpenFlashChart
             set { this.rotate = value; }
             get { return this.rotate; }
         }
-        [JsonProperty("vertical")]
+        [JsonIgnore]
         public bool Vertical
         {
             set

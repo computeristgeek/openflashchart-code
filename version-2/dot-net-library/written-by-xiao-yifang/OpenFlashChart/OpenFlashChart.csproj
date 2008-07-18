@@ -28,10 +28,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Documents and Settings\xiaoyf\桌面\Json20\Bin\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -49,6 +45,13 @@
     <Compile Include="ChartBase.cs" />
     <Compile Include="ChartElement.cs" />
     <Compile Include="HBar.cs" />
+    <Compile Include="JSON\JsonIgnoreAttribute.cs" />
+    <Compile Include="JSON\JsonNameAttribute.cs" />
+    <Compile Include="JSON\JsonPropertyAttribute.cs" />
+    <Compile Include="JSON\JsonReader.cs" />
+    <Compile Include="JSON\JsonSerializationException.cs" />
+    <Compile Include="JSON\JsonToken.cs" />
+    <Compile Include="JSON\JsonWriter.cs" />
     <Compile Include="Legend.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="LineBase.cs" />
@@ -59,6 +62,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scatter.cs" />
     <Compile Include="Title.cs" />
+    <Compile Include="ToolTip.cs" />
     <Compile Include="XAxis.cs" />
     <Compile Include="XAxisLabels.cs" />
     <Compile Include="YAxis.cs" />
@@ -69,6 +73,9 @@
     <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="JSON\License.txt" />
+    <Content Include="JSON\Readme too.txt" />
+    <Content Include="JSON\ReadMe.txt" />
     <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

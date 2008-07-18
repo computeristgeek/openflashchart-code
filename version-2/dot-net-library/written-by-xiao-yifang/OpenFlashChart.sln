@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenFlashChart", "OpenFlash
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "F:\...\ofcWebTest\", "ofcWebTest\", "{AD4F2CE2-196C-4E9B-94EA-ACB21CBCFE3F}"
 	ProjectSection(WebsiteProperties) = preProject
+		ProjectReferences = "{213ABC3E-F51E-4A09-A053-BC17E4797BA8}|OpenFlashChart.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/ofcWebTest"
 		Debug.AspNetCompiler.PhysicalPath = "ofcWebTest\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\ofcWebTest\"

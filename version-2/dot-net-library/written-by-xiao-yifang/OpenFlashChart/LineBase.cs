@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
+using JsonFx.Json;
+
 
 namespace OpenFlashChart
 {
@@ -37,8 +38,5 @@ namespace OpenFlashChart
             get { return halosize; }
             set { halosize = value; }
         }
-      
-      
-        
     }
 }
