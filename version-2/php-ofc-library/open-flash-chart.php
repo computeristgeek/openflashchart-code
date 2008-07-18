@@ -29,6 +29,7 @@ include_once 'ofc_bar_sketch.php';
 include_once 'ofc_scatter.php';
 include_once 'ofc_x_axis_labels.php';
 include_once 'ofc_x_axis_label.php';
+include_once 'ofc_tooltip.php';
 
 
 class open_flash_chart
@@ -82,6 +83,11 @@ class open_flash_chart
 	function set_bg_colour( $colour )
 	{
 		$this->bg_colour = $colour;	
+	}
+	
+	function set_tooltip( $tooltip )
+	{
+		$this->tooltip = $tooltip;	
 	}
 	
 	function toString()
