@@ -79,7 +79,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/tooltip-1.txt";
+					var file:String = "../data-files/horizontal-bar-chart.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -104,11 +104,10 @@ package  {
 		// External interface called by Javascript to
 		// save the flash as an image
 		//
-		public function save_image( debug:Boolean ):void {
+		public function save_image( url:String, callback:String, debug:Boolean ):void {
 			
-			tr.ace('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+			tr.ace('@@@@-- Saving image --@@@@@');
 
-			var fileName:String = 'tmp';
 			var quality:Number = 90;
 
 			var jpgSource:BitmapData = new BitmapData(this.width, this.height);
@@ -118,8 +117,7 @@ package  {
 			var header:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");
 
 			//Make sure to use the correct path to jpg_encoder_download.php
-			var jpgURLRequest:URLRequest =
-				new URLRequest("http://eden/open-flash-chart-2/php-ofc-library/ofc_upload_image.php?name=" + fileName + ".jpg");
+			var jpgURLRequest:URLRequest = new URLRequest(url);
 			
 			jpgURLRequest.requestHeaders.push(header);
 			jpgURLRequest.method = URLRequestMethod.POST;
@@ -134,6 +132,16 @@ package  {
 			{
 				var loader:URLLoader = new URLLoader();
 				loader.dataFormat = URLLoaderDataFormat.BINARY;
+				loader.addEventListener(Event.COMPLETE, function(e:Event):void {
+					tr.ace('Svaed image to:');
+					tr.ace( url );
+					//
+					// when the upload has finished call the user
+					// defined javascript function/method
+					//
+					ExternalInterface.call(callback);
+					});
+					
 				loader.load( jpgURLRequest );
 			}
 		}

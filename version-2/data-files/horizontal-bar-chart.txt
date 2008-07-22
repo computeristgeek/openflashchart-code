@@ -18,10 +18,13 @@
     "min":    0,
     "max":    20,
     "offset": false,
-    "labels": ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v"]
+    "labels": {
+      "labels": ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v"]
+    }
   },
   "y_axis":{
     "offset":      true,
-    "labels":      ["slashdot.org","digg.com","reddit.com"]
+    "labels": ["slashdot.org","digg.com","reddit.com"]
+    
   }
 }
