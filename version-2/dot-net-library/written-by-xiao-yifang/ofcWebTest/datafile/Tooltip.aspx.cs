@@ -25,16 +25,16 @@ public partial class Tooltip : System.Web.UI.Page
         {
             data1.Add(Math.Sin(i) * 1.9 + 7);
             data2.Add(Math.Sin(i) * 1.9 + 10);
-            data3.Add(random.Next(1,12));
+            data3.Add(random.Next(-10,12));
         }
 
         OpenFlashChart.LineHollow line1 = new LineHollow();
         line1.Values = data1;
-        line1.HaloSize = 0;
+        line1.HaloSize = 3;
         line1.Width = 2;
         line1.DotSize = 5;
         line1.Fontsize = 12;
-
+        line1.Colour = "#456f3";
 
         OpenFlashChart.LineHollow line2 = new LineHollow();
         line2.Values = data2;
@@ -45,7 +45,7 @@ public partial class Tooltip : System.Web.UI.Page
 
         OpenFlashChart.LineHollow line3 = new LineHollow();
         line3.Values = data3;
-        line3.HaloSize = 1;
+        line3.HaloSize = 2;
         line3.Width = 6;
         line3.DotSize = 4;
         line3.Fontsize = 12;
@@ -59,7 +59,7 @@ public partial class Tooltip : System.Web.UI.Page
         chart.AddElement(line2);
         chart.AddElement(line3);
         chart.Title = new Title("multi line");
-        chart.Y_Axis.SetRange(0, 15, 5);
+        chart.Y_Axis.SetRange(-10, 15, 5);
 
         chart.Tooltip = new ToolTip("my tip #val#");
 

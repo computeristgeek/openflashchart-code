@@ -30,11 +30,15 @@ public partial class Pie : System.Web.UI.Page
             values.Add(new PieValue(random.NextDouble(),"Pie"+i));
             labels.Add(i.ToString());
         }
+        values.Add(0.2);
         pie.Values = values;
+
+       // pie.Alpha = 50;
+
         //pie.Colour = "#fff";
         pie.Colours = new string[]{"#04f","#1ff","#6ef","#f30"};
         chart.AddElement(pie);
-        string s = chart.ToString();
+        string s = chart.ToPrettyString();
         Response.Clear();
         Response.CacheControl = "no-cache";
         Response.Write(s);

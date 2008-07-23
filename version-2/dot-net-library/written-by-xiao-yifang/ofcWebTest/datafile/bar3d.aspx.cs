@@ -39,6 +39,11 @@ labels.Add(i.ToString());
         chart.X_Axis.Labels.Values = labels;
         chart.X_Axis.Labels.Vertical = true;
         
+        chart.X_Axis.Set3D(12);
+
+        chart.Y_Axis.Set3D(3);
+        chart.Y_Axis.Steps = 4;
+
         string s = chart.ToString();
         Response.Clear();
         Response.CacheControl = "no-cache";
