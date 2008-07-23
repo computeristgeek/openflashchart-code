@@ -23,21 +23,12 @@ sub new() {
       "text"=>"Default Chart Title",
       "style"=>"{font-size:20px; font-family:Verdana; text-align:center;}"
     },
-#    "x_axis"=>{
-#      "min"=>     undef,
-#      "max"=>     undef,
-#      "labels"=> ["a","b","c","d","e"]
-#    },
-#    "y_axis"=>{
-#      "min"=>     0,
-#      "max"=>     "a",
-#      "colour"=>  "#d09090",
-#    },
   };
+
   my $x = axis->new('x_axis');
   $x->set_min(undef);
   $x->set_max(undef);
-  $x->set_labels(["a","b","c","d","e"]);
+  $x->set_labels(["January","February","March","April","May"]);
   
   my $y = axis->new('y_axis');
   $y->set_steps(5);
@@ -332,9 +323,9 @@ sub new() {
   $self->{'element_props'}->{'text'} = 'text';
   $self->{'element_props'}->{'font-size'} = 10;
 
-  $self->{'element_props'}->{'show_y2'} = 'false';
+  #$self->{'element_props'}->{'show_y2'} = 'false';
   #$self->{'element_props'}->{'y2_lines'} = [];
-  $self->{'element_props'}->{'values_2'} = [];
+  #$self->{'element_props'}->{'values_2'} = [];
 
   return $self;
 }
@@ -469,7 +460,7 @@ sub new() {
   return $self;
 }
 
-package bar_outline;
+package bar_filled;
 our @ISA = qw(bar);
 sub new() {
   my ($proto) = @_;
@@ -477,7 +468,7 @@ sub new() {
   my $self  = {};
   bless $self, $class;
   $self = $self->SUPER::new();
-  $self->{'element_props'}->{'type'} = 'filled_bar';
+  $self->{'element_props'}->{'type'} = __PACKAGE__;
   $self->{'element_props'}->{'outline-colour'} = main::random_color();
   return $self;
 }
@@ -607,15 +598,15 @@ sub new() {
   $self->{'name'} = $name; # x_axis | y_axis | y_axis_right
   $self->{'props'} =  {
   	'labels' =>       undef,
-		'stroke' =>				2,
-		'tick-length' =>	3,
-		'colour' =>				'#784016',
-		'offset' =>				'false',
-		'grid-colour' =>	'#F5E1AA',
-		'3d' =>						0,
-		'steps' =>				1,
-		'visible' =>			'true',
-		'min' =>					0,
+		'stroke' =>				undef,
+		'tick-length' =>	undef,
+		'colour' =>				undef,
+		'offset' =>				undef,
+		'grid-colour' =>	undef,
+		'3d' =>						undef,
+		'steps' =>				undef,
+		'visible' =>			undef,
+		'min' =>					undef,
 		'max' =>					'a'
   };
   return bless $self, $class;

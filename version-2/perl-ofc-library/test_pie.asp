@@ -11,6 +11,7 @@ use lib $Server->mappath('.');
 use open_flash_chart;
 
 my $g = chart->new();
+#$g->{'chart_props'}->{'tooltip'} = {'text'=>'#val#'};
 
 if ( $Request->QueryString("data")->Item == 1 ) {
 

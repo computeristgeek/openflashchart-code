@@ -24,10 +24,10 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   $g->add_element($e);
 
   
-  $e = $g->get_element('bar_outline');
+  $e = $g->get_element('bar_filled');
   my $data = [];
 	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(30) );
+		push ( @$data, rand(40) );
 	}
   $e->set_values($data);
   $g->add_element($e);  
