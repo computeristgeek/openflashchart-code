@@ -14,7 +14,7 @@ namespace OpenFlashChart
        
       
         private int steps=1;
-        private string _3d;
+        private int _3d;
        
         private double? min;
         private double? max;
@@ -48,9 +48,9 @@ namespace OpenFlashChart
             this.colour = color;
             this.grid_colour = gridcolor;
         }
-        public void Set3D(string str)
+        public void Set3D(int width)
         {
-            this._3d = str;
+            this.Axis3D = width;
         }
        
         [JsonProperty("min")]
@@ -65,9 +65,11 @@ namespace OpenFlashChart
             get { return max; }
             set { this.max = value; }
         }
-
-       
-
-
+        [JsonProperty("3d")]
+        public int Axis3D
+        {
+            get { return _3d; }
+            set { _3d = value; }
+        }
     }
 }

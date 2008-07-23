@@ -16,11 +16,13 @@ namespace OpenFlashChart
         public AxisLabel()
         {
             this.visible = true;
+            size = 12;
         }
         public AxisLabel(string text)
         {
             this.text = text;
             this.visible = true;
+            size = 12;
         }
         public AxisLabel(string text, string colour, int size, string rotate)
         {

@@ -14,6 +14,10 @@ namespace OpenFlashChart
         {
             this.val = val;
         }
+        public static implicit operator PieValue(double val)
+        {
+            return new PieValue(val,"");
+        }
         public PieValue(double val, string text)
         {
             this.val = val;

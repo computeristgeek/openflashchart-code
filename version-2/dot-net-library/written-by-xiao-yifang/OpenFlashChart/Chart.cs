@@ -6,7 +6,7 @@ using JsonFx.Json;
 
 namespace OpenFlashChart
 {
-    public  class Chart<T>:ChartBase
+    public  class Chart<T> :ChartBase
     {
         private string type;
         private IList<T> values;
