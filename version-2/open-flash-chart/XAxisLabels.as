@@ -29,7 +29,7 @@ package {
 			this.style = {
 				rotate:		null,
 				visible:	true,
-				labels:		[],
+				labels:		null,
 				steps:		1,
 				size:		10,
 				colour:		'#000000'
@@ -39,7 +39,7 @@ package {
 			this.labels = new Array();
 			
 			if( ( json.x_axis != null ) && ( json.x_axis.labels != null ) )
-				object_helper.merge_2( json.x_axis.labels, this.style.labels );
+				object_helper.merge_2( json.x_axis.labels, this.style );
 			
 			this.style.colour = Utils.get_colour( this.style.colour );
 			
