@@ -28,7 +28,7 @@ sub new() {
   my $x = axis->new('x_axis');
   $x->set_min(undef);
   $x->set_max(undef);
-  $x->set_labels(["January","February","March","April","May"]);
+  $x->set_labels({"labels"=>["January","February","March","April","May"]});
   
   my $y = axis->new('y_axis');
   $y->set_steps(5);
