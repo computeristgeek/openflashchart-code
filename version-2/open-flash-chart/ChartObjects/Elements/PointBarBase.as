@@ -65,18 +65,16 @@
 		}
 		
 		
-/*
-		public override function make_tooltip( key:String ):void
-		{
-			super.make_tooltip( key );
-			var tmp:String = this.tooltip;
-			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
-			tmp = tmp.replace('#top#', NumberUtils.formatNumber( this.top ));
-			tmp = tmp.replace('#bottom#', NumberUtils.formatNumber( this.bottom ));
-			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.top - this.bottom ));
-			this.tooltip = tmp;
+		//
+		// for tooltip closest - return the middle point
+		//
+		public override function get_mid_point():flash.geom.Point {
+			
+			//
+			// bars mid point
+			//
+			return new flash.geom.Point( this.x + (this.width/2), this.y );
 		}
-*/
 		
 		public override function mouseOver(event:Event):void {
 			this.is_tip = true;

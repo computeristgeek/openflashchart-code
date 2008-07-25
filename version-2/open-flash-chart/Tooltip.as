@@ -23,11 +23,13 @@ package {
 		
 		private var tip_style:Number;
 		private var cached_element:Element;
+		private var tip_showing:Boolean;
 		
 		public var tip_text:String;
 		
 		public static const CLOSEST:Number = 0;
 		public static const FOLLOW:Number = 1;
+		public static const NORMAL:Number = 2;		// normal tooltip (ugh -- boring!!)
 		
 		public function Tooltip( json:Object )
 		{
@@ -38,6 +40,8 @@ package {
 			this.text = new TextField();
 			this.text.x = 5;
 			this.text.y = 5;
+			
+			this.tip_showing = false;
 			
 			this.addChild( this.title );
 			this.addChild( this.text );
@@ -89,7 +93,6 @@ package {
 
 			// this is a new tooltip, get the
 			// text and recreate it
-			tr.ace('new tip');
 			this.cached_element = e;
 			
 			this.graphics.clear();
@@ -150,7 +153,10 @@ package {
 			var max_width:Number = Math.max( this.title.width, this.text.width );
 			
 			var x:Number = (pos.x + max_width + 16) > this.stage.stageWidth ? (this.stage.stageWidth - max_width - 16) : pos.x;
-			var y:Number = pos.y - 20 - this.text.height - this.text.height;
+			
+			var y:Number = pos.y;
+			y -= 4;
+			y -= (this.text.height + this.title.height + 10 ); // 10 == border size
 			
 			if( y < 0 )
 			{
@@ -163,19 +169,44 @@ package {
 		public function draw( e:Element ):void {
 
 			this.make_tip( e );
-			
+
 			// remove the 'hide' tween
 			Tweener.removeTweens( this );
-			
 			var p:flash.geom.Point = this.get_pos( e );
 			
-			this.visible = true;
-			this.alpha = 1
-			this.x = p.x;
-			this.y = p.y;
+			if ( this.style.mouse == Tooltip.CLOSEST )
+			{
+				//
+				// make the tooltip appear (if invisible)
+				// and shoot to the correct position
+				//
+				this.visible = true;
+				this.alpha = 1
+				this.x = p.x;
+				this.y = p.y;
+			}
+			else
+			{
+//				if ( !this.tip_showing )
+//				{
+					// make the tooltip fade in gently
+					this.tip_showing = true;
+					
+					tr.ace('show');
+					this.alpha = 0
+					this.visible = true;
+					this.x = p.x;
+					this.y = p.y;
+					Tweener.addTween(
+						this,
+						{
+							alpha:1,
+							time:0.4,
+							transition:Equations.easeOutExpo
+						} );
+//				}
+			}
 			
-			//Tweener.addTween(this, { x:new_x, time:0.3, transition:Equations.easeOutExpo } );
-			//Tweener.addTween(this, { y:new_y, time:0.3, transition:Equations.easeOutExpo } );
 		}
 		
 		public function closest( e:Element ):void {
@@ -199,6 +230,8 @@ package {
 		}
 		
 		public function hide():void {
+			this.tip_showing = false;
+			tr.ace('hide');
 			Tweener.addTween(this, { alpha:0, time:0.6, transition:Equations.easeOutExpo, onComplete:hideAway } );
 		}
 		

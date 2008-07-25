@@ -2,6 +2,7 @@ package ChartObjects {
 	import flash.display.Sprite;
 	import org.flashdevelop.utils.FlashConnect;
 	import ChartObjects.Elements.Element;
+	import flash.geom.Point;
 	
 	public class Base extends Sprite {
 		
@@ -159,6 +160,40 @@ package ChartObjects {
 				
 			return { element:closest, distance_x:shortest, distance_y:dy };
 		}
+		
+		public function closest_2( x:Number, y:Number ): Object {
+			var shortest:Number = Number.MAX_VALUE;
+			var closest:Element = null;
+			var dx:Number;
+			
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+			
+				//
+				// some of the children will will mask
+				// Sprites, so filter those out:
+				//
+				if( this.getChildAt(i) is Element ) {
+					
+					var e:Element = this.getChildAt(i) as Element;
+					e.set_tip( false );
+				
+					var p:flash.geom.Point = e.get_mid_point();
+					dx = Math.abs( x - p.x );
+				
+					if( dx < shortest )	{
+						shortest = dx;
+						closest = e;
+					}
+				}
+			}
+			
+			var dy:Number = 0;
+			if( closest )
+				dy = Math.abs( y - closest.y );
+				
+			return { element:closest, distance_x:shortest, distance_y:dy };
+		}
+		
 		
 		//
 		// this is a backup function so if the mouse leaves the

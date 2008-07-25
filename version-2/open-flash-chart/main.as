@@ -79,7 +79,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/x-axis-labels.txt";
+					var file:String = "../data-files/tooltip-bar-floating.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -275,22 +275,30 @@ package  {
 					break;
 					
 				case Tooltip.FOLLOW:
+				case Tooltip.NORMAL:
 					this.mouse_move_follow( event as MouseEvent );
 					break;
+					
 			}
 		}
 		
 		private function mouse_move_follow( event:MouseEvent ):void {
 
-			if( event.target is PieSlice )
+			//if( event.target is PieSlice )
+			if( event.target is Element )
 				this.tooltip.draw( event.target as Element );
 			else
 				this.tooltip.hide();
 		}
 		
 		private function mouse_move_closest( event:Event ):void {
-
-			var e:Element = this.obs.mouse_move( this.mouseX, this.mouseY );
+			
+			//
+			// old way of getting tooltip pos
+			//
+			//var e:Element = this.obs.mouse_move( this.mouseX, this.mouseY );
+			
+			var e:Element = this.obs.mouse_move_2( this.mouseX, this.mouseY );
 			this.tooltip.closest( e );
 		}
 		

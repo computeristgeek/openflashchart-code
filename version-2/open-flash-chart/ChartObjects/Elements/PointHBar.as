@@ -9,17 +9,16 @@
 	
 	public class PointHBar extends Element
 	{
-		private var _right:Number;
-		private var _left:Number;
-		protected var _width:Number;
+		private var right:Number;
+		private var left:Number;
+		//protected var width:Number;
 		
 		public var colour:Number;
 		protected var group:Number;
 		
-		public function PointHBar( index:Number, value:Object, colour:Number, group:Number )
+		public function PointHBar( index:Number, style:Object, group:Number )
 		{
 			super();
-			this.tooltip_template = '#val#';
 			//
 			// we use the index of this bar to find its Y position
 			//
@@ -28,33 +27,31 @@
 			// horizontal bar: value = X Axis position
 			// we'll use the ScreenCoords object to go [value -> x location]
 			//
-			//var result:* = JSON.deserialize( value );
 			
-			this._left = value.left ? value.left : 0;
-			this._right = value.right ? value.right : 0;
+			this.left = style.left ? style.left : 0;
+			this.right = style.right ? style.right : 0;
 			
-			this.colour = colour;
+			this.colour = style.colour;
 			this.group = group;
 			this.visible = true;
 			
 			this.alpha = 0.5;
+			
+			this.tooltip = this.replace_magic_values( style.tip );
 			
 			this.addEventListener(MouseEvent.MOUSE_OVER, this.mouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT, this.mouseOut);
 			
 		}
 
-	/* TODO: fix this
-	 *
-		public override function make_tooltip( key:String ):void
-		{
-			super.make_tooltip( key );
-			var tmp:String = this.tooltip;
-			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
-			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this._right - this._left ));
-			this.tooltip = tmp;
+		protected function replace_magic_values( t:String ): String {
+			
+			t = t.replace('#right#', NumberUtils.formatNumber( this.right ));
+			t = t.replace('#left#', NumberUtils.formatNumber( this.left ));
+			t = t.replace('#val#', NumberUtils.formatNumber( this.right - this.left ));
+			
+			return t;
 		}
-	*/
 		
 		public override function mouseOver(event:Event):void {
 			Tweener.addTween(this, { alpha:1, time:0.6, transition:Equations.easeOutCirc } );
@@ -68,8 +65,8 @@
 			
 			var tmp:Object = sc.get_horiz_bar_coords( this.index, this.group );
 			
-			var left:Number  = sc.get_x_from_val( this._left );
-			var right:Number = sc.get_x_from_val( this._right );
+			var left:Number  = sc.get_x_from_val( this.left );
+			var right:Number = sc.get_x_from_val( this.right );
 			var width:Number = right - left;
 			
 			this.graphics.clear();
@@ -81,8 +78,15 @@
 			this.y = tmp.y;
 		}
 		
+		public override function get_tip_pos():Object {
+			//
+			// Hover the tip over the right of the bar
+			//
+			return {x:this.x+this.width-20, y:this.y};
+		}
+		
 		public function get_max_x_value():Number {
-			return this._right;
+			return this.right;
 		}
 	}
 }

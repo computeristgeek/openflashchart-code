@@ -7,11 +7,22 @@
 	public class HBar extends Base {
 		
 		protected var group:Number;
+		protected var style:Object;
 		
 		public function HBar( json:Object ) {
 			
+			this.style = {
+				values:				[],
+				colour:				'#3030d0',
+				text:				'',		// <-- default not display a key
+				'font-size':		12,
+				tip:				'#val#'
+			};
+			
+			object_helper.merge_2( json, style );
+			
 			//this.alpha = Number( vals[0] );
-			this.colour = string.Utils.get_colour( json.colour );
+			this.colour = string.Utils.get_colour( style.colour );
 			this.key = json.text;
 			this.font_size = json['font-size'];
 			
@@ -36,7 +47,23 @@
 		// is the Y positiont
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
-			return new PointHBar( index, value, this.colour, this.group );
+			
+			var default_style:Object = {
+					colour:		this.style.colour,
+					tip:		this.style.tip
+			};
+			
+			if( value is Number )
+				default_style.top = value;
+			else
+				object_helper.merge_2( value, default_style );
+				
+			// our parent colour is a number, but
+			// we may have our own colour:
+			if( default_style.colour is String )
+				default_style.colour = Utils.get_colour( default_style.colour );
+			
+			return new PointHBar( index, default_style, this.group );
 		}
 		
 		public override function resize( sc:ScreenCoords ): void {

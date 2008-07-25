@@ -1,7 +1,7 @@
 {
 
   "title_":{
-    "text":"Horizontal Bar Chart",
+    "text":"Tooltip Hover",
     "style":"{font-size: 20px; font-family: Verdana; text-align: center;}"
   },
 
@@ -30,6 +30,6 @@
   },
 
   "tooltip":{
-    "mouse": 0
+    "mouse": 1
   }
 }

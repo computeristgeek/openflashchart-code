@@ -155,6 +155,50 @@ package ChartObjects {
 			return e;
 		}
 		
+		
+		private function closest_2( x:Number, y:Number ):Element {
+			var o:Object;
+			var s:Base;
+			
+			// get closest points from each data set
+			var closest:Array = new Array();
+			for each( s in this.sets )
+				closest.push( s.closest_2( x, y ) );
+			
+			// find closest point along X axis
+			var min:Number = Number.MAX_VALUE;
+			for each( o in closest )
+				min = Math.min( min, o.distance_x );
+				
+			//
+			// now select all points that are the
+			// min (see above) distance along the X axis
+			//
+			var xx:Object = {element:null, distance_x:Number.MAX_VALUE, distance_y:Number.MAX_VALUE };
+			for each( o in closest ) {
+				
+				if( o.distance_x == min )
+				{
+					// these share the same X position, so choose
+					// the closest to the mouse in the Y
+					if( o.distance_y < xx.distance_y )
+						xx = o;
+				}
+			}
+			
+			// pie charts may not return an element
+			if( xx.element )
+				xx.element.set_tip( true );
+				
+			return xx.element;
+		}
+		
+		public function mouse_move_2( x:Number, y:Number ):Element {
+			
+			var e:Element = this.closest_2(x, y);
+			return e;
+		}
+		
 		//
 		// are we resizing a PIE chart?
 		//
