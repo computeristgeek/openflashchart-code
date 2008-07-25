@@ -30,6 +30,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +45,7 @@
     <Compile Include="Chart.cs" />
     <Compile Include="AxisLabel.cs" />
     <Compile Include="ChartBase.cs" />
+    <Compile Include="ChartControlDesigner.cs" />
     <Compile Include="ChartElement.cs" />
     <Compile Include="HBar.cs" />
     <Compile Include="JSON\JsonIgnoreAttribute.cs" />
@@ -58,6 +61,7 @@
     <Compile Include="LineDot.cs" />
     <Compile Include="LineHollow.cs" />
     <Compile Include="OpenFlashChart.cs" />
+    <Compile Include="OpenFlashChartControl.cs" />
     <Compile Include="Pie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scatter.cs" />
@@ -76,7 +80,9 @@
     <Content Include="JSON\License.txt" />
     <Content Include="JSON\Readme too.txt" />
     <Content Include="JSON\ReadMe.txt" />
+    <EmbeddedResource Include="open-flash-chart.swf" />
     <Content Include="readme.txt" />
+    <EmbeddedResource Include="swfobject.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

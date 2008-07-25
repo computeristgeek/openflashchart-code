@@ -23,7 +23,7 @@ namespace OpenFlashChart
 
         public OpenFlashChart()
         {
-            title = new Title("Many data lines");
+            title = new Title("Chart Title");
             Elements = new List<ChartBase>();
             //x_axis = new XAxis();
             //y_axis= new YAxis();
