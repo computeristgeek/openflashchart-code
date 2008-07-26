@@ -58,7 +58,7 @@ public partial class Tooltip : System.Web.UI.Page
         chart.AddElement(line1);
         chart.AddElement(line2);
         chart.AddElement(line3);
-        chart.Title = new Title("multi line");
+        chart.Title = new Title("Tooltip Demo");
         chart.Y_Axis.SetRange(-10, 15, 5);
 
         chart.Tooltip = new ToolTip("my tip #val#");

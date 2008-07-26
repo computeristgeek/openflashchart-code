@@ -16,7 +16,7 @@ public partial class bar3d : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         OpenFlashChart.OpenFlashChart chart = new OpenFlashChart.OpenFlashChart();
-        chart.Title = new Title("AreaHollow");
+        chart.Title = new Title("Bar 3D");
 
         Bar3D bar = new OpenFlashChart.Bar3D();
         Random random = new Random();

@@ -17,7 +17,7 @@ public partial class bar : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         OpenFlashChart.OpenFlashChart chart = new OpenFlashChart.OpenFlashChart();
-        chart.Title = new Title("AreaHollow");
+        chart.Title = new Title("Bar Chart");
 
         Bar bar = new OpenFlashChart.Bar();
         Random random = new Random();
