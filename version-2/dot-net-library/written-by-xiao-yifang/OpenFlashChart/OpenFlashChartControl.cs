@@ -82,12 +82,13 @@ namespace OpenFlashChart
         protected override void OnInit(EventArgs e)
         {
             const string key = "swfobject";
+            string swfobjectfile = ExternalSWFObjectFile;
             if (string.IsNullOrEmpty(ExternalSWFObjectFile))
-                ExternalSWFObjectFile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "OpenFlashChart.swfobject.js");
+                swfobjectfile = Page.ClientScript.GetWebResourceUrl(this.GetType(), "OpenFlashChart.swfobject.js");
             
             if (!this.Page.ClientScript.IsClientScriptBlockRegistered(key))
             {
-                this.Page.ClientScript.RegisterClientScriptBlock(this.Page.GetType(), key, "<script src=\"" + ExternalSWFObjectFile + "\"></script>");
+                this.Page.ClientScript.RegisterClientScriptBlock(this.Page.GetType(), key, "<script type=\"text/javascript\" src=\"" + swfobjectfile + "\"></script>");
             }
             base.OnInit(e);
         }
