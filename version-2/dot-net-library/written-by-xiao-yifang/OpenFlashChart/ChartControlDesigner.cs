@@ -18,7 +18,7 @@ namespace OpenFlashChart
                 string format = "<br>{0} : {1}";
                 OpenFlashChartControl chart = component;
                 builder.AppendFormat("<div style='width:{0}px;height:{1}px;'>", chart.Width, chart.Height);
-                builder.Append("open flash chart Control");
+                builder.Append("<span style=\"font-size:16px;position:absolute;top:" + chart.Height /2+ ";\">Open Flash Chart Control</span>");
 
                 builder.Append("</div>");
                 errorDesignTimeHtml = this.CreatePlaceHolderDesignTimeHtml(builder.ToString());
