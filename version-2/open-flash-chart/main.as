@@ -79,7 +79,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/tooltip-bar-floating.txt";
+					var file:String = "../data-files/horizontal-bar-chart-3.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -284,6 +284,9 @@ package  {
 		
 		private function mouse_move_follow( event:MouseEvent ):void {
 
+			tr.ace( event.currentTarget );
+			tr.ace( event.target );
+			tr.ace( '@@' );
 			//if( event.target is PieSlice )
 			if( event.target is Element )
 				this.tooltip.draw( event.target as Element );

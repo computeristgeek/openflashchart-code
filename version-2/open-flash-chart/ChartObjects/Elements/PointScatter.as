@@ -7,33 +7,30 @@
 	public class PointScatter extends Element {
 		public var radius:Number;
 		
-		public function PointScatter( value:Object, colour:Number, size:Number ) {
-			this.tooltip_template = '(#x#,#y#) at #size#';
-			this._x = value.x;
-			this._y = value.y;
-			this.is_tip = false;
-			
-			this.graphics.beginFill( colour, 1 );
+		public function PointScatter( style:Object ) {
 
-			this.radius = value['dot-size'];//== null ? 2 : value['dot-size'];
+			this._x = style.x;
+			this._y = style.y;
+			this.radius = style['dot-size'];
+			this.is_tip = false;
+
+			this.tooltip = this.replace_magic_values( style.tip );
 			
+			this.graphics.beginFill( style.colour, 1 );
 			this.graphics.drawCircle( 0, 0, this.radius );
 			this.graphics.drawCircle( 0, 0, this.radius - 1 );
 			this.graphics.endFill();
 
 		}
-/* TODO: fix this
-		public override function make_tooltip( key:String ):void
-		{
-			super.make_tooltip( key );
-			var tmp:String = this.tooltip;
-			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
-			tmp = tmp.replace('#x#', NumberUtils.formatNumber(this._x));
-			tmp = tmp.replace('#y#', NumberUtils.formatNumber(this._y));
-			tmp = tmp.replace('#size#', NumberUtils.formatNumber(this.radius));
-			this.tooltip = tmp;
+		
+		private function replace_magic_values( t:String ): String {
+			
+			t = t.replace('#x#', NumberUtils.formatNumber(this._x));
+			t = t.replace('#y#', NumberUtils.formatNumber(this._y));
+			t = t.replace('#size#', NumberUtils.formatNumber(this.radius));
+			t = this.tooltip_replace_global_magics( t );
+			return t;
 		}
-*/
 		
 		public override function set_tip( b:Boolean ):void {
 			if ( b )

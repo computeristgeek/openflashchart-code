@@ -97,10 +97,10 @@ package ChartObjects {
 		
 		public function draw( val:String, mc:Object ):void {}
 		
-		//public function highlight_value():void {}
 		
-		// public function inside( x:Number, y:Number ):Object { return null }
-		
+		//
+		// TODO: old remove when tooltips tested
+		//
 		public function inside( x:Number, y:Number ):Object {
 			var ret:Element = null;
 			
@@ -129,6 +129,9 @@ package ChartObjects {
 			return { element:ret, distance_y:dy };
 		}
 		
+		//
+		// TODO: old remove when tooltips tested
+		//
 		public function closest( x:Number, y:Number ): Object {
 			var shortest:Number = Number.MAX_VALUE;
 			var closest:Element = null;
@@ -161,6 +164,9 @@ package ChartObjects {
 			return { element:closest, distance_x:shortest, distance_y:dy };
 		}
 		
+		//
+		// take a look at the scatter chart (overrides this)
+		//
 		public function closest_2( x:Number, y:Number ): Object {
 			var shortest:Number = Number.MAX_VALUE;
 			var closest:Element = null;
@@ -173,7 +179,7 @@ package ChartObjects {
 				// Sprites, so filter those out:
 				//
 				if( this.getChildAt(i) is Element ) {
-					
+		
 					var e:Element = this.getChildAt(i) as Element;
 					e.set_tip( false );
 				

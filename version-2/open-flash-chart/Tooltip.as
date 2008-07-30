@@ -33,13 +33,21 @@ package {
 		
 		public function Tooltip( json:Object )
 		{
+			//
+			// we don't want mouseOver events for the
+			// tooltip or any children (the text fields)
+			//
+			this.mouseEnabled = false;
 			
 			this.title = new TextField();
 			this.title.x = 5,
 			this.title.y = 5;
+			this.title.mouseEnabled = false;
+			
 			this.text = new TextField();
 			this.text.x = 5;
 			this.text.y = 5;
+			this.text.mouseEnabled = false;
 			
 			this.tip_showing = false;
 			
@@ -87,13 +95,6 @@ package {
 		}
 		
 		public function make_tip( e:Element ):void {
-			
-			if( this.cached_element == e )
-				return;
-
-			// this is a new tooltip, get the
-			// text and recreate it
-			this.cached_element = e;
 			
 			this.graphics.clear();
 			
@@ -166,10 +167,8 @@ package {
 			return new flash.geom.Point(x, y);
 		}
 		
-		public function draw( e:Element ):void {
-
-			this.make_tip( e );
-
+		private function show_tip( e:Element ):void {
+			
 			// remove the 'hide' tween
 			Tweener.removeTweens( this );
 			var p:flash.geom.Point = this.get_pos( e );
@@ -187,26 +186,43 @@ package {
 			}
 			else
 			{
-//				if ( !this.tip_showing )
-//				{
-					// make the tooltip fade in gently
-					this.tip_showing = true;
+				// make the tooltip fade in gently
+				this.tip_showing = true;
 					
-					tr.ace('show');
-					this.alpha = 0
-					this.visible = true;
-					this.x = p.x;
-					this.y = p.y;
-					Tweener.addTween(
-						this,
-						{
-							alpha:1,
-							time:0.4,
-							transition:Equations.easeOutExpo
-						} );
-//				}
+				tr.ace('show');
+				this.alpha = 0
+				this.visible = true;
+				this.x = p.x;
+				this.y = p.y;
+				Tweener.addTween(
+					this,
+					{
+						alpha:1,
+						time:0.4,
+						transition:Equations.easeOutExpo
+					} );
 			}
-			
+		}
+		
+		public function draw( e:Element ):void {
+
+			if ( this.cached_element == e )
+			{
+				// if the tip is showing, don't make it 
+				// show again because this makes it flicker
+				if( !this.tip_showing )
+					this.show_tip(e);
+			}
+			else
+			{
+
+				// this is a new tooltip, get the
+				// text and recreate it
+				this.cached_element = e;
+				
+				this.make_tip( e );
+				this.show_tip(e);
+			}
 		}
 		
 		public function closest( e:Element ):void {
