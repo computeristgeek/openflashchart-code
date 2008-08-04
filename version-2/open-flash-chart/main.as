@@ -63,23 +63,13 @@ package  {
 			var l:Loading = new Loading(loading);
 			this.addChild( l );
 
-			// so we can rotate text:
-			//this.embedFonts = true;
-
-			// Right click menu:
-//			var cm:ContextMenu = new ContextMenu();
-//			cm.addEventListener(ContextMenuEvent.MENU_SELECT, onContextMenuHandler);
-//			cm.hideBuiltInItems();
-//			var fs:ContextMenuItem = new ContextMenuItem("Show Full Screen" );
-//			//fs.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, onShowFullScreen);
-//			cm.customItems.push( fs );
-
+			this.build_right_click_menu();
 
 			if( !this.find_data() )
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/horizontal-bar-chart-3.txt";
+					var file:String = "../data-files/bug-1.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -556,6 +546,23 @@ package  {
 			this.addChild( this.y_axis_right );
 			this.addChild( this.x_axis );
 			this.addChild( this.keys );
+		}
+		
+		private function build_right_click_menu(): void {
+		
+			var cm:ContextMenu = new ContextMenu();
+			cm.addEventListener(ContextMenuEvent.MENU_SELECT, onContextMenuHandler);
+			cm.hideBuiltInItems();
+			var fs:ContextMenuItem = new ContextMenuItem("Charts by Open Flash Chart 2" );
+			fs.addEventListener(
+				ContextMenuEvent.MENU_ITEM_SELECT,
+				function doSomething(e:ContextMenuEvent):void {
+					var url:String = "http://teethgrinder.co.uk/open-flash-chart-2/";
+					var request:URLRequest = new URLRequest(url);
+					flash.net.navigateToURL(request, '_blank');
+				});
+			cm.customItems.push( fs );
+			this.contextMenu = cm;
 		}
 		
 		public function format_y_axis_label( val:Number ): String {

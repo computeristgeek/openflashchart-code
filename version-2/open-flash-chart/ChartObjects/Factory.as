@@ -44,6 +44,10 @@ package ChartObjects {
 						collection.add( new AreaHollow( elements[i] ) );
 						break;
 						
+					case 'area_line':
+						collection.add( new AreaLine( elements[i] ) );
+						break;
+						
 					case 'pie':
 						collection.add( new Pie( elements[i] ) );
 						break;
