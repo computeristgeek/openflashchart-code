@@ -27,7 +27,8 @@
 				'font-size':	10,
 				'dot-size':		6,
 				'halo-size':	2,
-				tip:			'#val#'
+				tip:			'#val#',
+				'line-style':	new LineStyle( json['line-style'] )
 			};
 			
 			this.style = object_helper.merge( json, this.style );

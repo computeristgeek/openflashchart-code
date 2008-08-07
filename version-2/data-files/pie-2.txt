@@ -14,7 +14,7 @@
       "animate":   0,
       "start-angle": 35,
       "tip":         "#val#<br>#total#<br>#percent#",
-      "values" :   [2,3,{"value":6.5,"text":"hello (6.5)"}]
+      "values" :   [18,27,{"value":54,"text":"hello (54)"}]
     }
   ]
 }

@@ -69,7 +69,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/bug-1.txt";
+					var file:String = "../data-files/line-dash.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
