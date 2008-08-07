@@ -90,6 +90,10 @@ package ChartObjects {
 						collection.add( new BarOutline( elements[i], bar_group ) );
 						bar_group++;
 						break;
+						
+					case 'shape':
+						collection.add( new Shape( elements[i] ) );
+						break;
 		
 				}
 			}

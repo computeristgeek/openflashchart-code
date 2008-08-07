@@ -1,6 +1,6 @@
 package ChartObjects {
+
 	import flash.display.Sprite;
-	import org.flashdevelop.utils.FlashConnect;
 	import ChartObjects.Elements.Element;
 	import flash.geom.Point;
 	
