@@ -21,7 +21,8 @@
     },
     {
       "type":      "shape",
-      "colour":    "#736AFF",
+      "colour":    "#FF0000",
+      "alpha":     0.2,
       "values" :   [
         {"x":2,"y":2},
         {"x":4,"y":2},
