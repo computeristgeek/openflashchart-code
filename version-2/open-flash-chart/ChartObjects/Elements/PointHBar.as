@@ -4,7 +4,8 @@
 	import flash.events.MouseEvent;
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
-	import com.serialization.json.JSON;
+//	import com.serialization.json.JSON;
+	import flash.geom.Point;
 	
 	
 	public class PointHBar extends Element
@@ -76,6 +77,17 @@
 			
 			this.x = left;
 			this.y = tmp.y;
+		}
+		
+		//
+		// for tooltip closest - return the middle point
+		//
+		public override function get_mid_point():flash.geom.Point {
+			
+			//
+			// bars mid point
+			//
+			return new flash.geom.Point( this.x + (this.width/2), this.y );
 		}
 		
 		public override function get_tip_pos():Object {

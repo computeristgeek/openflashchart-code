@@ -30,6 +30,7 @@ include_once 'ofc_scatter.php';
 include_once 'ofc_x_axis_labels.php';
 include_once 'ofc_x_axis_label.php';
 include_once 'ofc_tooltip.php';
+include_once 'ofc_shape.php';
 
 
 class open_flash_chart

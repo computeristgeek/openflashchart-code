@@ -7,23 +7,37 @@ class hbar_value
 		$this->left = $left;
 		$this->right = $right;
 	}
+	
+	function set_colour( $colour )
+	{
+		$this->colour = $colour;	
+	}
 }
 
 class hbar
 {
-	function hbar()
+	function hbar( $colour )
 	{
 		$this->type      = "hbar";
-		$this->colour    = "#9933CC";
-		$this->text      = "Page views";;
-		$tmp = 'font-size';
-		$this->$tmp = 10;
 		$this->values    = array();
+		$this->set_colour( $colour );
 	}
 	
 	function append_value( $v )
 	{
 		$this->values[] = $v;		
+	}
+	
+	function set_colour( $colour )
+	{
+		$this->colour = $colour;	
+	}
+	
+	function set_key( $text, $size )
+	{
+		$this->text = $text;
+		$tmp = 'font-size';
+		$this->$tmp = $size;
 	}
 }
 
