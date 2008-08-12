@@ -12,13 +12,14 @@
 				values:			[],
 				width:			2,
 				colour:			'#3030d0',
-				fill:			'',
+				fill:			'#3030d0',
 				text:			'',		// <-- default not display a key
 				'dot-size':		5,
 				'halo-size':	2,
 				'font-size':	10,
 				'fill-alpha':	0.6,
-				tip:			'#val#'
+				tip:			'#val#',
+				'line-style':	new LineStyle( json['line-style'] )
 			};
 			
 			object_helper.merge_2( json, this.style );
