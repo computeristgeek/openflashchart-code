@@ -47,8 +47,6 @@
 			
 			object_helper.merge_2( json, this.style );
 			
-			//this.labels = data['pie_labels'].split(',');
-			//this.links = data['links'].split(',');
 			
 			for each( var colour:String in this.style.colours )
 				this.colours.push( string.Utils.get_colour( colour ) );
@@ -141,38 +139,28 @@
 		public override function resize( sc:ScreenCoords ): void {
 
 			var radius:Number = ( Math.min( sc.width, sc.height ) / 2.0 );
-			var radius_offsets:Object = {top:0, right:0, bottom:0, left:0};
-			
-			var i:Number;
+		
 			var pie:PieSliceContainer;
-			
-			// loop to gather and merge offsets
-			for ( i = 0; i < this.numChildren; i++ )
+			//
+			// loop over the lables and make sure they are on the screen,
+			// reduce the radius until they fit
+			//
+			var i:Number = 0;
+			var outside:Boolean;
+			do
 			{
-				pie = this.getChildAt(i) as PieSliceContainer;
+				outside = false;
 				
-				var label:PieLabel = pie.getChildAt(1) as PieLabel;
-				tr.ace(label.text);
-				
-				var pie_offsets:Object = pie.get_radius_offsets();
-				
-				for (var key:Object in radius_offsets)
+				for ( i = 0; i < this.numChildren; i++ )
 				{
-					if ( pie_offsets[key] > radius_offsets[key] ) {
-						tr.ace(pie_offsets[key]);
-						radius_offsets[key] = pie_offsets[key];
-					}
+					pie = this.getChildAt(i) as PieSliceContainer;
+					if( !pie.is_label_on_screen(sc, radius) )
+						outside = true;
 				}
+				radius -= 1;
 			}
-
-			if ( Math.max(radius_offsets.top,radius_offsets.bottom) > (radius_offsets.left + radius_offsets.right) )
-			{
-				tr.ace('shrinking radius by ' + (radius_offsets.top + radius_offsets.bottom));
-				radius = radius - Math.max(radius_offsets.top,radius_offsets.bottom);
-			}
-			tr.ace('radius=' + radius);
+			while ( outside && radius > 10 );
 			
-			// loop and resize
 			for ( i = 0; i < this.numChildren; i++ )
 			{
 				pie = this.getChildAt(i) as PieSliceContainer;

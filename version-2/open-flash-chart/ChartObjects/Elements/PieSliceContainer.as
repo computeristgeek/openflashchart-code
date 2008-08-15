@@ -23,6 +23,10 @@
 			return this.getChildAt(0) as Element;
 		}
 		
+		public function get_label():PieLabel {
+			return this.getChildAt(1) as PieLabel;
+		}
+		
 		//
 		// because we hold the slice inside this element, pass
 		// along the tooltip info:
@@ -38,35 +42,19 @@
 		//
 		public override function resize( sc:ScreenCoords, axis:Number ): void { }
 		
-		
-		public function pie_resize( sc:ScreenCoords, slice_radius:Number ): void {
+		public function is_label_on_screen( sc:ScreenCoords, slice_radius:Number ): Boolean {
+			
 			var p:PieSlice = this.getChildAt(0) as PieSlice;
-			p.pie_resize(sc, slice_radius);
-
 			var l:PieLabel = this.getChildAt(1) as PieLabel;
-			l.move_label( slice_radius + 10, p.x, p.y, p.angle+(p.slice_angle/2) );
+			
+			return l.move_label( slice_radius + 10, sc.get_center_x(), sc.get_center_y(), p.angle+(p.slice_angle/2) );
 		}
 		
-		public function get_radius_offsets() :Object {
-			var offset:Object = {top:0, right:0, bottom:0, left:0};
+		public function pie_resize( sc:ScreenCoords, slice_radius:Number ): void {
+			
+			// the label is in the correct position -- see is_label_on_screen()
 			var p:PieSlice = this.getChildAt(0) as PieSlice;
-			var tick_angle:Number = (p.slice_angle / 2) + p.angle;
-            var offset_threshold:Number = 30;
-			
-			tr.ace('p.slice_angle=' + p.slice_angle + ' p.angle' + p.angle + ' tick_angle=' + tick_angle);
-			
-			if (tick_angle > 90 - offset_threshold && tick_angle < 90 + offset_threshold)
-			{
-				offset.bottom = (10 * Math.abs(Math.sin(tick_angle * TO_RADIANS))) + 14; // 14 is pad for label height
-			}
-			else if (tick_angle > 270 - offset_threshold && tick_angle < 270 + offset_threshold)
-			{
-				offset.top = (10 * Math.abs(Math.sin(tick_angle * TO_RADIANS))) + 14; // 14 is pad for label height
-			}
-
-			// need to add labels too right now they are included in the 30 factor above
-			//var l:PieLabel = this.getChildAt(1) as PieLabel;
-			return offset;
+			p.pie_resize(sc, slice_radius);
 		}
 		
 		public override function get_tooltip():String {

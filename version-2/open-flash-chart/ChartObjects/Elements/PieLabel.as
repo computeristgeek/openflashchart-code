@@ -38,11 +38,14 @@
 			this.x = legend_x;
 			this.y = legend_y;
 			
-			// is this label outside the stage?
-			if( (this.x>0) && (this.y>0) && (this.y+this.height<this.stage.stageHeight ) && (this.x+this.width<this.stage.stageWidth) )
-				return false;
-			else
+			// does the label fit onto the stage?
+			if( (this.x > 0) &&
+			    (this.y > 0) &&
+				(this.y + this.height < this.stage.stageHeight ) &&
+				(this.x+this.width<this.stage.stageWidth) )
 				return true;
+			else
+				return false;
 		}
 		
 		public function resize( sc:ScreenCoords ): void {
