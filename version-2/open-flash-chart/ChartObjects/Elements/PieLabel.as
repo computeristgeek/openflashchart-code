@@ -6,16 +6,16 @@
 		public var is_over:Boolean;
 		private static var TO_RADIANS:Number = Math.PI / 180;
 		
-		public function PieLabel( label:String )
+		public function PieLabel( style:Object )
 		{
 			
-			this.text = label;
+			this.text = style.label;
 			// legend_tf._rotation = 3.6*value.bar_bottom;
 			
 			var fmt:TextFormat = new TextFormat();
-			fmt.color = 0;// this.style.get( 'color' );
+			fmt.color = style.colour;
 			fmt.font = "Verdana";
-			fmt.size = 10;// this.style.get( 'font-size' );
+			fmt.size = style['font-size'];
 			fmt.align = "center";
 			this.setTextFormat(fmt);
 			this.autoSize = "left";

@@ -37,10 +37,11 @@
 			this.style = {
 				alpha:			0.5,
 				'start-angle':	90,
-				colour:			0x900000,
+				colour:			0x900000,	// default label colour
+				'font-size':	10,
 				'gradient-fill':1,
 				stroke:			1,
-				colours:		["#900000", "#009000"],
+				colours:		["#900000", "#009000"],	// slices colours
 				animate:		1,
 				tip:			'#val# of #total#'	// #percent#
 			}
@@ -90,21 +91,19 @@
 				
 				if( slice_angle >= 0 )
 				{
-					var label:String = val is Number ? val.toString() : val.text;
 					
 					var t:String = this.style.tip.replace('#total#', NumberUtils.formatNumber( this.total_value ));
 					t = t.replace('#percent#', NumberUtils.formatNumber( value / this.total_value * 100 ) + '%');
 				
-					var tmp:PieSliceContainer = new PieSliceContainer(
-						slice_start,
-						slice_angle,
-						value,
-						t,
-						this.colours[(i % this.colours.length)],
-						label,
-						(this.style.animate==1) );
-					
-					this.addChild( tmp );
+					this.addChild(
+						this.add_slice(
+							slice_start,
+							slice_angle,
+							val,		// <-- NOTE: val (object) NOT value (a number)
+							t,
+							this.colours[(i % this.colours.length)]
+							)
+						);
 
 					// TODO: fix this and remove
 					// tmp.make_tooltip( this.key );
@@ -112,6 +111,42 @@
 				i++;
 				slice_start += slice_angle;
 			}
+		}
+		
+		private function add_slice( start:Number, angle:Number, value:Object, tip:String, colour:String ): PieSliceContainer {
+			
+			var default_style:Object = {
+					colour:		colour,
+					tip:		tip,
+					start:		start,
+					angle:		angle,
+					value:		null,
+					animate:	this.style.animate,
+					label:		"",
+					'label-colour':		this.style.colour,
+					'font-size':		this.style['font-size']
+			};
+			
+			if ( value is Number )
+			{
+				default_style.value = value;
+				default_style.label = value.toString();
+			}
+			else
+				object_helper.merge_2( value, default_style );
+
+				
+				
+			// our parent colour is a number, but
+			// we may have our own colour:
+			if( default_style.colour is String )
+				default_style.colour = Utils.get_colour( default_style.colour );
+				
+			if( default_style['label-colour'] is String )
+				default_style['label-colour'] = Utils.get_colour( default_style['label-colour'] );
+				
+				
+			return new PieSliceContainer( default_style );
 		}
 		
 		public override function inside( x:Number, y:Number ): Object {

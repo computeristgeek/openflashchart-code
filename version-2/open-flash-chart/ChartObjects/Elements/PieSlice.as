@@ -9,6 +9,7 @@
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
 	import ChartObjects.Pie;
+	import flash.display.GradientType;
 	
 	public class PieSlice extends Element {
 		
@@ -93,17 +94,22 @@
 			this.graphics.clear();
 			
 			//line from center to edge
-			this.graphics.lineStyle( this.border_width, this.colour, 1 );
+			//this.graphics.lineStyle( this.border_width, this.colour, 1 );
+			this.graphics.lineStyle( 0, 0, 0 );
 
 			//if the user selected the charts to be gradient filled do gradients
-			if( true )//this.gradientFill == 'true' )
+			if( false )//this.gradientFill == 'true' )
 			{
 				//set gradient fill
-				var colors:Array = [this.colour, this.colour];
+				var colors:Array = [this.colour, 0x000000];// this.colour];
 				var alphas:Array = [100, 50];
 				var ratios:Array = [100,255];
-				//var matrix:Matrix = new Matrix( this.rad * 2, 0, 50, 0, this.rad * 2, 0, -3, 3, 1 );
-				this.graphics.beginGradientFill("radial", colors, alphas, ratios );// , matrix);
+				var matrix:Matrix = new Matrix();
+				matrix.createGradientBox(this.stage.stageWidth, this.stage.stageHeight, 0, this.x, 0);
+				
+				matrix.createGradientBox(this.stage.stageWidth, this.stage.stageHeight, (3 * Math.PI / 2), -150, 10);
+				
+				this.graphics.beginGradientFill(GradientType.RADIAL, colors, alphas, ratios, matrix);
 			}
 			else
 				this.graphics.beginFill(this.colour, 1);
@@ -195,8 +201,6 @@
 			
 			var tf:TextField = this.getChildAt(0) as TextField;
 			//text field position
-//			var legend_x:Number = x+rad*Math.cos((ang)*3.6*TO_RADIANS);
-//			var legend_y:Number = y+rad*Math.sin((ang)*3.6*TO_RADIANS);
 			var legend_x:Number = rad*Math.cos((ang)*3.6*TO_RADIANS);
 			var legend_y:Number = rad*Math.sin((ang)*3.6*TO_RADIANS);
 			
@@ -210,12 +214,6 @@
 			
 			tf.x = legend_x;
 			tf.y = legend_y + Math.random() * 20;
-
-			tr.ace('--');
-			tr.ace(this);
-			tr.ace( tf.x );
-			tr.ace( tf.y );
-			tr.ace( tf.text );
 			
 			// is this label outside the stage?
 			if( (tf.x>0) && (tf.y>0) && (tf.y+tf.height<this.stage.stageHeight ) && (tf.x+tf.width<this.stage.stageWidth) )
