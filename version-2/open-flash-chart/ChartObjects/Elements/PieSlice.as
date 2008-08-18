@@ -21,17 +21,20 @@
 		public var is_over:Boolean;
 		private var animate:Boolean;
 		public var value:Number;
+		private var gradientFill:Boolean;
 		
-		public function PieSlice( slice_start:Number, slice_angle:Number, value:Number, tip:String, colour:Number, animate:Boolean ) {
-			this.colour = colour;
-			this.slice_angle = slice_angle;
+		public function PieSlice( style:Object ) {
+		
+			this.colour = style.colour;
+			this.slice_angle = style.angle;
 			this.border_width = 1;
-			this.angle = slice_start;
+			this.angle = style.start;
 			this.alpha = 0.5;
-			this.animate = animate;
-			this.value = value;
+			this.animate = style.animate;
+			this.value = style.value;
+			this.gradientFill = style['gradient-fill'];
 			
-			this.tooltip = this.replace_magic_values( tip );
+			this.tooltip = this.replace_magic_values( style.tip );
 			
 			this.attach_events();
 		}
@@ -94,20 +97,20 @@
 			this.graphics.clear();
 			
 			//line from center to edge
-			//this.graphics.lineStyle( this.border_width, this.colour, 1 );
-			this.graphics.lineStyle( 0, 0, 0 );
+			this.graphics.lineStyle( this.border_width, this.colour, 1 );
+			//this.graphics.lineStyle( 0, 0, 0 );
 
 			//if the user selected the charts to be gradient filled do gradients
-			if( false )//this.gradientFill == 'true' )
+			if( this.gradientFill )
 			{
 				//set gradient fill
-				var colors:Array = [this.colour, 0x000000];// this.colour];
-				var alphas:Array = [100, 50];
+				var colors:Array = [this.colour, this.colour];// this.colour];
+				var alphas:Array = [1, 0.5];
 				var ratios:Array = [100,255];
 				var matrix:Matrix = new Matrix();
-				matrix.createGradientBox(this.stage.stageWidth, this.stage.stageHeight, 0, this.x, 0);
+				matrix.createGradientBox(radius*2, radius*2, 0, -radius, -radius);
 				
-				matrix.createGradientBox(this.stage.stageWidth, this.stage.stageHeight, (3 * Math.PI / 2), -150, 10);
+				//matrix.createGradientBox(this.stage.stageWidth, this.stage.stageHeight, (3 * Math.PI / 2), -150, 10);
 				
 				this.graphics.beginGradientFill(GradientType.RADIAL, colors, alphas, ratios, matrix);
 			}

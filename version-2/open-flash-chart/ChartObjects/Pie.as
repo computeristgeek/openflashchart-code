@@ -35,15 +35,15 @@
 			this.colours = new Array();
 			
 			this.style = {
-				alpha:			0.5,
-				'start-angle':	90,
-				colour:			0x900000,	// default label colour
-				'font-size':	10,
-				'gradient-fill':1,
-				stroke:			1,
-				colours:		["#900000", "#009000"],	// slices colours
-				animate:		1,
-				tip:			'#val# of #total#'	// #percent#
+				alpha:				0.5,
+				'start-angle':		90,
+				colour:				0x900000,	// default label colour
+				'font-size':		10,
+				'gradient-fill':	false,
+				stroke:				1,
+				colours:			["#900000", "#009000"],	// slices colours
+				animate:			1,
+				tip:				'#val# of #total#'	// #percent#
 			}
 			
 			object_helper.merge_2( json, this.style );
@@ -124,7 +124,8 @@
 					animate:	this.style.animate,
 					label:		"",
 					'label-colour':		this.style.colour,
-					'font-size':		this.style['font-size']
+					'font-size':		this.style['font-size'],
+					'gradient-fill':	this.style['gradient-fill']
 			};
 			
 			if ( value is Number )
