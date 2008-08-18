@@ -10,6 +10,7 @@
       "start-angle": 45,
       "tip":         "#val#<br>#total#<br>#percent#",
       "gradient-fill" :  true,
+      "label-colour":    "#0000d0",
       "values" :
         [10,10,{"value":100,"label":"hello (#val#)","font-size":20,"colour":"#00FF00","label-colour":"#00FFFF"},10]
     }

@@ -2,10 +2,27 @@
 
 class pie_value
 {
-	function pie_value( $value, $text )
+	function pie_value( $value, $label )
 	{
 		$this->value = $value;
-		$this->text = $text;
+		$this->label = $label;
+	}
+	
+	function set_colour( $colour )
+	{
+		$this->colour = $colour;
+	}
+	
+	function set_label( $label, $label_colour, $font_size )
+	{
+		$this->label = $label;
+		
+		$tmp = 'label-colour';
+		$this->$tmp = $label_colour;
+		
+		$tmp = 'font-size';
+		$this->$tmp = $font_size;
+		
 	}
 }
 
@@ -17,6 +34,11 @@ class pie
 		$this->colours     		= array("#d01f3c","#356aa0","#C79810");
 		$this->alpha			= 0.6;
 		$this->border			= 2;
+	}
+	
+	function set_colours( $colours )
+	{
+		$this->colours = $colours;
 	}
 	
 	function set_values( $v )
@@ -40,5 +62,17 @@ class pie
 	function set_tooltip( $tip )
 	{
 		$this->tip = $tip;
+	}
+	
+	function set_gradient_fill()
+	{
+		$tmp = 'gradient-fill';
+		$this->$tmp = true;
+	}
+	
+	function set_label_colour( $label_colour )
+	{
+		$tmp = 'label-colour';
+		$this->$tmp = $label_colour;	
 	}
 }

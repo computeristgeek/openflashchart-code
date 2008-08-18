@@ -37,7 +37,7 @@
 			this.style = {
 				alpha:				0.5,
 				'start-angle':		90,
-				colour:				0x900000,	// default label colour
+				'label-colour':		0x900000,	// default label colour
 				'font-size':		10,
 				'gradient-fill':	false,
 				stroke:				1,
@@ -123,7 +123,7 @@
 					value:		null,
 					animate:	this.style.animate,
 					label:		"",
-					'label-colour':		this.style.colour,
+					'label-colour':		this.style['label-colour'],
 					'font-size':		this.style['font-size'],
 					'gradient-fill':	this.style['gradient-fill']
 			};
