@@ -182,7 +182,11 @@ package  {
 				
 			}
 			
-			var json_string:* = ExternalInterface.call( 'open_flash_chart_data' );
+			var get_data:String = 'open_flash_chart_data';
+			if( parameters['get-data'] )
+				get_data = parameters['get-data'];
+				
+			var json_string:* = ExternalInterface.call( get_data );
 			
 			if( json_string != null )
 			{
