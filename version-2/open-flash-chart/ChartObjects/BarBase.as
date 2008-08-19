@@ -14,6 +14,9 @@
 		public function BarBase( json:Object, group:Number )
 		{
 			
+			//
+			// TODO: ugh, get rid of this
+			//
 			// Warning: this is our global singleton
 			var g:Global = Global.getInstance();
 			var tip:String = g.get_tooltip_string();

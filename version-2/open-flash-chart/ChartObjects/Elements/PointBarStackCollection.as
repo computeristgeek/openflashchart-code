@@ -12,9 +12,9 @@
 		protected var group:Number;
 		private var total:Number;
 		
-		public function PointBarStackCollection( index:Number, value:Object, colour:Number, group:Number ) {
+		public function PointBarStackCollection( index:Number, style:Object, group:Number ) {
 			
-			this.tooltip = '#total#';
+			this.tooltip = style.tip;
 			// this is very similar to a normal
 			// PointBarBase but without the mouse
 			// over and mouse out events
@@ -24,7 +24,7 @@
 			
 			// a stacked bar has n Y values
 			// so this is an array of objects
-			this.vals = value as Array;
+			this.vals = style.values as Array;
 			
 			this.total = 0;
 			for each( item in this.vals ) {
@@ -37,6 +37,7 @@
 			}
 			
 			var tmp:String = this.tooltip.replace('#total#', NumberUtils.formatNumber( this.total ));
+			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.total ));
 			this.tooltip = tmp;
 		
 			this.colour = colour;

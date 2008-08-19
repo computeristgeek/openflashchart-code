@@ -7,16 +7,32 @@
 	
 	
 	public class BarStack extends BarBase {
-		//private var line_width:Number;
 		
 		public function BarStack( json:Object, num:Number, group:Number ) {
 			super( json, group );
 		}
 		
 		
+		//
+		// value is an array (a stack) of bar stacks
+		//
 		protected override function get_element( index:Number, value:Object ): Element {
 			
-			return new PointBarStackCollection( index, value, this.colour, this.group );
+			//
+			// TODO: colour - should we pass this through
+			//       to colour the key text?
+			//
+			
+			//
+			// this is the style for a stack:
+			//
+			var default_style:Object = {
+				tip:		this.style.tip,
+				values:		value
+			};
+			
+			
+			return new PointBarStackCollection( index, default_style, this.group );
 		}
 		
 		
