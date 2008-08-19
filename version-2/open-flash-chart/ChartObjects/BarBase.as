@@ -3,6 +3,7 @@
 	import ChartObjects.Elements.PointBarBase;
 	import string.Utils;
 	import global.Global;
+
 	
 	public class BarBase extends Base
 	{

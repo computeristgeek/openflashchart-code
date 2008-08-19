@@ -3,6 +3,8 @@
 	import ChartObjects.Elements.PointBarStackCollection;
 	import string.Utils;
 	import com.serialization.json.JSON;
+	import flash.geom.Point;
+	
 	
 	public class BarStack extends BarBase {
 		//private var line_width:Number;
@@ -18,6 +20,39 @@
 		}
 		
 		
+		//
+		// override the default closest behaviour
+		//
+		public override function closest_2( x:Number, y:Number ): Object {
+			var shortest:Number = Number.MAX_VALUE;
+			var closest:Element = null;
+			var dx:Number;
+			
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+			
+				// get the collection
+				var e:PointBarStackCollection = this.getChildAt(i) as PointBarStackCollection;
+				
+				var p:flash.geom.Point = e.get_mid_point();
+				dx = Math.abs( x - p.x );
+				
+				if( dx < shortest )	{
+					shortest = dx;
+					closest = e;
+				}
+			}
+			
+			var dy:Number = 0;
+			if( closest )
+				dy = Math.abs( y - closest.y );
+				
+			return { element:closest, distance_x:shortest, distance_y:dy };
+		}
+		
+		
+		//
+		// TODO: maybe delete this?
+		//
 		public override function closest( x:Number, y:Number ): Object {
 			var shortest:Number = Number.MAX_VALUE;
 			var ex:Element = null;
@@ -58,6 +93,9 @@
 			return { element:ex, distance_x:shortest, distance_y:dy };
 		}
 		
+		//
+		// TODO: maybe delete this?
+		//
 		//
 		// stacked bar charts will need the Y to figure out which
 		// bar in the stack to return

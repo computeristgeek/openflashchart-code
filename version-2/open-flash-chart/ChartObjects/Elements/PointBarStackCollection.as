@@ -92,6 +92,7 @@
 		
 
 		public override function resize( sc:ScreenCoords, axis:Number ):void {
+			
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
 				var e:Element = this.getChildAt(i) as Element;
@@ -99,6 +100,21 @@
 			}
 		}
 		
+		//
+		// for tooltip closest - return the middle point
+		// of this stack
+		//
+		public override function get_mid_point():flash.geom.Point {
+			
+			// get the first bar in the stack
+			var e:Element = this.getChildAt(0) as Element;
+				
+			return e.get_mid_point();
+		}
+		
+		//
+		// TODO: maybe delete this?
+		//
 		//
 		// is the mouse above, inside or below this bar?
 		//
@@ -139,21 +155,13 @@
 		}
 		
 		public override function get_tip_pos():Object {
+			//
+			// get top item in stack
+			//
 			var e:Element = this.getChildAt(this.numChildren-1) as Element;
 			return e.get_tip_pos();
 		}
 		
-/*
- * TODO: fix this
-		public override function make_tooltip( key:String ):void
-		{
-			super.make_tooltip( key );
-			var tmp:String = this.tooltip;
-			if ( tmp == "_default" ) { tmp = this.tooltip_template; }
-			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.total ));
-			this.tooltip = tmp;
-		}
-*/
 		
 		public override function get_tooltip():String {
 			//
