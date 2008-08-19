@@ -66,7 +66,7 @@
 						total:		this.total,
 						tip:		'Total: #total#<br>#val#'
 					}
-
+				
 					//
 					// a valid item is one of [ Number, Object, null ]
 					//
@@ -75,9 +75,13 @@
 					}
 					else
 					{
+						// MERGE:
 						top += item.val;
 						if( item.colour )
 							value.colour = string.Utils.get_colour(item.colour);
+							
+						if( item.tip )
+							value.tip = item.tip;
 					}
 					
 					value.top = top;
