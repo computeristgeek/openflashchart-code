@@ -69,7 +69,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/languages-chinese.txt";
+					var file:String = "../data-files/pie-2.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -84,7 +84,10 @@ package  {
 			ExternalInterface.addCallback("save_image", save_image);
 			
 			// tell the web page that we are ready
-			ExternalInterface.call("ofc_ready");
+			if( parameters['id'] )
+				ExternalInterface.call("ofc_ready", parameters['id']);
+			else
+				ExternalInterface.call("ofc_ready");
 			
 			this.ok = false;
 			this.set_the_stage();
@@ -185,14 +188,28 @@ package  {
 			var get_data:String = 'open_flash_chart_data';
 			if( parameters['get-data'] )
 				get_data = parameters['get-data'];
-				
-			var json_string:* = ExternalInterface.call( get_data );
+			
+			var json_string:*;
+			
+			if( parameters['id'] )
+				json_string = ExternalInterface.call( get_data , parameters['id']);
+			else
+				json_string = ExternalInterface.call( get_data );
+			
 			
 			if( json_string != null )
 			{
 				if( json_string is String )
 				{
 					this.parse_json( json_string );
+					
+					//
+					// We have loaded the data, so this.ok = true
+					//
+					this.ok = true;
+					//
+					// LOOK:
+					//
 					return true;
 				}
 			}
