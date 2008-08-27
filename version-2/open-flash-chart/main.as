@@ -64,6 +64,7 @@ package  {
 			this.addChild( l );
 
 			this.build_right_click_menu();
+			this.ok = false;
 
 			if( !this.find_data() )
 			{
@@ -89,7 +90,6 @@ package  {
 			else
 				ExternalInterface.call("ofc_ready");
 			
-			this.ok = false;
 			this.set_the_stage();
 		}
 		
