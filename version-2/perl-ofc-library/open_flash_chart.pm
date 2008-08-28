@@ -531,7 +531,7 @@ sub new() {
   $self->{'element_props'}->{'animate'} = 1;
   $self->{'element_props'}->{'start-angle'} = 0;
   
-  $self->{'element_props'}->{'values'} = [ {'value'=>rand(255), 'text'=>'linux'}, {'value'=>rand(255), 'text'=>'windows'}, {'value'=>rand(255), 'text'=>'vax'}, {'value'=>rand(255), 'text'=>'NexT'}, {'value'=>rand(255), 'text'=>'solaris'}];
+  $self->{'element_props'}->{'values'} = [ {'value'=>rand(255), 'label'=>'linux'}, {'value'=>rand(255), 'label'=>'windows'}, {'value'=>rand(255), 'label'=>'vax'}, {'value'=>rand(255), 'label'=>'NexT'}, {'value'=>rand(255), 'label'=>'solaris'}];
 
   return $self;
 }
