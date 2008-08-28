@@ -32,13 +32,17 @@ class pie
 	{
 		$this->type      		= 'pie';
 		$this->colours     		= array("#d01f3c","#356aa0","#C79810");
-		$this->alpha			= 0.6;
 		$this->border			= 2;
 	}
 	
 	function set_colours( $colours )
 	{
 		$this->colours = $colours;
+	}
+	
+	function set_alpha( $alpha )
+	{
+		$this->alpha = $alpha;
 	}
 	
 	function set_values( $v )
@@ -74,5 +78,14 @@ class pie
 	{
 		$tmp = 'label-colour';
 		$this->$tmp = $label_colour;	
+	}
+	
+	/**
+	 * Turn off the labels
+	 */
+	function set_no_labels()
+	{
+		$tmp = 'no-labels';
+		$this->$tmp = true;
 	}
 }

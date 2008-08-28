@@ -4,11 +4,11 @@
     {
       "type":      "pie",
       "colours":   ["#d01f3c","#356aa0","#C79810"],
-      "alpha":     0.6,
+      "alpha":     0.2,
       "border":    2,
       "animate":   0,
       "start-angle": 45,
-      "tip":         "#val#<br>#total#<br>#percent#",
+      "tip":         "#val#<br>#total#<br>#percent#<br>#label#",
       "gradient-fill" :  true,
       "label-colour":    "#0000d0",
       "values" :

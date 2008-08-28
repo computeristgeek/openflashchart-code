@@ -35,7 +35,7 @@
 			this.slice_alpha = style.alpha;
 			this.alpha = style.alpha;
 			this.animate = style.animate;
-			this.nolabels = style.nolabels;
+			this.nolabels = style['no-labels'];
 			this.value = style.value;
 			this.gradientFill = style['gradient-fill'];
 			this.label = style.label;

@@ -9,11 +9,12 @@
 		// this container holds both
 		//
 		public function PieSliceContainer( style:Object )
-		//slice_start:Number, slice_angle:Number, value:Number, tip:String, colour:Number, label:String, animate:Boolean )
 		{
 			this.addChild( new PieSlice( style ) );
 			var textlabel:String = style.label;
-			if (style.nolabels) textlabel = ''
+			if( style['no-labels'] )
+				textlabel = '';
+				
 			this.addChild( new PieLabel( {label:textlabel, colour:style['label-colour'], 'font-size':style['font-size']} ) );
 		}
 		

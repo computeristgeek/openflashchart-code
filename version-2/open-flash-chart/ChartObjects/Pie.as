@@ -42,7 +42,8 @@
 				stroke:				1,
 				colours:			["#900000", "#009000"],	// slices colours
 				animate:			1,
-				tip:				'#val# of #total#'	// #percent#
+				tip:				'#val# of #total#',	// #percent#, #label#
+				'no-labels':		false
 			}
 			
 			object_helper.merge_2( json, this.style );			
@@ -114,15 +115,15 @@
 		private function add_slice( start:Number, angle:Number, value:Object, tip:String, colour:String ): PieSliceContainer {
 			
 			var default_style:Object = {
-					colour:		colour,
-					tip:		tip,
-					alpha:		this.style.alpha,
-					start:		start,
-					angle:		angle,
-					value:		null,
-					animate:	this.style.animate,
-					nolabels:   this.style.nolabels,
-					label:		"",
+					colour:				colour,
+					tip:				tip,
+					alpha:				this.style.alpha,
+					start:				start,
+					angle:				angle,
+					value:				null,
+					animate:			this.style.animate,
+					'no-labels':		this.style['no-labels'],
+					label:				"",
 					'label-colour':		this.style['label-colour'],
 					'font-size':		this.style['font-size'],
 					'gradient-fill':	this.style['gradient-fill']
