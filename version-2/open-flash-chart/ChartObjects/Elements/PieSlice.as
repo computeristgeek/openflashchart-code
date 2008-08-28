@@ -17,11 +17,14 @@
 		private var colour:Number;
 		public var slice_angle:Number;
 		private var border_width:Number;
+		private var slice_alpha:Number;
 		public var angle:Number;
 		public var is_over:Boolean;
+		public var nolabels:Boolean;
 		private var animate:Boolean;
 		public var value:Number;
 		private var gradientFill:Boolean;
+		private var label:String;
 		
 		public function PieSlice( style:Object ) {
 		
@@ -29,10 +32,13 @@
 			this.slice_angle = style.angle;
 			this.border_width = 1;
 			this.angle = style.start;
-			this.alpha = 0.5;
+			this.slice_alpha = style.alpha;
+			this.alpha = style.alpha;
 			this.animate = style.animate;
+			this.nolabels = style.nolabels;
 			this.value = style.value;
 			this.gradientFill = style['gradient-fill'];
+			this.label = style.label;
 			
 			this.tooltip = this.replace_magic_values( style.tip );
 			
@@ -50,7 +56,7 @@
 		}
 
 		public override function mouseOut(event:Event):void {
-			Tweener.addTween(this, { alpha:0.5, time:0.8, transition:Equations.easeOutElastic } );
+			Tweener.addTween(this, { alpha:slice_alpha, time:0.8, transition:Equations.easeOutElastic } );
 			this.is_over = false;
 		}
 		
@@ -78,6 +84,7 @@
 
 		private function replace_magic_values( t:String ): String {
 			
+			t = t.replace('#label#', this.label );
 			t = t.replace('#val#', NumberUtils.formatNumber( this.value ));
 			t = this.tooltip_replace_global_magics( t );
 			return t;
@@ -155,7 +162,7 @@
 			this.graphics.endFill();
 			this.graphics.lineTo(0, 0);
 			
-			this.draw_label_line( radius, label_line_length, this.slice_angle );
+			if (!this.nolabels) this.draw_label_line( radius, label_line_length, this.slice_angle );
 			// return;
 			
 			if( this.animate )
@@ -170,6 +177,7 @@
 		}
 		
 		// draw the line from the pie slice to the label
+		
 		private function draw_label_line( rad:Number, tick_size:Number, slice_angle:Number ):void {
 			//draw line
 			this.graphics.lineStyle( 1, this.colour, 100 );
@@ -182,6 +190,9 @@
 			this.graphics.lineTo(lineEnd_x, lineEnd_y);
 		}
 		
+		/*
+		 *  THE FOLLOWING METHODS DO NOT SEEM TO BE USED ???
+		 * 
 		private function create_label( label:String ):TextField {
 			var tf:TextField = new TextField();
 			
@@ -228,5 +239,6 @@
 		public override function toString():String {
 			return "PieSlice: "+ this.get_tooltip();
 		}
+		*/
 	}
 }

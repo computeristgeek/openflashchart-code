@@ -17,7 +17,6 @@
 		private var labels:Array;
 		private var links:Array;
 		private var colours:Array;
-		private var slice_alpha:Number;
 		private var gradientFill:String = 'true'; //toggle gradients
 		private var border_width:Number = 1;
 		private var label_line:Number;
@@ -46,8 +45,7 @@
 				tip:				'#val# of #total#'	// #percent#
 			}
 			
-			object_helper.merge_2( json, this.style );
-			
+			object_helper.merge_2( json, this.style );			
 			
 			for each( var colour:String in this.style.colours )
 				this.colours.push( string.Utils.get_colour( colour ) );
@@ -118,10 +116,12 @@
 			var default_style:Object = {
 					colour:		colour,
 					tip:		tip,
+					alpha:		this.style.alpha,
 					start:		start,
 					angle:		angle,
 					value:		null,
 					animate:	this.style.animate,
+					nolabels:   this.style.nolabels,
 					label:		"",
 					'label-colour':		this.style['label-colour'],
 					'font-size':		this.style['font-size'],

@@ -12,7 +12,9 @@
 		//slice_start:Number, slice_angle:Number, value:Number, tip:String, colour:Number, label:String, animate:Boolean )
 		{
 			this.addChild( new PieSlice( style ) );
-			this.addChild( new PieLabel( {label:style.label, colour:style['label-colour'], 'font-size':style['font-size']} ) );
+			var textlabel:String = style.label;
+			if (style.nolabels) textlabel = ''
+			this.addChild( new PieLabel( {label:textlabel, colour:style['label-colour'], 'font-size':style['font-size']} ) );
 		}
 		
 		public function is_over():Boolean {

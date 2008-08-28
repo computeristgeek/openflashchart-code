@@ -70,7 +70,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/pie-2.txt";
+					var file:String = "../data-files/pie-3.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
