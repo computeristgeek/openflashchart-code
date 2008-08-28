@@ -40,7 +40,8 @@ package {
 			
 			if( ( json.x_axis != null ) && ( json.x_axis.labels != null ) )
 				object_helper.merge_2( json.x_axis.labels, this.style );
-			
+				
+					
 			this.style.colour = Utils.get_colour( this.style.colour );
 			
 			if( ( this.style.labels is Array ) && ( this.style.labels.length > 0 ) )
@@ -59,13 +60,14 @@ package {
 		// we were not passed labels and need to make
 		// them from the X Axis range
 		//
-		public function auto_label( range:Range ):void {
+		public function auto_label( range:Range, steps:Number ):void {
 			
 			//
 			// if the user has passed labels we don't do this
 			//
 			if( this.need_labels )
-				if( this.style.visible )
+				if ( this.style.visible )
+				this.style.steps = steps;
 					for( var i:Number = range.min; i < range.max; i++ )
 						this.add( NumberUtils.formatNumber( i ), this.style );
 		}

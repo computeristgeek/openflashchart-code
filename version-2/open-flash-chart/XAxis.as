@@ -112,6 +112,10 @@ package {
 			return new Range( this.style.min, this.style.max );
 		}
 		
+		public function get_steps():Number {
+			return this.steps;
+		}
+		
 		public function resize( sc:ScreenCoords ):void
 		{
 			this.graphics.clear();

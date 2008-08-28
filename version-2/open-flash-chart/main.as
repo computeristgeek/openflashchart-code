@@ -70,7 +70,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/pie-3.txt";
+					var file:String = "../data-files/x-axis-labels-3.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -539,7 +539,8 @@ package  {
 					// No X Axis labels set:
 					//
 					this.x_axis.set_range( this.obs.get_min_x(), this.obs.get_max_x() );
-					this.x_labels.auto_label( this.x_axis.get_range() );
+//					this.x_labels.auto_label( this.x_axis.get_range() );
+					this.x_labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
 				}
 				else
 				{
@@ -551,6 +552,11 @@ package  {
 						this.obs.get_min_x(),
 						Math.max( this.x_labels.count(), this.obs.get_max_x() ) );
 				}
+			}
+			else
+			{
+				//range set, but no labels...
+				this.x_labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
 			}
 
 			// this is needed by all the elements tooltip
