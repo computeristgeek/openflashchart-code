@@ -65,7 +65,10 @@ package {
 			//
 			// if the user has passed labels we don't do this
 			//
-			if( this.need_labels )
+			if ( this.need_labels )
+			
+			// TODO: fix this
+			
 				if ( this.style.visible )
 				this.style.steps = steps;
 					for( var i:Number = range.min; i < range.max; i++ )
