@@ -1,4 +1,5 @@
-﻿Open Flash Chart Copyright (C) 2007 John Glazebrook
+﻿Open Flash Chart - PHP libraries. These help create data files for Open Flash Chart.
+Copyright (C) 2007 
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
