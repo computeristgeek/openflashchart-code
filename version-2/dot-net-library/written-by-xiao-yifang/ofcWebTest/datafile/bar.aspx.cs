@@ -42,7 +42,10 @@ public partial class bar : System.Web.UI.Page
         //yaxis.Steps = 4;
         //yaxis.SetRange(0, 20);
         //chart.Y_Axis = yaxis;
+        
+        chart.Tooltip = new ToolTip("提示:#val#");
         string s = chart.ToString();
+
         Response.Clear();
         Response.CacheControl = "no-cache";
         Response.Write(s);

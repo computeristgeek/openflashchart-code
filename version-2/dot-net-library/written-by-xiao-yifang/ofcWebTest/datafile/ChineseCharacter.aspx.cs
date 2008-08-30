@@ -42,7 +42,7 @@ public partial class ChineseCharacter : System.Web.UI.Page
         //when set to vertical ,the chinese character can not be displayed,
         //this may due to the flash ActionScript,the flash embeded font do not support chinese well
 
-        //chart.X_Axis.Labels.Vertical = true;
+        chart.X_Axis.Labels.Vertical = true;
         Response.Clear();
         Response.CacheControl = "no-cache";
         Response.Write(chart.ToPrettyString());

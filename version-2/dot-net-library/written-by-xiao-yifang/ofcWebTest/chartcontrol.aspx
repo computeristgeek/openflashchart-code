@@ -13,7 +13,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <cc1:OpenFlashChartControl ID="OpenFlashChartControl1" runat="server"  Datafile="datafile/pie.aspx" ExternalSWFfile="" ExternalSWFObjectFile="">
+        &nbsp;<cc1:OpenFlashChartControl ID="OpenFlashChartControl1" runat="server" DataFile="datafile/pie.aspx">
         </cc1:OpenFlashChartControl>
     
         
