@@ -14,6 +14,7 @@ namespace OpenFlashChart
         private double fontsize;
         private string colour;
         private string text;
+        private string tooltip;
         public Chart()
         {
             this.values = new List<T>();
@@ -25,7 +26,12 @@ namespace OpenFlashChart
             set { this.colour = value; }
             get { return this.colour; }
         }
-        
+        [JsonProperty("tip")]
+        public virtual string Tooltip
+        {
+            set { this.tooltip = value; }
+            get { return this.tooltip; }
+        }
         public override double GetMaxValue()
         {
             if (values.Count == 0)

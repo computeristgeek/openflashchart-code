@@ -43,6 +43,7 @@ namespace OpenFlashChart
         private double alpha;
         private bool animate;
         private double start_angle;
+        private bool gradientfill;
 
         public Pie()
         {
@@ -51,6 +52,7 @@ namespace OpenFlashChart
             this.colours = new string[] { "#d01f3c", "#356aa0", "#C79810" };
             this.alpha = 0.6;
             this.animate = true;
+            gradientfill = true;
 
         }
         [JsonProperty("colours")]
@@ -85,6 +87,12 @@ namespace OpenFlashChart
         {
             get { return start_angle; }
             set { start_angle = value; }
+        }
+        [JsonProperty("gradient-fill")]
+        public bool GradientFillMode
+        {
+            get { return gradientfill; }
+            set { gradientfill = value; }
         }
     }
 }
