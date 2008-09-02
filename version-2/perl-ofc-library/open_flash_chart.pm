@@ -1,6 +1,7 @@
 
 use strict; use warnings;
 
+my $open_flash_chart_seqno = 0;
 
 # This class manages all functions of the open flash chart api.
 package chart;
@@ -71,7 +72,7 @@ sub get_element() {
 
 sub add_element() {
   my ($self, $element) = @_;
-  if ( $element->{'use_extremes'} == 1 ) {
+  if ( defined($element->{'use_extremes'}) && $element->{'use_extremes'} == 1 ) {
   	$self->use_extremes();
   }
   push(@{$self->{'elements'}}, $element);
@@ -97,12 +98,18 @@ sub render_chart_data() {
   $tmp .= main::to_json($self->{'chart_props'});
 
   for ( keys %{$self->{'axis'}} ) {
-  	if ($self->{'axis'}->{$_}->{'props'}->{'max'} eq 'a') {
-			$self->{'axis'}->{$_}->{'props'}->{'max'} = main::smooth_max($ext->{$_ . '_max'});
-		}
-  	if ($self->{'axis'}->{$_}->{'props'}->{'min'} eq 'a') {
-			$self->{'axis'}->{$_}->{'props'}->{'min'} = main::smooth_min($ext->{$_ . '_min'});
-		}
+    if ( defined($self->{'axis'}->{$_}->{'props'}->{'max'}) ) {
+    	if ($self->{'axis'}->{$_}->{'props'}->{'max'} eq 'a') {
+  			$self->{'axis'}->{$_}->{'props'}->{'max'} = main::smooth_max($ext->{$_ . '_max'});
+  		}
+  	}
+		
+		if ( defined($self->{'axis'}->{$_}->{'props'}->{'min'}) ) {
+    	if ($self->{'axis'}->{$_}->{'props'}->{'min'} eq 'a') {
+  			$self->{'axis'}->{$_}->{'props'}->{'min'} = main::smooth_min($ext->{$_ . '_min'});
+  		}
+  	}
+  	
     $tmp .= $self->{'axis'}->{$_}->to_json();
   }  
 
@@ -125,19 +132,23 @@ sub render_swf {
   my ($self, $width, $height, $data_url) = @_;
 
   my $html = '';
+  $height = '300px' if !defined($height);
+  $width = '400px' if !defined($width);
+  $data_url = '' if !defined($data_url);
   
   if ( $self->{'data_load_type'} eq 'inline_js' ) {
     if ($self->{'skip_bootstrap'} == 0 ) {
       $html.='<script type="text/javascript" src="swfobject.js"></script>';
       $self->{'skip_bootstrap'} = 1;
     }
+    $open_flash_chart_seqno++;
     $html .= qq^
-    <div id="my_chart"></div>
+    <div id="ofc_div_$open_flash_chart_seqno"></div>
     <script type="text/javascript">
       var so = new SWFObject("open-flash-chart.swf", "ofc", "$width", "$height", "9", "#FFFFFF");
       so.addVariable("data-file", "$data_url");
       so.addParam("allowScriptAccess", "always" );//"sameDomain");
-      so.write("my_chart");
+      so.write("ofc_div_$open_flash_chart_seqno");
     </script>
     ^;
   } else {
@@ -189,24 +200,32 @@ sub get_auto_extremes() {
     
   for my $e ( @{$self->{'elements'}} ) {
 
-    $extremes->{'x_axis_max'} = $e->{'extremes'}->{'x_axis_max'} if !defined($extremes->{'x_axis_max'});
-    if ( $e->{'extremes'}->{'x_axis_max'} > $extremes->{'x_axis_max'} ) {
-        $extremes->{'x_axis_max'} = $e->{'extremes'}->{'x_axis_max'};
+    if ( defined($e->{'extremes'}->{'x_axis_max'}) ) {
+      $extremes->{'x_axis_max'} = $e->{'extremes'}->{'x_axis_max'} if !defined($extremes->{'x_axis_max'});
+      if ( $e->{'extremes'}->{'x_axis_max'} > $extremes->{'x_axis_max'} ) {
+          $extremes->{'x_axis_max'} = $e->{'extremes'}->{'x_axis_max'};
+      }
     }
 
-    $extremes->{'y_axis_max'} = $e->{'extremes'}->{'y_axis_max'} if !defined($extremes->{'y_axis_max'});
-    if ( $e->{'extremes'}->{'y_axis_max'} > $extremes->{'y_axis_max'} ) {
-        $extremes->{'y_axis_max'} = $e->{'extremes'}->{'y_axis_max'};
+    if ( defined($e->{'extremes'}->{'y_axis_max'}) ) {
+      $extremes->{'y_axis_max'} = $e->{'extremes'}->{'y_axis_max'} if !defined($extremes->{'y_axis_max'});
+      if ( $e->{'extremes'}->{'y_axis_max'} > $extremes->{'y_axis_max'} ) {
+          $extremes->{'y_axis_max'} = $e->{'extremes'}->{'y_axis_max'};
+      }
     }
 
-    $extremes->{'x_axis_min'} = $e->{'extremes'}->{'x_axis_min'} if !defined($extremes->{'x_axis_min'});
-    if ( $e->{'extremes'}->{'x_axis_min'} < $extremes->{'x_axis_min'} ) {
-        $extremes->{'x_axis_min'} = $e->{'extremes'}->{'x_axis_min'};
+    if ( defined($e->{'extremes'}->{'x_axis_min'}) ) {
+      $extremes->{'x_axis_min'} = $e->{'extremes'}->{'x_axis_min'} if !defined($extremes->{'x_axis_min'});
+      if ( $e->{'extremes'}->{'x_axis_min'} < $extremes->{'x_axis_min'} ) {
+          $extremes->{'x_axis_min'} = $e->{'extremes'}->{'x_axis_min'};
+      }
     }
 
-    $extremes->{'y_axis_min'} = $e->{'extremes'}->{'y_axis_min'} if !defined($extremes->{'y_axis_min'});
-    if ( $e->{'extremes'}->{'y_axis_min'} < $extremes->{'y_axis_min'} ) {
-        $extremes->{'y_axis_min'} = $e->{'extremes'}->{'y_axis_min'};
+    if ( defined($e->{'extremes'}->{'y_axis_min'}) ) {
+      $extremes->{'y_axis_min'} = $e->{'extremes'}->{'y_axis_min'} if !defined($extremes->{'y_axis_min'});
+      if ( $e->{'extremes'}->{'y_axis_min'} < $extremes->{'y_axis_min'} ) {
+          $extremes->{'y_axis_min'} = $e->{'extremes'}->{'y_axis_min'};
+      }
     }
 
   }
@@ -677,7 +696,9 @@ sub to_json {
   } elsif ( ref $data_structure eq 'HASH' ) {
     $tmp.= "{" if defined($name);
     for (keys %{$data_structure}) {
-      $tmp.= to_json($data_structure->{$_}, $_ || '');
+      if ( defined($data_structure->{$_}) ) {
+        $tmp.= to_json($data_structure->{$_}, $_ || '');
+      }
     }
     $tmp =~ s/,$//g;
     $tmp.= "}" if defined($name);
