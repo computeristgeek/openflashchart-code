@@ -86,7 +86,6 @@
 			
 			t = t.replace('#label#', this.label );
 			t = t.replace('#val#', NumberUtils.formatNumber( this.value ));
-			t = this.tooltip_replace_global_magics( t );
 			return t;
 		}
 		

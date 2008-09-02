@@ -28,7 +28,6 @@
 			t = t.replace('#x#', NumberUtils.formatNumber(this._x));
 			t = t.replace('#y#', NumberUtils.formatNumber(this._y));
 			t = t.replace('#size#', NumberUtils.formatNumber(this.radius));
-			t = this.tooltip_replace_global_magics( t );
 			return t;
 		}
 		

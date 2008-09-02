@@ -53,7 +53,6 @@
 		private function replace_magic_values( t:String ): String {
 			
 			t = t.replace('#val#', NumberUtils.formatNumber( this._y ));
-			t = this.tooltip_replace_global_magics( t );
 			return t;
 		}
 		

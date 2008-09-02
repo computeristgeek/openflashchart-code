@@ -6,6 +6,7 @@
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
 	import flash.geom.Point;
+	import global.Global;
 	
 	public class PointBarBase extends Element
 	{
@@ -60,6 +61,10 @@
 			t = t.replace('#top#', NumberUtils.formatNumber( this.top ));
 			t = t.replace('#bottom#', NumberUtils.formatNumber( this.bottom ));
 			t = t.replace('#val#', NumberUtils.formatNumber( this.top - this.bottom ));
+			
+			// Warning: this is our global singleton
+			var g:Global = Global.getInstance();
+			//t = t.replace('#x_label#', g.get_x_label(this.index) );
 			
 			return t;
 		}

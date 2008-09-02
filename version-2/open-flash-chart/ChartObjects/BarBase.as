@@ -13,22 +13,13 @@
 		
 		public function BarBase( json:Object, group:Number )
 		{
-			
-			//
-			// TODO: ugh, get rid of this
-			//
-			// Warning: this is our global singleton
-			var g:Global = Global.getInstance();
-			var tip:String = g.get_tooltip_string();
-			if( tip == "_default" )
-				tip = '#val#';
-			
+		
 			this.style = {
 				values:				[],
 				colour:				'#3030d0',
 				text:				'',		// <-- default not display a key
 				'font-size':		12,
-				tip:				tip
+				tip:				'#val#<br>#x_label#'
 			};
 			
 			object_helper.merge_2( json, style );
@@ -38,7 +29,8 @@
 			this.key		= this.style.text;
 			this.font_size	= this.style['font-size'];
 
-			
+			// Minor hack, replace all #key# with this key text:
+			this.style.tip = this.style.tip.replace('#key#', this.key);
 			
 //			this.axis = which_axis_am_i_attached_to(data, num);
 			

@@ -58,16 +58,11 @@ package ChartObjects {
 			return 1;
 		}
 			
-		// called from external interface (JS)
-		public function add( val:String, tool_tip:String ):void	{
-			this.values.push( val );
-		}
 		
-		// called from external interface (JS)
-		public function del():void {
-			this.values.shift();
-		}
-		
+		/**
+		 * may be called by main.as to make the X Axis labels
+		 * @return
+		 */
 		public function get_max_x_value():Number {
 			
 			var max_index:Number = Number.MIN_VALUE;
@@ -249,6 +244,23 @@ package ChartObjects {
 				}
 				
 				index++;
+			}
+		}
+		
+		/**
+		 * See ObjectCollection tooltip_replace_labels
+		 * 
+		 * @param	labels
+		 */
+		public function tooltip_replace_labels( labels:XAxisLabels ):void {
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+				
+				// filter out the mask elements in line charts
+				if( this.getChildAt(i) is Element ) {
+					
+					var e:Element = this.getChildAt(i) as Element;
+					e.tooltip_replace_labels( labels );
+				}
 			}
 		}
 		

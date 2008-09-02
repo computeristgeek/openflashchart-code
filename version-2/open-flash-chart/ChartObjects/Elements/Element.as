@@ -21,10 +21,7 @@
 		public var screen_y:Number;
 		protected var tooltip:String;
 		public var link:String;
-		
 		public var is_tip:Boolean;
-		public var tooltip_template:String = '#val#'
-		
 		
 		public var line_mask:Sprite;
 		
@@ -48,9 +45,17 @@
 			//
 			return new flash.geom.Point( this.x, this.y );
 		}
-		
-		// override this
+
+		/**
+		 * When true, this element is displaying a tooltip
+		 * and should fade-in, pulse, or become active
+		 * 
+		 * override this
+		 * 
+		 * @param	b
+		 */
 		public function set_tip( b:Boolean ):void {}
+		
 		
 		//
 		// if this is put in the Element constructor, it is
@@ -81,7 +86,7 @@
 		// we make good use of global objects here ;-)
 		// it reduces the complexity of passing all the
 		// data in through the methods
-		//
+		/*
 		public function tooltip_replace_global_magics( tip:String ):String {
 			var tmp:String = tip;
 			//
@@ -102,6 +107,7 @@
 			
 			return tmp;
 		}
+		*/
 		
 		public function set_link( s:String ):void {
 			this.link = s;
@@ -130,6 +136,17 @@
 		//
 		public function get_tooltip():String {
 			return this.tooltip;
+		}
+
+		/**
+		 * Replace #x_label# with the label. This is called
+		 * after the X Label object has been build (see main.as)
+		 * 
+		 * @param	labels
+		 */
+		public function tooltip_replace_labels( labels:XAxisLabels ):void {
+			
+			this.tooltip = this.tooltip.replace('#x_label#', labels.get( this.index ) );
 		}
 		
 		//public override function toString():String {

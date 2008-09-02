@@ -70,7 +70,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/x-axis-labels-3.txt";
+					var file:String = "../data-files/tooltip-mixed-2.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -480,17 +480,21 @@ package  {
 			g.set_tooltip_string( this.tooltip.tip_text );
 			//
 		
+			//
+			// these are common to both X Y charts and PIE charts:
 			this.background	= new Background( json );
 			this.title		= new Title( json.title );
-			this.obs		= Factory.MakeChart( json );
-			
-			
+			//
 			this.addChild( this.background );
+			//
 			
-			if( !this.obs.has_pie() )
+
+			if( !JsonInspector.has_pie_chart( json ) )
 				this.build_chart_background( json );
 			else
 			{
+				
+				this.obs = Factory.MakeChart( json );
 				// PIE charts default to FOLLOW tooltips
 				this.tooltip.set_tip_style( Tooltip.FOLLOW );
 			}
@@ -511,21 +515,22 @@ package  {
 		//
 		private function build_chart_background( json:Object ):void {
 			
-			var g:Global = Global.getInstance();
-			
-			this.x_legend		= new XLegend( json.x_legend );
-			// this is needed for tooltips
-			g.x_legend = this.x_legend;
-			
+			this.x_legend		= new XLegend( json.x_legend );			
 			this.y_legend		= new YLegendLeft( json );
 			this.y_legend_2		= new YLegendRight( json );
 			this.x_axis			= new XAxis( json.x_axis );
-			
-			
-			// var y_ticks:YTicks = new YTicks( json );
-			
 			this.y_axis			= new YAxisLeft( json );
 			this.y_axis_right	= new YAxisRight( json );
+			
+			//
+			// This reads all the 'elements' of the chart
+			// e.g. bars and lines, then creates them as sprites
+			//
+			this.obs			= Factory.MakeChart( json );
+			//
+			
+			// the X Axis labels *may* require info from
+			// this.obs
 			this.x_labels		= new XAxisLabels( json );
 			
 			if( !this.x_axis.range_set() )
@@ -539,7 +544,6 @@ package  {
 					// No X Axis labels set:
 					//
 					this.x_axis.set_range( this.obs.get_min_x(), this.obs.get_max_x() );
-//					this.x_labels.auto_label( this.x_axis.get_range() );
 					this.x_labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
 				}
 				else
@@ -559,9 +563,19 @@ package  {
 				this.x_labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
 			}
 
+			// access all our globals through this:
+			var g:Global = Global.getInstance();
 			// this is needed by all the elements tooltip
 			g.x_labels = this.x_labels;
+			g.x_legend = this.x_legend;
+
 			
+			//  can pick up X Axis labels for the
+			// tooltips
+			this.obs.tooltip_replace_labels( this.x_labels );
+			//
+			//
+			//
 			
 			this.keys = new Keys( this.obs );
 			

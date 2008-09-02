@@ -36,6 +36,18 @@ package ChartObjects {
 				o.resize( sc );
 		}
 		
+		/**
+		 * Tell each set to update the tooltip string and
+		 * eplace all #x_label# with the label
+		 * 
+		 * @param	labels
+		 */
+		public function tooltip_replace_labels( labels:XAxisLabels ):void {
+			
+			for each ( var o:Base in this.sets )
+				o.tooltip_replace_labels( labels );			
+		}
+		
 		public function mouse_out():void {
 			for each( var s:Base in this.sets )
 				s.mouse_out();
