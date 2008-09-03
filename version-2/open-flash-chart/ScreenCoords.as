@@ -19,10 +19,10 @@ package {
 		//public var zero:Number=0;
 		//public var steps:Number=0;
 		
-		// set by 3D axis
+		// tick_offset is set by 3D axis
 		public var tick_offset:Number;
 		private var x_offset:Boolean;
-		private var y_offset:Boolean;
+		private var y_offset:Object;
 		private var bar_groups:Number;
 	
 		
@@ -32,7 +32,7 @@ package {
 							x_axis_range:Range,
 							x_left_label_width:Number, x_right_label_width:Number,
 							three_d:Boolean,
-							x_offset:Boolean, y_offset:Boolean )
+							x_offset:Boolean, y_offset:Object )
 		{
 			
 			var tmp_left:Number = left;
@@ -185,30 +185,42 @@ package {
 			return y;
 		}
 		
+		//
 		// takes a value and returns the screen Y location
+		// what is the Y range? Horizontal bar charts
+		// are offset and will add 1 so we can calculate:
+		//
+		//   offset = true
+		//
+		//     |
+		//  X -|==========
+		//     |
+		//  Y -|===
+		//     |
+		//  Z -|========
+		//     +--+--+--+--+--+--
+		//
+		// offset = false
+		//
+		//  2 -|
+		//     |
+		//  1 -|  0--0--0--0--0
+		//     |
+		//  0 -+--+--+--+--+--+--
+		//
 		public function get_y_from_val( i:Number, right_axis:Boolean = false ):Number {
 			
-			// what is the Y range? Horizontal bar charts
-			// are offset and will add 1 so we can calculate:
-			//
-			//     |
-			//  X -|==========
-			//     |
-			//  Y -|===
-			//     |
-			//  Z -|========
-			//     +--+--+--+--+--+--
-			//
-			// as are scatter and all other charts...
-			//
-
 			var r:Range = right_axis ? this.y_right_range : this.y_range;
 			
-			//var steps:Number = (this.height / (r.count()+1)) + ( this.y_offset?1:0);
-			var steps:Number = this.height / ( r.count() + ( this.y_offset?1:0) );
+			var count:Number = r.count() + ( this.y_offset.offset ? 1 : 0 );
+			var steps:Number = this.height / count;
+			
+			tr.ace( 'off' );
+			tr.ace( this.y_offset.offset );
+			tr.ace( count );
 			
 			var tmp:Number = 0;
-			if( this.y_offset )
+			if( this.y_offset.offset )
 				tmp = (steps / 2);
 				
 			// move up (-Y) to our point (don't forget that y_min will shift it down)

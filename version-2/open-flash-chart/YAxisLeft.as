@@ -62,6 +62,11 @@
 			var min:Number = Math.min(this.style.min, this.style.max);
 			var max:Number = Math.max(this.style.min, this.style.max);
 			
+			//
+			// hack: http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_13989&sliceId=1
+			//
+			max += 0.000004;
+			
 			for( i = min; i <= max; i+=this.style.steps ) {
 				
 				// don't draw i = minmax.y_min

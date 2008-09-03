@@ -30,7 +30,7 @@ package {
 			
 			if( !ok )
 			{
-				values = make_labels( parent.style.min, parent.style.max, false, parent.style.steps );
+				values = this.make_labels( parent.style.min, parent.style.max, false, parent.style.steps );
 			}
 			
 			
@@ -52,6 +52,11 @@ package {
 			// now move it to the correct Y, vertical center align
 			for ( i=0; i < this.numChildren; i++ ) {
 				tf = this.getChildAt(i) as TextFieldY;
+				
+				tr.ace( '***' );
+				tr.ace( tf.y_val );
+				tr.ace( sc.get_y_from_val( tf.y_val, false ) );
+				
 				tf.y = sc.get_y_from_val( tf.y_val, false ) - (tf.height/2);
 			}
 		}

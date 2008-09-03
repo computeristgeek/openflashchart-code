@@ -70,7 +70,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/tooltip-mixed-2.txt";
+					var file:String = "../data-files/y-axis-2.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {

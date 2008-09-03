@@ -9,7 +9,11 @@ package {
 		protected var stroke:Number;
 		protected var tick_length:Number;
 		protected var colour:Number;
-		public var offset:Boolean;
+		//
+		// offset: see ScreenCoords for a details explination
+		//
+		public var offset:Object;
+		
 		protected var grid_colour:Number;
 		
 		public var style:Object;
@@ -35,7 +39,7 @@ package {
 			this.stroke = style.stroke;
 			this.tick_length = style['tick-length'];
 			
-			this.offset = style.offset;
+			this.offset = { 'offset':style.offset, 'value':style.steps };
 			
 			this._width = this.stroke + this.tick_length;
 		}

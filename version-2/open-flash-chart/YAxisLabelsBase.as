@@ -3,6 +3,7 @@
 	import TextFieldY;
 	import flash.text.TextFormat;
 	import org.flashdevelop.utils.FlashConnect;
+	import br.com.stimuli.string.printf;
 	
 	public class YAxisLabelsBase extends Sprite {
 		private var steps:Number;
@@ -41,13 +42,16 @@
 			var min_:Number = Math.min( min, max );
 			var max_:Number = Math.max( min, max );
 			
-			for( var i:Number = min_; i <= max_; i++ ) {
+			// hack: hack: http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_13989&sliceId=1
+			max_ += 0.000004;
+			
+			var eek:Number = 0;
+			for( var i:Number = min_; i <= max_; i+=steps ) {
 				
-				if( i % steps == 0 )
-				{
-					// TODO: number format i
-					values.push( { val:i, pos:i } );
-				}
+				values.push( { val:printf('%.3f',i), pos:i } );
+				
+				// make sure we don't generate too many labels:
+				if( eek++ > 250 ) break;
 			}
 			return values;
 		}
