@@ -12,6 +12,11 @@ class hbar_value
 	{
 		$this->colour = $colour;	
 	}
+	
+	function set_tooltip( $tip )
+	{
+		$this->tip = $tip;	
+	}
 }
 
 class hbar
@@ -38,6 +43,11 @@ class hbar
 		$this->text = $text;
 		$tmp = 'font-size';
 		$this->$tmp = $size;
+	}
+	
+	function set_tooltip( $tip )
+	{
+		$this->tip = $tip;	
 	}
 }
 
