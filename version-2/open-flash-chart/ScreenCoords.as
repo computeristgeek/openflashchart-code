@@ -41,6 +41,11 @@ package {
 			this.y_range = y_axis_range;
 			this.y_right_range = y_axis_right_range;
 			
+			tr.ace( '-----' );
+			tr.ace( this.x_range.count() );
+			tr.ace( this.y_range.count() );
+			
+			
 			if( x_range ) {
 				right = this.jiggle( left, right, x_right_label_width, x_axis_range.count() );
 				tmp_left = this.shrink_left( left, right, x_left_label_width, x_axis_range.count() );
@@ -187,10 +192,14 @@ package {
 		
 		//
 		// takes a value and returns the screen Y location
-		// what is the Y range? Horizontal bar charts
-		// are offset and will add 1 so we can calculate:
+		// what is the Y range?
 		//
-		//   offset = true
+		// Horizontal bar charts are offset. Note:
+		//   step = 1
+		//   and step/2 is offset at the bottom and top
+		// so we add 1*step so we can calculate:
+		//
+		//   offset = true 
 		//
 		//     |
 		//  X -|==========

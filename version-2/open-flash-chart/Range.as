@@ -4,11 +4,13 @@
 	{
 		public var min:Number;
 		public var max:Number;
+		public var step:Number;
 		
-		public function Range( min:Number, max:Number )
+		public function Range( min:Number, max:Number, step:Number )
 		{
 			this.min = min;
 			this.max = max;
+			this.step = step;
 		}
 		
 		public function count():Number {

@@ -7,7 +7,7 @@ package ChartObjects {
 	import string.Utils;
 	import flash.display.BlendMode;
 	
-	public class Line extends BaseLine
+	public class Line extends LineBase
 	{
 		
 		public function Line( json:Object ) {

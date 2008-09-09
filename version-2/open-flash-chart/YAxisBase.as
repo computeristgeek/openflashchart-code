@@ -3,8 +3,8 @@ package {
 	import string.Utils;
 	
 	public class YAxisBase extends Sprite {
-		protected var _width:Number=0;
-		protected var steps:Number;
+		//protected var _width:Number=0;
+		//protected var steps:Number;
 		
 		protected var stroke:Number;
 		protected var tick_length:Number;
@@ -41,7 +41,6 @@ package {
 			
 			this.offset = { 'offset':style.offset, 'value':style.steps };
 			
-			this._width = this.stroke + this.tick_length;
 		}
 		
 		public function get_style():Object { return null;  }
@@ -54,14 +53,14 @@ package {
 		}
 		
 		public function get_range():Range {
-			return new Range( this.style.min, this.style.max );
+			return new Range( this.style.min, this.style.max, this.style.steps );
 		}
 		
 		public function resize( label_pos:Number, sc:ScreenCoords ):void {
 		}
 		
 		public function get_width():Number {
-			return this._width + this.labels.width;
+			return this.stroke + this.tick_length + this.labels.width;
 		}
 		
 	}

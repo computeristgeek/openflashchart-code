@@ -7,14 +7,18 @@
 			var tmp:String = "Open Flash Chart\n\n";
 			tmp += "JSON Parse Error ["+ e.message +"]\n";
 			
+			// find the end of line after the error location:
 			var pos:Number = json.indexOf( "\n", e.errorID );
 			var s:String = json.substr(0, pos);
 			var lines:Array = s.split("\n");
 			
 			tmp += "Error at character " + e.errorID + ", line " + lines.length +":\n\n";
-			tmp += (lines.length-3).toString() +": "+ lines[lines.length-3];
-			tmp += (lines.length-2).toString() +": "+ lines[lines.length-2];
-			tmp += (lines.length-1).toString() +": "+ lines[lines.length-1];
+			
+			for ( var i:Number = 3; i > 0; i-- ) {
+				if( lines.length-i > -1 )
+					tmp += (lines.length - i).toString() +": " + lines[lines.length - i];
+					
+			}
 			
 			super( tmp );
 		}

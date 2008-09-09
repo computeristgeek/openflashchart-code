@@ -176,7 +176,7 @@ package ChartObjects {
 				if( this.getChildAt(i) is Element ) {
 		
 					var e:Element = this.getChildAt(i) as Element;
-					e.set_tip( false );
+					//e.set_tip( false );
 				
 					var p:flash.geom.Point = e.get_mid_point();
 					dx = Math.abs( x - p.x );

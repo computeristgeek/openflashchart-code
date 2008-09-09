@@ -70,7 +70,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/pie-bug-green.txt";
+					var file:String = "../data-files/line.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -230,7 +230,12 @@ package  {
 		}
 		
 		private function ioError( e:IOErrorEvent ):void {
-			this.show_error( 'Open Flash Chart\nIO ERROR\nLoading test data\n' + e.text );
+			
+			// remove the 'loading data...' msg:
+			this.removeChildAt(0);
+			var msg:ErrorMsg = new ErrorMsg( 'Open Flash Chart\nIO ERROR\nLoading test data\n' + e.text );
+			//msg.add_html( 'Click here to open your JSON file: <a href="http://a.com">asd</a>' );
+			this.addChild( msg );
 		}
 		
 		private function show_error( msg:String ):void {

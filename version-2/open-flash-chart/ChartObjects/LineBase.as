@@ -6,13 +6,13 @@
 	import string.Utils;
 	
 	
-	public class BaseLine extends Base
+	public class LineBase extends Base
 	{
 		// JSON style:
 		protected var style:Object;
 		
 		
-		public function BaseLine() {}
+		public function LineBase() {}
 		
 		// Draw lines...
 		public override function resize( sc:ScreenCoords ): void {

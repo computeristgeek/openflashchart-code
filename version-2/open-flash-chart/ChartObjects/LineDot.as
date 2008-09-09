@@ -9,7 +9,7 @@
 	import string.Utils;
 	import flash.display.BlendMode;
 	
-	public class LineDot extends BaseLine
+	public class LineDot extends LineBase
 	{
 		
 		public function LineDot( json:Object )

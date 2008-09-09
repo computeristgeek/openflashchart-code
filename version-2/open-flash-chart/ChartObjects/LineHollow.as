@@ -9,7 +9,7 @@
 	import string.Utils;
 	import flash.display.BlendMode;
 	
-	public class LineHollow extends BaseLine
+	public class LineHollow extends LineBase
 	{
 		
 		public function LineHollow( json:Object )

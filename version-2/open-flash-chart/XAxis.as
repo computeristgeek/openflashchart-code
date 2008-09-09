@@ -109,7 +109,7 @@ package {
 		// how many items in the X axis?
 		//
 		public function get_range():Range {
-			return new Range( this.style.min, this.style.max );
+			return new Range( this.style.min, this.style.max, this.steps );
 		}
 		
 		public function get_steps():Number {
@@ -123,14 +123,14 @@ package {
 			//
 			// Grid lines
 			//
-			for( var i:Number=0; i < this.style.max; i+=this.steps )
+			for( var i:Number=this.style.min; i <= this.style.max; i+=this.steps )
 			{
 				if( ( this.alt_axis_step > 1 ) && ( i % this.alt_axis_step == 0 ) )
 					this.graphics.beginFill(this.alt_axis_colour, 1);
 				else
 					this.graphics.beginFill(this.grid_colour, 1);
 				
-				var x:Number = sc.get_x_from_pos(i);
+				var x:Number = sc.get_x_from_val(i);
 				this.graphics.drawRect( x, sc.top, 1, sc.height );
 				this.graphics.endFill();
 			}
@@ -233,9 +233,9 @@ package {
 			tr.ace(this.style.max);
 			tr.ace(this.steps);
 			
-			for( var i:Number=0; i < this.style.max; i+=this.steps )
+			for( var i:Number=this.style.min; i <= this.style.max; i+=this.steps )
 			{
-				var x:Number = sc.get_x_tick_pos(i);
+				var x:Number = sc.get_x_from_val(i);
 				this.graphics.beginFill(this.colour, 1);
 				this.graphics.drawRect( x-(this.stroke/2), sc.bottom + this.stroke, this.stroke, this.tick_height );
 				this.graphics.endFill();

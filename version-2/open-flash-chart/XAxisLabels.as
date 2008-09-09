@@ -68,7 +68,7 @@ package {
 			if ( this.need_labels ) {
 				if ( this.style.visible ) {
 					this.style.steps = steps;
-					for( var i:Number = range.min; i < range.max; i++ )
+					for( var i:Number = range.min; i <= range.max; i++ )
 						this.add( NumberUtils.formatNumber( i ), this.style );
 				}
 			}

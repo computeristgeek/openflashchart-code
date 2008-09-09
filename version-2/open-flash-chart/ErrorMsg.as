@@ -33,5 +33,17 @@ package {
 			
 			this.addChild(title);
 		}
+		
+		public function add_html( html:String ): void {
+			var txt:TextField = new TextField();
+			txt.htmlText = html;
+			txt.autoSize = "left";
+			
+			var t:TextField = this.getChildAt(0) as TextField;
+			txt.y = t.y + t.height + 10;
+			
+			this.addChild( txt );
+			
+		}
 	}
 }

@@ -1,12 +1,15 @@
 ﻿package ChartObjects {
-
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import ChartObjects.Elements.Element;
+	import ChartObjects.Elements.PointScatter;
 	import string.Utils;
+	import flash.geom.Point;
 	
-	public class Scatter extends ScatterBase
+	public class ScatterLine extends ScatterBase
 	{
 		
-		
-		public function Scatter( json:Object )
+		public function ScatterLine( json:Object )
 		{
 			this.style = {
 				values:			[],
@@ -35,6 +38,17 @@
 			this.values = style.values;
 
 			this.add_values();
+		}
+		
+
+		
+		// Draw points...
+		public override function resize( sc:ScreenCoords ): void {
+			
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+				var e:PointScatter = this.getChildAt(i) as PointScatter;
+				e.resize( sc, this.axis );
+			}
 		}
 		
 	}

@@ -198,7 +198,6 @@ package ChartObjects {
 				}
 			}
 			
-			// pie charts may not return an element
 			if( xx.element )
 				xx.element.set_tip( true );
 				

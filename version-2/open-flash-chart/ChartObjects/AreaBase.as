@@ -4,7 +4,7 @@
 	import string.Utils;
 	import flash.display.BlendMode;
 	
-	public class AreaBase extends BaseLine {
+	public class AreaBase extends LineBase {
 		
 		public function AreaBase( json:Object ) {
 			

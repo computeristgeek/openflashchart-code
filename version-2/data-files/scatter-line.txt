@@ -2,7 +2,7 @@
 
   "elements":[
     {
-      "type":      "scatter",
+      "type":      "scatter_line",
       "colour":    "#FFB900",
       "text":      "Avg",
       "font-size": 10,

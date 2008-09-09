@@ -95,7 +95,7 @@ package {
 		}
 		
 		public function make_tip( e:Element ):void {
-			
+			tr.ace( 'make tip') ;
 			this.graphics.clear();
 			
 			var tt:String = e.get_tooltip();
@@ -216,8 +216,13 @@ package {
 			else
 			{
 
-				// this is a new tooltip, get the
-				// text and recreate it
+				// this is a new tooltip, tell
+				// the old highlighted item to
+				// return to ground state
+				this.cached_element.set_tip( false );
+				tr.ace( this.cached_element );
+				
+				// get the new text and recreate it
 				this.cached_element = e;
 				
 				this.make_tip( e );
@@ -230,6 +235,13 @@ package {
 			if( e == null )
 				return;
 				
+			if ( this.cached_element == e )
+				return;
+			
+			if( this.cached_element != null )
+				this.cached_element.set_tip( false );
+				
+			this.cached_element = e;
 			this.make_tip( e );
 
 			var p:flash.geom.Point = this.get_pos( e );
@@ -247,7 +259,7 @@ package {
 		
 		public function hide():void {
 			this.tip_showing = false;
-			tr.ace('hide');
+			tr.ace('hide tooltip');
 			Tweener.addTween(this, { alpha:0, time:0.6, transition:Equations.easeOutExpo, onComplete:hideAway } );
 		}
 		

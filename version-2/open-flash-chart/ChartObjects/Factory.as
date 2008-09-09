@@ -66,6 +66,10 @@ package ChartObjects {
 						collection.add( new Scatter( elements[i] ) );
 						break;
 						
+					case 'scatter_line':
+						collection.add( new ScatterLine( elements[i] ) );
+						break;
+						
 					case 'bar_sketch':
 						collection.add( new BarSketch( elements[i], bar_group ) );
 						bar_group++;

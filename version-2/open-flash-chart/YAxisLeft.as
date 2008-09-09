@@ -69,15 +69,10 @@
 			
 			for( i = min; i <= max; i+=this.style.steps ) {
 				
-				// don't draw i = minmax.y_min
-				// because it draws over the X axis line
-//				if( i != this.minmax.y_min ) {
-					
-					y = sc.get_y_from_val(i);
-					this.graphics.beginFill( this.grid_colour, 1 );
-					this.graphics.drawRect( sc.left, y, sc.width, 1 );
-					this.graphics.endFill();
-//				}
+				y = sc.get_y_from_val(i);
+				this.graphics.beginFill( this.grid_colour, 1 );
+				this.graphics.drawRect( sc.left, y, sc.width, 1 );
+				this.graphics.endFill();
 			}
 			var left:Number = sc.left - this.stroke;
 			
