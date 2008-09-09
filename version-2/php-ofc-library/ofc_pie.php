@@ -24,6 +24,11 @@ class pie_value
 		$this->$tmp = $font_size;
 		
 	}
+	
+	function set_tooltip( $tip )
+	{
+		$this->tip = $tip;
+	}
 }
 
 class pie

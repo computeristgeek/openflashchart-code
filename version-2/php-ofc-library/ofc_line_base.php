@@ -45,4 +45,9 @@ class line_base
 		$tmp = 'font-size';
 		$this->$tmp = $font_size;
 	}
+	
+	function set_tooltip( $tip )
+	{
+		$this->tip = $tip;
+	}
 }

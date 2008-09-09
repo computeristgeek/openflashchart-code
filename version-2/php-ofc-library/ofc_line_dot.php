@@ -17,6 +17,11 @@ class dot_value
 	{
 		$this->size = $size;
 	}
+	
+	function set_tooltip( $tip )
+	{
+		$this->tip = $tip;
+	}
 }
 
 class line_dot extends line_base
