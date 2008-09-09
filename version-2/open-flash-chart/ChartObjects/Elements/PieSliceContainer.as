@@ -1,7 +1,13 @@
 ﻿package ChartObjects.Elements {
+	import flash.events.Event;
+	import caurina.transitions.Tweener;
+	import caurina.transitions.Equations;
+	
 	public class PieSliceContainer extends Element {
 		
 		private var TO_RADIANS:Number = Math.PI / 180;
+		
+		private var animating:Boolean;
 
 		//
 		// this holds the slice and the text.
@@ -15,7 +21,10 @@
 			if( style['no-labels'] )
 				textlabel = '';
 				
-			this.addChild( new PieLabel( {label:textlabel, colour:style['label-colour'], 'font-size':style['font-size']} ) );
+			this.addChild( new PieLabel( { label:textlabel, colour:style['label-colour'], 'font-size':style['font-size'] } ) );
+			
+			// this.attach_events();
+			// this.animating = false;
 		}
 		
 		public function is_over():Boolean {
@@ -31,20 +40,11 @@
 			return this.getChildAt(1) as PieLabel;
 		}
 		
-		//
-		// because we hold the slice inside this element, pass
-		// along the tooltip info:
-		//
-//		public override function make_tooltip( key:String ):void
-//		{
-//			var tmp:PieSlice = this.getChildAt(0) as PieSlice;
-//			tmp.make_tooltip( key );
-//		}
 		
 		//
 		// the axis makes no sense here, let's override with null and write our own.
 		//
-		public override function resize( sc:ScreenCoords, axis:Number ): void { }
+		public override function resize( sc:ScreenCoords, axis:Number ): void {}
 		
 		public function is_label_on_screen( sc:ScreenCoords, slice_radius:Number ): Boolean {
 			
@@ -64,6 +64,17 @@
 		public override function get_tooltip():String {
 			var p:PieSlice = this.getChildAt(0) as PieSlice;
 			return p.get_tooltip();
+		}
+		
+		public override function mouseOver(event:Event):void {
+			
+			if ( this.animating ) return;
+			
+			this.animating = true;
+			Tweener.removeTweens(this);
+			tr.ace('over container');
+			var p:PieSlice = this.getChildAt(0) as PieSlice;
+			Tweener.addTween(this, {x:p.position_animate_to.x, y:p.position_animate_to.y, time:0.4, transition:"linear"} );
 		}
 	}
 }

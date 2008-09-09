@@ -26,6 +26,9 @@
 		private var gradientFill:Boolean;
 		private var label:String;
 		
+		public var position_original:flash.geom.Point;
+		public var position_animate_to:flash.geom.Point;
+		
 		public function PieSlice( style:Object ) {
 		
 			this.colour = style.colour;
@@ -46,13 +49,10 @@
 		}
 		
 		public override function mouseOver(event:Event):void {
+			
 			Tweener.addTween(this, { alpha:1, time:0.6, transition:Equations.easeOutCirc } );
 			this.is_over = true;
 			this.dispatchEvent( new ShowTipEvent( this.slice_angle ) );
-			//this.dispatchEvent( new MouseEvent( MouseEvent.MIDDLE_CLICK ) );
-			tr.ace('event dispatched');
-			
-			//event.stopImmediatePropagation();
 		}
 
 		public override function mouseOut(event:Event):void {
@@ -64,6 +64,7 @@
 		// may be called by the MOUSE_LEAVE
 		//
 		public override function set_tip( b:Boolean ):void {
+				
 			if ( !b )
 			{
 				Tweener.addTween(this, { alpha:0.5, time:0.8, transition:Equations.easeOutElastic } );
@@ -97,6 +98,21 @@
 			
 			this.x = sc.get_center_x();
 			this.y = sc.get_center_y();
+			
+			//
+			// use to animate the mouse over and mouse out events:
+			//
+			this.position_original = new flash.geom.Point(this.x, this.y);
+			
+			var ang:Number = this.angle + (this.slice_angle / 2);
+			
+			var animationOffset:Number = 10;
+			this.position_animate_to = new flash.geom.Point(
+				this.x + (animationOffset * Math.cos(ang * TO_RADIANS)),
+				this.y + (animationOffset * Math.sin(ang * TO_RADIANS)) );
+			//
+			//
+			//
 			
 			var label_line_length:Number = 10;
 			
@@ -189,55 +205,9 @@
 			this.graphics.lineTo(lineEnd_x, lineEnd_y);
 		}
 		
-		/*
-		 *  THE FOLLOWING METHODS DO NOT SEEM TO BE USED ???
-		 * 
-		private function create_label( label:String ):TextField {
-			var tf:TextField = new TextField();
-			
-			tf.text = label;
-			// legend_tf._rotation = 3.6*value.bar_bottom;
-			
-			var fmt:TextFormat = new TextFormat();
-			fmt.color = 0;// this.style.get( 'color' );
-			fmt.font = "Verdana";
-			fmt.size = 10;// this.style.get( 'font-size' );
-			fmt.align = "center";
-			tf.setTextFormat(fmt);
-			//tf.autoSize = true;
-			tf.autoSize = "left";
-			
-			return tf;
-		}
-		
-		private function move_label( rad:Number, x:Number, y:Number, ang:Number ):Boolean {
-			
-			var tf:TextField = this.getChildAt(0) as TextField;
-			//text field position
-			var legend_x:Number = rad*Math.cos((ang)*3.6*TO_RADIANS);
-			var legend_y:Number = rad*Math.sin((ang)*3.6*TO_RADIANS);
-			
-			//if legend stands to the right side of the pie
-//			if(legend_x<0)
-//				legend_x -= tf.width;
-					
-			//if legend stands on upper half of the pie
-//			if(legend_y<0)
-//				legend_y -= tf.height;
-			
-			tf.x = legend_x;
-			tf.y = legend_y + Math.random() * 20;
-			
-			// is this label outside the stage?
-			if( (tf.x>0) && (tf.y>0) && (tf.y+tf.height<this.stage.stageHeight ) && (tf.x+tf.width<this.stage.stageWidth) )
-				return false;
-			else
-				return true;
-		}
 		
 		public override function toString():String {
 			return "PieSlice: "+ this.get_tooltip();
 		}
-		*/
 	}
 }
