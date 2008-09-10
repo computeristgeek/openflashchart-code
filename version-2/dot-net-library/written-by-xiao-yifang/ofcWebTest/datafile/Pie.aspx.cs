@@ -30,13 +30,14 @@ public partial class Pie : System.Web.UI.Page
             values.Add(new PieValue(random.NextDouble(),"Pie"+i));
             labels.Add(i.ToString());
         }
-        values.Add(0.2);
+        //values.Add(0.2);
         pie.Values = values;
-
+        pie.Fontsize = 20;
        // pie.Alpha = 50;
 
         //pie.Colour = "#fff";
         pie.Colours = new string[]{"#04f","#1ff","#6ef","#f30"};
+        pie.Tooltip="#val# of #total##percent# of 100%";
         chart.AddElement(pie);
         string s = chart.ToPrettyString();
         Response.Clear();

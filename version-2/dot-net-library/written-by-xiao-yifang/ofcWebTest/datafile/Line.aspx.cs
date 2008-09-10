@@ -16,13 +16,10 @@ public partial class datafile_Line : System.Web.UI.Page
     {
         OpenFlashChart.OpenFlashChart chart = new OpenFlashChart.OpenFlashChart();
         List<double> data1 = new List<double>();
-        List<double> data2 = new List<double>();
-        List<double> data3 = new List<double>();
-        for(double i=0;i<6.2;i+=0.2)
+     Random rand = new Random(DateTime.Now.Millisecond);
+        for(double i=0;i<12;i++)
         {
-            data1.Add(Math.Sin(i)*1.9+7);
-            data2.Add(Math.Sin(i) * 1.9 + 10);
-            data3.Add(Math.Sin(i) * 1.9 + 4);
+            data1.Add(rand.Next(30));
         }
 
         OpenFlashChart.LineHollow line1 = new LineHollow();
@@ -31,24 +28,16 @@ public partial class datafile_Line : System.Web.UI.Page
         line1.Width = 2;
         line1.DotSize = 5;
 
-        OpenFlashChart.LineHollow line2 = new LineHollow();
-        line2.Values = data2;
-        line2.HaloSize = 1;
-        line2.Width = 1;
-        line2.DotSize = 4;
-
-        OpenFlashChart.LineHollow line3 = new LineHollow();
-        line3.Values = data3;
-        line3.HaloSize = 1;
-        line3.Width = 6;
-        line3.DotSize = 4;
+        line1.Tooltip = "提示：#val#";
 
         chart.AddElement(line1);
-        chart.AddElement(line2);
-        chart.AddElement(line3);
-        chart.Title = new Title("multi line");
-        chart.Y_Axis.SetRange(0,15,5);
-
+      
+        chart.Title = new Title("line演示");
+        chart.Y_Axis.SetRange(0,35,5);
+        chart.Tooltip = new ToolTip("全局提示：#val#");
+        chart.Tooltip.Shadow = true;
+        chart.Tooltip.Colour = "#e43456";
+        chart.Tooltip.MouseStyle = ToolTipStyle.CLOSEST;
         Response.Clear();
         Response.CacheControl = "no-cache";
         Response.Write(chart.ToString());
