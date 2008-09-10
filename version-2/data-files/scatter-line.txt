@@ -8,12 +8,12 @@
       "font-size": 10,
       "dot-size":  10,
       "values" :   [
-                     {"x":-5,  "y":-5, "tip":"HELLO" },
-                     {"x":0,   "y":0,  "colour":"#FF0000" },
-                     {"x":5,   "y":5,  "dot-size":20},
-                     {"x":5,   "y":-5, "dot-size":5},
-                     {"x":-5,  "y":5,  "dot-size":5},
-                     {"x":0.5, "y":1,  "dot-size":15}
+                     {"x":-5,  "y":-5,  "tip":"HELLO" },
+                     {"x":-5,  "y":-2,  "colour":"#FF0000" },
+                     {"x":-5,  "y":1,   "dot-size":4},
+                     {"x":3,   "y":3,   "dot-size":5},
+                     {"x":3.5, "y":3.5, "dot-size":6},
+                     {"x":4.9, "y":4.9, "dot-size":7}
                    ]
     }
 

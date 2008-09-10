@@ -5,6 +5,7 @@
 	import ChartObjects.Elements.PointScatter;
 	import string.Utils;
 	import flash.geom.Point;
+	import flash.display.Sprite;
 	
 	public class ScatterLine extends ScatterBase
 	{
@@ -23,8 +24,10 @@
 			
 			object_helper.merge_2( json, style );
 			
+			this.style.colour = string.Utils.get_colour( style.colour );
+			
 			this.line_width = style.width;
-			this.colour		= string.Utils.get_colour( style.colour );
+			this.colour		= this.style.colour;
 			this.key		= style.text;
 			this.font_size	= style['font-size'];
 			this.circle_size = style['dot-size'];
@@ -45,9 +48,50 @@
 		// Draw points...
 		public override function resize( sc:ScreenCoords ): void {
 			
+			// move the dots:
+			super.resize( sc );
+			
+			this.graphics.clear();
+			this.graphics.lineStyle( this.style.width, this.style.colour );
+			
+			//if( this.style['line-style'].style != 'solid' )
+			//	this.dash_line(sc);
+			//else
+			this.solid_line(sc);
+				
+		}
+		
+		//
+		// This is cut and paste from LineBase
+		//
+		public function solid_line( sc:ScreenCoords ): void {
+			
+			var first:Boolean = true;
+			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				var e:PointScatter = this.getChildAt(i) as PointScatter;
-				e.resize( sc, this.axis );
+				
+				var tmp:Sprite = this.getChildAt(i) as Sprite;
+				
+				//
+				// filter out the line masks
+				//
+				if( tmp is Element )
+				{
+					var e:Element = tmp as Element;
+					
+					// tr.ace(e.screen_x);
+					
+					// tell the point where it is on the screen
+					// we will use this info to place the tooltip
+					e.resize( sc, 0 );
+					if( first )
+					{
+						this.graphics.moveTo(e.screen_x,e.screen_y);
+						first = false;
+					}
+					else
+						this.graphics.lineTo(e.screen_x, e.screen_y);
+				}
 			}
 		}
 		

@@ -43,7 +43,7 @@
 				{
 					var e:Element = tmp as Element;
 					
-					tr.ace(e.screen_x);
+					// tr.ace(e.screen_x);
 					
 					// tell the point where it is on the screen
 					// we will use this info to place the tooltip
