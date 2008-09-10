@@ -11,7 +11,7 @@ namespace OpenFlashChart
         private string type;
         private IList<T> values;
         private double fillalpha;
-        private double fontsize;
+        private double? fontsize;
         private string colour;
         private string text;
         private string tooltip;
@@ -19,6 +19,7 @@ namespace OpenFlashChart
         {
             this.values = new List<T>();
             Fillalpha = 0.35;
+            //fontsize = 20;
         }
         [JsonProperty("colour")]
         public virtual string Colour
@@ -87,7 +88,7 @@ namespace OpenFlashChart
         }
         [JsonProperty("font-size")]
         [System.ComponentModel.DefaultValue(12.0)]
-        public double Fontsize
+        public double? Fontsize
         {
             get { return fontsize; }
             set { fontsize = value; }

@@ -29,7 +29,7 @@ namespace OpenFlashChart
             get { return val; }
             set { val = value; }
         }
-        [JsonProperty("text")]
+        [JsonProperty("label")]
         public string Text
         {
             get { return text; }
