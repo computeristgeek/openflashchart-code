@@ -11,28 +11,20 @@ use lib $Server->mappath('.');
 use open_flash_chart qw(random_color);
 
 my $g = chart->new();
-
-if ( $Request->QueryString("data")->Item == 1 ) {
-
   
-  my $e = $g->get_element('bar_stack');
-  
-  $e->set_values([
-    [{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(40),"colour"=>random_color()}],
-    [{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(20),"colour"=>random_color()}],
-    [{"val"=>rand(10)},{"val"=>rand(20)},{"val"=>rand(30)}],
-    [{"val"=>rand(20)},{"val"=>rand(20)},{"val"=>rand(20)}],
-    [{"val"=>rand(5)},{"val"=>rand(10)},{"val"=>rand(5)},{"val"=>rand(20)},{"val"=>rand(5),"colour"=>random_color()},{"val"=>rand(5)},{"val"=>rand(5)}]
-   ]);  
-  
-  $g->add_element($e);
+my $e = $g->get_element('bar_stack');
 
-  $Response->{'ContentType'} = "text/javascript";
-	$Response->write($g->render_chart_data());
-  $Response->exit();
+my $colors = get_random_colors(5);
+$e->set_values([
+  [{"val"=>rand(20),"colour"=>$colors->[0]},{"val"=>rand(40),"colour"=>$colors->[1]}],
+  [{"val"=>rand(20),"colour"=>$colors->[0]},{"val"=>rand(20),"colour"=>$colors->[1]},{"val"=>rand(20),"colour"=>$colors->[2]}],
+  [{"val"=>rand(10),"colour"=>$colors->[0]},{"val"=>rand(20),"colour"=>$colors->[1]},{"val"=>rand(30),"colour"=>$colors->[2]}],
+  [{"val"=>rand(20),"colour"=>$colors->[0]},{"val"=>rand(20),"colour"=>$colors->[1]},{"val"=>rand(20),"colour"=>$colors->[2]}],
+  [{"val"=> rand(5),"colour"=>$colors->[0]},{"val"=>rand(10),"colour"=>$colors->[1]},{"val"=> rand(5),"colour"=>$colors->[2]},{"val"=>rand(20),"colour"=>$colors->[3]},{"val"=>rand(5),"colour"=>$colors->[4]}]
+ ]);  
 
-} else {
-  
+$g->add_element($e);
+
 %>
 <html>
   <head>
@@ -41,11 +33,8 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   <body>
     <h1>OFC Stack Bar Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400, '?data=1&'.time()));
+  $Response->write($g->render_swf(600, 400));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>
 </html>
-<%  
-}
-%>

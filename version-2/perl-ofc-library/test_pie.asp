@@ -10,18 +10,12 @@ our ($Server, $Request, $Response);
 use lib $Server->mappath('.');
 use open_flash_chart;
 
+
 my $g = chart->new();
 #$g->{'chart_props'}->{'tooltip'} = {'text'=>'#val#'};
 
-if ( $Request->QueryString("data")->Item == 1 ) {
-
-  my $e = $g->get_element('pie');
-  $g->add_element($e);
-  
-	$Response->write($g->render_chart_data());
-  $Response->exit();
-
-} else {
+my $e = $g->get_element('pie');
+$g->add_element($e);
   
 %>
 <html>
@@ -31,11 +25,8 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   <body>
     <h1>OFC Pie Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400, '?data=1&'.time()));
+  $Response->write($g->render_swf(600, 400));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>
 </html>
-<%  
-}
-%>

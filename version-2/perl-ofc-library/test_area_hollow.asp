@@ -13,30 +13,23 @@ use open_flash_chart;
 my $g = chart->new();
 $g->{'chart_props'}->{'tooltip'} = {'text'=>'Hollow Tip #val#<br>I See...'};
 
-if ( $Request->QueryString("data")->Item == 1 ) {
 
-  
-  my $e = $g->get_element('area_hollow');
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(20) );
-	}
-  $e->set_values($data);
-  $g->add_element($e);
+my $e = $g->get_element('area_hollow');
+my $data = [];
+for( my $i=0; $i<5; $i++ ) {
+	push ( @$data, rand(20) );
+}
+$e->set_values($data);
+$g->add_element($e);
 
-  my $f = $g->get_element('area_hollow');
-  $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(40) );
-	}
-  $f->set_values($data);
-  $g->add_element($f);
- 
-	$Response->write($g->render_chart_data());
-  $Response->exit();
+my $f = $g->get_element('area_hollow');
+$data = [];
+for( my $i=0; $i<5; $i++ ) {
+	push ( @$data, rand(40) );
+}
+$f->set_values($data);
+$g->add_element($f);
 
-} else {
-  
 %>
 <html>
   <head>
@@ -51,6 +44,3 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 
 </body>
 </html>
-<%  
-}
-%>

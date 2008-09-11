@@ -12,25 +12,19 @@ use open_flash_chart;
 
 my $g = chart->new();
 
-if ( $Request->QueryString("data")->Item == 1 ) {
 
-  my $e = $g->get_element('scatter');
+my $e = $g->get_element('scatter');
 
-  $e->set_values([
-    {"x"=>-5,  "y"=>-5 },
-    {"x"=>-4,   "y"=>-4  },
-    {"x"=>-2,   "y"=>-2,  "dot-size"=>20},
-    {"x"=>2,   "y"=>2, "dot-size"=>5},
-    {"x"=>4,  "y"=>4,  "dot-size"=>5},
-    {"x"=>8, "y"=>8,  "dot-size"=>15}
-  ]);
-  $g->add_element($e);
-  
-	$Response->write($g->render_chart_data());
-  $Response->exit();
+$e->set_values([
+  {"x"=>-5,  "y"=>-5 },
+  {"x"=>-4,   "y"=>-4  },
+  {"x"=>-2,   "y"=>-2,  "dot-size"=>20},
+  {"x"=>2,   "y"=>2, "dot-size"=>5},
+  {"x"=>4,  "y"=>4,  "dot-size"=>5},
+  {"x"=>8, "y"=>8,  "dot-size"=>15}
+]);
+$g->add_element($e);
 
-} else {
-  
 %>
 <html>
   <head>
@@ -44,6 +38,3 @@ if ( $Request->QueryString("data")->Item == 1 ) {
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>
 </html>
-<%  
-}
-%>

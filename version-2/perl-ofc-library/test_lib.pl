@@ -4,20 +4,19 @@ use open_flash_chart;
 
 
 my $g = chart->new();
-my $e = $g->get_element('bar');
+  
+my $e = $g->get_element('bar_stack');
+
+$e->set_values([
+  [{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(40),"colour"=>random_color()}],
+  [{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(20),"colour"=>random_color()},{"val"=>rand(20),"colour"=>random_color()}],
+  [{"val"=>rand(10)},{"val"=>rand(20)},{"val"=>rand(30)}],
+  [{"val"=>rand(20)},{"val"=>rand(20)},{"val"=>rand(20)}],
+  [{"val"=>rand(5)},{"val"=>rand(10)},{"val"=>rand(5)},{"val"=>rand(20)},{"val"=>rand(5),"colour"=>random_color()},{"val"=>rand(5)},{"val"=>rand(5)}]
+ ]);  
+
 $g->add_element($e);
 
-print STDERR $g->render_chart_data();
-print STDERR "\n\n\n";
-print STDERR $g->render_swf();
-print STDERR $g->render_swf();
 
 
-my $g1 = chart->new();
-my $e = $g1->get_element('bar');
-$g1->add_element($e);
-
-print STDERR $g1->render_chart_data();
-print STDERR "\n\n\n";
-print STDERR $g1->render_swf();
-print STDERR $g1->render_swf();
+print $g->render_chart_data();

@@ -12,40 +12,32 @@ use open_flash_chart;
 
 my $g = chart->new();
 
-if ( $Request->QueryString("data")->Item == 1 ) {
+my $e = $g->get_element('line');
 
-  my $e = $g->get_element('line');
-  
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(20) );
-	}
-  $e->set_values($data);
-  $g->add_element($e);
-  
-  $e = $g->get_element('line_dot');
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(30) );
-	}
-  $e->set_values($data);
-  $g->add_element($e);
+my $data = [];
+for( my $i=0; $i<5; $i++ ) {
+	push ( @$data, rand(20) );
+}
+$e->set_values($data);
+$g->add_element($e);
+
+$e = $g->get_element('line_dot');
+my $data = [];
+for( my $i=0; $i<5; $i++ ) {
+	push ( @$data, rand(30) );
+}
+$e->set_values($data);
+$g->add_element($e);
 
 
-  $e = $g->get_element('line_hollow');
-  my $data = [];
-	for( my $i=0; $i<5; $i++ ) {
-		push ( @$data, rand(40) );
-	}
-  $e->set_values($data);
-  $g->add_element($e);
-  
-  
-	$Response->write($g->render_chart_data());
-  $Response->exit();
+$e = $g->get_element('line_hollow');
+my $data = [];
+for( my $i=0; $i<5; $i++ ) {
+	push ( @$data, rand(40) );
+}
+$e->set_values($data);
+$g->add_element($e);
 
-} else {
-  
 %>
 <html>
   <head>
@@ -54,11 +46,8 @@ if ( $Request->QueryString("data")->Item == 1 ) {
   <body>
     <h1>OFC Line Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400, '?data=1&'.time()));
+  $Response->write($g->render_swf(600, 400));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>
 </html>
-<%  
-}
-%>

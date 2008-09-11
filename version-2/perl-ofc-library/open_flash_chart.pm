@@ -2,21 +2,19 @@
 use strict; use warnings;
 
 my $open_flash_chart_seqno = 0;
+my $BOOTSTRAP_COMPLETED = 0;
 
 # This class manages all functions of the open flash chart api.
 package chart;
 sub new() {
   # Constructer for the open_flash_chart_api
   # Sets our default variables
-  my ($proto, $skip_bootstrap) = @_;
+  my ($proto) = @_;
   my $class = ref($proto) || $proto;
   my $self  = {};
   bless $self, $class;
   
   $self->{'data_load_type'} = 'inline_js'; # or 'url_callback'  not sure if we still need both
-  
-  $self->{'skip_bootstrap'} = 0; # you can set this to 1 if you want to handle the includes
-  $self->{'skip_bootstrap'} = $skip_bootstrap if defined($skip_bootstrap);
   
   $self->{'chart_props'} = {
 
@@ -32,7 +30,7 @@ sub new() {
   $x->set_labels({"labels"=>["January","February","March","April","May"]});
   
   my $y = axis->new('y_axis');
-  $y->set_steps(5);
+  $y->set_steps(1);
   
   $self->{'axis'} = {
   	'x_axis' => $x,
@@ -92,7 +90,7 @@ sub render_chart_data() {
 
   my $tmp = '';
 
-  my $ext = $self->get_auto_extremes();
+  my $ext = $self->collect_extremes();
   
   $tmp .= "{";
   $tmp .= main::to_json($self->{'chart_props'});
@@ -127,29 +125,34 @@ sub render_chart_data() {
   return $tmp;
 }
 
-
+#
+#
+#
 sub render_swf {
-  my ($self, $width, $height, $data_url) = @_;
-
+  my ($self, $width, $height, $data) = @_;
+ 
   my $html = '';
   $height = '300px' if !defined($height);
   $width = '400px' if !defined($width);
-  $data_url = '' if !defined($data_url);
+  $data = '' if !defined($data);
+  $open_flash_chart_seqno++;
   
   if ( $self->{'data_load_type'} eq 'inline_js' ) {
-    if ($self->{'skip_bootstrap'} == 0 ) {
-      $html.='<script type="text/javascript" src="swfobject.js"></script>';
-      $self->{'skip_bootstrap'} = 1;
+  	$data = $self->render_chart_data();
+    if ($BOOTSTRAP_COMPLETED == 0 ) {
+    	$html .= '<script type="text/javascript" src="json/json2.js"></script>';
+      $html .= '<script type="text/javascript" src="swfobject.js"></script>';
+      $BOOTSTRAP_COMPLETED = 1;
     }
-    $open_flash_chart_seqno++;
     $html .= qq^
-    <div id="ofc_div_$open_flash_chart_seqno"></div>
-    <script type="text/javascript">
-      var so = new SWFObject("open-flash-chart.swf", "ofc", "$width", "$height", "9", "#FFFFFF");
-      so.addVariable("data-file", "$data_url");
-      so.addParam("allowScriptAccess", "always" );//"sameDomain");
-      so.write("ofc_div_$open_flash_chart_seqno");
-    </script>
+      <script type="text/javascript">
+        swfobject.embedSWF("open-flash-chart.swf", "ofc_div_$open_flash_chart_seqno", "$width", "$height", "9.0.0", "expressInstall.swf", {"get-data":"get_data_$open_flash_chart_seqno","loading":"loading..."} );
+        function get_data_$open_flash_chart_seqno() {
+          return JSON.stringify(data_$open_flash_chart_seqno);
+        }
+        var data_$open_flash_chart_seqno = $data;
+      </script>
+      <div id="ofc_div_$open_flash_chart_seqno"></div>
     ^;
   } else {
     $html .= qq^
@@ -158,14 +161,14 @@ sub render_swf {
       codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0"
       width="$width"
       height="$height"
-      id="graph_2"
+      id="ofc_div_$open_flash_chart_seqno"
       align="middle">
     <param name="allowScriptAccess" value="sameDomain" />
-    <param name="movie" value="open-flash-chart.swf?width=$width&height=$height&data=$data_url"/>
+    <param name="movie" value="open-flash-chart.swf?width=$width&height=$height&data=$data"/>
     <param name="quality" value="high" />
     <param name="bgcolor" value="#FFFFFF" />
     <embed
-      src="open-flash-chart.swf?width=$width&height=$height&data=$data_url"
+      src="open-flash-chart.swf?width=$width&height=$height&data=$data"
       quality="high"
       bgcolor="#FFFFFF"
       width="$width"
@@ -178,59 +181,21 @@ sub render_swf {
     />
     </object>
     ^;
-  }
-
+  }  	
+  	
   return $html;
 }
 
-#
-# control how the auto max works
-#
-# @param $smooth_rounding an int argument.
-#   1 or 0: rounds the y_max to the nearest 10, 50, 100, 200, or 500
-# @param $head_room an decimal argument.
-#   defines how much extra y scale you want above your highest data point
-#   defaults to 0.1 (or 10%) extra space at the top of a chart
-sub get_auto_extremes() {
-  my ($self, $smooth_rounding, $head_room) = @_;
-  $smooth_rounding = 1 if !defined($smooth_rounding);
-  $head_room = 0.1 if !defined($head_room);
+sub collect_extremes() {
+  my ($self) = @_;
   
-  my $extremes = {'x_axis_max' => undef, 'x_axis_min' => undef, 'y_axis_max' => undef, 'y_axis_min' => undef, 'other' => undef};
+  my $ext = extreme->new();
     
   for my $e ( @{$self->{'elements'}} ) {
-
-    if ( defined($e->{'extremes'}->{'x_axis_max'}) ) {
-      $extremes->{'x_axis_max'} = $e->{'extremes'}->{'x_axis_max'} if !defined($extremes->{'x_axis_max'});
-      if ( $e->{'extremes'}->{'x_axis_max'} > $extremes->{'x_axis_max'} ) {
-          $extremes->{'x_axis_max'} = $e->{'extremes'}->{'x_axis_max'};
-      }
-    }
-
-    if ( defined($e->{'extremes'}->{'y_axis_max'}) ) {
-      $extremes->{'y_axis_max'} = $e->{'extremes'}->{'y_axis_max'} if !defined($extremes->{'y_axis_max'});
-      if ( $e->{'extremes'}->{'y_axis_max'} > $extremes->{'y_axis_max'} ) {
-          $extremes->{'y_axis_max'} = $e->{'extremes'}->{'y_axis_max'};
-      }
-    }
-
-    if ( defined($e->{'extremes'}->{'x_axis_min'}) ) {
-      $extremes->{'x_axis_min'} = $e->{'extremes'}->{'x_axis_min'} if !defined($extremes->{'x_axis_min'});
-      if ( $e->{'extremes'}->{'x_axis_min'} < $extremes->{'x_axis_min'} ) {
-          $extremes->{'x_axis_min'} = $e->{'extremes'}->{'x_axis_min'};
-      }
-    }
-
-    if ( defined($e->{'extremes'}->{'y_axis_min'}) ) {
-      $extremes->{'y_axis_min'} = $e->{'extremes'}->{'y_axis_min'} if !defined($extremes->{'y_axis_min'});
-      if ( $e->{'extremes'}->{'y_axis_min'} < $extremes->{'y_axis_min'} ) {
-          $extremes->{'y_axis_min'} = $e->{'extremes'}->{'y_axis_min'};
-      }
-    }
-
+		$ext->aggregate_extremes($e->{'extremes'});
   }
  
-  return $extremes;
+  return $ext;
 }
 
 
@@ -261,7 +226,7 @@ sub new() {
   my $class = ref($proto) || $proto;
   my $self  = {};
 
-	$self->{'extremes'} = {};
+	$self->{'extremes'} = extreme->new();
   $self->{'element_props'} =  {
     'type'      => '',
     'values'    => [1.5,1.69,1.88,2.06,2.21],
@@ -277,7 +242,8 @@ sub set_values {
 
 sub set_extremes {
   my ($self) = @_;
-  my $extremes = {'x_axis_max' => undef, 'x_axis_min' => undef, 'y_axis_max' => undef, 'y_axis_min' => undef, 'other' => undef};
+
+  my $extremes = extreme->new();
   for ( @{$self->{'element_props'}->{'values'}} ) {
     if ( ref($_) eq 'HASH' || ref($_) eq 'ARRAY' ) {
       return $extremes;
@@ -514,24 +480,30 @@ sub new() {
 #stackbar must override set_extremes() because of nested value list
 sub set_extremes {
   my ($self) = @_;
-  my $extremes = {'x_axis_max' => undef, 'x_axis_min' => undef, 'y_axis_max' => undef, 'y_axis_min' => undef, 'other' => undef};
+  
+  my $ext = extreme->new();
+  
   for my $v ( @{$self->{'element_props'}->{'values'}} ) {
-    my $bar_ext = {'x_axis_max' => undef, 'x_axis_min' => undef, 'y_axis_max' => undef, 'y_axis_min' => undef, 'other' => undef};
+  	# each bar
+    my $bar_ext = extreme->new();
+    
     if (ref($v) eq 'ARRAY') {
       for ( @$v ) {
+      	# each bar piece
         next if !defined($_->{'val'});
-        if ( !defined($bar_ext->{'y_axis_max'}) ) {
-          $bar_ext->{'y_axis_max'} = $_->{'val'} ;
+        
+        my $bar_max = $bar_ext->get_y_axis_max();
+        if ( !defined($bar_max) ) {
+          $bar_ext->set_y_axis_max($_->{'val'});
         } else {
-          $bar_ext->{'y_axis_max'} += $_->{'val'};
+          $bar_ext->set_y_axis_max($_->{'val'} + $bar_max);
         }
       }
     }
-    if ( $bar_ext->{'y_axis_max'} > $extremes->{'y_axis_max'} ) {
-      $extremes->{'y_axis_max'} = $bar_ext->{'y_axis_max'};
-    }
+    $ext->aggregate_extremes($bar_ext);
   }
-  $self->{'extremes'} = $extremes;
+  
+  $self->{'extremes'} = $ext;
 }
 
 
@@ -579,7 +551,8 @@ sub new() {
 }
 sub set_extremes {
   my ($self) = @_;
-  my $extremes = {'x_axis_max' => undef, 'x_axis_min' => undef, 'y_axis_max' => undef, 'y_axis_min' => undef, 'other' => undef};
+  my $extremes = extreme->new();
+  
   for ( @{$self->{'element_props'}->{'values'}} ) {
     $extremes->{'y_axis_max'} = $_->{'y'} if !defined($extremes->{'y_axis_max'});
     if ( $_->{'y'} > $extremes->{'y_axis_max'} ) {
@@ -604,7 +577,7 @@ sub set_extremes {
 }
 
 #############################
-sub _____AXIS_OBJECTS_____(){}
+sub _____AXIS_OBJECT_____(){}
 #############################
 package axis;
 use Carp qw(cluck);
@@ -660,6 +633,54 @@ sub AUTOLOAD {
 sub DESTROY {  }
 
 
+
+################################
+sub _____EXTREMES_OBJECT_____(){}
+################################
+package extreme;
+use Carp qw(cluck);
+our $AUTOLOAD;
+sub new() {
+  my ($proto) = @_;
+  my $class = ref($proto) || $proto;
+  my $self = {'x_axis_max' => undef, 'x_axis_min' => undef, 'y_axis_max' => undef, 'y_axis_min' => undef, 'other' => undef};
+
+  return bless $self, $class;
+}
+
+sub aggregate_extremes {
+	my ($self, $ext2) = @_;
+	
+	for my $key ('x_axis_max', 'x_axis_min', 'y_axis_max', 'y_axis_min') {
+		if ( $key =~ /_max/ ) {
+			$self->{$key} = $ext2->{$key} if ( !defined($self->{$key}) || $self->{$key} < $ext2->{$key} );
+		} else {
+			$self->{$key} = $ext2->{$key} if ( !defined($self->{$key}) || $self->{$key} > $ext2->{$key} );
+		}
+	}
+}
+
+sub AUTOLOAD {
+	my $self = shift;
+	my $type = ref($self) or warn "$self is not an object";
+
+	my $name = $AUTOLOAD;
+	$name =~ s/.*://;   # strip fully-qualified portion
+	$name =~ s/^set_//; # strip set_
+	$name =~ s/^get_//; # strip get_
+
+	unless (exists $self->{$name} ) {
+	  cluck "'$name' is not a valid property in class $type";
+	  return undef;
+	}
+
+	if (@_) {
+	  return $self->{"$name"} = shift;
+	} else {
+    return $self->{"$name"};
+	}
+}
+sub DESTROY {  }
 
 
 
@@ -720,6 +741,15 @@ sub to_json {
   } 
   
   return $tmp.',';
+}
+
+sub get_random_colors {
+	my $how_many = shift;
+	my $ret = [];
+	for ( my $i = 0; $i < $how_many; $i++ ) {
+		push(@$ret,random_color());
+	}
+	return $ret;
 }
 
 sub random_color {
