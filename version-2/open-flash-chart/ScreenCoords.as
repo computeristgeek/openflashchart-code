@@ -41,9 +41,9 @@ package {
 			this.y_range = y_axis_range;
 			this.y_right_range = y_axis_right_range;
 			
-			tr.ace( '-----' );
-			tr.ace( this.x_range.count() );
-			tr.ace( this.y_range.count() );
+			// tr.ace( '-----' );
+			// tr.ace( this.x_range.count() );
+			// tr.ace( this.y_range.count() );
 			
 			
 			if( x_range ) {
@@ -224,9 +224,9 @@ package {
 			var count:Number = r.count() + ( this.y_offset.offset ? 1 : 0 );
 			var steps:Number = this.height / count;
 			
-			tr.ace( 'off' );
-			tr.ace( this.y_offset.offset );
-			tr.ace( count );
+			// tr.ace( 'off' );
+			// tr.ace( this.y_offset.offset );
+			// tr.ace( count );
 			
 			var tmp:Number = 0;
 			if( this.y_offset.offset )

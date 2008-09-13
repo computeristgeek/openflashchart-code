@@ -166,7 +166,8 @@
 				'dot-size':		this.style['dot-size'],
 				colour:			this.style.colour,
 				'halo-size':	this.style['halo-size'],
-				tip:			this.style.tip
+				tip:			this.style.tip,
+				'on-click':		this.style['on-click']
 			}
 			
 			if( value is Number )

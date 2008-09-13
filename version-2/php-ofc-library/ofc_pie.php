@@ -29,6 +29,13 @@ class pie_value
 	{
 		$this->tip = $tip;
 	}
+	
+	function on_click( $event )
+	{
+		$tmp = 'on-click';
+		$this->$tmp = $event;
+	}
+
 }
 
 class pie
@@ -92,5 +99,11 @@ class pie
 	{
 		$tmp = 'no-labels';
 		$this->$tmp = true;
+	}
+	
+	function on_click( $event )
+	{
+		$tmp = 'on-click';
+		$this->$tmp = $event;
 	}
 }

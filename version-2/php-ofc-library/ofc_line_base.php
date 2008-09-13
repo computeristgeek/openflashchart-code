@@ -50,4 +50,10 @@ class line_base
 	{
 		$this->tip = $tip;
 	}
+	
+	function set_on_click( $text )
+	{
+		$tmp = 'on-click';
+		$this->$tmp = $text;
+	}
 }

@@ -14,14 +14,20 @@
 		// we want to rotate the slice, but not the text, so
 		// this container holds both
 		//
-		public function PieSliceContainer( style:Object )
+		public function PieSliceContainer( index:Number, style:Object )
 		{
-			this.addChild( new PieSlice( style ) );
+			this.addChild( new PieSlice( index, style ) );
 			var textlabel:String = style.label;
 			if( style['no-labels'] )
 				textlabel = '';
 				
-			this.addChild( new PieLabel( { label:textlabel, colour:style['label-colour'], 'font-size':style['font-size'] } ) );
+			this.addChild(
+				new PieLabel(
+					{
+						label:			textlabel,
+						colour:			style['label-colour'],
+						'font-size':	style['font-size'],
+						'on-click':		style['on-click'] } ) );
 			
 			// this.attach_events();
 			// this.animating = false;

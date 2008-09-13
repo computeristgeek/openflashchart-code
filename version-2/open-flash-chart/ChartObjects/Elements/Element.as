@@ -7,6 +7,9 @@
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
 	import flash.geom.Point;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
+	import flash.external.ExternalInterface;
 	
 	public class Element extends Sprite {
 		//
@@ -20,7 +23,7 @@
 		public var screen_x:Number;
 		public var screen_y:Number;
 		protected var tooltip:String;
-		public var link:String;
+		private var link:String;
 		public var is_tip:Boolean;
 		
 		public var line_mask:Sprite;
@@ -109,7 +112,7 @@
 		}
 		*/
 		
-		public function set_link( s:String ):void {
+		public function set_on_click( s:String ):void {
 			this.link = s;
 			this.buttonMode = true;
 			this.useHandCursor = true;
@@ -118,6 +121,24 @@
 		
 		private function mouseUp(event:Event):void {
 			tr.ace( this.link );
+			tr.ace(this.link.substring(0, 4));
+			
+			if ( this.link.substring(0, 5) == 'http:' )
+				this.browse_url( this.link );
+			else
+				ExternalInterface.call( this.link, this.index );
+		}
+			
+		private function browse_url( url:String ):void {
+			var req:URLRequest = new URLRequest(this.link);
+			try
+			{
+				navigateToURL(req);
+			}
+			catch (e:Error)
+			{
+				trace("Error opening link: " + this.link);
+			}
 		}
 		
 		public function get_tip_pos():Object {

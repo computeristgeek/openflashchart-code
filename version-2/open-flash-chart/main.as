@@ -70,7 +70,8 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/scatter-line-2.txt";
+					var file:String = "../data-files/y-axis-upside-down.txt";
+					//var file:String = "../../../test-data-files/test.json";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -548,6 +549,9 @@ package  {
 					//
 					// No X Axis labels set:
 					//
+					
+					tr.ace( 'max x');
+					tr.ace( this.obs.get_max_x() );
 					this.x_axis.set_range( this.obs.get_min_x(), this.obs.get_max_x() );
 					this.x_labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
 				}

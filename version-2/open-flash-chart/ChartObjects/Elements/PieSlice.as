@@ -29,7 +29,7 @@
 		public var position_original:flash.geom.Point;
 		public var position_animate_to:flash.geom.Point;
 		
-		public function PieSlice( style:Object ) {
+		public function PieSlice( index:Number, style:Object ) {
 		
 			this.colour = style.colour;
 			this.slice_angle = style.angle;
@@ -42,10 +42,14 @@
 			this.value = style.value;
 			this.gradientFill = style['gradient-fill'];
 			this.label = style.label;
+			this.index = index;
 			
 			this.tooltip = this.replace_magic_values( style.tip );
 			
 			this.attach_events();
+			
+			if ( style['on-click'] )
+				this.set_on_click( style['on-click'] );
 		}
 		
 		public override function mouseOver(event:Event):void {
@@ -101,7 +105,7 @@
 			
 			//
 			// use to animate the mouse over and mouse out events:
-			//
+			/*
 			this.position_original = new flash.geom.Point(this.x, this.y);
 			
 			var ang:Number = this.angle + (this.slice_angle / 2);
@@ -112,7 +116,7 @@
 				this.y + (animationOffset * Math.sin(ang * TO_RADIANS)) );
 			//
 			//
-			//
+			*/
 			
 			var label_line_length:Number = 10;
 			

@@ -43,7 +43,8 @@
 				colours:			["#900000", "#009000"],	// slices colours
 				animate:			1,
 				tip:				'#val# of #total#',	// #percent#, #label#
-				'no-labels':		false
+				'no-labels':		false,
+				'on-click':			null
 			}
 			
 			object_helper.merge_2( json, this.style );			
@@ -96,6 +97,7 @@
 				
 					this.addChild(
 						this.add_slice(
+							i,
 							slice_start,
 							slice_angle,
 							val,		// <-- NOTE: val (object) NOT value (a number)
@@ -112,7 +114,7 @@
 			}
 		}
 		
-		private function add_slice( start:Number, angle:Number, value:Object, tip:String, colour:String ): PieSliceContainer {
+		private function add_slice( index:Number, start:Number, angle:Number, value:Object, tip:String, colour:String ): PieSliceContainer {
 			
 			var default_style:Object = {
 					colour:				colour,
@@ -126,7 +128,8 @@
 					label:				"",
 					'label-colour':		this.style['label-colour'],
 					'font-size':		this.style['font-size'],
-					'gradient-fill':	this.style['gradient-fill']
+					'gradient-fill':	this.style['gradient-fill'],
+					'on-click':			this.style['on-click']
 			};
 			
 			if ( value is Number )
@@ -148,7 +151,7 @@
 				default_style['label-colour'] = Utils.get_colour( default_style['label-colour'] );
 				
 				
-			return new PieSliceContainer( default_style );
+			return new PieSliceContainer( index, default_style );
 		}
 		
 		public override function inside( x:Number, y:Number ): Object {

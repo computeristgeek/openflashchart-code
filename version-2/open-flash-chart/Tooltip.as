@@ -219,8 +219,11 @@ package {
 				// this is a new tooltip, tell
 				// the old highlighted item to
 				// return to ground state
-				this.cached_element.set_tip( false );
-				tr.ace( this.cached_element );
+				if (this.cached_element)
+				{
+					this.cached_element.set_tip( false );
+					tr.ace( this.cached_element );
+				}
 				
 				// get the new text and recreate it
 				this.cached_element = e;

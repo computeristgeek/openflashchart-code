@@ -13,7 +13,9 @@ package {
 				if( json.y_axis.labels )
 				{
 					values = [];
-					var i:Number = 0;
+					
+					// use passed in min if provided else zero
+					var i:Number = (json.y_axis && json.y_axis.min) ? json.y_axis.min : 0;
 					for each( var s:String in json.y_axis.labels )
 					{
 						values.push( { val:s, pos:i } );
@@ -23,7 +25,9 @@ package {
 					//
 					// alter the MinMax object:
 					//
-					parent.set_y_max( values.length - 1 );
+					// use passed in max if provided else the number of values less 1
+					i = (json.y_axis && json.y_axis.max) ? json.y_axis.max : values.length - 1;
+					parent.set_y_max( i );
 					ok = true;
 				}
 			}

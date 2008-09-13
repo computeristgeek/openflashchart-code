@@ -18,6 +18,9 @@
 			this._y = Number( style.value );
 			this.radius = style['dot-size'];
 			this.tooltip = this.replace_magic_values( style.tip );
+			
+			if ( style['on-click'] )
+				this.set_on_click( style['on-click'] );
 		}
 		
 		//
