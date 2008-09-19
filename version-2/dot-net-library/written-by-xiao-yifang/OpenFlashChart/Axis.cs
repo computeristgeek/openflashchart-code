@@ -8,7 +8,7 @@ namespace OpenFlashChart
 {
     public class Axis
     {
-        private string stroke;
+        private int? stroke;
         private string colour;
         private string grid_colour;
        
@@ -19,7 +19,7 @@ namespace OpenFlashChart
         private double? min;
         private double? max;
         [JsonProperty("stroke")]
-        public string Stroke
+        public int? Stroke
         {
             set { this.stroke = value; }
             get { return this.stroke; }
