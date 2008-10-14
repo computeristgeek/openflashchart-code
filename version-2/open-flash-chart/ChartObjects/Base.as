@@ -382,5 +382,17 @@ package ChartObjects {
 			}
 		}
 		
+		public function die():void {
+			
+			for ( var i:Number = 0; i < this.numChildren; i++ )
+				if ( this.getChildAt(i) is Element ) {
+					
+					var e:Element = this.getChildAt(i) as Element;
+					e.die();
+				}
+			
+			while ( this.numChildren > 0 )
+				this.removeChildAt(0);
+		}
 	}
 }

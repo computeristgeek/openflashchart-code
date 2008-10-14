@@ -58,8 +58,11 @@ package labels {
 			return this.getChildAt(0).width;
 		}
 		
-//		public function get_height():Number {
-//			return this.getChildAt(0).height;
-//		}
+		public function die(): void {
+			
+			this.graphics.clear();
+			while ( this.numChildren > 0 )
+				this.removeChildAt(0);
+		}
 	}
 }

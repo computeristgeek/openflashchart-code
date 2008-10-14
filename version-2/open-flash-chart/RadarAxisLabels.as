@@ -120,5 +120,15 @@
 				tf.y = ( sc.get_y_from_val( i, false ) - (tf.height / 2) );
 			}
 		}
+		
+		public function die(): void {
+			
+			this.style = null;
+			this.labels = null;
+			
+			this.graphics.clear();
+			while ( this.numChildren > 0 )
+				this.removeChildAt(0);
+		}
 	}
 }

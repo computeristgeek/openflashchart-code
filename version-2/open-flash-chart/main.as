@@ -21,6 +21,7 @@ package  {
 	import flash.ui.ContextMenuItem;
 	import flash.events.IOErrorEvent;
 	import flash.events.ContextMenuEvent;
+	import flash.system.System;
 	
 	import mx.utils.Base64Encoder;
 	// import com.dynamicflash.util.Base64;
@@ -573,6 +574,9 @@ package  {
 			tr.ace(JSON.serialize(json));
 			tr.ace('----');
 			
+			if ( this.obs != null )
+				this.die();
+			
 			// init singletons:
 			NumberFormat.getInstance( json );
 			NumberFormat.getInstanceY2( json );
@@ -608,17 +612,6 @@ package  {
 			
 			if ( JsonInspector.is_radar( json ) ) {
 				
-				//
-				//
-				//
-				//this.title		= new Title( {
-				//	text:"Open Flash Chart DEMO",
-				//	style:"{font-size: 20px; color: #FF0000}"
-				//	} );
-				//
-				//
-				//
-				
 				this.obs = Factory.MakeChart( json );
 				this.radar_axis = new RadarAxis( json.radar_axis );
 				this.keys = new Keys( this.obs );
@@ -627,8 +620,10 @@ package  {
 				this.addChild( this.keys );
 				
 			}
-			else if( !JsonInspector.has_pie_chart( json ) )
+			else if ( !JsonInspector.has_pie_chart( json ) )
+			{
 				this.build_chart_background( json );
+			}
 			else
 			{
 				// this is a PIE chart
@@ -728,6 +723,34 @@ package  {
 			this.addChild( this.y_axis_right );
 			this.addChild( this.x_axis );
 			this.addChild( this.keys );
+		}
+		
+		/**
+		 * Remove all our referenced objects
+		 */
+		private function die():void {
+			this.obs.die();
+			this.obs = null;
+			
+			if ( this.tooltip != null ) this.tooltip.die();
+			
+			if ( this.x_legend != null )	this.x_legend.die();
+			if ( this.y_legend != null )	this.y_legend.die();
+			if ( this.y_legend_2 != null )	this.y_legend_2.die();
+			if ( this.x_labels != null )	this.x_labels.die();
+			if ( this.y_axis != null )		this.y_axis.die();
+			if ( this.y_axis_right != null ) this.y_axis_right.die();
+			if ( this.x_axis != null )		this.x_axis.die();
+			if ( this.keys != null )		this.keys.die();
+			if ( this.title != null )		this.title.die();
+			if ( this.radar_axis != null )	this.radar_axis.die();
+			if ( this.background != null )	this.background.die();
+			
+			while ( this.numChildren > 0 )
+				this.removeChildAt(0);
+			
+			// do not force a garbage collection, it is not supported:
+			// http://stackoverflow.com/questions/192373/force-garbage-collection-in-as3
 		}
 		
 		private function build_right_click_menu(): void {

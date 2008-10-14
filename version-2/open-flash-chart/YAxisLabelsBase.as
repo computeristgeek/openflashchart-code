@@ -95,5 +95,11 @@
 			}
 			return max;
 		}
+		
+		public function die(): void {
+			
+			while ( this.numChildren > 0 )
+				this.removeChildAt(0);
+		}
 	}
 }

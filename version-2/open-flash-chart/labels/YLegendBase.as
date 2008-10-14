@@ -80,5 +80,11 @@
 			else
 				return this.getChildAt(0).width;
 		}
+		
+		public function die(): void {
+			
+			while ( this.numChildren > 0 )
+				this.removeChildAt(0);
+		}
 	}
 }

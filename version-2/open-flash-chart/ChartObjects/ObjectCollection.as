@@ -287,5 +287,15 @@ package ChartObjects {
 			else
 				return false;
 		}
+		
+		/**
+		 * To stop memory leaks we explicitly kill all
+		 * our children
+		 */
+		public function die():void {
+
+			for each( var o:Base in this.sets )
+				o.die();
+		}
 	}
 }

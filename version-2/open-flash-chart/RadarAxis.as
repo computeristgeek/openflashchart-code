@@ -104,5 +104,16 @@
 				}
 			}
 		}
+		
+		public function die(): void {
+			
+			this.style = null;
+			this.labels.die();
+			this.spoke_labels.die();
+		
+			this.graphics.clear();
+			while ( this.numChildren > 0 )
+				this.removeChildAt(0);
+		}
 	}
 }

@@ -58,4 +58,9 @@ class area_base
 	{
 		$this->tip = $tip;	
 	}
+	
+	function set_loop()
+	{
+		$this->loop = true;
+	}
 }

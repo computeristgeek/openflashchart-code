@@ -111,5 +111,10 @@ package {
 			this.graphics.beginFill( this.colour );
 			this.graphics.drawRect( 0, 0, this.stage.stageWidth, this.stage.stageHeight );
 		}
+		
+		public function die(): void {
+	
+			this.graphics.clear();
+		}
 	}
 }

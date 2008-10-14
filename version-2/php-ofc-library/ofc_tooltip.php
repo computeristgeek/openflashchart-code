@@ -37,5 +37,10 @@ class tooltip
 	{
 		$this->body = $style;
 	}
+	
+	function set_proximity()
+	{
+		$this->mouse = 1;
+	}
 }
 

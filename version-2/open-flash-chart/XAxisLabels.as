@@ -204,6 +204,8 @@ package {
 		
 		public function resize( sc:ScreenCoords, yPos:Number ) : void//, b:Box )
 		{
+			
+			this.graphics.clear();
 			var i:Number = 0;
 			
 			for( var pos:Number=0; pos < this.numChildren; pos++ )
@@ -248,6 +250,16 @@ package {
 				return this.getChildAt(0).width;
 			else
 				return 0;
+		}
+		
+		public function die(): void {
+			
+			this.labels = null;
+			this.style = null;
+			this.graphics.clear();
+			
+			while ( this.numChildren > 0 )
+				this.removeChildAt(0);
 		}
 	}
 }

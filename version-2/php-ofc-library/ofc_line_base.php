@@ -56,4 +56,9 @@ class line_base
 		$tmp = 'on-click';
 		$this->$tmp = $text;
 	}
+	
+	function loop()
+	{
+		$this->loop = true;
+	}
 }

@@ -2,7 +2,17 @@
 
 // var_dump(debug_backtrace());
 
-include_once 'JSON.php';
+//
+// Omar Kilani's php C extension for encoding JSON has been incorporated in stock PHP since 5.2.0
+// http://www.aurore.net/projects/php-json/
+//
+// -- Marcus Engene
+//
+if (! function_exists('json_encode'))
+{
+	include_once 'JSON.php';
+}
+
 include_once 'json_format.php';
 
 // ofc classes
@@ -29,11 +39,14 @@ include_once 'ofc_x_legend.php';
 include_once 'ofc_y_legend.php';
 include_once 'ofc_bar_sketch.php';
 include_once 'ofc_scatter.php';
+include_once 'ofc_scatter_line.php';
 include_once 'ofc_x_axis_labels.php';
 include_once 'ofc_x_axis_label.php';
 include_once 'ofc_tooltip.php';
 include_once 'ofc_shape.php';
-
+include_once 'ofc_radar_axis.php';
+include_once 'ofc_radar_axis_labels.php';
+include_once 'ofc_radar_spoke_labels.php';
 
 class open_flash_chart
 {
@@ -88,6 +101,11 @@ class open_flash_chart
 		$this->bg_colour = $colour;	
 	}
 	
+	function set_radar_axis( $radar )
+	{
+		$this->radar_axis = $radar;
+	}
+	
 	function set_tooltip( $tooltip )
 	{
 		$this->tooltip = $tooltip;	
@@ -95,8 +113,15 @@ class open_flash_chart
 	
 	function toString()
 	{
-		$json = new Services_JSON();
-		return $json->encode( $this );
+		if (function_exists('json_encode'))
+		{
+			return json_encode($this);
+		}
+		else
+		{
+			$json = new Services_JSON();
+			return $json->encode( $this );
+		}
 	}
 	
 	function toPrettyString()

@@ -30,13 +30,6 @@ package labels {
 			this.count = key;
 		}
 		
-		//
-		// this should be in the destructor, but
-		// actionscript does not support them :-(
-		//
-		public function del():void{
-		}
-		
 		// each key is a MovieClip with text on it
 		private function make_key( st:Base, c:Number ) : void //st:Style, c:Number )
 		{
@@ -112,5 +105,15 @@ package labels {
 		public function get_height() : Number {
 			return this._height;
 		}
+		
+		public function die(): void {
+			
+			this.colours = null;
+		
+			this.graphics.clear();
+			while ( this.numChildren > 0 )
+				this.removeChildAt(0);
+		}
+		
 	}
 }

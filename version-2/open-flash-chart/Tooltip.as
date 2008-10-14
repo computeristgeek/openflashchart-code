@@ -17,8 +17,8 @@ package {
 	import object_helper;
 	
 	public class Tooltip extends Sprite {
-		private var title:TextField;
-		private var text:TextField;
+		//private var title:TextField;
+		//private var text:TextField;
 		// JSON style:
 		private var style:Object;
 		
@@ -39,21 +39,7 @@ package {
 			// tooltip or any children (the text fields)
 			//
 			this.mouseEnabled = false;
-			
-			this.title = new TextField();
-			this.title.x = 5,
-			this.title.y = 5;
-			this.title.mouseEnabled = false;
-			
-			this.text = new TextField();
-			this.text.x = 5;
-			this.text.y = 5;
-			this.text.mouseEnabled = false;
-			
 			this.tip_showing = false;
-			
-			this.addChild( this.title );
-			this.addChild( this.text );
 			
 			this.style = {
 				shadow:		true,
@@ -133,6 +119,7 @@ package {
 			if ( lines.length > 1 ) {
 				
 				var title:TextField = this.make_title(lines.shift());
+				title.mouseEnabled = false;
 				title.x = x;
 				title.y = top;
 				top += title.height;
@@ -142,6 +129,7 @@ package {
 			}
 			
 			var text:TextField = this.make_body(lines.join( '\n' ));
+			text.mouseEnabled = false;
 			text.x = x;
 			text.y = top;
 			width = Math.max( width, text.width );
@@ -349,6 +337,18 @@ package {
 
 		public function set_tip_style( i:Number ):void {
 			this.tip_style = i;
+		}
+		
+		public function die():void {
+			
+			this.filters = [];
+			this.graphics.clear();
+			
+			while( this.numChildren > 0 )
+				this.removeChildAt(0);
+		
+			this.style = null;
+			this.cached_elements = null;
 		}
 	}
 }

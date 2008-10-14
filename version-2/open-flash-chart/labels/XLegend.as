@@ -39,5 +39,6 @@ package labels {
 			// the title may be turned off:
 			return this.height;
 		}
+	
 	}
 }

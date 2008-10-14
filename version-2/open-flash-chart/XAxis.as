@@ -257,5 +257,13 @@ package {
 				return this.stroke + this.tick_height;
 		}
 		
+		public function die(): void {
+			
+			this.style = null;
+		
+			this.graphics.clear();
+			while ( this.numChildren > 0 )
+				this.removeChildAt(0);
+		}
 	}
 }

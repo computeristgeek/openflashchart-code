@@ -19,9 +19,6 @@
 		public var _y:Number;
 		
 		public var index:Number;
-		
-		//public var screen_x:Number;
-		//public var screen_y:Number;
 		protected var tooltip:String;
 		private var link:String;
 		public var is_tip:Boolean;
@@ -70,8 +67,10 @@
 		// called multiple times for some reason :-(
 		//
 		protected function attach_events():void {
-			this.addEventListener(MouseEvent.MOUSE_OVER, this.mouseOver);
-			this.addEventListener(MouseEvent.MOUSE_OUT, this.mouseOut);
+			
+			// weak references so the garbage collector will kill them:
+			this.addEventListener(MouseEvent.MOUSE_OVER, this.mouseOver, false, 0, true);
+			this.addEventListener(MouseEvent.MOUSE_OUT, this.mouseOut, false, 0, true);
 		}
 		
 		public function mouseOver(event:Event):void {
@@ -90,38 +89,12 @@
 			Tweener.addTween(this, { alpha:1, time:0.4, transition:Equations.easeOutElastic } );
 		}
 		
-		//
-		// we make good use of global objects here ;-)
-		// it reduces the complexity of passing all the
-		// data in through the methods
-		/*
-		public function tooltip_replace_global_magics( tip:String ):String {
-			var tmp:String = tip;
-			//
-			// Warning: this is our global singleton
-			//
-			var g:Global = Global.getInstance();
-			//
-			// do we want a global tooltip default? I don't think so...
-			//
-//			var tip:String = g.get_tooltip_string();
-			var x_legend:String = g.get_x_legend();
-			var x_axis_label:String = g.get_x_label( this.index );
-
-//			tmp = tmp.replace('#key#',key);
-			tmp = tmp.replace('#x_label#',x_axis_label);
-//			tmp = tmp.replace('#val:time#',_root.formatTime(val));
-			tmp = tmp.replace('#x_legend#', x_legend);
-			
-			return tmp;
-		}
-		*/
-		
 		public function set_on_click( s:String ):void {
 			this.link = s;
 			this.buttonMode = true;
 			this.useHandCursor = true;
-			this.addEventListener(MouseEvent.MOUSE_UP, this.mouseUp);
+			// weak references so the garbage collector will kill it:
+			this.addEventListener(MouseEvent.MOUSE_UP, this.mouseUp, false, 0, true);
 		}
 		
 		private function mouseUp(event:Event):void {
@@ -175,8 +148,16 @@
 			this.tooltip = this.tooltip.replace('#x_label#', labels.get( this.index ) );
 		}
 		
-		//public override function toString():String {
-		//	return "x :"+ this._x;
-		//}
+		/**
+		 * Mem leaks
+		 */
+		public function die():void {
+			
+			if ( this.line_mask != null ) {
+				
+				this.line_mask.graphics.clear();
+				this.line_mask = null;
+			}
+		}
 	}
 }
