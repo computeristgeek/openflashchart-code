@@ -62,9 +62,12 @@
 			Tweener.addTween(this, { alpha:0.5, time:0.8, transition:Equations.easeOutElastic } );
 		}
 		
-		public override function resize( sc:ScreenCoords, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
 			
-			var tmp:Object = sc.get_horiz_bar_coords( this.index, this.group );
+			// is it OK to cast up like this?
+			var sc2:ScreenCoords = sc as ScreenCoords;
+			
+			var tmp:Object = sc2.get_horiz_bar_coords( this.index, this.group );
 			
 			var left:Number  = sc.get_x_from_val( this.left );
 			var right:Number = sc.get_x_from_val( this.right );

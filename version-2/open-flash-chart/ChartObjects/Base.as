@@ -88,7 +88,7 @@ package ChartObjects {
 		//
 		// this should be overriden
 		//
-		public function resize( sc:ScreenCoords ):void{}
+		public function resize( sc:ScreenCoordsBase ):void{}
 		
 		public function draw( val:String, mc:Object ):void {}
 		
@@ -143,7 +143,7 @@ package ChartObjects {
 					var e:Element = this.getChildAt(i) as Element;
 					e.set_tip( false );
 				
-					dx = Math.abs( x -e.screen_x );
+					dx = Math.abs( x -e.x );
 				
 					if( dx < shortest )	{
 						shortest = dx;
@@ -160,11 +160,30 @@ package ChartObjects {
 		}
 		
 		//
-		// take a look at the scatter chart (overrides this)
+		// Line and bar charts will normally only have one
+		// Element at any X position, but when using Radar axis
+		// you may get many at any give X location.
 		//
-		public function closest_2( x:Number, y:Number ): Object {
-			var shortest:Number = Number.MAX_VALUE;
-			var closest:Element = null;
+		// Scatter charts can have many items at the same X position
+		//
+		public function closest_2( x:Number, y:Number ): Array {
+
+			// get the closest Elements X value
+			var x:Number		= closest_x(x);
+			var tmp:Array		= this.get_all_at_this_x_pos(x);
+			var closest:Array	= this.get_closest_y(tmp, y);
+			var dy:Number = Math.abs( y - closest.y );
+			return closest;
+		}
+		
+		//
+		// get the X value of the closest points to the mouse
+		//
+		private function closest_x( x:Number ):Number {
+			
+			var closest:Number = Number.MAX_VALUE;
+			var p:flash.geom.Point;
+			var x_pos:Number;
 			var dx:Number;
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
@@ -176,24 +195,123 @@ package ChartObjects {
 				if( this.getChildAt(i) is Element ) {
 		
 					var e:Element = this.getChildAt(i) as Element;
-					//e.set_tip( false );
 				
-					var p:flash.geom.Point = e.get_mid_point();
+					p = e.get_mid_point();
 					dx = Math.abs( x - p.x );
-				
-					if( dx < shortest )	{
-						shortest = dx;
-						closest = e;
+
+					if( dx < closest )	{
+						closest = dx;
+						x_pos = p.x;
 					}
 				}
 			}
 			
-			var dy:Number = 0;
-			if( closest )
-				dy = Math.abs( y - closest.y );
-				
-			return { element:closest, distance_x:shortest, distance_y:dy };
+			return x_pos;
 		}
+		
+		//
+		// get all the Elements at this X position
+		//
+		private function get_all_at_this_x_pos( x:Number ):Array {
+			
+			var tmp:Array = new Array();
+			var p:flash.geom.Point;
+			var e:Element;
+			
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+			
+				// some of the children will will mask
+				// Sprites, so filter those out:
+				//
+				if( this.getChildAt(i) is Element ) {
+		
+					e = this.getChildAt(i) as Element;
+				
+					p = e.get_mid_point();
+					if ( p.x == x )
+						tmp.push( e );
+				}
+			}
+			
+			return tmp;
+		}
+		
+		//
+		// scatter charts may have many Elements in the same
+		// x, y location
+		//
+		private function get_closest_y( elements:Array, y:Number):Array {
+			
+			var y_min:Number = Number.MAX_VALUE;
+			var dy:Number;
+			var closest:Array = new Array();
+			var p:flash.geom.Point;
+			var e:Element;
+			
+			// get min Y distance
+			for each( e in elements ) {
+				
+				p = e.get_mid_point();
+				dy = Math.abs( y - p.y );
+				
+				y_min = Math.min( dy, y_min );
+			}
+			
+			// select all Elements at this Y pos
+			for each( e in elements ) {
+				
+				p = e.get_mid_point();
+				dy = Math.abs( y - p.y );
+				if( dy == y_min )
+					closest.push(e);
+			}
+
+			return closest;
+		}
+		
+		//
+		// scatter charts may have many Elements in the same
+		// x, y location
+		//
+		public function mouse_proximity( x:Number, y:Number ): Array {
+			
+			var closest:Number = Number.MAX_VALUE;
+			var p:flash.geom.Point;
+			var i:Number;
+			var e:Element;
+			var mouse:flash.geom.Point = new flash.geom.Point(x, y);
+			
+			//
+			// find the closest Elements
+			//
+			for ( i=0; i < this.numChildren; i++ ) {
+			
+				// filter mask Sprites
+				if( this.getChildAt(i) is Element ) {
+		
+					e = this.getChildAt(i) as Element;
+					closest = Math.min( flash.geom.Point.distance(e.get_mid_point(), mouse), closest );
+				}
+			}
+			
+			//
+			// grab all Elements at this distance
+			//
+			var close:Array = [];
+			for ( i=0; i < this.numChildren; i++ ) {
+			
+				// filter mask Sprites
+				if( this.getChildAt(i) is Element ) {
+		
+					e = this.getChildAt(i) as Element;
+					if ( flash.geom.Point.distance(e.get_mid_point(), mouse) == closest )
+						close.push(e);
+				}
+			}
+			
+			return close;
+		}
+		
 		
 		
 		//

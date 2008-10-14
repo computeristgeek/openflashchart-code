@@ -4,6 +4,7 @@
 	import flash.display.BlendMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	public class PointDotBase extends Element {
 		
@@ -26,14 +27,17 @@
 		//
 		// all dot share the same resize code:
 		//
-		public override function resize( sc:ScreenCoords, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
 			
 			//
 			// Haha! This is the worst code in the world,
 			// but it is kinda kooky and cool at the same time :-)
 			//
-			this.x = this.screen_x = this.line_mask.x = sc.get_x_from_pos( this._x );
-			this.y = this.screen_y = this.line_mask.y = sc.get_y_from_val( this._y, (axis == 2) );
+			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this.index, this._y, (axis == 2) );
+			this.x = this.line_mask.x = p.x;
+			this.y = this.line_mask.y = p.y;
+			
+			tr.ace(this.x );
 		}
 		
 		public override function set_tip( b:Boolean ):void {

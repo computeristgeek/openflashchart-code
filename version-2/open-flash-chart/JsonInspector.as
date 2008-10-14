@@ -23,5 +23,14 @@
 			
 			return false;
 		}
+		
+		public static function is_radar( json:Object ): Boolean
+		{
+			
+			if ( json['radar_axis'] != null )
+				return true;
+			
+			return false;
+		}
 	}
 }

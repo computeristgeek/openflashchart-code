@@ -1,15 +1,11 @@
 package {
-	import org.flashdevelop.utils.FlashConnect;
-	import ChartObjects.Elements.PointBar;
+	import flash.geom.Point;
+	import ChartObjects.Elements.Point;
 	
-	public class ScreenCoords
+	public class ScreenCoords extends ScreenCoordsBase
 	{
-		public var top:Number;
-		public var left:Number;
-		public var right:Number;
-		public var bottom:Number;
-		public var width:Number;
-		public var height:Number;
+
+		
 		
 		private var x_range:Range;
 		private var y_range:Range;
@@ -34,6 +30,7 @@ package {
 							three_d:Boolean,
 							x_offset:Boolean, y_offset:Object )
 		{
+			super( top, left, right, bottom );
 			
 			var tmp_left:Number = left;
 			
@@ -144,23 +141,11 @@ package {
 		}
 		
 		//
-		// used by the PIE slices so the pie chart is
-		// centered in the screen
-		//
-		public function get_center_x():Number {
-			return ((this.right-this.left) / 2)+this.left;
-		}
-
-		public function get_center_y():Number {
-			return ((this.bottom-this.top) / 2)+this.top;
-		}
-		
-		//
 		// the bottom point of a bar:
 		//   min=-100 and max=100, use b.zero
 		//   min = 10 and max = 20, use b.bottom
 		//
-		public function get_y_bottom( right_axis:Boolean = false ):Number
+		public override function get_y_bottom( right_axis:Boolean = false ):Number
 		{
 			//
 			// may have min=10, max=20, or
@@ -217,7 +202,7 @@ package {
 		//     |
 		//  0 -+--+--+--+--+--+--
 		//
-		public function get_y_from_val( i:Number, right_axis:Boolean = false ):Number {
+		public override function get_y_from_val( i:Number, right_axis:Boolean = false ):Number {
 			
 			var r:Range = right_axis ? this.y_right_range : this.y_range;
 			
@@ -234,6 +219,13 @@ package {
 				
 			// move up (-Y) to our point (don't forget that y_min will shift it down)
 			return this.bottom-tmp-(r.min-i)*steps*-1;
+		}
+		
+		public override function get_get_x_from_pos_and_y_from_val( index:Number, y:Number, right_axis:Boolean = false ):flash.geom.Point {
+			
+			return new flash.geom.Point(
+				this.get_x_from_pos( index ),
+				this.get_y_from_val( y, right_axis ) );
 		}
 		
 		public function width_():Number
@@ -253,7 +245,7 @@ package {
 		//   get the x position by value
 		//  (e.g. what is the x position for -5 ?)
 		//
-		public function get_x_from_val( i:Number ):Number {
+		public override function get_x_from_val( i:Number ):Number {
 
 			var item_width:Number = this.width_() / this.x_range.count();
 			
@@ -269,8 +261,8 @@ package {
 		//
 		// get the x location of the n'th item
 		//
-		public function get_x_from_pos( i:Number ):Number
-		{
+		public override function get_x_from_pos( i:Number ):Number {
+			
 			var item_width:Number = this.width_() / this.x_range.count();
 			
 			var tmp:Number = 0;
@@ -292,9 +284,9 @@ package {
 		//
 		// make a point object, using the absolute values (e.g. -5,-5 )
 		//
-		public function make_point_2( x:Number, y:Number, right_axis:Boolean ):Point
+		public function make_point_2( x:Number, y:Number, right_axis:Boolean ):ChartObjects.Elements.Point
 		{
-			return new Point(
+			return new ChartObjects.Elements.Point(
 				this.get_x_from_val( x ),
 				this.get_y_from_val( y, right_axis )
 				

@@ -60,6 +60,7 @@
 			s.width = this.style.width;
 			
 			return new ChartObjects.Elements.PointHollow( index, s );
+			//return new ChartObjects.Elements.Star( index, s );
 		}
 			
 	}

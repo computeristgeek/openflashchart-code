@@ -21,11 +21,12 @@
 			this.filters = [dropShadow];
 		}
 		
-		public override function resize( sc:ScreenCoords, axis:Number ):void {
-			
-			var h:Object = this.resize_helper( sc, axis );
+		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
 			
 			this.graphics.clear();
+			var h:Object = this.resize_helper( sc as ScreenCoords, axis );
+			if (h.height == 0)
+				return;
 			
 			this.bg( h.width, h.height, h.upside_down );
 			this.glass( h.width, h.height, h.upside_down );
@@ -34,7 +35,9 @@
 		private function bg( w:Number, h:Number, upside_down:Boolean ):void {
 			//
 			var rad:Number = 7;
-			
+			if ( rad > ( w / 2 ) )
+				rad = w / 2;
+				
 			this.graphics.lineStyle(0, 0, 0);// this.outline_colour, 100);
 			this.graphics.beginFill(this.colour, 1);
 			

@@ -50,9 +50,9 @@
 		//
 		// the axis makes no sense here, let's override with null and write our own.
 		//
-		public override function resize( sc:ScreenCoords, axis:Number ): void {}
+		public override function resize( sc:ScreenCoordsBase, axis:Number ): void {}
 		
-		public function is_label_on_screen( sc:ScreenCoords, slice_radius:Number ): Boolean {
+		public function is_label_on_screen( sc:ScreenCoordsBase, slice_radius:Number ): Boolean {
 			
 			var p:PieSlice = this.getChildAt(0) as PieSlice;
 			var l:PieLabel = this.getChildAt(1) as PieLabel;
@@ -60,7 +60,7 @@
 			return l.move_label( slice_radius + 10, sc.get_center_x(), sc.get_center_y(), p.angle+(p.slice_angle/2) );
 		}
 		
-		public function pie_resize( sc:ScreenCoords, slice_radius:Number ): void {
+		public function pie_resize( sc:ScreenCoordsBase, slice_radius:Number ): void {
 			
 			// the label is in the correct position -- see is_label_on_screen()
 			var p:PieSlice = this.getChildAt(0) as PieSlice;

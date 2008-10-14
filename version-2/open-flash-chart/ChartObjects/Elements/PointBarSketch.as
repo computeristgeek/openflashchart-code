@@ -13,9 +13,9 @@
 		}
 		
 		
-		public override function resize( sc:ScreenCoords, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
 			
-			var h:Object = this.resize_helper( sc, axis );
+			var h:Object = this.resize_helper( sc as ScreenCoords, axis );
 			
 			// how sketchy the bar is:
 			var offset:Number = this.offset;

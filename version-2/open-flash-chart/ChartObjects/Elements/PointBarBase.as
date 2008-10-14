@@ -92,7 +92,7 @@
 		}
 		
 		// override this:
-		public override function resize( sc:ScreenCoords, axis:Number ):void {}
+		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {}
 		
 		//
 		// tooltip.left for bars center over the bar

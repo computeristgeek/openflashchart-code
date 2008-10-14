@@ -37,7 +37,7 @@
 		}
 		
 		// Draw points...
-		public override function resize( sc:ScreenCoords ): void {
+		public override function resize( sc:ScreenCoordsBase ): void {
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
 				var e:PointScatter = this.getChildAt(i) as PointScatter;
@@ -49,7 +49,7 @@
 		// scatter charts can have many items at the same Y position
 		// so we need to figure out which one to pass back
 		//
-		public override function closest_2( x:Number, y:Number ): Object {
+		public function ___OLD___closest_2( x:Number, y:Number ): Object {
 			
 			var shortest:Number = Number.MAX_VALUE;
 			var dx:Number;
@@ -61,25 +61,7 @@
 			//
 			// get shortest distance along X
 			//
-			for( i=0; i < this.numChildren; i++ ) {
 			
-				// some of the children will will mask
-				// Sprites, so filter those out:
-				//
-				if( this.getChildAt(i) is Element ) {
-		
-					e = this.getChildAt(i) as Element;
-				
-					p = e.get_mid_point();
-					dx = Math.abs( x - p.x );
-				
-					if( dx < shortest )
-					{
-						shortest = dx;
-						x_pos = p.x;
-					}
-				}
-			}
 
 			var tmp:Array = new Array();
 			
@@ -115,7 +97,7 @@
 			}
 			
 			//
-			// TODO: this should be used in Base
+			// TODO: this is now done in tooltip
 			//
 			for ( i=0; i < this.numChildren; i++ ) {
 			

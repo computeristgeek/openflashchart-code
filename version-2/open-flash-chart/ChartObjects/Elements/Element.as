@@ -20,8 +20,8 @@
 		
 		public var index:Number;
 		
-		public var screen_x:Number;
-		public var screen_y:Number;
+		//public var screen_x:Number;
+		//public var screen_y:Number;
 		protected var tooltip:String;
 		private var link:String;
 		public var is_tip:Boolean;
@@ -32,10 +32,15 @@
 		
 		public function Element() {}
 		
-		public function resize( sc:ScreenCoords, axis:Number ):void {
-	
-			this.x = this.screen_x = sc.get_x_from_pos( this._x );
-			this.y = this.screen_y = sc.get_y_from_val( this._y, (axis==2) );
+		public function resize( sc:ScreenCoordsBase, axis:Number ):void {
+			
+			// because of radar co-ords:
+			// this.x = this.screen_x = sc.get_x_from_pos( this._x );
+			// this.y = this.screen_y = sc.get_y_from_val( this._y, (axis==2) );
+			
+			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this._x, this._y, (axis == 2) );
+			this.x = p.x;
+			this.y = p.y;
 		}
 		
 		//

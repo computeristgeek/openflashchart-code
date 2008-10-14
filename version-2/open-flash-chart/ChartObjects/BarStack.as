@@ -39,7 +39,7 @@
 		//
 		// override the default closest behaviour
 		//
-		public override function closest_2( x:Number, y:Number ): Object {
+		public override function closest_2( x:Number, y:Number ): Array {
 			var shortest:Number = Number.MAX_VALUE;
 			var closest:Element = null;
 			var dx:Number;
@@ -62,7 +62,7 @@
 			if( closest )
 				dy = Math.abs( y - closest.y );
 				
-			return { element:closest, distance_x:shortest, distance_y:dy };
+			return new Array();// TODO: FIX!! { element:closest, distance_x:shortest, distance_y:dy };
 		}
 		
 		

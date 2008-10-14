@@ -11,6 +11,7 @@
 			
 			this.visible = true;
 			
+			this.graphics.clear();
 			this.graphics.lineStyle( 0, 0, 0 );
 			this.graphics.beginFill( style.colour, 1 );
 			this.graphics.drawCircle( 0, 0, style['dot-size']);

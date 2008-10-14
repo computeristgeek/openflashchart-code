@@ -23,7 +23,7 @@
 				this.style.points.push( new flash.geom.Point( val.x, val.y ) );
 		}
 		
-		public override function resize( sc:ScreenCoords ): void {
+		public override function resize( sc:ScreenCoordsBase ): void {
 			
 			this.graphics.clear();
 			//this.graphics.lineStyle( this.style.width, this.style.colour );

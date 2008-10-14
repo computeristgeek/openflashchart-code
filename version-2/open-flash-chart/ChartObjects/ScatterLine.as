@@ -46,7 +46,7 @@
 
 		
 		// Draw points...
-		public override function resize( sc:ScreenCoords ): void {
+		public override function resize( sc:ScreenCoordsBase ): void {
 			
 			// move the dots:
 			super.resize( sc );
@@ -64,7 +64,7 @@
 		//
 		// This is cut and paste from LineBase
 		//
-		public function solid_line( sc:ScreenCoords ): void {
+		public function solid_line( sc:ScreenCoordsBase ): void {
 			
 			var first:Boolean = true;
 			
@@ -86,11 +86,11 @@
 					e.resize( sc, 0 );
 					if( first )
 					{
-						this.graphics.moveTo(e.screen_x,e.screen_y);
+						this.graphics.moveTo(e.x,e.y);
 						first = false;
 					}
 					else
-						this.graphics.lineTo(e.screen_x, e.screen_y);
+						this.graphics.lineTo(e.x, e.y);
 				}
 			}
 		}

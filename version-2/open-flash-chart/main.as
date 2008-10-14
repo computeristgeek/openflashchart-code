@@ -4,13 +4,14 @@ package  {
 	import ChartObjects.Elements.PieSlice;
 	import ChartObjects.Factory;
 	import ChartObjects.ObjectCollection;
+	import com.adobe.images.PNGEncoder;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.display.Sprite;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.display.StageAlign;
-    import flash.display.StageScaleMode;
+	import flash.display.StageScaleMode;
 	import labels.*;
 	import string.Utils;
 	import global.Global;
@@ -20,6 +21,10 @@ package  {
 	import flash.ui.ContextMenuItem;
 	import flash.events.IOErrorEvent;
 	import flash.events.ContextMenuEvent;
+	
+	import mx.utils.Base64Encoder;
+	// import com.dynamicflash.util.Base64;
+
 	
 //	import flash.text.TextField;
 	
@@ -37,9 +42,11 @@ package  {
 	
 	public class main extends Sprite {
 		
+		public  var VERSION:String = "2 beta 2";
 		private var title:Title = null;
 		private var x_labels:XAxisLabels;
 		private var x_axis:XAxis;
+		private var radar_axis:RadarAxis;
 		private var x_legend:XLegend;
 		private var y_axis:YAxisBase;
 		private var y_axis_right:YAxisBase;
@@ -52,6 +59,7 @@ package  {
 		private var tooltip:Tooltip;
 		private var background:Background;
 		private var ok:Boolean;
+		private var URL:String;		// ugh, vile. The IOError doesn't report the URL
 		
 		public function main() {
 
@@ -70,8 +78,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/y-axis-upside-down.txt";
-					//var file:String = "../../../test-data-files/test.json";
+					var file:String = "../data-files/scatter-line.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -83,7 +90,14 @@ package  {
 			ExternalInterface.addCallback("load", load);
 			
 			// inform javascript that it can call our save_image method
-			ExternalInterface.addCallback("save_image", save_image);
+			//ExternalInterface.addCallback("save_image", saveImage);
+			ExternalInterface.addCallback("get_img_binary",  getImgBinary);
+
+			// more interface
+			ExternalInterface.addCallback("get_version",	getVersion);
+			ExternalInterface.addCallback("get_graph",		getGraph);
+			ExternalInterface.addCallback("set_graph",		setGraph);
+			ExternalInterface.addCallback("update_graph",	updateGraph);
 			
 			// tell the web page that we are ready
 			if( parameters['id'] )
@@ -94,20 +108,50 @@ package  {
 			this.set_the_stage();
 		}
 		
+		public function getVersion():String {return VERSION;}
+		
+		// public function getImgBinary():String { return Base64.encodeByteArray(image_binary()); }
+		public function getImgBinary():String {
+			
+			var b64:Base64Encoder = new Base64Encoder();
+			b64.encodeBytes(image_binary());
+			tr.ace( b64 as String );
+			return b64 as String;
+		}
+		
+		public function saveImage(e:ContextMenuEvent):void {
+			
+			ExternalInterface.call("save_image");// , getImgBinary());
+		}
+
+		public function getGraph():Object {
+			return ''; /*Global.getJson()*/
+		}
+		
+	    public function setGraph(json:Object):void {
+			build_chart(json);
+		}
+		
+	    public function updateGraph(update:Object):void {
+			var g:Object = '';// Global.getJson();
+			if (g)
+				build_chart(object_helper.merge(update, g.json));
+		}
+
+	    private function image_binary() : ByteArray {
+			tr.ace('Saving image :: image_binary()');
+
+			var pngSource:BitmapData = new BitmapData(this.width, this.height);
+			pngSource.draw(this);
+			return PNGEncoder.encode(pngSource);
+	    }
+	
 		//
 		// External interface called by Javascript to
 		// save the flash as an image
 		//
 		public function save_image( url:String, callback:String, debug:Boolean ):void {
 			
-			tr.ace('@@@@-- Saving image --@@@@@');
-
-			var quality:Number = 90;
-
-			var jpgSource:BitmapData = new BitmapData(this.width, this.height);
-			jpgSource.draw(this);
-			var jpgEncoder:JPGEncoder = new JPGEncoder(quality);
-			var jpgStream:ByteArray = jpgEncoder.encode(jpgSource);
 			var header:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");
 
 			//Make sure to use the correct path to jpg_encoder_download.php
@@ -115,7 +159,7 @@ package  {
 			
 			jpgURLRequest.requestHeaders.push(header);
 			jpgURLRequest.method = URLRequestMethod.POST;
-			jpgURLRequest.data = jpgStream;
+			jpgURLRequest.data = image_binary();
 
 			if( debug )
 			{
@@ -127,7 +171,7 @@ package  {
 				var loader:URLLoader = new URLLoader();
 				loader.dataFormat = URLLoaderDataFormat.BINARY;
 				loader.addEventListener(Event.COMPLETE, function(e:Event):void {
-					tr.ace('Svaed image to:');
+					tr.ace('Saved image to:');
 					tr.ace( url );
 					//
 					// when the upload has finished call the user
@@ -177,7 +221,7 @@ package  {
 			
 			if( parameters['data-file'] )
 			{
-				tr.ace( 'Found parameter:' + parameters['data-file'] );
+				// tr.ace( 'Found parameter:' + parameters['data-file'] );
 				this.load_external_file( parameters['data-file'] );
 				//
 				// LOOK:
@@ -219,6 +263,8 @@ package  {
 		}
 		
 		private function load_external_file( file:String ):void {
+			
+			this.URL = file;
 			//
 			// LOAD THE DATA
 			//
@@ -235,7 +281,7 @@ package  {
 			// remove the 'loading data...' msg:
 			this.removeChildAt(0);
 			var msg:ErrorMsg = new ErrorMsg( 'Open Flash Chart\nIO ERROR\nLoading test data\n' + e.text );
-			//msg.add_html( 'Click here to open your JSON file: <a href="http://a.com">asd</a>' );
+			msg.add_html( 'This is the URL that I tried to open:<br><a href="'+this.URL+'">'+this.URL+'</a>' );
 			this.addChild( msg );
 		}
 		
@@ -243,7 +289,10 @@ package  {
 			
 			// remove the 'loading data...' msg:
 			this.removeChildAt(0);
-			this.addChild( new ErrorMsg( msg ) );
+
+			var m:ErrorMsg = new ErrorMsg( msg );
+			//m.add_html( 'Click here to open your JSON file: <a href="http://a.com">asd</a>' );
+			this.addChild(m);
 		}
 
 		public function get_x_legend() : XLegend {
@@ -264,34 +313,39 @@ package  {
             this.stage.addEventListener(Event.RESIZE, this.resizeHandler);
 			this.stage.addEventListener(Event.MOUSE_LEAVE, this.mouseOut);
 			
-			
-			
+			//
+			// TODO: check and remove
+			//
 			//this.stage.addEventListener( ShowTipEvent.SHOW_TIP_TYPE, this.show_tip );
-			this.stage.addEventListener( ShowTipEvent.SHOW_TIP_TYPE, this.show_tip );
-			this.addEventListener( MouseEvent.MOUSE_OVER, this.show_tip2 );
+			//this.stage.addEventListener( ShowTipEvent.SHOW_TIP_TYPE, this.show_tip );
 			//this.stage.addEventListener( Event..MIDDLE_CLICK, this.show_tip );
-		}
-		
-		private function show_tip( event:ShowTipEvent ):void {
-			tr.ace( 'show_tip: over '+event.pos );
-		}
-		
-		private function show_tip2( event:MouseEvent ):void {
-			tr.ace( 'over ' + event.target );
 			
-			this.mouseMove( event );
+			this.addEventListener( MouseEvent.MOUSE_OVER, this.mouseMove );
 		}
+		
+//		private function show_tip( event:ShowTipEvent ):void {
+//			tr.ace( 'show_tip: over '+event.pos );
+//		}
+//		private function show_tip2( event:MouseEvent ):void {
+//			
+//			this.mouseMove( event );
+//		}
 		
 		private function mouseMove( event:Event ):void {
-//			if( this.sc.get_x_pos( this.mouseX ) > this.sc.get_x_pos(0) )
-
+			// tr.ace( 'over ' + event.target );
 			// tr.ace('move ' + Math.random().toString());
+			// tr.ace( this.tooltip.get_tip_style() );
+			
 			switch( this.tooltip.get_tip_style() ) {
 				case Tooltip.CLOSEST:
 					this.mouse_move_closest( event );
 					break;
 					
-				case Tooltip.FOLLOW:
+				case Tooltip.PROXIMITY:
+				tr.ace('prox');
+					this.mouse_move_proximity( event as MouseEvent );
+					break;
+					
 				case Tooltip.NORMAL:
 					this.mouse_move_follow( event as MouseEvent );
 					break;
@@ -311,15 +365,19 @@ package  {
 				this.tooltip.hide();
 		}
 		
+		private function mouse_move_proximity( event:MouseEvent ):void {
+
+			tr.ace( event.currentTarget );
+			tr.ace( event.target );
+			tr.ace( '@@' );
+			var elements:Array = this.obs.mouse_move_proximity( this.mouseX, this.mouseY );
+			this.tooltip.closest( elements );
+		}
+		
 		private function mouse_move_closest( event:Event ):void {
 			
-			//
-			// old way of getting tooltip pos
-			//
-			//var e:Element = this.obs.mouse_move( this.mouseX, this.mouseY );
-			
-			var e:Element = this.obs.mouse_move_2( this.mouseX, this.mouseY );
-			this.tooltip.closest( e );
+			var elements:Array = this.obs.closest_2( this.mouseX, this.mouseY );
+			this.tooltip.closest( elements );
 		}
 		
 		private function activateHandler(event:Event):void {
@@ -336,6 +394,8 @@ package  {
 		// have all the extras (X,Y axis, legends etc..)
 		//
 		private function resize_pie(): void {
+			
+			// should this be here?
 			this.addEventListener(MouseEvent.MOUSE_MOVE, this.mouseMove);
 			
 			this.background.resize();
@@ -350,11 +410,42 @@ package  {
 			// TODO: hook into the mouse move events for tooltips
 		}
 		
+		//
+		//
+		private function resize_radar(): void {
+			
+			this.addEventListener(MouseEvent.MOUSE_MOVE, this.mouseMove);
+			
+			this.background.resize();
+			this.title.resize();
+			this.keys.resize( 0, this.title.get_height() );
+				
+			var top:Number = this.title.get_height() + this.keys.get_height();
+			
+			// this object is used in the mouseMove method
+			var sc:ScreenCoordsRadar = new ScreenCoordsRadar(top, 0, this.stage.stageWidth, this.stage.stageHeight);
+			
+			sc.set_max( this.radar_axis.get_max() );
+			sc.set_angles( this.obs.get_max_x() );
+			
+			// resize the axis first because they may
+			// change the radius (to fit the labels on screen)
+			this.radar_axis.resize( sc );
+			this.obs.resize( sc );
+		}
+		
 		private function resize():void {
+			//
+			// the chart is async, so we may get this
+			// event before the chart has loaded, or has
+			// partly loaded
+			//
 			if ( !this.ok )
 				return;			// <-- something is wrong
 		
-			if ( this.obs.has_pie() )
+			if ( this.radar_axis != null )
+				this.resize_radar();
+			else if ( this.obs.has_pie() )
 				this.resize_pie();
 			else
 				this.resize_chart();
@@ -467,7 +558,13 @@ package  {
 				// remove 'loading data...' msg:
 				this.removeChildAt(0);
 				this.build_chart( json );
+				
+				// force this to be garbage collected
+				// get_graph() ?!?!?!?
+				json = null;
 			}
+			
+			json_string = '';
 		}
 		
 		private function build_chart( json:Object ):void {
@@ -480,10 +577,25 @@ package  {
 			NumberFormat.getInstance( json );
 			NumberFormat.getInstanceY2( json );
 
+			// Tooltip does not work like the rest : why?
 			//
-			this.tooltip	= new Tooltip( json.tooltip );
+			// TODO: sort this out - reload problem??
+			//
+//			if (json.tooltip == null && this.tooltip != null)
+//			{
+//				tr.ace("keep old tooltip")
+//				tr.ace(this.tooltip)
+//			} else {
+//				tr.ace("found json.tooltip : ")
+//				tr.ace_json(json.tooltip)
+				this.tooltip	= new Tooltip( json.tooltip )
+//			}
 			var g:Global = Global.getInstance();
 			g.set_tooltip_string( this.tooltip.tip_text );
+//
+// TODO: why is this here?
+//
+//			g.json = json;
 			//
 		
 			//
@@ -494,15 +606,35 @@ package  {
 			this.addChild( this.background );
 			//
 			
-
-			if( !JsonInspector.has_pie_chart( json ) )
+			if ( JsonInspector.is_radar( json ) ) {
+				
+				//
+				//
+				//
+				this.title		= new Title( {
+					text:"Open Flash Chart DEMO",
+					style:"{font-size: 20px; color: #FF0000}"
+					} );
+				//
+				//
+				//
+				
+				this.obs = Factory.MakeChart( json );
+				this.radar_axis = new RadarAxis( json.radar_axis );
+				this.keys = new Keys( this.obs );
+				
+				this.addChild( this.radar_axis );
+				this.addChild( this.keys );
+				
+			}
+			else if( !JsonInspector.has_pie_chart( json ) )
 				this.build_chart_background( json );
 			else
 			{
-				
+				// this is a PIE chart
 				this.obs = Factory.MakeChart( json );
 				// PIE charts default to FOLLOW tooltips
-				this.tooltip.set_tip_style( Tooltip.FOLLOW );
+				this.tooltip.set_tip_style( Tooltip.NORMAL );
 			}
 
 			// these are added in the Flash Z Axis order
@@ -603,6 +735,8 @@ package  {
 			var cm:ContextMenu = new ContextMenu();
 			cm.addEventListener(ContextMenuEvent.MENU_SELECT, onContextMenuHandler);
 			cm.hideBuiltInItems();
+
+			// OFC CREDITS
 			var fs:ContextMenuItem = new ContextMenuItem("Charts by Open Flash Chart 2" );
 			fs.addEventListener(
 				ContextMenuEvent.MENU_ITEM_SELECT,
@@ -612,6 +746,11 @@ package  {
 					flash.net.navigateToURL(request, '_blank');
 				});
 			cm.customItems.push( fs );
+			
+			var dl:ContextMenuItem = new ContextMenuItem("Save Image Locally" );
+			dl.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, this.saveImage);
+			cm.customItems.push( dl );
+			
 			this.contextMenu = cm;
 		}
 		

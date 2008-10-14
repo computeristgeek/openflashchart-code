@@ -24,10 +24,12 @@
 		//
 		// BUG: we assume that all are positive numbers:
 		//
-		public override function resize( sc:ScreenCoords, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
 			this.graphics.clear();
 			
-			var tmp:Object = sc.get_bar_coords( this.index, this.group );
+			var sc2:ScreenCoords = sc as ScreenCoords;
+			
+			var tmp:Object = sc2.get_bar_coords( this.index, this.group );
 			
 			// move the Sprite into position:
 			this.x = tmp.x;

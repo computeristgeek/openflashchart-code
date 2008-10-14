@@ -10,9 +10,9 @@ package ChartObjects.Elements {
 			super(index, style, style.colour, style.tip, group);
 		}
 		
-		public override function resize( sc:ScreenCoords, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
 			
-			var h:Object = this.resize_helper( sc, axis );
+			var h:Object = this.resize_helper( sc as ScreenCoords, axis );
 			
 			this.graphics.clear();
 			this.graphics.beginFill( this.colour, 1.0 );

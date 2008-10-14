@@ -6,6 +6,7 @@ package {
 	import caurina.transitions.Equations;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.filters.DropShadowFilter;
@@ -22,13 +23,13 @@ package {
 		private var style:Object;
 		
 		private var tip_style:Number;
-		private var cached_element:Element;
+		private var cached_elements:Array;
 		private var tip_showing:Boolean;
 		
 		public var tip_text:String;
 		
 		public static const CLOSEST:Number = 0;
-		public static const FOLLOW:Number = 1;
+		public static const PROXIMITY:Number = 1;
 		public static const NORMAL:Number = 2;		// normal tooltip (ugh -- boring!!)
 		
 		public function Tooltip( json:Object )
@@ -79,6 +80,7 @@ package {
 			
 			this.tip_style = this.style.mouse;
 			this.tip_text = this.style.text;
+			this.cached_elements = [];
 			
 			if( this.style.shadow==1 )
 			{
@@ -94,19 +96,67 @@ package {
 			}
 		}
 		
-		public function make_tip( e:Element ):void {
-			tr.ace( 'make tip') ;
+		public function make_tip( elements:Array ):void {
+			
 			this.graphics.clear();
+			
+			while( this.numChildren > 0 )
+				this.removeChildAt(0);
+
+			var height:Number = 0;
+			var x:Number = 5;
+			
+			for each ( var e:Element in elements ) {
+				
+				var o:Object = this.make_one_tip(e, x);
+				height = Math.max(height, o.height);
+				x += o.width + 2;
+			}
+			
+			this.graphics.lineStyle(this.style.stroke, this.style.colour, 1);
+			this.graphics.beginFill(this.style.background, 1);
+		
+			this.graphics.drawRoundRect(
+				0,0,
+				width+10, height + 5,
+				6,6 );
+		}
+			
+		private function make_one_tip( e:Element, x:Number ):Object {
 			
 			var tt:String = e.get_tooltip();
 			var lines:Array = tt.split( '<br>' );
 			
-			if( lines.length > 1 )
-				this.title.htmlText = lines.shift();
-			else
-				this.title.htmlText = '';
-
+			var top:Number = 5;
+			var width:Number = 0;
+			
+			if ( lines.length > 1 ) {
 				
+				var title:TextField = this.make_title(lines.shift());
+				title.x = x;
+				title.y = top;
+				top += title.height;
+				width = title.width;
+				
+				this.addChild( title );
+			}
+			
+			var text:TextField = this.make_body(lines.join( '\n' ));
+			text.x = x;
+			text.y = top;
+			width = Math.max( width, text.width );
+			this.addChild( text );
+			
+			top += text.height;
+			return {width:width, height:top};
+		}
+
+		private function make_title( text:String ):TextField {
+			
+			var title:TextField = new TextField();
+			title.mouseEnabled = false;
+			
+			title.htmlText =  text;
 			/*
 			 * 
 			 * Start thinking about just using html formatting 
@@ -122,42 +172,39 @@ package {
 			fmt.bold = (this.style.title.font_weight=="bold");
 			fmt.size = this.style.title.font_size;
 			fmt.align = "right";
-			this.title.setTextFormat(fmt);
-			this.title.autoSize="left";
-		
-			this.text.y = this.title.height;
+			title.setTextFormat(fmt);
+			title.autoSize = "left";
 			
-			this.text.htmlText = lines.join( '\n' );
+			return title;
+		}			
+			
+		private function make_body( body:String ):TextField {
+			
+			var text:TextField = new TextField();
+			text.mouseEnabled = false;
+			
+			text.htmlText =  body;
 			var fmt2:TextFormat = new TextFormat();
 			fmt2.color = this.style.body.color;
 			fmt2.font = "Verdana";
 			fmt2.bold = (this.style.body.font_weight=="bold");
 			fmt2.size = this.style.body.font_size;
 			fmt2.align = "left";
-			this.text.setTextFormat(fmt2);
-			this.text.autoSize="left";
+			text.setTextFormat(fmt2);
+			text.autoSize="left";
 			
-			this.graphics.lineStyle(this.style.stroke, this.style.colour, 1);
-			this.graphics.beginFill(this.style.background, 1);
-		
-			var max_width:Number = Math.max( this.title.width, this.text.width );
-			
-			this.graphics.drawRoundRect(
-				0,0,
-				max_width+10, this.title.height + this.text.height + 5,
-				6,6 );
+			return text;
 		}
 		
 		private function get_pos( e:Element ):flash.geom.Point {
 
 			var pos:Object = e.get_tip_pos();
-			var max_width:Number = Math.max( this.title.width, this.text.width );
 			
-			var x:Number = (pos.x + max_width + 16) > this.stage.stageWidth ? (this.stage.stageWidth - max_width - 16) : pos.x;
+			var x:Number = (pos.x + this.width + 16) > this.stage.stageWidth ? (this.stage.stageWidth - this.width - 16) : pos.x;
 			
 			var y:Number = pos.y;
 			y -= 4;
-			y -= (this.text.height + this.title.height + 10 ); // 10 == border size
+			y -= (this.height + 10 ); // 10 == border size
 			
 			if( y < 0 )
 			{
@@ -206,7 +253,7 @@ package {
 		
 		public function draw( e:Element ):void {
 
-			if ( this.cached_element == e )
+			if ( this.cached_elements[0] == e )
 			{
 				// if the tip is showing, don't make it 
 				// show again because this makes it flicker
@@ -219,35 +266,36 @@ package {
 				// this is a new tooltip, tell
 				// the old highlighted item to
 				// return to ground state
-				if (this.cached_element)
-				{
-					this.cached_element.set_tip( false );
-					tr.ace( this.cached_element );
-				}
+				this.untip();
 				
 				// get the new text and recreate it
-				this.cached_element = e;
+				this.cached_elements = [e];
 				
-				this.make_tip( e );
+				this.make_tip( [e] );
 				this.show_tip(e);
 			}
 		}
 		
-		public function closest( e:Element ):void {
+		public function closest( elements:Array ):void {
 
-			if( e == null )
-				return;
-				
-			if ( this.cached_element == e )
+			if( elements.length == 0 )
 				return;
 			
-			if( this.cached_element != null )
-				this.cached_element.set_tip( false );
-				
-			this.cached_element = e;
-			this.make_tip( e );
+			if( this.is_cached( elements ) )
+				return;
+			
+			this.untip();
+			this.cached_elements = elements;
+			this.tip();
 
-			var p:flash.geom.Point = this.get_pos( e );
+			//
+			//tr.ace( 'make new tooltip' );
+			//tr.ace( Math.random() );
+			//
+			
+			this.make_tip( elements );
+
+			var p:flash.geom.Point = this.get_pos( elements[0] );
 			
 			this.visible = true;
 			
@@ -255,8 +303,37 @@ package {
 			Tweener.addTween(this, { y:p.y, time:0.3, transition:Equations.easeOutExpo } );
 		}
 		
+		//
+		// TODO: if elements has 1 item and cached_elements has 2
+		//       one of which is in elements, this function
+		//       returns true which is wrong
+		//
+		private function is_cached( elements:Array ):Boolean {
+			
+			if ( this.cached_elements.length == 0 )
+				return false;
+				
+			for each( var e:Element in elements )
+				if ( this.cached_elements.indexOf(e) == -1 )
+					return false;
+					
+			return true;
+		}
+		
+		private function untip():void {
+			for each( var e:Element in this.cached_elements )
+				e.set_tip( false );
+		}
+		
+		private function tip():void {
+			for each( var e:Element in this.cached_elements )
+				e.set_tip( true );
+		}
+		
 		private function hideAway() : void {
 			this.visible = false;
+			this.untip();
+			this.cached_elements = new Array();
 			this.alpha = 1;
 		}
 		

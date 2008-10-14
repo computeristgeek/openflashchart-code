@@ -3,6 +3,7 @@
 	import ChartObjects.Elements.PointDotBase;
 	import string.Utils;
 	import flash.display.BlendMode;
+	import flash.geom.Point;
 	
 	public class AreaBase extends LineBase {
 		
@@ -19,7 +20,8 @@
 				'font-size':	10,
 				'fill-alpha':	0.6,
 				tip:			'#val#',
-				'line-style':	new LineStyle( json['line-style'] )
+				'line-style':	new LineStyle( json['line-style'] ),
+				loop:			false		// < for radar charts
 			};
 			
 			object_helper.merge_2( json, this.style );
@@ -51,11 +53,12 @@
 			return new ChartObjects.Elements.Point( index, s );
 		}
 		
-		public override function resize(sc:ScreenCoords):void {
+		public override function resize(sc:ScreenCoordsBase):void {
 			
+			this.graphics.clear();
 			// now draw the line + hollow dots
 			super.resize(sc);
-						
+			
 			var x:Number;
 			var y:Number;
 			var last:PointDotBase;
@@ -72,27 +75,45 @@
 					
 					// tell the point where it is on the screen
 					// we will use this info to place the tooltip
-					x = sc.get_x_from_pos(e._x);
-					y = sc.get_y_from_val(e._y);
+					var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( e._x, e._y );
+					//x = sc.get_x_from_pos(e._x);
+					//y = sc.get_y_from_val(e._y);
+					
+					
 					if( first )
 					{
-						// draw line from Y=0 up to Y pos
-						this.graphics.moveTo( x, sc.get_y_bottom(false) );
+						
+						
+						if (this.style.loop)
+						{
+							// assume we are in a radar chart
+							this.graphics.moveTo( p.x, p.y );
+							x = p.x;
+							y = p.y;
+						}
+						else
+						{
+							// draw line from Y=0 up to Y pos
+							this.graphics.moveTo( p.x, sc.get_y_bottom(false) );
+							this.graphics.lineTo( p.x, p.y );
+						}
 						this.graphics.lineStyle(0,0,0);
 						this.graphics.beginFill( this.style.fill, this.style['fill-alpha'] );
-						this.graphics.lineTo( x, y );
 						first = false;
 					}
 					else
 					{
-						this.graphics.lineTo( x, y );
+						this.graphics.lineTo( p.x, p.y );
 						last = e;
 					}
 				}
 			}
 			
-			if( last != null )
-				this.graphics.lineTo( sc.get_x_from_pos(last._x), sc.get_y_bottom(false) );
+			if ( last != null ) {
+				if ( !this.style.loop) {
+					this.graphics.lineTo( sc.get_x_from_pos(last._x), sc.get_y_bottom(false) );
+				}
+			}
 				
 			this.graphics.endFill();
 		}

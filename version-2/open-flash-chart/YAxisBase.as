@@ -39,6 +39,10 @@ package {
 			this.stroke = style.stroke;
 			this.tick_length = style['tick-length'];
 			
+			// try to avoid infinate loops...
+			if ( this.style.steps == 0 )
+				this.style.steps = 1;
+			
 			this.offset = { 'offset':style.offset, 'value':style.steps };
 			
 		}

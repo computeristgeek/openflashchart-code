@@ -176,7 +176,7 @@
 		}
 		
 		
-		public override function resize( sc:ScreenCoords ): void {
+		public override function resize( sc:ScreenCoordsBase ): void {
 
 			var radius:Number = ( Math.min( sc.width, sc.height ) / 2.0 );
 		

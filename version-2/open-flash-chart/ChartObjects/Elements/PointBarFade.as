@@ -9,7 +9,7 @@
 			super(index,value,colour,'',group);
 		}
 		
-		public override function resize( sc:ScreenCoords, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
 			/*
 			var tmp:Object = sc.get_bar_coords(this._x,this.group);
 			this.screen_x = tmp.x;
@@ -30,7 +30,7 @@
 				height = bar_bottom-this.screen_y;
 			}
 			*/
-			var h:Object = this.resize_helper( sc, axis );
+			var h:Object = this.resize_helper( sc as ScreenCoords, axis );
 			
 			this.graphics.clear();
 			this.graphics.beginFill( this.colour, 1.0 );

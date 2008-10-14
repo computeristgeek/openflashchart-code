@@ -97,8 +97,8 @@
 		//
 		// the axis makes no sense here, let's override with null and write our own.
 		//
-		public override function resize( sc:ScreenCoords, axis:Number ): void { }
-		public function pie_resize( sc:ScreenCoords, radius:Number): void {
+		public override function resize( sc:ScreenCoordsBase, axis:Number ): void { }
+		public function pie_resize( sc:ScreenCoordsBase, radius:Number): void {
 			
 			this.x = sc.get_center_x();
 			this.y = sc.get_center_y();

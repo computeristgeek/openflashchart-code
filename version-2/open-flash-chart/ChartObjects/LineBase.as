@@ -15,7 +15,7 @@
 		public function LineBase() {}
 		
 		// Draw lines...
-		public override function resize( sc:ScreenCoords ): void {
+		public override function resize( sc:ScreenCoordsBase ): void {
 			this.x = this.y = 0;
 
 			this.graphics.clear();
@@ -28,13 +28,17 @@
 		
 		}
 		
-		public function solid_line( sc:ScreenCoords ): void {
+		public function solid_line( sc:ScreenCoordsBase ): void {
 			
 			var first:Boolean = true;
+			var i:Number;
+			var tmp:Sprite;
+			var x:Number;
+			var y:Number;
 			
-			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				
-				var tmp:Sprite = this.getChildAt(i) as Sprite;
+			for ( i=0; i < this.numChildren; i++ ) {
+
+				tmp = this.getChildAt(i) as Sprite;
 				
 				//
 				// filter out the line masks
@@ -43,24 +47,29 @@
 				{
 					var e:Element = tmp as Element;
 					
-					// tr.ace(e.screen_x);
-					
 					// tell the point where it is on the screen
 					// we will use this info to place the tooltip
 					e.resize( sc, 0 );
 					if( first )
 					{
-						this.graphics.moveTo(e.screen_x,e.screen_y);
+						this.graphics.moveTo(e.x, e.y);
+						x = e.x;
+						y = e.y;
 						first = false;
 					}
 					else
-						this.graphics.lineTo(e.screen_x, e.screen_y);
+						this.graphics.lineTo(e.x, e.y);
 				}
+			}
+			
+			if ( this.style.loop ) {
+				// close the line loop (radar charts)
+				this.graphics.lineTo(x, y);
 			}
 		}
 		
 		// Dashed lines by Arseni
-		public function dash_line( sc:ScreenCoords ): void {
+		public function dash_line( sc:ScreenCoordsBase ): void {
 			
 			var first:Boolean = true;
 			
@@ -86,22 +95,22 @@
 					e.resize( sc, 0 );
 					if( first )
 					{
-						this.graphics.moveTo(e.screen_x, e.screen_y);
+						this.graphics.moveTo(e.x, e.y);
 						on_len_left = on_len;
 						off_len_left = off_len;
 						now_on = true;
 						first = false;
-						prev_x = e.screen_x;
-						prev_y = e.screen_y;
+						prev_x = e.x;
+						prev_y = e.y;
 						var x_tmp_1:Number = prev_x;
 						var x_tmp_2:Number;
 						var y_tmp_1:Number = prev_y;
 						var y_tmp_2:Number;						
 					}
 					else {
-						var part_len:Number = Math.sqrt((e.screen_x - prev_x) * (e.screen_x - prev_x) + (e.screen_y - prev_y) * (e.screen_y - prev_y) );
-						var sinus:Number = ((e.screen_y - prev_y) / part_len); 
-						var cosinus:Number = ((e.screen_x - prev_x) / part_len); 
+						var part_len:Number = Math.sqrt((e.x - prev_x) * (e.x - prev_x) + (e.y - prev_y) * (e.y - prev_y) );
+						var sinus:Number = ((e.y - prev_y) / part_len); 
+						var cosinus:Number = ((e.x - prev_x) / part_len); 
 						var part_len_left:Number = part_len;
 						var inside_part:Boolean = true;
 							
@@ -121,8 +130,8 @@
 									off_len_left = off_len;															
 								} else {
 									//Does not fit - draw part of the stroke
-									x_tmp_2 = e.screen_x;
-									y_tmp_2 = e.screen_y;
+									x_tmp_2 = e.x;
+									y_tmp_2 = e.y;
 									x_tmp_1 = x_tmp_2;
 									y_tmp_1 = y_tmp_2;
 									on_len_left = on_len_left - part_len_left;
@@ -143,8 +152,8 @@
 									on_len_left = on_len;
 								} else {
 									//Does not fit - draw part of the space
-									x_tmp_2 = e.screen_x;									
-									y_tmp_2 = e.screen_y;									
+									x_tmp_2 = e.x;									
+									y_tmp_2 = e.y;									
 									x_tmp_1 = x_tmp_2;
 									y_tmp_1 = y_tmp_2;
 									off_len_left = off_len_left - part_len_left;
@@ -154,8 +163,8 @@
 							}
 						}
 					}
-					prev_x = e.screen_x;
-					prev_y = e.screen_y;
+					prev_x = e.x;
+					prev_y = e.y;
 				}
 			}
 		}

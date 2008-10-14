@@ -22,7 +22,8 @@ package ChartObjects {
 				'font-size': 	12,
 				tip:			'#val#',
 				'line-style':	new LineStyle( json['line-style'] ),
-				'on-click':		null
+				'on-click':		null,
+				loop:			false
 			};
 			
 			object_helper.merge_2( json, this.style );

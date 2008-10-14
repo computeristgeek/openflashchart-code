@@ -57,9 +57,9 @@ package {
 			for ( i=0; i < this.numChildren; i++ ) {
 				tf = this.getChildAt(i) as TextFieldY;
 				
-				tr.ace( '***' );
-				tr.ace( tf.y_val );
-				tr.ace( sc.get_y_from_val( tf.y_val, false ) );
+				// tr.ace( '***' );
+				// tr.ace( tf.y_val );
+				// tr.ace( sc.get_y_from_val( tf.y_val, false ) );
 				
 				tf.y = sc.get_y_from_val( tf.y_val, false ) - (tf.height/2);
 			}

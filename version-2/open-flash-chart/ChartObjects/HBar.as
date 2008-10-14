@@ -66,7 +66,7 @@
 			return new PointHBar( index, default_style, this.group );
 		}
 		
-		public override function resize( sc:ScreenCoords ): void {
+		public override function resize( sc:ScreenCoordsBase ): void {
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{

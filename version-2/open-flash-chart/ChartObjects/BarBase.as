@@ -55,7 +55,7 @@
 		// I'll flip a coin and see what happens. It was heads. What does it mean? Mmmmm.... red wine....
 		// Fuck it, I'm passing it in. Makes the resize method messy, but keeps the PointBarBase clean.
 		//
-		public override function resize( sc:ScreenCoords ): void {
+		public override function resize( sc:ScreenCoordsBase ): void {
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
