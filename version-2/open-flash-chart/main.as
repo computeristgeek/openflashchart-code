@@ -611,10 +611,10 @@ package  {
 				//
 				//
 				//
-				this.title		= new Title( {
-					text:"Open Flash Chart DEMO",
-					style:"{font-size: 20px; color: #FF0000}"
-					} );
+				//this.title		= new Title( {
+				//	text:"Open Flash Chart DEMO",
+				//	style:"{font-size: 20px; color: #FF0000}"
+				//	} );
 				//
 				//
 				//
