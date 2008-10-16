@@ -42,5 +42,10 @@ class tooltip
 	{
 		$this->mouse = 1;
 	}
+	
+	function set_hover()
+	{
+		$this->mouse = 2;
+	}
 }
 

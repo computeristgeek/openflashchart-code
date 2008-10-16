@@ -79,7 +79,8 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/scatter-line.txt";
+					//var file:String = "../data-files/radar-axis-tooltip-hover.txt";
+					var file:String = "../../../test-data-files/area-bug-gs.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {

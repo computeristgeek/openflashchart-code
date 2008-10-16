@@ -71,7 +71,7 @@ package {
 			
 			this.offset = null;
 			this.style = null;
-			this.labels.die();
+			if (this.labels != null) this.labels.die();
 			this.labels = null;
 			
 			this.graphics.clear();

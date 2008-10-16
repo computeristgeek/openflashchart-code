@@ -2,10 +2,15 @@
 
 class hbar_value
 {
-	function hbar_value( $left, $right )
+	function hbar_value( $left, $right=null )
 	{
-		$this->left = $left;
-		$this->right = $right;
+		if( isset( $right ) )
+		{
+			$this->left = $left;
+			$this->right = $right;
+		}
+		else
+			$this->right = $left;
 	}
 	
 	function set_colour( $colour )
@@ -31,6 +36,12 @@ class hbar
 	function append_value( $v )
 	{
 		$this->values[] = $v;		
+	}
+	
+	function set_values( $v )
+	{
+		foreach( $v as $val )
+			$this->append_value( new hbar_value( $val ) );
 	}
 	
 	function set_colour( $colour )
