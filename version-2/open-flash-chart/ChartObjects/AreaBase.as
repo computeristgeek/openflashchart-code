@@ -4,6 +4,8 @@
 	import string.Utils;
 	import flash.display.BlendMode;
 	import flash.geom.Point;
+	import flash.display.Sprite;
+	
 	
 	public class AreaBase extends LineBase {
 		
@@ -21,7 +23,7 @@
 				'fill-alpha':	0.6,
 				tip:			'#val#',
 				'line-style':	new LineStyle( json['line-style'] ),
-				loop:			false		// < for radar charts
+				loop:			false		// <-- for radar charts
 			};
 			
 			object_helper.merge_2( json, this.style );
@@ -59,51 +61,51 @@
 			// now draw the line + hollow dots
 			super.resize(sc);
 			
-			var x:Number;
-			var y:Number;
-			var last:PointDotBase;
+			var last:Element;
 			var first:Boolean = true;
+			var tmp:Sprite;
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
 				
-				//
+				tmp = this.getChildAt(i) as Sprite;
+				
 				// filter out the masks
-				//
-				if( this.getChildAt(i) is PointDotBase ) {
+				if( tmp is Element ) {
 					
-					var e:PointDotBase = this.getChildAt(i) as PointDotBase;
-					
-					// tell the point where it is on the screen
-					// we will use this info to place the tooltip
-					var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( e._x, e._y );
-					//x = sc.get_x_from_pos(e._x);
-					//y = sc.get_y_from_val(e._y);
-					
-					
+					var e:Element = tmp as Element;
+					tr.ace(e.index);
+					tr.ace(e.x + ', ' + e.y);
 					if( first )
 					{
 						
+						first = false;
 						
+						this.style.loop = false;
 						if (this.style.loop)
 						{
 							// assume we are in a radar chart
-							this.graphics.moveTo( p.x, p.y );
-							x = p.x;
-							y = p.y;
+							this.graphics.moveTo( e.x, e.y );
 						}
 						else
 						{
 							// draw line from Y=0 up to Y pos
-							this.graphics.moveTo( p.x, sc.get_y_bottom(false) );
-							this.graphics.lineTo( p.x, p.y );
+							this.graphics.moveTo( e.x, sc.get_y_bottom(false) );
 						}
+						
+						//
+						// TO FIX BUG: you must do a graphics.moveTo before
+						//             starting a fill:
+						//
 						this.graphics.lineStyle(0,0,0);
 						this.graphics.beginFill( this.style.fill, this.style['fill-alpha'] );
-						first = false;
+						
+						if (!this.style.loop)
+							this.graphics.lineTo( e.x, e.y );
+						
 					}
 					else
 					{
-						this.graphics.lineTo( p.x, p.y );
+						this.graphics.lineTo( e.x, e.y );
 						last = e;
 					}
 				}
@@ -111,10 +113,11 @@
 			
 			if ( last != null ) {
 				if ( !this.style.loop) {
-					this.graphics.lineTo( sc.get_x_from_pos(last._x), sc.get_y_bottom(false) );
+					this.graphics.lineTo( last.x, sc.get_y_bottom(false) );
 				}
 			}
-				
+			
+
 			this.graphics.endFill();
 		}
 	}
