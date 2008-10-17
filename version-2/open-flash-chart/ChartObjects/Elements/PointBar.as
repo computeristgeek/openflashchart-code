@@ -1,7 +1,6 @@
 package ChartObjects.Elements {
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	import org.flashdevelop.utils.FlashConnect;
 	
 	public class PointBar extends PointBarBase {
 	

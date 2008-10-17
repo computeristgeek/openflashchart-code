@@ -62,10 +62,6 @@
 			t = t.replace('#bottom#', NumberUtils.formatNumber( this.bottom ));
 			t = t.replace('#val#', NumberUtils.formatNumber( this.top - this.bottom ));
 			
-			// Warning: this is our global singleton
-			var g:Global = Global.getInstance();
-			//t = t.replace('#x_label#', g.get_x_label(this.index) );
-			
 			return t;
 		}
 		
