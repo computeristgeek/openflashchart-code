@@ -80,7 +80,6 @@
 						
 						first = false;
 						
-						this.style.loop = false;
 						if (this.style.loop)
 						{
 							// assume we are in a radar chart

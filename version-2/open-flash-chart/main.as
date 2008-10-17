@@ -79,7 +79,11 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/area-line.txt";
+					//var file:String = "../data-files/radar-area.txt";
+					//this.load_external_file( file );
+					var file:String = "../data-files/radar-area.txt";
+					this.load_external_file( file );
+					file = "../data-files/area-2.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -444,6 +448,9 @@ package  {
 			if ( !this.ok )
 				return;			// <-- something is wrong
 		
+			tr.ace(this.radar_axis);
+			tr.ace(this.obs.has_pie());
+			
 			if ( this.radar_axis != null )
 				this.resize_radar();
 			else if ( this.obs.has_pie() )
@@ -459,6 +466,7 @@ package  {
 			// items near the mouse, so hook into the
 			// mouse move event:
 			//
+			tr.ace( '@@@@@@');
 			this.addEventListener(MouseEvent.MOUSE_MOVE, this.mouseMove);
 	
 			// FlashConnect.trace("stageWidth: " + stage.stageWidth + " stageHeight: " + stage.stageHeight);
@@ -478,7 +486,7 @@ package  {
 			right -= this.y_legend_2.get_width();
 			//right -= this.y_labels_right.get_width();
 			right -= this.y_axis_right.get_width();
-			
+			tr.ace( '@@@@@@');
 			// this object is used in the mouseMove method
 			this.sc = new ScreenCoords(
 				top, left, right, bottom,
@@ -698,14 +706,13 @@ package  {
 				//range set, but no labels...
 				this.x_labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
 			}
-
+			
 			// access all our globals through this:
 			var g:Global = Global.getInstance();
 			// this is needed by all the elements tooltip
 			g.x_labels = this.x_labels;
 			g.x_legend = this.x_legend;
 
-			
 			//  can pick up X Axis labels for the
 			// tooltips
 			this.obs.tooltip_replace_labels( this.x_labels );
@@ -746,11 +753,28 @@ package  {
 			if ( this.radar_axis != null )	this.radar_axis.die();
 			if ( this.background != null )	this.background.die();
 			
+			this.tooltip = null;
+			this.x_legend = null;
+			this.y_legend = null;
+			this.y_legend_2 = null;
+			this.x_labels = null;
+			this.y_axis = null;
+			this.y_axis_right = null;
+			this.x_axis = null;
+			this.keys = null;
+			this.title = null;
+			this.radar_axis = null;
+			this.background = null;
+			
 			while ( this.numChildren > 0 )
 				this.removeChildAt(0);
+		
+			if ( this.hasEventListener(MouseEvent.MOUSE_MOVE))
+				this.removeEventListener(MouseEvent.MOUSE_MOVE, this.mouseMove);
 			
 			// do not force a garbage collection, it is not supported:
 			// http://stackoverflow.com/questions/192373/force-garbage-collection-in-as3
+		
 		}
 		
 		private function build_right_click_menu(): void {
