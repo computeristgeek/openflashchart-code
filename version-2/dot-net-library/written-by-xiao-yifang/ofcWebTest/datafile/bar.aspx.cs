@@ -25,7 +25,7 @@ public partial class bar : System.Web.UI.Page
         
         bar.Fillalpha = 0.4;
         bar.Text = "Test";
-      
+     
         bar.Fontsize = 10;
         List<double> values = new List<double>();
         for (int i = 0; i < 12; i++)
@@ -42,7 +42,7 @@ public partial class bar : System.Web.UI.Page
         //yaxis.Steps = 4;
         //yaxis.SetRange(0, 20);
         //chart.Y_Axis = yaxis;
-        
+        chart.Y_Axis.SetRange(0,24,3);
         chart.Tooltip = new ToolTip("提示:#val#");
         string s = chart.ToString();
 

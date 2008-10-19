@@ -34,19 +34,21 @@ public partial class datafile_yaxis : System.Web.UI.Page
         chart.AddElement(line1);
 
         chart.Title = new Title("line演示");
-        chart.Y_Axis.SetRange(0, 35, 5);
-        chart.Y_Axis.Stroke = 2;
+       // chart.Y_Axis.SetRange(0, 35, 5);
+       // chart.Y_Axis.Stroke = 2;
         chart.Y_Axis_Right = new YAxis();
         chart.Y_Axis_Right.TickLength=5;
         chart.Y_Axis_Right.Stroke = 10;
-        chart.Y_Axis_Right.Steps = 4;
+        //chart.Y_Axis_Right.Steps = 4;
+        chart.Y_Axis_Right.SetRange(0,20,10);
+        //chart.Y_Axis_Right
         chart.Tooltip = new ToolTip("全局提示：#val#");
         chart.Tooltip.Shadow = true;
         chart.Tooltip.Colour = "#e43456";
         chart.Tooltip.MouseStyle = ToolTipStyle.CLOSEST;
         Response.Clear();
         Response.CacheControl = "no-cache";
-        Response.Write(chart.ToString());
+        Response.Write(chart.ToPrettyString());
         Response.End();
     }
 }

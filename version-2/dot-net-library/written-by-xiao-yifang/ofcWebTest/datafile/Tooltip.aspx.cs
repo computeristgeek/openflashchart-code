@@ -35,14 +35,14 @@ public partial class Tooltip : System.Web.UI.Page
        
         line3.Text = "line3";
 
-
+        line3.Tooltip = "my tip #val#";
        
         chart.AddElement(line3);
         chart.Title = new Title("Tooltip Demo");
         chart.Y_Axis.SetRange(-10, 15, 5);
 
         chart.Tooltip = new ToolTip("my tip #val#");
-
+        
         Response.Clear();
         Response.CacheControl = "no-cache";
         Response.Write(chart.ToPrettyString());
