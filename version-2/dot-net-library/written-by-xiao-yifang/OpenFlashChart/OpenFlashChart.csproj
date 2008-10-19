@@ -39,6 +39,7 @@
     <Compile Include="Axis.cs" />
     <Compile Include="Bar.cs" />
     <Compile Include="Bar3D.cs" />
+    <Compile Include="BarFilled.cs" />
     <Compile Include="BarGlass.cs" />
     <Compile Include="BarSketch.cs" />
     <Compile Include="BarStack.cs" />

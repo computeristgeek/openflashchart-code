@@ -15,7 +15,6 @@ namespace OpenFlashChart
             try
             {
                 OpenFlashChartControl component = (OpenFlashChartControl)base.Component;
-                string format = "<br>{0} : {1}";
                 OpenFlashChartControl chart = component;
                 builder.AppendFormat("<div style='width:{0}px;height:{1}px;'>", chart.Width, chart.Height);
                 builder.Append("<span style=\"font-size:16px;position:absolute;top:" + chart.Height /2+ ";\">Open Flash Chart Control</span>");

@@ -75,7 +75,7 @@ namespace OpenFlashChart
         public void AddElement(ChartBase chart)
         {
             this.elements.Add(chart);
-            Y_Axis.SetRange(chart.GetMinValue(), chart.GetMaxValue());
+            //Y_Axis.SetRange(chart.GetMinValue(), chart.GetMaxValue());
            // X_Axis.SetRange(0,chart.GetValueCount());
             X_Axis.Steps = 1;
         }

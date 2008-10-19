@@ -13,7 +13,7 @@ namespace OpenFlashChart
         private int height;
         private string externalSWFfile;
         private string externalSWFObjectFile;
-
+        private string loadingmsg;
        
         private string datafile;
 
@@ -79,6 +79,12 @@ namespace OpenFlashChart
             set { datafile = value; }
         }
 
+        public string LoadingMsg
+        {
+            get { return loadingmsg; }
+            set { loadingmsg = value; }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             const string key = "swfobject";
@@ -104,7 +110,12 @@ namespace OpenFlashChart
                 ExternalSWFfile, this.ClientID, Width, Height);
             builder.Append("{\"data-file\":\"");
             builder.Append(DataFile);
-            builder.Append("\"});");
+            builder.Append("\"");
+            if (!string.IsNullOrEmpty(loadingmsg))
+            {
+                builder.AppendFormat(",\"loading\":\"{0}\"", loadingmsg);
+            }
+            builder.Append("});");
             builder.AppendLine("</script>");
            
             writer.Write(builder.ToString());

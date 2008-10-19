@@ -90,6 +90,10 @@ namespace OpenFlashChart
                 mouse = (int) value;
             }
         }
+        public override string ToString()
+        {
+            return this.text;
+        }
     }
     public enum ToolTipStyle
     {
