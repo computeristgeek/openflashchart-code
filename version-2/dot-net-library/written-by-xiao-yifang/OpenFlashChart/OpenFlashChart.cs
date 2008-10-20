@@ -18,7 +18,7 @@ namespace OpenFlashChart
         private Legend x_legend;
         private Legend y_legend;
         private string bgcolor;
-
+        private RadarAxis radar_axis;
         private ToolTip tooltip;
 
         public OpenFlashChart()
@@ -102,6 +102,15 @@ namespace OpenFlashChart
         {
             get { return tooltip; }
             set { tooltip = value; }
+        }
+        [JsonProperty("radar_axis")]
+        public RadarAxis Radar_Axis
+        {
+            get
+            {
+                return this.radar_axis;
+            }
+            set { this.radar_axis = value; }
         }
 
         public override string ToString()

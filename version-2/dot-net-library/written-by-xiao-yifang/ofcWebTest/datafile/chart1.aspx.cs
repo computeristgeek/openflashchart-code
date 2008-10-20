@@ -28,7 +28,7 @@ public partial class datafile_chart1 : System.Web.UI.Page
         area.Text = "Test";
         area.Width = 2;
         area.Fontsize = 10;
-        IList<double> values = new List<double>();
+        IList values = new List<double>();
         for (int i = 0; i < 12; i++)
             values.Add(random.Next(i, i*2));
         area.Values = values;

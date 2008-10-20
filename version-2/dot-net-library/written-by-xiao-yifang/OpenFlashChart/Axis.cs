@@ -11,9 +11,9 @@ namespace OpenFlashChart
         private int? stroke;
         private string colour;
         private string grid_colour;
-       
+        
       
-        private int steps=1;
+        private int? steps;
         private int _3d;
        
         private double? min;
@@ -37,12 +37,13 @@ namespace OpenFlashChart
             get { return this.grid_colour; }
         }
         [JsonProperty("steps")]
-        public int Steps
+        public int? Steps
         {
             set { steps = value; }
             get { return this.steps; }
         }
-
+        
+       
         public void SetColors(string color,string gridcolor)
         {
             this.colour = color;

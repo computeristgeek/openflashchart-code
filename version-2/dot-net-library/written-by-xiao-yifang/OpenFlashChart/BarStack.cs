@@ -15,6 +15,18 @@ namespace OpenFlashChart
            this.Colour = color;
            this.Val = val;
        }
+       public BarStackValue(double val)
+       {
+           this.Val = val;
+       }
+       public BarStackValue()
+       {
+           
+       }
+       public static implicit operator BarStackValue(double val)
+       {
+           return new BarStackValue(val);
+       }
        [JsonProperty("colour")]
        public string Colour
        {
@@ -33,6 +45,11 @@ namespace OpenFlashChart
         public BarStack()
         {
             this.ChartType = "bar_stack";
+        }
+
+        public void AddStack(List<BarStackValue> barStackValues)
+        {
+            base.Values.Add(barStackValues);
         }
     }
 }

@@ -36,7 +36,7 @@ labels.Add(i.ToString());
         chart.AddElement(bar);
         chart.X_Axis.Steps = 4;
         chart.X_Axis.Labels.Steps = 4;
-        chart.X_Axis.Labels.Values = labels;
+        chart.X_Axis.SetLabels( labels);
         chart.X_Axis.Labels.Vertical = true;
         
         chart.X_Axis.Set3D(12);

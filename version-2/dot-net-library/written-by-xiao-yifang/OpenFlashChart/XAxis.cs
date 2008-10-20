@@ -9,8 +9,29 @@ namespace OpenFlashChart
     public class XAxis:Axis
     {
         private string tick_height;
-        private XAxisLabels labels;
         private bool offset;
+        private XAxisLabels labels;
+        [JsonProperty("labels")]
+        public XAxisLabels Labels
+        {
+            get
+            {
+                if (this.labels == null)
+                    this.labels = new XAxisLabels();
+                return this.labels;
+            }
+            set { this.labels = value; }
+        }
+        public void SetLabels(IList<string> labelsvalue)
+        {
+            Labels.SetLabels(labelsvalue);
+            //if (labels == null)
+            //    labels = new List<AxisLabel>();
+            //foreach (string str in labelsvalue)
+            //{
+            //    labels.Add(new AxisLabel(str));
+            //}
+        }
         public void SetRange(double min, double max)
         {
             base.Max = max;
@@ -22,17 +43,7 @@ namespace OpenFlashChart
             set { offset = value; }
             get { return offset; }
         }
-        [JsonProperty("labels")]
-        public   XAxisLabels Labels
-        {
-            get
-            {
-                if(this.labels==null)
-                    this.labels = new XAxisLabels();
-                return this.labels;
-            }
-            set { this.labels = value; }
-        }
+       
         [JsonProperty("tick-height")]
         public string TickHeight
         {

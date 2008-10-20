@@ -44,7 +44,7 @@ public partial class bar : System.Web.UI.Page
         //chart.Y_Axis = yaxis;
         chart.Y_Axis.SetRange(0,24,3);
         chart.Tooltip = new ToolTip("提示:#val#");
-        string s = chart.ToString();
+        string s = chart.ToPrettyString();
 
         Response.Clear();
         Response.CacheControl = "no-cache";

@@ -24,6 +24,10 @@ namespace OpenFlashChart
             this.visible = true;
             size = 12;
         }
+        public static implicit operator AxisLabel(string text)
+        {
+            return new AxisLabel(text);
+        }
         public AxisLabel(string text, string colour, int size, string rotate)
         {
             this.text = text;

@@ -12,7 +12,7 @@ namespace OpenFlashChart
         private int width;
         private double dotsize;
 
-      
+        private bool loop;
       
         public AreaHollow()
         {
@@ -33,9 +33,12 @@ namespace OpenFlashChart
             get { return dotsize; }
             set { dotsize = value; }
         }
-      
-        
-      
+        [JsonProperty("loop")]
+        public bool Loop
+        {
+            get { return loop; }
+            set { loop = value; }
+        }
     }
 
     

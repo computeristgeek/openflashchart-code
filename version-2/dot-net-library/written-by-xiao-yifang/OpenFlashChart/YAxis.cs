@@ -10,6 +10,7 @@ namespace OpenFlashChart
     {
         private int offset;
         private int tick_length;
+        private IList<String> labels;
         [JsonProperty("tick-length")]
         public int TickLength
         {
@@ -36,5 +37,21 @@ namespace OpenFlashChart
                 offset = value>0 ? 1 : 0;
             }
         }
+        [JsonProperty("labels")]
+        public IList<string> Labels
+        {
+            get { return labels; }
+            set { labels = value; }
+        }
+        public void SetLabels(IList<string> labelsvalue)
+        {
+            if(labels==null)
+                labels = new List<string>();
+            foreach (string str in labelsvalue)
+            {
+                labels.Add(str);
+            }
+        }
+       
     }
 }

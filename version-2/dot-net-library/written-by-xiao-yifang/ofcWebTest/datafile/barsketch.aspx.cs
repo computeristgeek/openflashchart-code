@@ -36,7 +36,7 @@ public partial class barsketch : System.Web.UI.Page
         chart.AddElement(bar);
         chart.X_Axis.Steps = 4;
         chart.X_Axis.Labels.Steps = 4;
-        chart.X_Axis.Labels.Values = labels;
+        chart.X_Axis.SetLabels( labels);
         chart.X_Axis.Labels.Vertical = true;
 
         chart.Y_Axis.Steps = 2;

@@ -90,6 +90,10 @@ namespace OpenFlashChart
                 mouse = (int) value;
             }
         }
+        public void SetProximity()
+        {
+            mouse = 1;
+        }
         public override string ToString()
         {
             return this.text;

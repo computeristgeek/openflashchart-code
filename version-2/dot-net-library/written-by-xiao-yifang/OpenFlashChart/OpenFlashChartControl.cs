@@ -17,14 +17,14 @@ namespace OpenFlashChart
        
         private string datafile;
 
-        [DefaultValue(300)]
+        [DefaultValue(600)]
         [Category("Appearance")]
         [PersistenceMode(PersistenceMode.Attribute)]
         public int Width
         {
             get
             {
-                width = 300;
+                width = 600;
                 if (this.ViewState["width"] != null)
                 {
                     width = Convert.ToInt32(this.ViewState["width"]);

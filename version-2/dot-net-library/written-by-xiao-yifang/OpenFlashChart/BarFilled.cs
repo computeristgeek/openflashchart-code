@@ -4,43 +4,17 @@ using System.Text;
 using JsonFx.Json;
 namespace OpenFlashChart
 {
-    public class BarFilledValue
+    public class BarFilledValue:BarValue
     {
-        private int? bottom;
-        private int? top;
-        private string color;
-        private string tip;
         private string outline_color;
-        public BarFilledValue(int top, int bottom)
+        public BarFilledValue():base()
+        {}
+        public BarFilledValue(double top, double bottom):base(top,bottom)
         {
-            this.Bottom = bottom;
-            this.Top = top;
+
         }
 
-        [JsonProperty("bottom")]
-        public int? Bottom
-        {
-            get { return bottom; }
-            set { bottom = value; }
-        }
-        [JsonProperty("top")]
-        public int? Top
-        {
-            get { return top; }
-            set { top = value; }
-        }
-        [JsonProperty("colour")]
-        public string Color
-        {
-            get { return color; }
-            set { color = value; }
-        }
-        [JsonProperty("tip")]
-        public string Tip
-        {
-            get { return tip; }
-            set { tip = value; }
-        }
+       
         [JsonProperty("outline-colour")]
         public string OutlineColor
         {

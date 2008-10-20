@@ -65,6 +65,7 @@
     <Compile Include="OpenFlashChartControl.cs" />
     <Compile Include="Pie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadarAxis.cs" />
     <Compile Include="Scatter.cs" />
     <Compile Include="Title.cs" />
     <Compile Include="ToolTip.cs" />

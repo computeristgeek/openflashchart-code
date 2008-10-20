@@ -10,10 +10,17 @@ namespace OpenFlashChart
     {
         private double left;
         private double right;
+        private string tip;
         public HBarValue(double left,double right)
         {
             this.Left = left;
             this.Right = right;
+        }
+        public HBarValue(double left, double right,string tip)
+        {
+            this.Left = left;
+            this.Right = right;
+            this.tip = tip;
         }
         [JsonProperty("left")]
         public double Left
@@ -26,6 +33,12 @@ namespace OpenFlashChart
         {
             get { return right; }
             set { right = value; }
+        }
+
+        public string Tip
+        {
+            get { return tip; }
+            set { tip = value; }
         }
     }
     public class HBar:Chart<HBarValue>

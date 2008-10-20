@@ -7,23 +7,27 @@ namespace OpenFlashChart
 {
     public class BarValue
     {
-        private int? bottom;
-        private int? top;
+        private double? bottom;
+        private double? top;
         private string color;
         private string tip;
-        public BarValue(int top,int bottom)
+        public BarValue()
+        {
+            
+        }
+        public BarValue(double top,double bottom)
         {
             this.bottom = bottom;
             this.top = top;
         }
         [JsonProperty("bottom")]
-        public int? Bottom
+        public double? Bottom
         {
             get { return bottom; }
             set { bottom = value; }
         }
         [JsonProperty("top")]
-        public int? Top
+        public double? Top
         {
             get { return top; }
             set { top = value; }
