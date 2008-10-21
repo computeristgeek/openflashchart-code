@@ -42,6 +42,9 @@ package {
 			// try to avoid infinate loops...
 			if ( this.style.steps == 0 )
 				this.style.steps = 1;
+				
+			if ( this.style.steps < 0 )
+				this.style.steps *= -1;
 			
 			this.offset = { 'offset':style.offset, 'value':style.steps };
 			

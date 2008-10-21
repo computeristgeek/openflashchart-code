@@ -1,10 +1,8 @@
 
 package  {
 	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PieSlice;
 	import ChartObjects.Factory;
 	import ChartObjects.ObjectCollection;
-	import com.adobe.images.PNGEncoder;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.display.Sprite;
@@ -23,17 +21,13 @@ package  {
 	import flash.events.ContextMenuEvent;
 	import flash.system.System;
 	
+	import flash.display.LoaderInfo;
+
+	// export the chart as an image
+	import com.adobe.images.PNGEncoder;
+	import com.adobe.images.JPGEncoder;
 	import mx.utils.Base64Encoder;
 	// import com.dynamicflash.util.Base64;
-
-	
-//	import flash.text.TextField;
-	
-	// from example code
-	import flash.display.LoaderInfo;
-//	import flash.display.Loader;
-	
-	import com.adobe.images.JPGEncoder;
 	import flash.display.BitmapData;
 	import flash.utils.ByteArray;
 	import flash.net.URLRequestHeader;
@@ -43,7 +37,7 @@ package  {
 	
 	public class main extends Sprite {
 		
-		public  var VERSION:String = "2 beta 2";
+		public  var VERSION:String = "2 Gamera";
 		private var title:Title = null;
 		private var x_labels:XAxisLabels;
 		private var x_axis:XAxis;
@@ -79,11 +73,8 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					//var file:String = "../data-files/radar-area.txt";
-					//this.load_external_file( file );
-					var file:String = "../data-files/radar-area.txt";
-					this.load_external_file( file );
-					file = "../data-files/area-2.txt";
+					var file:String = "../data-files/x-axis-labels-6.txt";
+					//var file:String = "../../../test-data-files/crasher-2.txt";
 					this.load_external_file( file );
 				}
 				catch (e:Error) {
@@ -118,10 +109,28 @@ package  {
 		// public function getImgBinary():String { return Base64.encodeByteArray(image_binary()); }
 		public function getImgBinary():String {
 			
+			tr.ace('Saving image :: image_binary()');
+
+			var bmp:BitmapData = new BitmapData(this.stage.stageWidth, this.stage.stageHeight);
+			bmp.draw(this);
+			
+			var b64:Base64Encoder = new Base64Encoder();
+			
+			var b:ByteArray = PNGEncoder.encode(bmp);
+			
+			// var encoder:JPGEncoder = new JPGEncoder(80);
+			// var q:ByteArray = encoder.encode(bmp);
+			// b64.encodeBytes(q);
+			
+			b64.encodeBytes(b);
+			return b64.flush();
+			
+			/*
 			var b64:Base64Encoder = new Base64Encoder();
 			b64.encodeBytes(image_binary());
 			tr.ace( b64 as String );
 			return b64 as String;
+			*/
 		}
 		
 		public function saveImage(e:ContextMenuEvent):void {

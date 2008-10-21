@@ -3,13 +3,15 @@ package {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.display.DisplayObject;
+	import flash.geom.Rectangle;
+	import labels.AxisLabel;
 	import string.Utils;
 	import com.serialization.json.JSON;
 	
 	public class XAxisLabels extends Sprite {
 		
 		public var need_labels:Boolean;
-		public var labels:Array;
+		public var axis_labels:Array;
 		// JSON style:
 		private var style:Object;
 		
@@ -27,7 +29,7 @@ package {
 			
 			
 			this.style = {
-				rotate:		null,
+				rotate:		0,
 				visible:	true,
 				labels:		null,
 				steps:		1,
@@ -36,12 +38,26 @@ package {
 			};
 			
 			// cache the text for tooltips
-			this.labels = new Array();
+			this.axis_labels = new Array();
 			
 			if( ( json.x_axis != null ) && ( json.x_axis.labels != null ) )
 				object_helper.merge_2( json.x_axis.labels, this.style );
+			
 				
-					
+			
+			// Force rotation value if "rotate" is specified
+			if ( this.style.rotate is String )
+			{
+				if (this.style.rotate == "vertical")
+				{
+					this.style.rotate = 270;
+				}
+				else if (this.style.rotate == "diagonal")
+				{
+					this.style.rotate = -45;
+				}
+			}
+			
 			this.style.colour = Utils.get_colour( this.style.colour );
 			
 			if( ( this.style.labels is Array ) && ( this.style.labels.length > 0 ) )
@@ -76,13 +92,14 @@ package {
 		
 		public function add( label:Object, style:Object ) : void
 		{
+			tr.ace( JSON.serialize( style ) );
+			
 			var label_style:Object = {
 				colour:		style.colour,
 				text:		'',
 				rotate:		style.rotate,
 				size:		style.size,
 				colour:		style.colour
-				//,visible:    true		// style.visible
 			};
 
 			
@@ -92,18 +109,18 @@ package {
 			//
 			if( label is String )
 				label_style.text = label as String;
-			else {
+			else
 				object_helper.merge_2( label, label_style );
-			}
+
 			
 			// our parent colour is a number, but
 			// we may have our own colour:
 			if( label_style.colour is String )
 				label_style.colour = Utils.get_colour( label_style.colour );
 			
-			// tr.ace( JSON.serialize( label_style ) );
-			
-			this.labels.push( label_style.text );
+			//tr.ace( JSON.serialize( label_style ) );
+			tr.ace(label_style.text );
+			this.axis_labels.push( label_style.text );
 
 			//
 			// inheriting the 'visible' attribute
@@ -115,7 +132,7 @@ package {
 				//
 				// some labels will be invisible due to our parents step value
 				//
-				if ( ( (this.labels.length - 1) % style.steps ) == 0 )
+				if ( ( (this.axis_labels.length - 1) % style.steps ) == 0 )
 					label_style.visible = true;
 				else
 					label_style.visible = false;
@@ -127,8 +144,8 @@ package {
 		
 		public function get( i:Number ) : String
 		{
-			if( i<this.labels.length )
-				return this.labels[i];
+			if( i<this.axis_labels.length )
+				return this.axis_labels[i];
 			else
 				return '';
 		}
@@ -138,7 +155,7 @@ package {
 			// we create the text in its own movie clip, so when
 			// we rotate it, we can move the regestration point
 			
-			var title:TextField = new TextField();
+			var title:AxisLabel = new AxisLabel();
             title.x = 0;
 			title.y = 0;
 			
@@ -149,7 +166,8 @@ package {
 			var fmt:TextFormat = new TextFormat();
 			fmt.color = label_style.colour;
 		
-			if( label_style.rotate is String )
+			// TODO: != null
+			if( label_style.rotate != 0 )
 			{
 				// so we can rotate the text
 				fmt.font = "spArial";
@@ -160,24 +178,22 @@ package {
 				fmt.font = "Verdana";
 			}
 
-			
 			fmt.size = label_style.size;
 			fmt.align = "left";
 			title.setTextFormat(fmt);
 			title.autoSize = "left";
 			
-			if( label_style.rotate == 'vertical' )
+			if( label_style.rotate != 0 )
 			{
-				title.rotation = 270;
-			}
-			else if( label_style.rotate == 'diagonal' )
-			{
-				title.rotation = -45;
+				title.rotate_and_align( label_style.rotate );
 			}
 			else
 			{
 				title.x = -(title.width/2);
 			}
+			
+			this.adjustForRotation(title, 0, 0);
+
 			// we don't know the x & y locations yet...
 			
 			title.visible = label_style.visible;
@@ -185,9 +201,10 @@ package {
 			return title;
 		}
 		
+		
 		public function count() : Number
 		{
-			return this.labels.length;
+			return this.axis_labels.length;
 		}
 		
 		public function get_height() : Number
@@ -210,7 +227,8 @@ package {
 			
 			for( var pos:Number=0; pos < this.numChildren; pos++ )
 			{
-				var child:DisplayObject = this.getChildAt(pos);
+			/*
+			var child:DisplayObject = this.getChildAt(pos);
 				child.x = sc.get_x_tick_pos(pos) - (child.width / 2);
 				child.y = yPos;
 				
@@ -219,6 +237,17 @@ package {
 				
 				if( this.style.rotate == 'diag' )
 					child.y += child.height;
+
+			*/		
+				var child:AxisLabel = this.getChildAt(pos) as AxisLabel;
+				child.x = sc.get_x_tick_pos(pos) + child.xAdj;
+				child.y = yPos + child.yAdj;
+				//
+				//if( this.style.vertical )
+					//child.y += child.height;
+				//
+				//if( this.style.diag )
+					//child.y += child.height;
 
 //				i+=this.style.step;
 			}
@@ -254,7 +283,7 @@ package {
 		
 		public function die(): void {
 			
-			this.labels = null;
+			this.axis_labels = null;
 			this.style = null;
 			this.graphics.clear();
 			
