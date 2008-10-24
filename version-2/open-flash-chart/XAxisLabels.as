@@ -191,8 +191,6 @@ package {
 			{
 				title.x = -(title.width/2);
 			}
-			
-			this.adjustForRotation(title, 0, 0);
 
 			// we don't know the x & y locations yet...
 			

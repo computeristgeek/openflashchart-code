@@ -61,7 +61,9 @@ package {
 				// tr.ace( tf.y_val );
 				// tr.ace( sc.get_y_from_val( tf.y_val, false ) );
 				
-				tf.y = sc.get_y_from_val( tf.y_val, false ) - (tf.height/2);
+				tf.y = sc.get_y_from_val( tf.y_val, false ) - (tf.height / 2);
+				if (tf.y < 0 && sc.top == 0) // Tried setting tf.height but that didnt work 
+					tf.y = this.rotate == "vertical" ? tf.height : tf.textHeight - tf.height;
 			}
 		}
 	}

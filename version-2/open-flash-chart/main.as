@@ -73,9 +73,17 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/x-axis-labels-6.txt";
+					var file:String = "../data-files/y-axis-no-title.txt";
 					//var file:String = "../../../test-data-files/crasher-2.txt";
 					this.load_external_file( file );
+
+					/*
+					// test AJAX calls like this:
+					var file:String = "../data-files/bar-2.txt";
+					this.load_external_file( file );
+					file = "../data-files/radar-area.txt";
+					this.load_external_file( file );
+					*/
 				}
 				catch (e:Error) {
 					this.show_error( 'Loading test data\n'+file+'\n'+e.message );
@@ -91,9 +99,6 @@ package  {
 
 			// more interface
 			ExternalInterface.addCallback("get_version",	getVersion);
-			ExternalInterface.addCallback("get_graph",		getGraph);
-			ExternalInterface.addCallback("set_graph",		setGraph);
-			ExternalInterface.addCallback("update_graph",	updateGraph);
 			
 			// tell the web page that we are ready
 			if( parameters['id'] )
@@ -136,20 +141,6 @@ package  {
 		public function saveImage(e:ContextMenuEvent):void {
 			
 			ExternalInterface.call("save_image");// , getImgBinary());
-		}
-
-		public function getGraph():Object {
-			return ''; /*Global.getJson()*/
-		}
-		
-	    public function setGraph(json:Object):void {
-			build_chart(json);
-		}
-		
-	    public function updateGraph(update:Object):void {
-			var g:Object = '';// Global.getJson();
-			if (g)
-				build_chart(object_helper.merge(update, g.json));
 		}
 
 	    private function image_binary() : ByteArray {
@@ -578,7 +569,6 @@ package  {
 				this.build_chart( json );
 				
 				// force this to be garbage collected
-				// get_graph() ?!?!?!?
 				json = null;
 			}
 			
@@ -598,26 +588,10 @@ package  {
 			NumberFormat.getInstance( json );
 			NumberFormat.getInstanceY2( json );
 
-			// Tooltip does not work like the rest : why?
-			//
-			// TODO: sort this out - reload problem??
-			//
-//			if (json.tooltip == null && this.tooltip != null)
-//			{
-//				tr.ace("keep old tooltip")
-//				tr.ace(this.tooltip)
-//			} else {
-//				tr.ace("found json.tooltip : ")
-//				tr.ace_json(json.tooltip)
-				this.tooltip	= new Tooltip( json.tooltip )
-//			}
+			this.tooltip	= new Tooltip( json.tooltip )
+
 			var g:Global = Global.getInstance();
 			g.set_tooltip_string( this.tooltip.tip_text );
-//
-// TODO: why is this here?
-//
-//			g.json = json;
-			//
 		
 			//
 			// these are common to both X Y charts and PIE charts:

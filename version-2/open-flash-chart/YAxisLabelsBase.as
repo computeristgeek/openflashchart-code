@@ -8,6 +8,7 @@
 	public class YAxisLabelsBase extends Sprite {
 		private var steps:Number;
 		private var right:Boolean;
+		protected var rotate:String;
 		
 		public function YAxisLabelsBase( values:Array, steps:Number, json:Object, name:String, style_name:String ) {
 
@@ -18,6 +19,9 @@
 			// are the Y Labels visible?
 			if( !style.show_labels )
 				return;
+				
+			if( json.y_axis && json.y_axis.rotate )
+				this.rotate = json.y_axis.rotate;
 				
 			// labels
 			var pos:Number = 0;
@@ -72,11 +76,17 @@
 			tf.text = title;
 			var fmt:TextFormat = new TextFormat();
 			fmt.color = style.colour;
-			fmt.font = "Verdana";
+			fmt.font = this.rotate == "vertical" ? "spArial" : "Verdana";
 			fmt.size = style.size;
 			fmt.align = "right";
 			tf.setTextFormat(fmt);
-			tf.autoSize="right";
+			tf.autoSize = "right";
+			if (rotate == "vertical")
+			{
+				tf.rotation = 270;
+				tf.embedFonts = true;
+				tf.antiAliasType = flash.text.AntiAliasType.ADVANCED;
+			} 
 			return tf;
 		}
 
