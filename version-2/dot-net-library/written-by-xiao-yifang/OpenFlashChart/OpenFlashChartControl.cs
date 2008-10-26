@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
+using System.Web;
+using System.Web.Caching;
 using System.Web.UI;
 
 namespace OpenFlashChart
@@ -14,6 +16,15 @@ namespace OpenFlashChart
         private string externalSWFfile;
         private string externalSWFObjectFile;
         private string loadingmsg;
+        private OpenFlashChart chart;
+        /// <summary>
+        /// Used to hold internal chart
+        /// </summary>
+        public OpenFlashChart Chart
+        {
+            get{ return chart;}
+            set{ chart = value;}
+        }
        
         private string datafile;
 
@@ -109,7 +120,16 @@ namespace OpenFlashChart
             builder.AppendFormat("swfobject.embedSWF(\"{0}\", \"{1}\", \"{2}\", \"{3}\",\"9.0.0\", \"expressInstall.swf\",",
                 ExternalSWFfile, this.ClientID, Width, Height);
             builder.Append("{\"data-file\":\"");
-            builder.Append(DataFile);
+            //if both chart,datafile exists ,chart win.
+            if(chart!=null)
+            {
+                string uniqid = Guid.NewGuid().ToString();
+                Page.Cache.Add(uniqid, chart.ToString(), null, Cache.NoAbsoluteExpiration, new TimeSpan(0, 10, 0),
+                              CacheItemPriority.Normal, null);
+                builder.Append("ofc_handler.ofc?chartjson=" + uniqid);
+            }
+            else
+                builder.Append(DataFile);
             builder.Append("\"");
             if (!string.IsNullOrEmpty(loadingmsg))
             {

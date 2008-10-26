@@ -23,6 +23,11 @@ namespace OpenFlashChart
             this.tip = tip;
             this.color = color;
         }
+        public LineDotValue(double val,  string color)
+        {
+            this.val = val;
+            this.color = color;
+        }
         [JsonProperty("value")]
         public double? Value
         {

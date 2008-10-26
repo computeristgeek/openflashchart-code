@@ -69,6 +69,7 @@
     <Compile Include="Scatter.cs" />
     <Compile Include="Title.cs" />
     <Compile Include="ToolTip.cs" />
+    <Compile Include="WebHandler\ofcHandler.cs" />
     <Compile Include="XAxis.cs" />
     <Compile Include="XAxisLabels.cs" />
     <Compile Include="YAxis.cs" />
