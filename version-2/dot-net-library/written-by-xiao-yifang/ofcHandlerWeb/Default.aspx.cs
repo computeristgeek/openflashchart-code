@@ -46,7 +46,7 @@ public partial class _Default : System.Web.UI.Page
         chart.Tooltip.Shadow = true;
         chart.Tooltip.Colour = "#e43456";
         chart.Tooltip.MouseStyle = ToolTipStyle.CLOSEST;
-
+        OpenFlashChartControl1.EnableCache = true;
         OpenFlashChartControl1.Chart = chart;
     }
 }

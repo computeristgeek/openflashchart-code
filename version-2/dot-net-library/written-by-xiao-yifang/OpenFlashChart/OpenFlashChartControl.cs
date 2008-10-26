@@ -17,6 +17,7 @@ namespace OpenFlashChart
         private string externalSWFObjectFile;
         private string loadingmsg;
         private OpenFlashChart chart;
+        private bool _enableCache;
         /// <summary>
         /// Used to hold internal chart
         /// </summary>
@@ -96,6 +97,12 @@ namespace OpenFlashChart
             set { loadingmsg = value; }
         }
 
+        public bool EnableCache
+        {
+            get { return _enableCache; }
+            set { _enableCache = value; }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             const string key = "swfobject";
@@ -123,10 +130,9 @@ namespace OpenFlashChart
             //if both chart,datafile exists ,chart win.
             if(chart!=null)
             {
-                string uniqid = Guid.NewGuid().ToString();
-                Page.Cache.Add(uniqid, chart.ToString(), null, Cache.NoAbsoluteExpiration, new TimeSpan(0, 10, 0),
+                Page.Cache.Add(this.ClientID, chart.ToString(), null, Cache.NoAbsoluteExpiration, new TimeSpan(0, 10, 0),
                               CacheItemPriority.Normal, null);
-                builder.Append("ofc_handler.ofc?chartjson=" + uniqid);
+                builder.Append("ofc_handler.ofc?chartjson=" + this.ClientID+"&ec="+(EnableCache?"1":"0"));
             }
             else
                 builder.Append(DataFile);

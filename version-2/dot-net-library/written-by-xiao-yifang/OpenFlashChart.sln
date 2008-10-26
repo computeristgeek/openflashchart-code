@@ -24,8 +24,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "F:\...\ofcWebTest\", "ofcWe
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1133"
-		VWDDynamicPort = "true"
+		VWDPort = "6666"
+		VWDDynamicPort = "false"
 	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "F:\...\ofcHandlerWeb\", "ofcHandlerWeb\", "{B47F3D8B-F653-407D-B081-8AF35AF95C83}"
