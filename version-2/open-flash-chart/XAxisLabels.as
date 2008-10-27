@@ -185,7 +185,7 @@ package {
 			
 			if( label_style.rotate != 0 )
 			{
-				title.rotate_and_align( label_style.rotate );
+				title.rotate_and_align( label_style.rotate, this );
 			}
 			else
 			{

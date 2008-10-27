@@ -37,7 +37,7 @@ package  {
 	
 	public class main extends Sprite {
 		
-		public  var VERSION:String = "2 Gamera";
+		public  var VERSION:String = "2 Hyperion";
 		private var title:Title = null;
 		private var x_labels:XAxisLabels;
 		private var x_axis:XAxis;
@@ -55,13 +55,13 @@ package  {
 		private var background:Background;
 		private var ok:Boolean;
 		private var URL:String;		// ugh, vile. The IOError doesn't report the URL
+		private var id:String;
+		private var chart_parameters:Object;
 		
 		public function main() {
+			chart_parameters = LoaderInfo(this.loaderInfo).parameters;
 
-			var loading:String = 'Loading data...';
-			var parameters:Object = LoaderInfo(this.loaderInfo).parameters;
-			if( parameters['loading'] )
-				loading = parameters['loading'];
+			var loading:String = ( this.chart_parameters['loading'] ) ? this.chart_parameters['loading'] : 'Loading data...';
 				
 			var l:Loading = new Loading(loading);
 			this.addChild( l );
@@ -73,7 +73,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/y-axis-no-title.txt";
+					var file:String = "../data-files/line-dash.txt";
 					//var file:String = "../../../test-data-files/crasher-2.txt";
 					this.load_external_file( file );
 
@@ -101,8 +101,8 @@ package  {
 			ExternalInterface.addCallback("get_version",	getVersion);
 			
 			// tell the web page that we are ready
-			if( parameters['id'] )
-				ExternalInterface.call("ofc_ready", parameters['id']);
+			if( this.chart_parameters['id'] )
+				ExternalInterface.call("ofc_ready", this.chart_parameters['id']);
 			else
 				ExternalInterface.call("ofc_ready");
 			
@@ -139,8 +139,7 @@ package  {
 		}
 		
 		public function saveImage(e:ContextMenuEvent):void {
-			
-			ExternalInterface.call("save_image");// , getImgBinary());
+			ExternalInterface.call("save_image", this.chart_parameters['id']);// , getImgBinary());
 		}
 
 	    private function image_binary() : ByteArray {
@@ -222,12 +221,10 @@ package  {
 				}
 			}
 			
-			var parameters:Object = LoaderInfo(this.loaderInfo).parameters;
-			
-			if( parameters['data-file'] )
+			if( this.chart_parameters['data-file'] )
 			{
 				// tr.ace( 'Found parameter:' + parameters['data-file'] );
-				this.load_external_file( parameters['data-file'] );
+				this.load_external_file( this.chart_parameters['data-file'] );
 				//
 				// LOOK:
 				//
@@ -236,13 +233,13 @@ package  {
 			}
 			
 			var get_data:String = 'open_flash_chart_data';
-			if( parameters['get-data'] )
-				get_data = parameters['get-data'];
+			if( this.chart_parameters['get-data'] )
+				get_data = this.chart_parameters['get-data'];
 			
 			var json_string:*;
 			
-			if( parameters['id'] )
-				json_string = ExternalInterface.call( get_data , parameters['id']);
+			if( this.chart_parameters['id'] )
+				json_string = ExternalInterface.call( get_data , this.chart_parameters['id']);
 			else
 				json_string = ExternalInterface.call( get_data );
 			
@@ -398,7 +395,7 @@ package  {
 		// pie charts are simpler to resize, they don't
 		// have all the extras (X,Y axis, legends etc..)
 		//
-		private function resize_pie(): void {
+		private function resize_pie(): ScreenCoordsBase {
 			
 			// should this be here?
 			this.addEventListener(MouseEvent.MOUSE_MOVE, this.mouseMove);
@@ -412,12 +409,12 @@ package  {
 				null, null, null, 0, 0, false, false, false );
 			this.obs.resize( sc );
 			
-			// TODO: hook into the mouse move events for tooltips
+			return sc;
 		}
 		
 		//
 		//
-		private function resize_radar(): void {
+		private function resize_radar(): ScreenCoordsBase {
 			
 			this.addEventListener(MouseEvent.MOUSE_MOVE, this.mouseMove);
 			
@@ -437,6 +434,8 @@ package  {
 			// change the radius (to fit the labels on screen)
 			this.radar_axis.resize( sc );
 			this.obs.resize( sc );
+			
+			return sc;
 		}
 		
 		private function resize():void {
@@ -450,16 +449,26 @@ package  {
 		
 			tr.ace(this.radar_axis);
 			tr.ace(this.obs.has_pie());
+			var sc:ScreenCoordsBase;
 			
 			if ( this.radar_axis != null )
-				this.resize_radar();
+				sc = this.resize_radar();
 			else if ( this.obs.has_pie() )
-				this.resize_pie();
+				sc = this.resize_pie();
 			else
-				this.resize_chart();
+				sc = this.resize_chart();
+			
+			
+			// tell the web page that we have resized our content
+			if( this.id != null )
+				ExternalInterface.call("ofc_resize", sc.left, sc.width, sc.top, sc.height, id);
+			else
+				ExternalInterface.call("ofc_resize", sc.left, sc.width, sc.top, sc.height);
+				
+			sc = null;
 		}
 			
-		private function resize_chart(): void {
+		private function resize_chart(): ScreenCoordsBase {
 			
 			//
 			// we want to show the tooltip closest to
@@ -513,6 +522,8 @@ package  {
 			this.y_legend_2.resize();
 				
 			this.obs.resize( sc );
+			
+			return sc;
 		}
 		
 		private function mouseOut(event:Event):void {
@@ -777,7 +788,9 @@ package  {
 				});
 			cm.customItems.push( fs );
 			
-			var dl:ContextMenuItem = new ContextMenuItem("Save Image Locally" );
+			var save_image_message:String = ( this.chart_parameters['save_image_message'] ) ? this.chart_parameters['save_image_message'] : 'Save Image Locally';
+			
+			var dl:ContextMenuItem = new ContextMenuItem(save_image_message);
 			dl.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, this.saveImage);
 			cm.customItems.push( dl );
 			
