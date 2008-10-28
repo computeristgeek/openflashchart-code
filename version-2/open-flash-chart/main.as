@@ -73,8 +73,8 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/line-dash.txt";
-					//var file:String = "../../../test-data-files/crasher-2.txt";
+					//var file:String = "../data-files/line-dash.txt";
+					var file:String = "../../../test-data-files/area.txt";
 					this.load_external_file( file );
 
 					/*

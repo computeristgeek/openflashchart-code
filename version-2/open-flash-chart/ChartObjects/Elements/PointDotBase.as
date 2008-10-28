@@ -17,6 +17,7 @@
 			this.visible = false;
 			this.index = this._x = index;
 			this._y = Number( style.value );
+			
 			this.radius = style['dot-size'];
 			this.tooltip = this.replace_magic_values( style.tip );
 			
@@ -37,7 +38,7 @@
 			this.x = this.line_mask.x = p.x;
 			this.y = this.line_mask.y = p.y;
 			
-			tr.ace(this.x );
+			// tr.ace(this.x );
 		}
 		
 		public override function set_tip( b:Boolean ):void {

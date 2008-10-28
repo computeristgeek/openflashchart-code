@@ -92,7 +92,6 @@ package {
 		
 		public function add( label:Object, style:Object ) : void
 		{
-			tr.ace( JSON.serialize( style ) );
 			
 			var label_style:Object = {
 				colour:		style.colour,
@@ -118,8 +117,6 @@ package {
 			if( label_style.colour is String )
 				label_style.colour = Utils.get_colour( label_style.colour );
 			
-			//tr.ace( JSON.serialize( label_style ) );
-			tr.ace(label_style.text );
 			this.axis_labels.push( label_style.text );
 
 			//

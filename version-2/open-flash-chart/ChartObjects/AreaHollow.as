@@ -16,16 +16,19 @@
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
 			
-			var style:Object = {
-				value:			Number(value),
-				'dot-size':		this.style['dot-size'],
-				colour:			this.style.colour,
-				'halo-size':	this.style['halo-size'],
-				width:			this.style.width,
-				tip:			this.style.tip
-			}
+			//
+			// WARNING: this is copied from LineHollow, THIS MUST BE
+			//          AN EXACT COPY OF THAT CODE (yes this is a 
+			//          bit hacky)
+			//
 			
-			return new ChartObjects.Elements.PointHollow( index, style );
+			var s:Object = this.merge_us_with_value_object( value );
+			//
+			// the width of the hollow circle is the same as the width of the line
+			//
+			s.width = this.style.width;
+			
+			return new ChartObjects.Elements.PointHollow( index, s );
 		}
 	}
 }
