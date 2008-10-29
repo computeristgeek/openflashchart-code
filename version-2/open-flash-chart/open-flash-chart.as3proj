@@ -31,7 +31,7 @@
     <option useNetwork="True" />
     <option useResourceBundleMetadata="True" />
     <option warnings="True" />
-    <option verboseStackTraces="False" />
+    <option verboseStackTraces="True" />
     <option additional="" />
     <option customSDK="" />
   </build>

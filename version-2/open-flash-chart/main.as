@@ -73,8 +73,8 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					//var file:String = "../data-files/line-dash.txt";
-					var file:String = "../../../test-data-files/area.txt";
+					var file:String = "../data-files/x-axis-labels-4.txt";
+					//var file:String = "../../../test-data-files/x-axis-labels.txt";
 					this.load_external_file( file );
 
 					/*
@@ -93,8 +93,10 @@ package  {
 			// inform javascript that it can call our load method
 			ExternalInterface.addCallback("load", load);
 			
-			// inform javascript that it can call our save_image method
-			//ExternalInterface.addCallback("save_image", saveImage);
+			// inform javascript that it can call our post_image method
+			ExternalInterface.addCallback("post_image", post_image);
+			
+			// 
 			ExternalInterface.addCallback("get_img_binary",  getImgBinary);
 
 			// more interface
@@ -138,10 +140,12 @@ package  {
 			*/
 		}
 		
+		
 		public function saveImage(e:ContextMenuEvent):void {
 			ExternalInterface.call("save_image", this.chart_parameters['id']);// , getImgBinary());
 		}
 
+		
 	    private function image_binary() : ByteArray {
 			tr.ace('Saving image :: image_binary()');
 
@@ -152,9 +156,9 @@ package  {
 	
 		//
 		// External interface called by Javascript to
-		// save the flash as an image
+		// save the flash as an image, then POST it to a URL
 		//
-		public function save_image( url:String, callback:String, debug:Boolean ):void {
+		public function post_image( url:String, callback:String, debug:Boolean ):void {
 			
 			var header:URLRequestHeader = new URLRequestHeader("Content-type", "application/octet-stream");
 

@@ -179,16 +179,8 @@ package {
 			fmt.align = "left";
 			title.setTextFormat(fmt);
 			title.autoSize = "left";
+			title.rotate_and_align( label_style.rotate, this );
 			
-			if( label_style.rotate != 0 )
-			{
-				title.rotate_and_align( label_style.rotate, this );
-			}
-			else
-			{
-				title.x = -(title.width/2);
-			}
-
 			// we don't know the x & y locations yet...
 			
 			title.visible = label_style.visible;
