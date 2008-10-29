@@ -142,7 +142,12 @@ package  {
 		
 		
 		public function saveImage(e:ContextMenuEvent):void {
-			ExternalInterface.call("save_image", this.chart_parameters['id']);// , getImgBinary());
+			// ExternalInterface.call("save_image", this.chart_parameters['id']);// , getImgBinary());
+			// ExternalInterface.call("save_image", getImgBinary());
+			
+			// this just calls the javascript function which will grab an image from use
+			// an do something with it.
+			ExternalInterface.call("save_image");
 		}
 
 		
