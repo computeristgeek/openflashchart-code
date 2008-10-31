@@ -1,6 +1,6 @@
 ﻿package elements.axis {
 	import flash.display.Sprite;
-	import elements.axis.TextFieldY;
+	import elements.axis.YTextField;
 	import flash.text.TextFormat;
 	import org.flashdevelop.utils.FlashConnect;
 	import br.com.stimuli.string.printf;
@@ -28,7 +28,7 @@
 			
 			for each ( var v:Object in values )
 			{
-				var tmp:TextFieldY = this.make_label( v.val, style );
+				var tmp:YTextField = this.make_label( v.val, style );
 				tmp.y_val = v.pos;
 				this.addChild(tmp);
 				
@@ -60,7 +60,7 @@
 			return values;
 		}
 		
-		private function make_label( title:String, style:YLabelStyle ):TextFieldY
+		private function make_label( title:String, style:YLabelStyle ):YTextField
 		{
 			
 			
@@ -71,7 +71,7 @@
 			// distructor method, but I don't think actionscript has these :-(
 
 			
-			var tf:TextFieldY = new TextFieldY();
+			var tf:YTextField = new YTextField();
 			//tf.border = true;
 			tf.text = title;
 			var fmt:TextFormat = new TextFormat();
@@ -100,7 +100,7 @@
 			var max:Number = 0;
 			for( var i:Number=0; i<this.numChildren; i++ )
 			{
-				var tf:TextFieldY = this.getChildAt(i) as TextFieldY;
+				var tf:YTextField = this.getChildAt(i) as YTextField;
 				max = Math.max( max, tf.width );
 			}
 			return max;

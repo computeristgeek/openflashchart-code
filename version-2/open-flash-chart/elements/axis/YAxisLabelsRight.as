@@ -38,17 +38,17 @@
 		public override function resize( left:Number, box:ScreenCoords ):void {
 			var maxWidth:Number = this.get_width();
 			var i:Number;
-			var tf:TextFieldY;
+			var tf:YTextField;
 			
 			for( i=0; i<this.numChildren; i++ ) {
 				// right align
-				tf = this.getChildAt(i) as TextFieldY;
+				tf = this.getChildAt(i) as YTextField;
 				tf.x = left - tf.width + maxWidth;
 			}
 			
 			// now move it to the correct Y, vertical center align
 			for ( i=0; i < this.numChildren; i++ ) {
-				tf = this.getChildAt(i) as TextFieldY;
+				tf = this.getChildAt(i) as YTextField;
 				tf.y = box.get_y_from_val( tf.y_val, true ) - (tf.height / 2);
 				if (tf.y < 0 && box.top == 0) // Tried setting tf.height but that didnt work 
 					tf.y = this.rotate == "vertical" ? tf.height : tf.textHeight - tf.height;

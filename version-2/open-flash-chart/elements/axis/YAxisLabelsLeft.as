@@ -45,17 +45,17 @@ package elements.axis {
 		public override function resize( left:Number, sc:ScreenCoords ):void {
 			var maxWidth:Number = this.get_width();
 			var i:Number;
-			var tf:TextFieldY;
+			var tf:YTextField;
 			
 			for( i=0; i<this.numChildren; i++ ) {
 				// right align
-				tf = this.getChildAt(i) as TextFieldY;
+				tf = this.getChildAt(i) as YTextField;
 				tf.x = left - tf.width + maxWidth;
 			}
 			
 			// now move it to the correct Y, vertical center align
 			for ( i=0; i < this.numChildren; i++ ) {
-				tf = this.getChildAt(i) as TextFieldY;
+				tf = this.getChildAt(i) as YTextField;
 				
 				// tr.ace( '***' );
 				// tr.ace( tf.y_val );
