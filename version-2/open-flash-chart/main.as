@@ -40,6 +40,7 @@ package  {
 	import elements.axis.YAxisRight;
 	import elements.axis.RadarAxis;
 	import elements.Background;
+	import elements.Tooltip;
 	
 	
 	public class main extends Sprite {

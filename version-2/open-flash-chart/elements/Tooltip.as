@@ -1,6 +1,4 @@
-package {
-//	import mx.effects.Tween;
-//	import mx.effects.easing.*;
+package elements {
 
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
@@ -17,8 +15,6 @@ package {
 	import object_helper;
 	
 	public class Tooltip extends Sprite {
-		//private var title:TextField;
-		//private var text:TextField;
 		// JSON style:
 		private var style:Object;
 		
