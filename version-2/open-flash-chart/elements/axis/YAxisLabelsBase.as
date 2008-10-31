@@ -1,6 +1,6 @@
 ﻿package elements.axis {
 	import flash.display.Sprite;
-	import TextFieldY;
+	import elements.axis.TextFieldY;
 	import flash.text.TextFormat;
 	import org.flashdevelop.utils.FlashConnect;
 	import br.com.stimuli.string.printf;

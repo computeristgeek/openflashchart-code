@@ -1,5 +1,5 @@
-﻿
-package {
+﻿package elements.axis {
+	
 	import flash.text.TextField;
 	
 	public class TextFieldY extends TextField {
