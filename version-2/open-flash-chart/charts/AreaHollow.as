@@ -1,6 +1,6 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointHollow;
+﻿package charts {
+	import charts.Elements.Element;
+	import charts.Elements.PointHollow;
 	import string.Utils;
 	import flash.display.BlendMode;
 	

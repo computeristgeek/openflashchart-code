@@ -1,6 +1,6 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointDotBase;
+﻿package charts {
+	import charts.Elements.Element;
+	import charts.Elements.PointDotBase;
 	import string.Utils;
 	import flash.display.BlendMode;
 	import flash.geom.Point;

@@ -1,6 +1,6 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Point;
-	import ChartObjects.Elements.Element;
+﻿package charts {
+	import charts.Elements.Point;
+	import charts.Elements.Element;
 	
 	public class AreaLine extends AreaBase {
 		
