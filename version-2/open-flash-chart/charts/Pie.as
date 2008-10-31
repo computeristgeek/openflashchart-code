@@ -1,12 +1,9 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.PieLabel;
+﻿package charts {
+	import charts.Elements.PieLabel;
 	import flash.external.ExternalInterface;
-//	import mx.transitions.Tween;
-//	import mx.transitions.easing.*;
-
 	import string.Utils;
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PieSliceContainer;
+	import charts.Elements.Element;
+	import charts.Elements.PieSliceContainer;
 	import global.Global;
 	
 	import flash.display.Sprite;
@@ -21,9 +18,6 @@
 		private var border_width:Number = 1;
 		private var label_line:Number;
 		private var easing:Function;
-		
-//		private var style:Css;
-
 		public var style:Object;
 		public var total_value:Number = 0;
 		

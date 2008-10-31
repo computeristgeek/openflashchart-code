@@ -1,6 +1,6 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointBarOutline;
+﻿package charts {
+	import charts.Elements.Element;
+	import charts.Elements.PointBarOutline;
 	import string.Utils;
 	
 	public class BarOutline extends BarBase {

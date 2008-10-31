@@ -1,6 +1,6 @@
 package labels {
-	import ChartObjects.Base;
-	import ChartObjects.ObjectCollection;
+	import charts.Base;
+	import charts.ObjectCollection;
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import flash.text.TextFormat;

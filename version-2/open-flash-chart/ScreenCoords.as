@@ -1,6 +1,6 @@
 package {
 	import flash.geom.Point;
-	import ChartObjects.Elements.Point;
+	import charts.Elements.Point;
 	
 	public class ScreenCoords extends ScreenCoordsBase
 	{
@@ -284,9 +284,9 @@ package {
 		//
 		// make a point object, using the absolute values (e.g. -5,-5 )
 		//
-		public function make_point_2( x:Number, y:Number, right_axis:Boolean ):ChartObjects.Elements.Point
+		public function make_point_2( x:Number, y:Number, right_axis:Boolean ):charts.Elements.Point
 		{
-			return new ChartObjects.Elements.Point(
+			return new charts.Elements.Point(
 				this.get_x_from_val( x ),
 				this.get_y_from_val( y, right_axis )
 				

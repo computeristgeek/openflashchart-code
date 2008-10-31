@@ -1,6 +1,6 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointBarStackCollection;
+﻿package charts {
+	import charts.Elements.Element;
+	import charts.Elements.PointBarStackCollection;
 	import string.Utils;
 	import com.serialization.json.JSON;
 	import flash.geom.Point;

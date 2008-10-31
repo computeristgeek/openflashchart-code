@@ -1,6 +1,6 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointBarFade;
+﻿package charts {
+	import charts.Elements.Element;
+	import charts.Elements.PointBarFade;
 	
 	public class BarFade extends BarBase {
 		

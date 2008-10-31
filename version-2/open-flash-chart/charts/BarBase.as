@@ -1,6 +1,6 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointBarBase;
+﻿package charts {
+	import charts.Elements.Element;
+	import charts.Elements.PointBarBase;
 	import string.Utils;
 	import global.Global;
 

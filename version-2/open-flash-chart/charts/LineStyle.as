@@ -1,4 +1,4 @@
-﻿package ChartObjects {
+﻿package charts {
 
 	public class LineStyle extends Object
 	{

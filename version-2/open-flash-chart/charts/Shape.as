@@ -1,4 +1,4 @@
-﻿package ChartObjects {
+﻿package charts {
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import string.Utils;

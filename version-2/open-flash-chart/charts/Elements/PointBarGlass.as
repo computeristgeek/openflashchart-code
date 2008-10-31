@@ -1,4 +1,4 @@
-﻿package ChartObjects.Elements {
+﻿package charts.Elements {
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
 	

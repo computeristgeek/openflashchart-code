@@ -1,9 +1,9 @@
-package ChartObjects {
+package charts {
 
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.Point;
+	import charts.Elements.Element;
+	import charts.Elements.Point;
 	import string.Utils;
 	import flash.display.BlendMode;
 	
@@ -51,7 +51,7 @@ package ChartObjects {
 			
 			var s:Object = this.merge_us_with_value_object( value );
 
-			return new ChartObjects.Elements.Point( index, s );
+			return new charts.Elements.Point( index, s );
 		}
 	}
 }

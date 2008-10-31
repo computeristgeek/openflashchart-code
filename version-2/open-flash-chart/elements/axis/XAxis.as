@@ -2,7 +2,7 @@ package elements.axis {
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import string.Utils;
-	import ChartObjects.Elements.PointBar3D;
+	import charts.Elements.PointBar3D;
 	import com.serialization.json.JSON;
 	import Range;
 	

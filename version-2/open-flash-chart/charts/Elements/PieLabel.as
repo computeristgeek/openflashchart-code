@@ -1,4 +1,4 @@
-﻿package ChartObjects.Elements {
+﻿package charts.Elements {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	

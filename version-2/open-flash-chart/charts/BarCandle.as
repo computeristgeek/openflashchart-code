@@ -1,6 +1,6 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointBarCandle;
+﻿package charts {
+	import charts.Elements.Element;
+	import charts.Elements.PointBarCandle;
 	import string.Utils;
 	
 	public class BarCandle extends BarBase {

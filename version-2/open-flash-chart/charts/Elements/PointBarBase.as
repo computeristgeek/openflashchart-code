@@ -1,4 +1,4 @@
-﻿package ChartObjects.Elements {
+﻿package charts.Elements {
 
 	import flash.events.Event;
 	import flash.events.MouseEvent;

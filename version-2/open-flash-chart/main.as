@@ -1,8 +1,8 @@
 
 package  {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Factory;
-	import ChartObjects.ObjectCollection;
+	import charts.Elements.Element;
+	import charts.Factory;
+	import charts.ObjectCollection;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.display.Sprite;

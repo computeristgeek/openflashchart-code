@@ -1,8 +1,8 @@
-﻿package ChartObjects {
+﻿package charts {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointScatter;
+	import charts.Elements.Element;
+	import charts.Elements.PointScatter;
 	import string.Utils;
 	import flash.geom.Point;
 	import flash.display.Sprite;

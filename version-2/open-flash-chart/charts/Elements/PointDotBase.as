@@ -1,6 +1,6 @@
-﻿package ChartObjects.Elements {
+﻿package charts.Elements {
 	import flash.display.Sprite;
-	import ChartObjects.Elements.Element;
+	import charts.Elements.Element;
 	import flash.display.BlendMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;

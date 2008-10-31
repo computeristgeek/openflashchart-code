@@ -1,6 +1,6 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.ECandle;
+﻿package charts {
+	import charts.Elements.Element;
+	import charts.Elements.ECandle;
 	import string.Utils;
 
 	

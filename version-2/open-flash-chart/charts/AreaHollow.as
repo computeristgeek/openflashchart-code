@@ -28,7 +28,7 @@
 			//
 			s.width = this.style.width;
 			
-			return new ChartObjects.Elements.PointHollow( index, s );
+			return new charts.Elements.PointHollow( index, s );
 		}
 	}
 }

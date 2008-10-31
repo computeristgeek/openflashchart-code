@@ -1,6 +1,6 @@
-﻿package ChartObjects.Elements {
+﻿package charts.Elements {
 	import flash.display.Sprite;
-	import ChartObjects.Elements.Element;
+	import charts.Elements.Element;
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
 	

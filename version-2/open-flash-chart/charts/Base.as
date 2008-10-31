@@ -1,7 +1,7 @@
-package ChartObjects {
+package charts {
 
 	import flash.display.Sprite;
-	import ChartObjects.Elements.Element;
+	import charts.Elements.Element;
 	import flash.geom.Point;
 	import elements.axis.XAxisLabels;
 	

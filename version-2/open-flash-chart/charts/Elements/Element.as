@@ -1,4 +1,4 @@
-﻿package ChartObjects.Elements {
+﻿package charts.Elements {
 	import flash.display.Sprite;
 	import string.Utils;
 	import global.Global;

@@ -1,6 +1,6 @@
-package ChartObjects {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointBarGlass;
+package charts {
+	import charts.Elements.Element;
+	import charts.Elements.PointBarGlass;
 	import string.Utils;
 	
 	public class BarGlass extends BarBase {

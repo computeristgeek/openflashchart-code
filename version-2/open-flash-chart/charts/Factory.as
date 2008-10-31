@@ -1,4 +1,4 @@
-package ChartObjects {
+package charts {
 	import com.serialization.json.JSON;
 	
 	public class Factory

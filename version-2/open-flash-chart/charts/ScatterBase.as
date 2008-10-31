@@ -1,7 +1,7 @@
-﻿package ChartObjects {
+﻿package charts {
 	
-	import ChartObjects.Elements.PointScatter;
-	import ChartObjects.Elements.Element;
+	import charts.Elements.PointScatter;
+	import charts.Elements.Element;
 	import string.Utils;
 	import flash.geom.Point;
 	

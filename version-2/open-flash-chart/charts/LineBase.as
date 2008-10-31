@@ -1,5 +1,5 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Element;
+﻿package charts {
+	import charts.Elements.Element;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.display.BlendMode;

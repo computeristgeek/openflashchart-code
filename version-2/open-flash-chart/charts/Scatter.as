@@ -1,4 +1,4 @@
-﻿package ChartObjects {
+﻿package charts {
 
 	import string.Utils;
 	

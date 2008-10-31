@@ -1,11 +1,11 @@
-﻿package ChartObjects {
+﻿package charts {
 	//import caurina.transitions.Tweener;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointDot;
+	import charts.Elements.Element;
+	import charts.Elements.PointDot;
 	import string.Utils;
 	import flash.display.BlendMode;
 	
@@ -51,7 +51,7 @@
 		//
 		// called from the base object
 		//
-		protected override function get_element( index:Number, value:Object ): ChartObjects.Elements.Element {
+		protected override function get_element( index:Number, value:Object ): charts.Elements.Element {
 			
 			var s:Object = this.merge_us_with_value_object( value );
 			//
@@ -59,7 +59,7 @@
 			//
 			s.width = this.style.width;
 			
-			return new ChartObjects.Elements.PointHollow( index, s );
+			return new charts.Elements.PointHollow( index, s );
 			//return new ChartObjects.Elements.Star( index, s );
 		}
 			

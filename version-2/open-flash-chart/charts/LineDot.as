@@ -1,11 +1,11 @@
-﻿package ChartObjects {
+﻿package charts {
 	//import caurina.transitions.Tweener;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointDot;
+	import charts.Elements.Element;
+	import charts.Elements.PointDot;
 	import string.Utils;
 	import flash.display.BlendMode;
 	

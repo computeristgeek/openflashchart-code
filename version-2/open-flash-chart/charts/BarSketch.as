@@ -1,6 +1,6 @@
-﻿package ChartObjects {
-	import ChartObjects.Elements.Element;
-	import ChartObjects.Elements.PointBarSketch;
+﻿package charts {
+	import charts.Elements.Element;
+	import charts.Elements.PointBarSketch;
 	import string.Utils;
 	
 	public class BarSketch extends BarBase {
