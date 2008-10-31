@@ -1,4 +1,4 @@
-package {
+package elements.axis {
 	import flash.text.TextField;
 	
 	public class YAxisLabelsLeft extends YAxisLabelsBase {

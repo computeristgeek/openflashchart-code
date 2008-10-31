@@ -1,4 +1,4 @@
-package {
+package elements.axis {
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -19,7 +19,7 @@ package {
 		// Ugh, ugly code so we can rotate the text:
 		//
 		[Embed(systemFont='Arial', fontName='spArial', mimeType='application/x-font')]
-		public static var ArialFont:Class;
+		public static var ArialFont__:Class;
 
 		function XAxisLabels( json:Object ) {
 			

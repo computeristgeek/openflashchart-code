@@ -1,5 +1,9 @@
 package global {
+	
+	import labels.AxisLabel;
 	import labels.XLegend;
+	import elements.axis.XAxisLabels;
+	
 	public class Global {
 		private static var instance:Global = null;
 		private static var allowInstantiation:Boolean = false;

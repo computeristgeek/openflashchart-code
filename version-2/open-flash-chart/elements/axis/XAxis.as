@@ -1,7 +1,6 @@
-package {
+package elements.axis {
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
-	import org.flashdevelop.utils.FlashConnect;
 	import string.Utils;
 	import ChartObjects.Elements.PointBar3D;
 	import com.serialization.json.JSON;
@@ -9,7 +8,7 @@ package {
 	
 	
 	public class XAxis extends Sprite {
-		//private var grid_count:Number;
+
 		private var steps:Number;
 		private var alt_axis_colour:Number;
 		private var alt_axis_step:Number;

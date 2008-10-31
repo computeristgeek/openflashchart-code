@@ -1,6 +1,7 @@
 package ChartObjects {
 	import ChartObjects.Elements.Element;
 	import flash.geom.Point;
+	import elements.axis.XAxisLabels;
 
 	public class ObjectCollection
 	{

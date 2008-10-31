@@ -33,7 +33,11 @@ package  {
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLLoaderDataFormat;
-	
+	import elements.axis.XAxis;
+	import elements.axis.XAxisLabels;
+	import elements.axis.YAxisBase;
+	import elements.axis.YAxisLeft;
+	import elements.axis.YAxisRight;
 	
 	public class main extends Sprite {
 		
@@ -73,7 +77,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/x-axis-labels-4.txt";
+					var file:String = "../data-files/y-axis-labels-step.txt";
 					//var file:String = "../../../test-data-files/x-axis-labels.txt";
 					this.load_external_file( file );
 

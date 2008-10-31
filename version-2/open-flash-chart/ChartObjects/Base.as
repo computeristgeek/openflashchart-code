@@ -3,6 +3,7 @@ package ChartObjects {
 	import flash.display.Sprite;
 	import ChartObjects.Elements.Element;
 	import flash.geom.Point;
+	import elements.axis.XAxisLabels;
 	
 	public class Base extends Sprite {
 		

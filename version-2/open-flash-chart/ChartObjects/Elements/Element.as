@@ -10,6 +10,7 @@
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.external.ExternalInterface;
+	import elements.axis.XAxisLabels;
 	
 	public class Element extends Sprite {
 		//

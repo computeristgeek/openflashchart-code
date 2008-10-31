@@ -1,4 +1,4 @@
-package {
+package elements.axis {
 	import string.Utils;
 	
 	public class YLabelStyle

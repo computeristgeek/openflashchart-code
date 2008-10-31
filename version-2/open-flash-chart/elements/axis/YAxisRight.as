@@ -1,4 +1,4 @@
-﻿package {
+﻿package elements.axis {
 	import flash.display.Sprite;
 	
 	public class YAxisRight extends YAxisBase {
