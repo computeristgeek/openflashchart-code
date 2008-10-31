@@ -38,6 +38,9 @@ package  {
 	import elements.axis.YAxisBase;
 	import elements.axis.YAxisLeft;
 	import elements.axis.YAxisRight;
+	import elements.axis.RadarAxis;
+	import elements.Background;
+	
 	
 	public class main extends Sprite {
 		

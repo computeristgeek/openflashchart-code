@@ -1,4 +1,4 @@
-package {
+package elements {
 	
 	import flash.display.Sprite;
 	import string.Utils;

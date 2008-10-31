@@ -1,4 +1,4 @@
-﻿package {
+﻿package elements.axis {
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import string.Utils;

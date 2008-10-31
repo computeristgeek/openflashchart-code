@@ -4,7 +4,7 @@ package elements.axis {
 	import flash.text.TextFormat;
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
-	import labels.AxisLabel;
+	import elements.axis.AxisLabel;
 	import string.Utils;
 	import com.serialization.json.JSON;
 	

@@ -1,6 +1,6 @@
 /* */
 
-package labels {
+package elements.axis {
 	
 	import flash.display.Sprite;
     import flash.text.TextField;

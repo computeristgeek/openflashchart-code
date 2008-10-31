@@ -1,6 +1,6 @@
 package global {
 	
-	import labels.AxisLabel;
+	import elements.axis.AxisLabel;
 	import labels.XLegend;
 	import elements.axis.XAxisLabels;
 	
