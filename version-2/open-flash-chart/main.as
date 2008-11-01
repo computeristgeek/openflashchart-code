@@ -80,7 +80,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/y-axis-labels-step.txt";
+					var file:String = "../data-files/stack-bar-1.txt";
 					//var file:String = "../../../test-data-files/x-axis-labels.txt";
 					this.load_external_file( file );
 
@@ -148,6 +148,9 @@ package  {
 		}
 		
 		
+		/**
+		 * Called from the context menu:
+		 */
 		public function saveImage(e:ContextMenuEvent):void {
 			// ExternalInterface.call("save_image", this.chart_parameters['id']);// , getImgBinary());
 			// ExternalInterface.call("save_image", getImgBinary());
@@ -491,7 +494,6 @@ package  {
 			// items near the mouse, so hook into the
 			// mouse move event:
 			//
-			tr.ace( '@@@@@@');
 			this.addEventListener(MouseEvent.MOUSE_MOVE, this.mouseMove);
 	
 			// FlashConnect.trace("stageWidth: " + stage.stageWidth + " stageHeight: " + stage.stageHeight);
@@ -511,7 +513,7 @@ package  {
 			right -= this.y_legend_2.get_width();
 			//right -= this.y_labels_right.get_width();
 			right -= this.y_axis_right.get_width();
-			tr.ace( '@@@@@@');
+
 			// this object is used in the mouseMove method
 			this.sc = new ScreenCoords(
 				top, left, right, bottom,

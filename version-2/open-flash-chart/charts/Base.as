@@ -97,7 +97,7 @@ package charts {
 		//
 		// TODO: old remove when tooltips tested
 		//
-		public function inside( x:Number, y:Number ):Object {
+		public function inside__( x:Number, y:Number ):Object {
 			var ret:Element = null;
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {

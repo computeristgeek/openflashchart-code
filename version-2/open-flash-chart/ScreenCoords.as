@@ -342,63 +342,6 @@ package {
 			return { y:top, width:group_width };
 		}
 		
-/*
-		public function make_point_bar( x:Number, y:Number, right_axis:Boolean, group:Number, group_count:Number )
-		:PointBar{
-			
-			var item_width:Number = this.width_() / this.count;
-			
-			// the bar(s) have gaps between them:
-			var bar_set_width:Number = item_width*0.8;
-			
-			// get the margin between sets of bars:
-			var tmp:Number = 0;
-			if( this.x_offset )
-				tmp = item_width;
-				
-			var bar_left:Number = this.left_()+(tmp-bar_set_width)/2;
-			// 1 bar == 100% wide, 2 bars = 50% wide each
-			var bar_width:Number = bar_set_width/group_count;
-			
-			var left:Number = bar_left+(x*item_width);
-			left += bar_width*group;
-			
-			return new PointBar(
-				left,
-				this.getY( y, right_axis ),
-				bar_width-0.001,	// <-- hack so bars don't quite touch
-				this.getYbottom( right_axis )
-				);
-		}
-*/
-		public function make_point_candle( x:Number, high:Number, open:Number, close:Number, low:Number, right_axis:Boolean, group:Number, group_count:Number )
-		:PointCandle {
-			
-			var item_width:Number = this.width_() / this.x_range.count();
-			
-			// the bar(s) have gaps between them:
-			var bar_set_width:Number = item_width*0.8;
-			
-			// get the margin between sets of bars:
-			var bar_left:Number = this.left_()+((item_width-bar_set_width)/2);
-			// 1 bar == 100% wide, 2 bars = 50% wide each
-			var bar_width:Number = bar_set_width/group_count;
-			
-			var left:Number = bar_left+(x*item_width);
-			left += bar_width*group;
-			
-			return new PointCandle(
-				left,
-				this.get_y_from_val( high,  right_axis ),
-				this.get_y_from_val( open,  right_axis ),
-				this.get_y_from_val( close, right_axis ),
-				this.get_y_from_val( low,   right_axis ),
-				high,
-				bar_width
-//				,open
-				);
-			
-		}
 		
 		public function makePointHLC( x:Number, high:Number, close:Number, low:Number, right_axis:Boolean, group:Number, group_count:Number )
 		:PointHLC {

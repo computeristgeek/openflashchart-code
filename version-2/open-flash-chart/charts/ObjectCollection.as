@@ -55,14 +55,14 @@ package charts {
 				s.mouse_out();
 		}
 		
-		private function inside( x:Number, y:Number ):Element {
+		private function inside__( x:Number, y:Number ):Element {
 			var o:Object;
 			var s:Base;
 			
 			var inside:Array = new Array();
 			for each( s in this.sets )
 			{
-				o = s.inside( x, y );
+				o = s.inside__( x, y );
 				if( o.element!=null )
 					inside.push( o );
 			}
@@ -154,7 +154,7 @@ package charts {
 			// filters out all items that are not
 			// above or below the mouse:
 			//
-			var e:Element = this.inside(x, y);
+			var e:Element = this.inside__(x, y);
 			
 			if ( !e )
 			{

@@ -1,5 +1,5 @@
 package {
-	public class PointHLC extends Point
+	public class PointHLC// extends Point
 	{
 	//	private var numDecimals:Number =5;
 	//	private var isFixedNumDecimalsForced:Boolean =true;
@@ -12,7 +12,7 @@ package {
 		public var low:Number;
 		
 		public function PointHLC( x:Number, high:Number, close:Number, low:Number, tooltip:Number, width:Number ):void{
-			super( x, high );
+			//super( x, high );
 			
 			this.width = width;
 			this.high = high;
@@ -20,7 +20,7 @@ package {
 			this.low = low;
 		}
 		
-		public override function make_tooltip(
+		public  function make_tooltip(
 			tip:String, key:String, val:Number, x_legend:String,
 			x_axis_label:String, tip_set:String ):void {
 			
@@ -35,8 +35,9 @@ package {
 //			this.tooltip = tmp;
 		}
 		
-		public override function get_tip_pos():Object {
-			return {x:this.x+(this.width/2), y:this.y};
+		public  function get_tip_pos():Object {
+			//return {x:this.x+(this.width/2), y:this.y};
+			return null;
 		}
 	}
 }

@@ -116,7 +116,7 @@
 		// stacked bar charts will need the Y to figure out which
 		// bar in the stack to return
 		//
-		public override function inside( x:Number, y:Number ):Object {
+		public override function inside__( x:Number, y:Number ):Object {
 			var ret:Element = null;
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {

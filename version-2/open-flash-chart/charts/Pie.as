@@ -148,7 +148,7 @@
 			return new PieSliceContainer( index, default_style );
 		}
 		
-		public override function inside( x:Number, y:Number ): Object {
+		public override function inside__( x:Number, y:Number ): Object {
 			var shortest:Number = Number.MAX_VALUE;
 			var closest:Element = null;
 			
