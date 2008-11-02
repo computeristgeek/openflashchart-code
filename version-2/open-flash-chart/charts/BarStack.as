@@ -9,9 +9,49 @@
 	public class BarStack extends BarBase {
 		
 		public function BarStack( json:Object, num:Number, group:Number ) {
-			super( json, group );
+			
+			super(null, 0);
+			
+			this.style = {
+				values:				[],
+				keys:				[],
+				tip:				'#x_label# : #val#<br>#total'
+			};
+			
+			object_helper.merge_2( json, style );
+			
+			
+//			this.axis = which_axis_am_i_attached_to(data, num);
+			
+			//
+			// bars are grouped, so 3 bar sets on one chart
+			// will arrange them selves next to each other
+			// at each value of X, this.group tell the bar
+			// where it is in that grouping
+			//
+			this.group = group;
+			
+			this.values = this.style.values;
+
+			this.add_values();
 		}
 		
+		//
+		// return an array of key info objects:
+		//
+		public override function get_keys(): Object {
+			
+			var tmp:Array = [];
+			
+			for each( var o:Object in this.style.keys ) {
+				if ( o.text && o['font-size'] && o.colour ) {
+					o.colour = string.Utils.get_colour( o.colour );
+					tmp.push( o );
+				}
+			}
+			
+			return tmp;
+		}
 		
 		//
 		// value is an array (a stack) of bar stacks

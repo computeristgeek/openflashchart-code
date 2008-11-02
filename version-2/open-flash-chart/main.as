@@ -10,7 +10,6 @@ package  {
 	import flash.net.URLRequest;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
-	import labels.*;
 	import string.Utils;
 	import global.Global;
 	import com.serialization.json.JSON;
@@ -40,6 +39,12 @@ package  {
 	import elements.axis.YAxisRight;
 	import elements.axis.RadarAxis;
 	import elements.Background;
+	import elements.labels.XLegend;
+	import elements.labels.Title;
+	import elements.labels.Keys;
+	import elements.labels.YLegendBase;
+	import elements.labels.YLegendLeft;
+	import elements.labels.YLegendRight;
 	
 	
 	public class main extends Sprite {
@@ -80,7 +85,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/stack-bar-1.txt";
+					var file:String = "../data-files/keys-1.txt";
 					//var file:String = "../../../test-data-files/x-axis-labels.txt";
 					this.load_external_file( file );
 

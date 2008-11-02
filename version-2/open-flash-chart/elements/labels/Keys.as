@@ -1,4 +1,4 @@
-package labels {
+package elements.labels {
 	import charts.Base;
 	import charts.ObjectCollection;
 	import flash.display.Sprite;
@@ -18,12 +18,12 @@ package labels {
 			var key:Number = 0;
 			for each( var b:Base in stuff.sets )
 			{
-				// some lines may not have a key
-				if( (b.font_size > 0) && (b.key != '' ) )
-				{
-					this.make_key( b, key );
-					this.colours.push( b.get_colour() );
+				for each( var o:Object in b.get_keys() ) {
+					
+					this.make_key( o.text, o['font-size'], o.colour );
+					this.colours.push( o.colour );
 					key++;
+
 				}
 			}
 			
@@ -31,16 +31,16 @@ package labels {
 		}
 		
 		// each key is a MovieClip with text on it
-		private function make_key( st:Base, c:Number ) : void //st:Style, c:Number )
+		private function make_key( text:String, font_size:Number, colour:Number ) : void
 		{
 
 			var tf:TextField = new TextField();
 			
-			tf.text = st.key;
+			tf.text = text;
 			var fmt:TextFormat = new TextFormat();
-			fmt.color = st.get_colour();
+			fmt.color = colour;
 			fmt.font = "Verdana";
-			fmt.size = 12;// st.font_size;
+			fmt.size = font_size;
 			fmt.align = "left";
 			
 			tf.setTextFormat(fmt);

@@ -10,7 +10,6 @@
 		protected var group:Number;
 		protected var style:Object;
 		
-		
 		public function BarBase( json:Object, group:Number )
 		{
 		

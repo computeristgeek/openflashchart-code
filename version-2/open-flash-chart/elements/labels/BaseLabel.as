@@ -1,6 +1,6 @@
 /* */
 
-package labels {
+package elements.labels {
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;

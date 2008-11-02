@@ -1,4 +1,4 @@
-﻿package labels {
+﻿package elements.labels {
 	public class YLegendRight extends YLegendBase {
 		
 		public function YLegendRight( json:Object ) {

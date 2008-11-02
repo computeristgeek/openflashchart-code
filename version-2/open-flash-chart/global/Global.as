@@ -1,7 +1,7 @@
 package global {
 	
 	import elements.axis.AxisLabel;
-	import labels.XLegend;
+	import elements.labels.XLegend;
 	import elements.axis.XAxisLabels;
 	
 	public class Global {

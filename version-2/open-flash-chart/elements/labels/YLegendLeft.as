@@ -1,4 +1,4 @@
-package labels {
+package elements.labels {
 	
 	public class YLegendLeft extends YLegendBase {
 		

@@ -1,4 +1,4 @@
-﻿package labels {
+﻿package elements.labels {
 	import org.flashdevelop.utils.FlashConnect;
 	import flash.display.Sprite;
 	import flash.display.Stage;

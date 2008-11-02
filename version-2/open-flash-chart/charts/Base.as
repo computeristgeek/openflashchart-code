@@ -7,10 +7,11 @@ package charts {
 	
 	public class Base extends Sprite {
 		
-		public var key:String;
-		public var font_size:Number;
-		
 		// accessed by the Keys object to display the key
+		protected var key:String;
+		protected var font_size:Number;
+		
+		
 		public var colour:Number;
 		public var line_width:Number;
 		public var circle_size:Number;
@@ -30,6 +31,20 @@ package charts {
 		
 		public function get_colour(): Number {
 			return this.colour;
+		}
+		
+		//
+		// return an array of key info objects:
+		//
+		public function get_keys(): Object {
+			
+			var tmp:Array = [];
+			
+			// some lines may not have a key
+			if( (this.font_size > 0) && (this.key != '' ) )
+				tmp.push( { 'text':this.key, 'font-size':this.font_size, 'colour':this.get_colour() } );
+				
+			return tmp;
 		}
 		
 		//
