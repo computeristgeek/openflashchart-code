@@ -1,6 +1,6 @@
 ﻿package charts {
 	import charts.Elements.Element;
-	import charts.Elements.PointBarStackCollection;
+	import charts.series.bars.PointBarStackCollection;
 	import string.Utils;
 	import com.serialization.json.JSON;
 	import flash.geom.Point;

@@ -1,4 +1,6 @@
-﻿package charts.Elements {
+﻿package charts.series.bars {
+	
+	import charts.Elements.PointBarBase;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
