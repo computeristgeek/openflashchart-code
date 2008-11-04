@@ -65,16 +65,10 @@
 		}
 		
 		//
-		// may be called by the MOUSE_LEAVE
+		// This is called by the tooltip when it is finished with us,
+		// it is only used in modes the pie does not support
 		//
-		public override function set_tip( b:Boolean ):void {
-				
-			if ( !b )
-			{
-				Tweener.addTween(this, { alpha:0.5, time:0.8, transition:Equations.easeOutElastic } );
-				this.is_over = false;
-			}
-		}
+		public override function set_tip( b:Boolean ):void {}
 		
 		//
 		// for most objects this is handled in Element,
