@@ -4,10 +4,10 @@
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
-	public class PointBarStack extends PointBarBase {
+	public class Stack extends PointBarBase {
 		private var total:Number;
 		
-		public function PointBarStack( index:Number, style:Object, group:Number ) {
+		public function Stack( index:Number, style:Object, group:Number ) {
 			
 			// we are not passed a string value, the value
 			// is set by the parent collection later

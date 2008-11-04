@@ -88,7 +88,7 @@
 					
 					value.top = top;
 					
-					var p:PointBarStack = new PointBarStack( index, value, group );
+					var p:Stack = new Stack( index, value, group );
 					this.addChild( p );
 					
 					bottom = top;
