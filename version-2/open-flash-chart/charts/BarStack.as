@@ -1,6 +1,6 @@
 ﻿package charts {
 	import charts.Elements.Element;
-	import charts.series.bars.PointBarStackCollection;
+	import charts.series.bars.StackCollection;
 	import string.Utils;
 	import com.serialization.json.JSON;
 	import flash.geom.Point;
@@ -72,7 +72,7 @@
 			};
 			
 			
-			return new PointBarStackCollection( index, default_style, this.group );
+			return new StackCollection( index, default_style, this.group );
 		}
 		
 		
@@ -87,7 +87,7 @@
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
 			
 				// get the collection
-				var e:PointBarStackCollection = this.getChildAt(i) as PointBarStackCollection;
+				var e:StackCollection = this.getChildAt(i) as StackCollection;
 				
 				var p:flash.geom.Point = e.get_mid_point();
 				dx = Math.abs( x - p.x );
@@ -116,7 +116,7 @@
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
 				// get the collection
-				var stack:Element = this.getChildAt(i) as PointBarStackCollection;
+				var stack:Element = this.getChildAt(i) as StackCollection;
 				
 				// get the first bar in the stack
 				var e:Element = stack.getChildAt(0) as Element;
@@ -161,7 +161,7 @@
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
 				
-				var e:PointBarStackCollection = this.getChildAt(i) as PointBarStackCollection;
+				var e:StackCollection = this.getChildAt(i) as StackCollection;
 				
 				//
 				// may return a PointBarStack or null

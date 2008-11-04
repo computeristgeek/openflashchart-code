@@ -6,7 +6,7 @@
 	import com.serialization.json.JSON;
 	import string.Utils;
 	
-	public class PointBarStackCollection extends Element {
+	public class StackCollection extends Element {
 		
 		protected var tip_pos:flash.geom.Point;
 		private var vals:Array;
@@ -14,7 +14,7 @@
 		protected var group:Number;
 		private var total:Number;
 		
-		public function PointBarStackCollection( index:Number, style:Object, group:Number ) {
+		public function StackCollection( index:Number, style:Object, group:Number ) {
 			
 			this.tooltip = style.tip;
 			// this is very similar to a normal
