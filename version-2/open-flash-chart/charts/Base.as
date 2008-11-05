@@ -187,8 +187,13 @@ package charts {
 			// get the closest Elements X value
 			var x:Number		= closest_x(x);
 			var tmp:Array		= this.get_all_at_this_x_pos(x);
+			
+			tr.aces('tmp.length', tmp.length);
+			
 			var closest:Array	= this.get_closest_y(tmp, y);
 			var dy:Number = Math.abs( y - closest.y );
+			tr.aces('closest.length', closest.length);
+			
 			return closest;
 		}
 		
@@ -227,8 +232,9 @@ package charts {
 		
 		//
 		// get all the Elements at this X position
+		// BarStack overrides this
 		//
-		private function get_all_at_this_x_pos( x:Number ):Array {
+		protected function get_all_at_this_x_pos( x:Number ):Array {
 			
 			var tmp:Array = new Array();
 			var p:flash.geom.Point;

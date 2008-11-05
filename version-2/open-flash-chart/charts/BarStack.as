@@ -77,9 +77,40 @@
 		
 		
 		//
+		// get all the Elements at this X position
+		//
+		protected override function get_all_at_this_x_pos( x:Number ):Array {
+			
+			var tmp:Array = new Array();
+			var p:flash.geom.Point;
+			var e:StackCollection;
+			
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+			
+				// some of the children will will mask
+				// Sprites, so filter those out:
+				//
+				if( this.getChildAt(i) is Element ) {
+		
+					e = this.getChildAt(i) as StackCollection;
+				
+					p = e.get_mid_point();
+					if ( p.x == x ) {
+						var children:Array = e.get_children();
+						for each( var child:Element in children )
+							tmp.push( child );
+					}
+				}
+			}
+			
+			return tmp;
+		}
+		
+		
+		//
 		// override the default closest behaviour
 		//
-		public override function closest_2( x:Number, y:Number ): Array {
+		public  function closest_2__( x:Number, y:Number ): Array {
 			var shortest:Number = Number.MAX_VALUE;
 			var closest:Element = null;
 			var dx:Number;
@@ -105,78 +136,5 @@
 			return new Array();// TODO: FIX!! { element:closest, distance_x:shortest, distance_y:dy };
 		}
 		
-		
-		//
-		// TODO: maybe delete this?
-		//
-		public override function closest( x:Number, y:Number ): Object {
-			var shortest:Number = Number.MAX_VALUE;
-			var ex:Element = null;
-			
-			for ( var i:Number = 0; i < this.numChildren; i++ )
-			{
-				// get the collection
-				var stack:Element = this.getChildAt(i) as StackCollection;
-				
-				// get the first bar in the stack
-				var e:Element = stack.getChildAt(0) as Element;
-				
-				e.is_tip = false;
-				
-				if( (x > e.x) && (x < e.x+e.width) )
-				{
-					// mouse is in position 1
-					shortest = Math.min( Math.abs( x - e.x ), Math.abs( x - (e.x+e.width) ) );
-					ex = stack;
-					break;
-				}
-				else
-				{
-					// mouse is in position 2
-					// get distance to left side and right side
-					var d1:Number = Math.abs( x - e.x );
-					var d2:Number = Math.abs( x - (e.x+e.width) );
-					var min:Number = Math.min( d1, d2 );
-					if( min < shortest )
-					{
-						shortest = min;
-						ex = stack;
-					}
-				}
-			}
-			var dy:Number = Math.abs( y - ex.y );
-			
-			return { element:ex, distance_x:shortest, distance_y:dy };
-		}
-		
-		//
-		// TODO: maybe delete this?
-		//
-		//
-		// stacked bar charts will need the Y to figure out which
-		// bar in the stack to return
-		//
-		public override function inside__( x:Number, y:Number ):Object {
-			var ret:Element = null;
-			
-			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				
-				var e:StackCollection = this.getChildAt(i) as StackCollection;
-				
-				//
-				// may return a PointBarStack or null
-				//
-				ret = e.inside_2(x);
-				
-				if( ret )
-					break;
-			}
-			
-			var dy:Number = 0;
-			if ( ret != null )
-				dy = Math.abs( y - ret.y );
-				
-			return { element:ret, distance_y:dy };
-		}
 	}
 }

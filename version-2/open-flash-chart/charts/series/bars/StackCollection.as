@@ -120,6 +120,18 @@
 		}
 		
 		//
+		// called by get_all_at_this_x_pos
+		//
+		public function get_children(): Array {
+			
+			var tmp:Array = [];
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+				tmp.push( this.getChildAt(i) );
+			}
+			return tmp;
+		}
+		
+		//
 		// TODO: maybe delete this?
 		//
 		//

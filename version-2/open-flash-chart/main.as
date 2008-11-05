@@ -85,8 +85,8 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/keys-1.txt";
-					//var file:String = "../../../test-data-files/x-axis-labels.txt";
+					var file:String = "../data-files/stack-bar-tooltip-hover.txt";
+					//var file:String = "../../../test-data-files/pie-chart-alpha-bug.txt";
 					this.load_external_file( file );
 
 					/*
@@ -381,10 +381,9 @@ package  {
 		
 		private function mouse_move_follow( event:MouseEvent ):void {
 
-			tr.ace( event.currentTarget );
-			tr.ace( event.target );
-			tr.ace( '@@' );
-			//if( event.target is PieSlice )
+			//tr.ace( event.currentTarget );
+			//tr.ace( event.target );
+			
 			if( event.target is Element )
 				this.tooltip.draw( event.target as Element );
 			else
@@ -393,9 +392,9 @@ package  {
 		
 		private function mouse_move_proximity( event:MouseEvent ):void {
 
-			tr.ace( event.currentTarget );
-			tr.ace( event.target );
-			tr.ace( '@@' );
+			//tr.ace( event.currentTarget );
+			//tr.ace( event.target );
+			
 			var elements:Array = this.obs.mouse_move_proximity( this.mouseX, this.mouseY );
 			this.tooltip.closest( elements );
 		}
