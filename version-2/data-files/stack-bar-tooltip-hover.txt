@@ -8,7 +8,6 @@
   "elements":[
     {
       "type":      "bar_stack",
-      "colour":    "#FFB900",
       "keys": [
         {"colour":"#FFB900", "text": "Key 1", "font-size": 10},
         {"colour":"#FFB9F0", "text": "Key 2", "font-size": 16}
@@ -42,5 +41,10 @@
 
   "y_axis":{
     "max": 20
+  },
+
+  "tooltip":{
+    "mouse": 2,
+    "stroke":1
   }
 }
