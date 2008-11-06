@@ -5,12 +5,13 @@
 	import flash.geom.Point;
 	import com.serialization.json.JSON;
 	import string.Utils;
+	import elements.axis.XAxisLabels;
 	
 	public class StackCollection extends Element {
 		
 		protected var tip_pos:flash.geom.Point;
 		private var vals:Array;
-		public var colour:Number;
+		public var colours:Array;
 		protected var group:Number;
 		private var total:Number;
 		
@@ -37,12 +38,14 @@
 						this.total += item.val;
 				}
 			}
-			
-			var tmp:String = this.tooltip.replace('#total#', NumberUtils.formatNumber( this.total ));
-			tmp = tmp.replace('#val#', NumberUtils.formatNumber( this.total ));
-			this.tooltip = tmp;
 		
-			this.colour = colour;
+			//
+			// parse our HEX colour strings
+			//
+			this.colours = new Array();
+			for each( var colour:String in style.colours )
+				this.colours.push( string.Utils.get_colour( colour ) );
+				
 			this.group = group;
 			this.visible = true;
 			
@@ -52,21 +55,22 @@
 			var bottom:Number = 0;
 			var top:Number = 0;
 			var odd:Boolean = false;
-			var c:Number;
+			var colr:Number;
+			var count:Number = 0;
 
 			for each( item in this.vals )
 			{
 				// is this a null stacked bar group?
 				if( item != null )
 				{
-					c = odd?this.colour:0x909090;
+					colr = this.colours[(count % this.colours.length)]
 					
 					var value:Object = {
 						top:		0,		// <-- set this later
 						bottom:		bottom,
-						colour:		c,		// <-- default colour (may be overriden later)
+						colour:		colr,		// <-- default colour (may be overriden later)
 						total:		this.total,
-						tip:		'Total: #total#<br>#val#'
+						tip:		this.tooltip
 					}
 				
 					//
@@ -93,6 +97,7 @@
 					
 					bottom = top;
 					odd = !odd;
+					count++;
 				}
 			}
 		}
@@ -201,6 +206,17 @@
 			// the mouse is *near* our stack, so show the 'total' tooltip
 			//
 			return this.tooltip;
+		}
+		
+		/**
+		 * See Element
+		 */
+		public override function tooltip_replace_labels( labels:XAxisLabels ):void {
+			
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+				var e:Stack = this.getChildAt(i) as Stack;
+				e.replace_x_axis_label( labels.get( this.index ) );
+			}
 		}
 	}
 }

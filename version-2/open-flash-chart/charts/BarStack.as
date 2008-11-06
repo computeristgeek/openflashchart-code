@@ -13,13 +13,13 @@
 			super(null, 0);
 			
 			this.style = {
+				colours:			['#FF0000','#00FF00'],	// <-- ugly default colours
 				values:				[],
 				keys:				[],
-				tip:				'#x_label# : #val#<br>#total'
+				tip:				'#x_label# : #val#<br>Total: #total#'
 			};
 			
 			object_helper.merge_2( json, style );
-			
 			
 //			this.axis = which_axis_am_i_attached_to(data, num);
 			
@@ -59,16 +59,12 @@
 		protected override function get_element( index:Number, value:Object ): Element {
 			
 			//
-			// TODO: colour - should we pass this through
-			//       to colour the key text?
-			//
-			
-			//
 			// this is the style for a stack:
 			//
 			var default_style:Object = {
 				tip:		this.style.tip,
-				values:		value
+				values:		value,
+				colours:	this.style.colours
 			};
 			
 			
@@ -105,36 +101,5 @@
 			
 			return tmp;
 		}
-		
-		
-		//
-		// override the default closest behaviour
-		//
-		public  function closest_2__( x:Number, y:Number ): Array {
-			var shortest:Number = Number.MAX_VALUE;
-			var closest:Element = null;
-			var dx:Number;
-			
-			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-			
-				// get the collection
-				var e:StackCollection = this.getChildAt(i) as StackCollection;
-				
-				var p:flash.geom.Point = e.get_mid_point();
-				dx = Math.abs( x - p.x );
-				
-				if( dx < shortest )	{
-					shortest = dx;
-					closest = e;
-				}
-			}
-			
-			var dy:Number = 0;
-			if( closest )
-				dy = Math.abs( y - closest.y );
-				
-			return new Array();// TODO: FIX!! { element:closest, distance_x:shortest, distance_y:dy };
-		}
-		
 	}
 }

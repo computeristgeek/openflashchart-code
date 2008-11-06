@@ -32,7 +32,9 @@ package elements.labels {
 			
 			var fmt:TextFormat = new TextFormat();
 			fmt.color = this.css.color;
-			fmt.font = "Verdana";
+			//fmt.font = "Verdana";
+			fmt.font = this.css.font_family?this.css.font_family:'Verdana';
+			fmt.bold = this.css.font_weight == 'bold'?true:false;
 			fmt.size = this.css.font_size;
 			fmt.align = "center";
 		

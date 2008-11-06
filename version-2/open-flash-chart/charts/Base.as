@@ -188,11 +188,11 @@ package charts {
 			var x:Number		= closest_x(x);
 			var tmp:Array		= this.get_all_at_this_x_pos(x);
 			
-			tr.aces('tmp.length', tmp.length);
+			// tr.aces('tmp.length', tmp.length);
 			
 			var closest:Array	= this.get_closest_y(tmp, y);
 			var dy:Number = Math.abs( y - closest.y );
-			tr.aces('closest.length', closest.length);
+			// tr.aces('closest.length', closest.length);
 			
 			return closest;
 		}

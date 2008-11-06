@@ -8,12 +8,12 @@
   "elements":[
     {
       "type":      "bar_stack",
-      "colour":    "#FFB900",
+      "colours":   ["#FF0000","#0000FF"],
       "keys": [
         {"colour":"#FFB900", "text": "Key 1", "font-size": 10},
         {"colour":"#FFB9F0", "text": "Key 2", "font-size": 16}
       ],
-      "tip":       "#total#<br>(bar total)",
+      "ti--p":       "#total#<br>(bar total)",
       "values": [
         [2.5,{"val":5}],
         [{"val":2.5},{"val":5},{"val":2.5}],

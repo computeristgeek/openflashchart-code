@@ -4,6 +4,7 @@
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
+	
 	public class Stack extends PointBarBase {
 		private var total:Number;
 		
@@ -21,6 +22,11 @@
 			t = t.replace('#total#', NumberUtils.formatNumber( this.total ));
 			
 			return t;
+		}
+		
+		public function replace_x_axis_label( t:String ): void {
+			
+			this.tooltip = this.tooltip.replace('#x_label#', t );
 		}
 				
 		//
