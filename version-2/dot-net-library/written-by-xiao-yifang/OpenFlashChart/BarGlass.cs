@@ -8,16 +8,16 @@ namespace OpenFlashChart
 {
     public  class BarGlassValue
     {
-        public BarGlassValue(string top)
+        public BarGlassValue(double top)
         {
             this.top = top;
         }
 
-        private string top;
+        private double top;
         private string colour;
         private string tooltip;
         [JsonProperty("top")]
-        public string Top
+        public double Top
         {
             get { return top; }
             set { top = value; }

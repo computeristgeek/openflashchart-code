@@ -11,9 +11,11 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <cc1:OpenFlashChartControl ID="OpenFlashChartControl1" runat="server">
+        <cc1:OpenFlashChartControl ID="OpenFlashChartControl1" runat="server" EnableCache="false" LoadingMsg="test loading...">
         </cc1:OpenFlashChartControl>
-    </div>
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="ChangeChartTitle" />
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="RestoreDefaultTitle" /></div>
+        &amp;&amp;
     </form>
 </body>
 </html>

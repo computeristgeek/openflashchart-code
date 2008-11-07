@@ -18,7 +18,7 @@ public partial class datafile_radar : System.Web.UI.Page
         Random rand = new Random(DateTime.Now.Millisecond);
         for (double i = 0; i < 12; i++)
         {
-            data1.Add(rand.Next(30));
+            data1.Add(rand.Next(15,30));
         }
 
         OpenFlashChart.LineHollow line1 = new LineHollow();
@@ -28,17 +28,19 @@ public partial class datafile_radar : System.Web.UI.Page
         line1.DotSize = 5;
 
         line1.Tooltip = "提示：#val#";
-
+        line1.Loop = true;
         chart.AddElement(line1);
         RadarAxis radarAxis = new RadarAxis(12);
         radarAxis.Steps = 4;
-        radarAxis.SetLabels(new string[] { "0", "1", "2", "3", "4", "5", "0", "1", "2", "3", "4", "5" ,"23","34"});
+        //radarAxis.SetLabels(new string[] { "0", "1", "2", "3", "4", "5", "0", "1", "2", "3", "4", "5" ,"23","34"});
         chart.Radar_Axis = radarAxis;
-        chart.Title = new Title("line演示");
+        radarAxis.SetRange(0,30);
+        chart.Title = new Title("Radar Chart");
         chart.Tooltip = new ToolTip("全局提示：#val#");
         chart.Tooltip.Shadow = true;
         chart.Tooltip.Colour = "#e43456";
         chart.Tooltip.MouseStyle = ToolTipStyle.CLOSEST;
+        
         Response.Clear();
         Response.CacheControl = "no-cache";
         Response.Write(chart.ToPrettyString());

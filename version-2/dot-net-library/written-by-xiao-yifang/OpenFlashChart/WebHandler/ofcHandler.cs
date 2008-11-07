@@ -20,15 +20,9 @@ namespace OpenFlashChart.WebHandler
                string chartID = context.Request.QueryString["chartjson"];
                if (chartID == null)
                    return;
-               string enableCache = context.Request.QueryString["ec"];
                string chartjson = (string)context.Cache[chartID];
-               //if (enableCache != "1")
-               //    context.Cache.Remove(chartID);
-               if (enableCache != "1")
-               {
-                   context.Response.Clear();
-                   context.Response.CacheControl = "no-cache";
-               }
+               context.Response.Clear();
+               context.Response.CacheControl = "no-cache";
                
                writer.Write(chartjson);
            }

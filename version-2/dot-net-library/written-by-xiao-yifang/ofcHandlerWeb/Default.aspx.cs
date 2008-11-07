@@ -14,9 +14,10 @@ using ToolTipStyle=OpenFlashChart.ToolTipStyle;
 
 public partial class _Default : System.Web.UI.Page 
 {
+    OpenFlashChart.OpenFlashChart chart = new OpenFlashChart.OpenFlashChart();
+        
     protected void Page_Load(object sender, EventArgs e)
     {
-        OpenFlashChart.OpenFlashChart chart = new OpenFlashChart.OpenFlashChart();
         ArrayList data1 = new ArrayList();
         Random rand = new Random(DateTime.Now.Millisecond);
         for (double i = 0; i < 12; i++)
@@ -46,7 +47,15 @@ public partial class _Default : System.Web.UI.Page
         chart.Tooltip.Shadow = true;
         chart.Tooltip.Colour = "#e43456";
         chart.Tooltip.MouseStyle = ToolTipStyle.CLOSEST;
-        OpenFlashChartControl1.EnableCache = true;
+        OpenFlashChartControl1.EnableCache = false;
         OpenFlashChartControl1.Chart = chart;
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        chart.Title = new Title("new Title");
+    }
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        chart.Title = new Title("default title");
     }
 }
