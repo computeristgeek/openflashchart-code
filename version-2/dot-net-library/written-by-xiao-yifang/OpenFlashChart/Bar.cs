@@ -15,6 +15,10 @@ namespace OpenFlashChart
         {
             
         }
+        public BarValue(double top)
+        {
+            this.top = top;
+        }
         public BarValue(double top,double bottom)
         {
             this.bottom = bottom;

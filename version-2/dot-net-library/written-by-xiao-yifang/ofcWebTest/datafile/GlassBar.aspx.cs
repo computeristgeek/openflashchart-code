@@ -30,8 +30,15 @@ public partial class datafile_GlassBar : System.Web.UI.Page
 
         bar.Fontsize = 10;
         List<BarGlassValue> values = new List<BarGlassValue>();
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < 11; i++)
+        {
+
             values.Add(new BarGlassValue(random.Next(i, i * 2)));
+        }
+        BarGlassValue barGlassValue = new BarGlassValue(4);
+        barGlassValue.Tip = "#bottom#:top#top#<br>#val#";
+        barGlassValue.Color = "#eee";
+        values.Add(barGlassValue);
         bar.Values = values;
         chart.AddElement(bar);
         YAxis yaxis = new YAxis();
