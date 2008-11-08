@@ -35,7 +35,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AreaBase.cs" />
     <Compile Include="AreaHollow.cs" />
+    <Compile Include="AreaLine.cs" />
     <Compile Include="Axis.cs" />
     <Compile Include="Bar.cs" />
     <Compile Include="Bar3D.cs" />

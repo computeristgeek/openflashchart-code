@@ -32,7 +32,7 @@ public partial class Pie : System.Web.UI.Page
         }
         //values.Add(0.2);
         pie.Values = values;
-        pie.Fontsize = 20;
+        pie.FontSize = 20;
        // pie.Alpha = 50;
 
         //pie.Colour = "#fff";

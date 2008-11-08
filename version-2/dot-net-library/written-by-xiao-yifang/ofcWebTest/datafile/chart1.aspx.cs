@@ -24,10 +24,10 @@ public partial class datafile_chart1 : System.Web.UI.Page
         Random random=new Random();
         area.Colour = "#0fe";
         area.DotSize = 2;
-        area.Fillalpha = 0.4;
+        area.FillAlpha = 0.4;
         area.Text = "Test";
         area.Width = 2;
-        area.Fontsize = 10;
+        area.FontSize = 10;
         IList values = new List<double>();
         for (int i = 0; i < 12; i++)
             values.Add(random.Next(i, i*2));

@@ -25,10 +25,10 @@ public partial class datafile_GlassBar : System.Web.UI.Page
         Random random = new Random();
         bar.Colour = "#345";
 
-        bar.Fillalpha = 0.4;
+        bar.FillAlpha = 0.4;
         bar.Text = "Test";
 
-        bar.Fontsize = 10;
+        bar.FontSize = 10;
         List<BarGlassValue> values = new List<BarGlassValue>();
         for (int i = 0; i < 11; i++)
         {

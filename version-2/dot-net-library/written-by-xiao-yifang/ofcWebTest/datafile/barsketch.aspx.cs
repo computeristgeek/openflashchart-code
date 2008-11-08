@@ -21,10 +21,10 @@ public partial class barsketch : System.Web.UI.Page
         Random random = new Random();
         bar.Colour = "#345";
 
-        bar.Fillalpha = 0.4;
+        bar.FillAlpha = 0.4;
         bar.Text = "Test";
 
-        bar.Fontsize = 10;
+        bar.FontSize = 10;
         List<double> values = new List<double>();
         List<string> labels = new List<string>();
         for (int i = 0; i < 12; i++)

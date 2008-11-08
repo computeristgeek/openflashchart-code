@@ -19,10 +19,10 @@ public partial class datafile_HBar : System.Web.UI.Page
         HBar bar = new OpenFlashChart.HBar();
         bar.Colour = "#345";
 
-        bar.Fillalpha = 0.4;
+        bar.FillAlpha = 0.4;
         bar.Text = "Test";
 
-        bar.Fontsize = 10;
+        bar.FontSize = 10;
         bar.AppendValue(new HBarValue(0,5));
         bar.AppendValue(new HBarValue(6,8));
         bar.AppendValue(new HBarValue(8,10));

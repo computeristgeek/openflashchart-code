@@ -18,7 +18,7 @@ namespace OpenFlashChart
         public Chart()
         {
             this.values = new ArrayList();
-            Fillalpha = 0.35;
+            FillAlpha = 0.35;
             //fontsize = 20;
         }
         [JsonProperty("colour")]
@@ -93,7 +93,7 @@ namespace OpenFlashChart
         }
         [JsonProperty("font-size")]
         [System.ComponentModel.DefaultValue(12.0)]
-        public double? Fontsize
+        public double? FontSize
         {
             get { return fontsize; }
             set { fontsize = value; }
@@ -105,16 +105,16 @@ namespace OpenFlashChart
             set { text = value; }
         }
         [JsonProperty("fillalpha")]
-        public double Fillalpha
+        public double FillAlpha
         {
             get { return fillalpha; }
             set { fillalpha = value; }
         }
 
-        public virtual void Set_Key(string text, double font_size)
+        public virtual void Set_Key(string key, double font_size)
         {
-            this.Text = text;
-            Fontsize = font_size;
+            this.Text = key;
+            FontSize = font_size;
         }
         [JsonProperty("type")]
         public string ChartType

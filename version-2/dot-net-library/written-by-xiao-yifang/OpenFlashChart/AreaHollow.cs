@@ -5,40 +5,14 @@ using JsonFx.Json;
 
 namespace OpenFlashChart
 {
-    public class AreaHollow:Chart<double >
+    public class AreaHollow : AreaBase  
     {
        
-       
-        private int width;
-        private double dotsize;
-
-        private bool loop;
-      
-        public AreaHollow()
-        {
-            this.ChartType = "area_hollow";
-          
-           
-        }
-        [JsonProperty("width")]
-        public virtual int Width
-        {
-            set { this.width = value; }
-            get { return this.width; }
-        }
-     
-        [JsonProperty("dot-size")]
-        public virtual double DotSize
-        {
-            get { return dotsize; }
-            set { dotsize = value; }
-        }
-        [JsonProperty("loop")]
-        public bool Loop
-        {
-            get { return loop; }
-            set { loop = value; }
-        }
+       public AreaHollow()
+       {
+           this.ChartType = "area_hollow";
+       }
+        
     }
 
     

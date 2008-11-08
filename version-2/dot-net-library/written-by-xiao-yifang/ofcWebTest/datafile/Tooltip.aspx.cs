@@ -30,7 +30,7 @@ public partial class Tooltip : System.Web.UI.Page
         line3.HaloSize = 2;
         line3.Width = 6;
         line3.DotSize = 4;
-        line3.Fontsize = 12;
+        line3.FontSize = 12;
 
        
         line3.Text = "line3";
