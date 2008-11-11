@@ -25,6 +25,8 @@
 		public var value:Number;
 		private var gradientFill:Boolean;
 		private var label:String;
+		private var pieRadius:Number;
+		private var rawToolTip:String;
 		
 		public var position_original:flash.geom.Point;
 		public var position_animate_to:flash.geom.Point;
@@ -43,26 +45,28 @@
 			this.gradientFill = style['gradient-fill'];
 			this.label = style.label;
 			this.index = index;
+			this.rawToolTip = style.tip;
 			
 			this.tooltip = this.replace_magic_values( style.tip );
 			
-			this.attach_events();
+			// TODO: why is this commented out in the patch file?
+			// this.attach_events();
 			
 			if ( style['on-click'] )
 				this.set_on_click( style['on-click'] );
 		}
 		
-		public override function mouseOver(event:Event):void {
-			
-			Tweener.addTween(this, { alpha:1, time:0.6, transition:Equations.easeOutCirc } );
-			this.is_over = true;
-			this.dispatchEvent( new ShowTipEvent( this.slice_angle ) );
-		}
-
-		public override function mouseOut(event:Event):void {
-			Tweener.addTween(this, { alpha:slice_alpha, time:0.8, transition:Equations.easeOutElastic } );
-			this.is_over = false;
-		}
+		//public override function mouseOver(event:Event):void {
+			//
+			//Tweener.addTween(this, { alpha:1, time:0.6, transition:Equations.easeOutCirc } );
+			//this.is_over = true;
+			//this.dispatchEvent( new ShowTipEvent( this.slice_angle ) );
+		//}
+//
+		//public override function mouseOut(event:Event):void {
+			//Tweener.addTween(this, { alpha:slice_alpha, time:0.8, transition:Equations.easeOutElastic } );
+			//this.is_over = false;
+		//}
 		
 		//
 		// This is called by the tooltip when it is finished with us,
@@ -85,7 +89,13 @@
 			
 			t = t.replace('#label#', this.label );
 			t = t.replace('#val#', NumberUtils.formatNumber( this.value ));
+			t = t.replace('#radius#', NumberUtils.formatNumber( this.pieRadius ));
 			return t;
+		}
+		
+		public override function get_tooltip():String {
+			this.tooltip = this.replace_magic_values( this.rawToolTip );
+			return this.tooltip;
 		}
 		
 		//
@@ -94,6 +104,7 @@
 		public override function resize( sc:ScreenCoordsBase, axis:Number ): void { }
 		public function pie_resize( sc:ScreenCoordsBase, radius:Number): void {
 			
+			this.pieRadius = radius;
 			this.x = sc.get_center_x();
 			this.y = sc.get_center_y();
 			
@@ -193,19 +204,36 @@
 		
 		private function draw_label_line( rad:Number, tick_size:Number, slice_angle:Number ):void {
 			//draw line
-			this.graphics.lineStyle( 1, this.colour, 100 );
+			
+			// TODO: why is this commented out?
+			//this.graphics.lineStyle( 1, this.colour, 100 );
 			//move to center of arc
-			this.graphics.moveTo(rad*Math.cos(slice_angle/2*TO_RADIANS), rad*Math.sin(slice_angle/2*TO_RADIANS));
-
+			
+			// TODO: need this?
+			//this.graphics.moveTo(rad*Math.cos(slice_angle/2*TO_RADIANS), rad*Math.sin(slice_angle/2*TO_RADIANS));
+//
 			//final line positions
-			var lineEnd_x:Number = (rad+tick_size)*Math.cos(slice_angle/2*TO_RADIANS);
-			var lineEnd_y:Number = (rad+tick_size)*Math.sin(slice_angle/2*TO_RADIANS);
-			this.graphics.lineTo(lineEnd_x, lineEnd_y);
+			//var lineEnd_x:Number = (rad+tick_size)*Math.cos(slice_angle/2*TO_RADIANS);
+			//var lineEnd_y:Number = (rad+tick_size)*Math.sin(slice_angle/2*TO_RADIANS);
+			//this.graphics.lineTo(lineEnd_x, lineEnd_y);
 		}
 		
 		
 		public override function toString():String {
 			return "PieSlice: "+ this.get_tooltip();
+		}
+		
+		public function getTicAngle():Number {
+			return this.angle + (this.slice_angle / 2);
+		}
+
+		public function isRightSide():Boolean
+		{
+			return (this.getTicAngle() >= 270) || (this.getTicAngle() <= 90);
+		}
+		
+		public function get_colour(): Number {
+			return this.colour;
 		}
 	}
 }

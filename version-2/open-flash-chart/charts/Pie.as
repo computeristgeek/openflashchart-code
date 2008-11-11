@@ -169,37 +169,244 @@
 			return { Element:null, distance_x:0, distance_y:0 };
 		}
 		
-		
 		public override function resize( sc:ScreenCoordsBase ): void {
-
-			var radius:Number = ( Math.min( sc.width, sc.height ) / 2.0 );
-		
-			var pie:PieSliceContainer;
-			//
-			// loop over the lables and make sure they are on the screen,
-			// reduce the radius until they fit
-			//
-			var i:Number = 0;
-			var outside:Boolean;
-			do
+			var radius:Number = this.style.radius;
+			if (isNaN(radius)) 
 			{
-				outside = false;
+				radius = ( Math.min( sc.width, sc.height ) / 2.0 );
+				var offsets:Object = {top:0, right:0, bottom:0, left:0};
 				
+				var i:Number;
+				var sliceContainer:PieSliceContainer;
+				
+				// loop to gather and merge offsets
 				for ( i = 0; i < this.numChildren; i++ )
 				{
-					pie = this.getChildAt(i) as PieSliceContainer;
-					if( !pie.is_label_on_screen(sc, radius) )
-						outside = true;
+					sliceContainer = this.getChildAt(i) as PieSliceContainer;
+					var pie_offsets:Object = sliceContainer.get_radius_offsets();
+					for (var key:Object in offsets) 
+					{
+						if ( pie_offsets[key] > offsets[key] ) {
+							offsets[key] = pie_offsets[key];
+						}
+					}
 				}
-				radius -= 1;
+
+				var vRadius:Number = radius;
+				var hRadius:Number = radius;
+				// Calculate minimum radius assuming the contraint is vertical
+				// Shrink radius by the largest top/bottom offset
+				vRadius -= Math.max(offsets.top, offsets.bottom);
+				// check to see if the left/right labels will fit
+				if ((vRadius + offsets.left) > (sc.width / 2))
+				{
+					//radius -= radius + offsets.left - (sc.width / 2);
+					vRadius = (sc.width / 2) - offsets.left;
+				}
+				if ((vRadius + offsets.right) > (sc.width / 2))
+				{
+					//radius -= radius + offsets.right - (sc.width / 2);
+					vRadius = (sc.width / 2) - offsets.right;
+				}
+					
+				// Calculate minimum radius assuming the contraint is horizontal
+				// Shrink radius by the largest left/right offset
+				hRadius -= Math.max(offsets.left, offsets.right);
+				// check to see if the left/right labels will fit
+				if ((hRadius + offsets.top) > (sc.height / 2))
+				{
+					//radius -= radius + offsets.height - (sc.width / 2);
+					hRadius = (sc.height / 2) - offsets.top;
+				}
+				if ((hRadius + offsets.bottom) > (sc.height / 2))
+				{
+					//radius -= radius + offsets.right - (sc.width / 2);
+					hRadius = (sc.height / 2) - offsets.bottom;
+				}
+				// Use the smallest calculated radius but not less than 10
+				radius = Math.max(Math.min(vRadius, hRadius), 10);
 			}
-			while ( outside && radius > 10 );
 			
+			var rightTopTicAngle:Number		= 720;
+			var rightTopTicIdx:Number 		= -1;
+			var rightBottomTicAngle:Number	= -720;
+			var rightBottomTicIdx:Number	= -1;
+
+			var leftTopTicAngle:Number		= 720;
+			var leftTopTicIdx:Number		= -1;
+			var leftBottomTicAngle:Number	= -720;
+			var leftBottomTicIdx:Number		= -1;
+
+			// loop and resize
 			for ( i = 0; i < this.numChildren; i++ )
 			{
-				pie = this.getChildAt(i) as PieSliceContainer;
-				pie.pie_resize(sc, radius);
+				sliceContainer = this.getChildAt(i) as PieSliceContainer;
+				sliceContainer.pie_resize(sc, radius);
+				
+				// While we are looping through the children, we determine which
+				// labels are the starting points in each quadrant so that we
+				// move the labels around to prevent overlaps
+				var ticAngle:Number = sliceContainer.getTicAngle();
+				if (ticAngle >= 270)
+				{
+					// Right side - Top
+					if ((ticAngle < rightTopTicAngle) || (rightTopTicAngle <= 90))
+					{
+						rightTopTicAngle = ticAngle;
+						rightTopTicIdx = i;
+					}
+					// Just in case no tics in Right-Bottom
+					if ((rightBottomTicAngle < 0) || 
+						((rightBottomTicAngle > 90) && (rightBottomTicAngle < ticAngle)))
+					{
+						rightBottomTicAngle = ticAngle;
+						rightBottomTicIdx = i;
+					}
+				}
+				else if (ticAngle <= 90)
+				{
+					// Right side - Bottom
+					if ((ticAngle > rightBottomTicAngle) || (rightBottomTicAngle > 90))
+					{
+						rightBottomTicAngle = ticAngle;
+						rightBottomTicIdx = i;
+					}
+					// Just in case no tics in Right-Top
+					if ((rightTopTicAngle > 360) ||
+						((rightTopTicAngle <= 90) && (ticAngle < rightBottomTicAngle)))
+					{
+						rightTopTicAngle = ticAngle;
+						rightTopTicIdx = i;
+					}
+				}
+				else if (ticAngle <= 180)
+				{
+					// Left side - Bottom
+					if ((leftBottomTicAngle < 0) || (ticAngle < leftBottomTicAngle))
+					{
+						leftBottomTicAngle = ticAngle;
+						leftBottomTicIdx = i;
+					}
+					// Just in case no tics in Left-Top
+					if ((leftTopTicAngle > 360) || (leftTopTicAngle < ticAngle))
+					{
+						leftTopTicAngle = ticAngle;
+						leftTopTicIdx = i;
+					}
+				}
+				else 
+				{
+					// Left side - Top
+					if ((leftTopTicAngle > 360) || (ticAngle > leftTopTicAngle))
+					{
+						leftTopTicAngle = ticAngle;
+						leftTopTicIdx = i;
+					}
+					// Just in case no tics in Left-Bottom
+					if ((leftBottomTicAngle < 0) || (leftBottomTicAngle > ticAngle))
+					{
+						leftBottomTicAngle = ticAngle;
+						leftBottomTicIdx = i;
+					}
+				}
 			}
+			
+			// Make a clockwise pass on right side of pie trying to move 
+			// the labels so that they do not overlap
+			var childIdx:Number = rightTopTicIdx;
+			var yVal:Number = sc.top;
+			var bDone:Boolean = false;
+			while ((childIdx >= 0) && (!bDone))
+			{
+				sliceContainer = this.getChildAt(childIdx) as PieSliceContainer;
+				ticAngle = sliceContainer.getTicAngle();
+				if ((ticAngle >= 270) || (ticAngle <= 90))
+				{
+					yVal = sliceContainer.moveLabelDown(sc, yVal);
+					
+					childIdx++;
+					if (childIdx >= this.numChildren) childIdx = 0;
+					
+					bDone = (childIdx == rightTopTicIdx);
+				}
+				else
+				{
+					bDone = true;
+				}
+			}
+			
+			// Make a counter-clockwise pass on right side of pie trying to move 
+			// the labels so that they do not overlap
+			childIdx = rightBottomTicIdx;
+			yVal = sc.bottom;
+			bDone = false;
+			while ((childIdx >= 0) && (!bDone))
+			{
+				sliceContainer = this.getChildAt(childIdx) as PieSliceContainer;
+				ticAngle = sliceContainer.getTicAngle();
+				if ((ticAngle >= 270) || (ticAngle <= 90))
+				{
+					yVal = sliceContainer.moveLabelUp(sc, yVal);
+					
+					childIdx--;
+					if (childIdx < 0) childIdx = this.numChildren - 1;
+					
+					bDone = (childIdx == rightBottomTicIdx);
+				}
+				else
+				{
+					bDone = true;
+				}
+			}
+			
+			// Make a clockwise pass on left side of pie trying to move 
+			// the labels so that they do not overlap
+			childIdx = leftBottomTicIdx;
+			yVal = sc.bottom;
+			bDone = false;
+			while ((childIdx >= 0) && (!bDone))
+			{
+				sliceContainer = this.getChildAt(childIdx) as PieSliceContainer;
+				ticAngle = sliceContainer.getTicAngle();
+				if ((ticAngle > 90) && (ticAngle < 270))
+				{
+					yVal = sliceContainer.moveLabelUp(sc, yVal);
+					
+					childIdx++;
+					if (childIdx >= this.numChildren) childIdx = 0;
+					
+					bDone = (childIdx == leftBottomTicIdx);
+				}
+				else
+				{
+					bDone = true;
+				}
+			}
+			
+			// Make a counter-clockwise pass on left side of pie trying to move 
+			// the labels so that they do not overlap
+			childIdx = leftTopTicIdx;
+			yVal = sc.top;
+			bDone = false;
+			while ((childIdx >= 0) && (!bDone))
+			{
+				sliceContainer = this.getChildAt(childIdx) as PieSliceContainer;
+				ticAngle = sliceContainer.getTicAngle();
+				if ((ticAngle > 90) && (ticAngle < 270))
+				{
+					yVal = sliceContainer.moveLabelDown(sc, yVal);
+					
+					childIdx--;
+					if (childIdx < 0) childIdx = this.numChildren - 1;
+					
+					bDone = (childIdx == leftTopTicIdx);
+				}
+				else
+				{
+					bDone = true;
+				}
+			}
+			
 		}
 		
 		
