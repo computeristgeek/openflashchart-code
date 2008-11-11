@@ -1,5 +1,10 @@
-﻿package charts.Elements {
+﻿package charts.series.pies {
+	
+	import charts.Elements.Element;
+	import charts.Pie;
+	
 	import flash.display.Sprite;
+	import flash.display.GradientType;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.text.TextField;
@@ -8,8 +13,6 @@
 	import flash.events.MouseEvent;
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
-	import charts.Pie;
-	import flash.display.GradientType;
 	
 	public class PieSlice extends Element {
 		

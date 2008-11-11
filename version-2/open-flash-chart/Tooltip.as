@@ -39,7 +39,7 @@ package {
 			
 			this.style = {
 				shadow:		true,
-				rounded:	1,
+				rounded:	6,
 				stroke:		2,
 				colour:		'#808080',
 				background:	'#f0f0f0',
@@ -101,7 +101,7 @@ package {
 			this.graphics.drawRoundRect(
 				0,0,
 				width+10, height + 5,
-				6,6 );
+				this.style.rounded,this.style.rounded );
 		}
 			
 		private function make_one_tip( e:Element, x:Number ):Object {

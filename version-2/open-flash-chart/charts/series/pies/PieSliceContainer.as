@@ -1,4 +1,6 @@
-﻿package charts.Elements {
+﻿package charts.series.pies {
+	
+	import charts.Elements.Element;
 	import flash.events.Event;
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
@@ -69,7 +71,11 @@
 		
 		public function is_label_on_screen( sc:ScreenCoordsBase, slice_radius:Number ): Boolean {
 			
-			return this.pieLabel.move_label( slice_radius + 10, sc.get_center_x(), sc.get_center_y(), this.pieSlice.angle+(this.pieSlice.slice_angle/2) );
+			return this.pieLabel.move_label(
+				slice_radius + 10,
+				sc.get_center_x(),
+				sc.get_center_y(),
+				this.pieSlice.angle+(this.pieSlice.slice_angle/2) );
 		}
 		
 		public function pie_resize( sc:ScreenCoordsBase, slice_radius:Number ): void {
@@ -99,8 +105,12 @@
 				else
 				{
 					//if legend stands to the left side of the pie
-					this.pieLabel.x = this.pieLabel.x - this.pieLabel.width -
-										this.tick_extension_size - this.label_margin - 4;
+					this.pieLabel.x =
+						this.pieLabel.x -
+						this.pieLabel.width -
+						this.tick_extension_size -
+						this.label_margin -
+						4;
 				}
 				this.pieLabel.y -= this.pieLabel.height / 2;
 
@@ -123,14 +133,15 @@
 			
 			this.animating = true;
 			Tweener.removeTweens(this);
-			tr.ace('over container');
+			
+			// tr.ace('over container');
 //			Tweener.addTween(this, {x:this.myPieSlice.position_animate_to.x, y:this.myPieSlice.position_animate_to.y, time:0.4, transition:"linear"} );
-			Tweener.addTween(this, {x:this.moveToX, y:this.moveToY, time:0.4, transition:"linear"} );
+			Tweener.addTween(this, {x:this.moveToX, y:this.moveToY, time:0.4, transition:"easeOutBounce"} );
 		}
 		
 		public override function mouseOut(event:Event):void {
 			Tweener.removeTweens(this);
-			Tweener.addTween(this, {x:this.saveX, y:this.saveY, time:0.4, transition:"linear"} );
+			Tweener.addTween(this, {x:this.saveX, y:this.saveY, time:0.4, transition:"easeOutBounce"} );
 			this.animating = false;
 		}
 

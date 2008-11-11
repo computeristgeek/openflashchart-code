@@ -1,9 +1,9 @@
 ﻿package charts {
-	import charts.Elements.PieLabel;
+	import charts.series.pies.PieLabel;
 	import flash.external.ExternalInterface;
 	import string.Utils;
 	import charts.Elements.Element;
-	import charts.Elements.PieSliceContainer;
+	import charts.series.pies.PieSliceContainer;
 	import global.Global;
 	
 	import flash.display.Sprite;

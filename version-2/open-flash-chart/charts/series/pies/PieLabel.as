@@ -1,4 +1,4 @@
-﻿package charts.Elements {
+﻿package charts.series.pies {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
