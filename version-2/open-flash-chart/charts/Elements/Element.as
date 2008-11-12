@@ -1,4 +1,5 @@
 ﻿package charts.Elements {
+	import charts.series.has_tooltip;
 	import flash.display.Sprite;
 	import string.Utils;
 	import global.Global;
@@ -12,7 +13,7 @@
 	import flash.external.ExternalInterface;
 	import elements.axis.XAxisLabels;
 	
-	public class Element extends Sprite {
+	public class Element extends Sprite implements has_tooltip {
 		//
 		// for line data
 		//
@@ -56,7 +57,7 @@
 		 * When true, this element is displaying a tooltip
 		 * and should fade-in, pulse, or become active
 		 * 
-		 * override this
+		 * override this to show hovered states.
 		 * 
 		 * @param	b
 		 */

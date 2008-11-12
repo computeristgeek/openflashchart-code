@@ -1,8 +1,10 @@
 ﻿package charts.series.pies {
+	
+	import charts.series.has_tooltip;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
-	public class PieLabel extends TextField {
+	public class PieLabel extends TextField implements has_tooltip{
 		public var is_over:Boolean;
 		private static var TO_RADIANS:Number = Math.PI / 180;
 		
@@ -46,6 +48,19 @@
 				return true;
 			else
 				return false;
+		}
+		
+		public function get_tooltip():String {
+			tr.ace(( this.parent as has_tooltip ).get_tooltip());
+			return ( this.parent as has_tooltip ).get_tooltip();
+		}
+		
+		public function get_tip_pos():Object {
+			return ( this.parent as has_tooltip ).get_tip_pos();
+		}
+		
+		public function set_tip( b:Boolean ):void {
+			return ( this.parent as has_tooltip ).set_tip(b);
 		}
 		
 		public function resize( sc:ScreenCoords ): void {

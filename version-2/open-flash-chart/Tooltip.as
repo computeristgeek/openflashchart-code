@@ -8,11 +8,12 @@ package {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.filters.DropShadowFilter;
-	import charts.Elements.Element;
+	// import charts.Elements.Element;
 	import com.serialization.json.JSON;
 	import string.Utils;
 	import string.Css;
 	import object_helper;
+	import charts.series.has_tooltip;
 	
 	public class Tooltip extends Sprite {
 		// JSON style:
@@ -88,7 +89,7 @@ package {
 			var height:Number = 0;
 			var x:Number = 5;
 			
-			for each ( var e:Element in elements ) {
+			for each ( var e:has_tooltip in elements ) {
 				
 				var o:Object = this.make_one_tip(e, x);
 				height = Math.max(height, o.height);
@@ -104,7 +105,7 @@ package {
 				this.style.rounded,this.style.rounded );
 		}
 			
-		private function make_one_tip( e:Element, x:Number ):Object {
+		private function make_one_tip( e:has_tooltip, x:Number ):Object {
 			
 			var tt:String = e.get_tooltip();
 			var lines:Array = tt.split( '<br>' );
@@ -180,9 +181,11 @@ package {
 			return text;
 		}
 		
-		private function get_pos( e:Element ):flash.geom.Point {
+		private function get_pos( e:has_tooltip ):flash.geom.Point {
 
+			tr.ace('@@@');
 			var pos:Object = e.get_tip_pos();
+			tr.ace_json( pos );
 			
 			var x:Number = (pos.x + this.width + 16) > this.stage.stageWidth ? (this.stage.stageWidth - this.width - 16) : pos.x;
 			
@@ -198,7 +201,7 @@ package {
 			return new flash.geom.Point(x, y);
 		}
 		
-		private function show_tip( e:Element ):void {
+		private function show_tip( e:has_tooltip ):void {
 			
 			// remove the 'hide' tween
 			Tweener.removeTweens( this );
@@ -235,7 +238,7 @@ package {
 			}
 		}
 		
-		public function draw( e:Element ):void {
+		public function draw( e:has_tooltip ):void {
 
 			if ( this.cached_elements[0] == e )
 			{
@@ -297,7 +300,7 @@ package {
 			if ( this.cached_elements.length == 0 )
 				return false;
 				
-			for each( var e:Element in elements )
+			for each( var e:has_tooltip in elements )
 				if ( this.cached_elements.indexOf(e) == -1 )
 					return false;
 					
@@ -305,12 +308,12 @@ package {
 		}
 		
 		private function untip():void {
-			for each( var e:Element in this.cached_elements )
+			for each( var e:has_tooltip in this.cached_elements )
 				e.set_tip( false );
 		}
 		
 		private function tip():void {
-			for each( var e:Element in this.cached_elements )
+			for each( var e:has_tooltip in this.cached_elements )
 				e.set_tip( true );
 		}
 		

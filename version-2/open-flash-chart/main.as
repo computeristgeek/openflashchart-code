@@ -3,6 +3,7 @@ package  {
 	import charts.Elements.Element;
 	import charts.Factory;
 	import charts.ObjectCollection;
+	import charts.series.has_tooltip;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.display.Sprite;
@@ -85,7 +86,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/pie-many-slices.txt";
+					var file:String = "../data-files/pie-many-slices-fixed.txt";
 					//var file:String = "../../../test-data-files/pie-chart-alpha-bug.txt";
 					this.load_external_file( file );
 
@@ -339,23 +340,9 @@ package  {
             this.stage.addEventListener(Event.RESIZE, this.resizeHandler);
 			this.stage.addEventListener(Event.MOUSE_LEAVE, this.mouseOut);
 			
-			//
-			// TODO: check and remove
-			//
-			//this.stage.addEventListener( ShowTipEvent.SHOW_TIP_TYPE, this.show_tip );
-			//this.stage.addEventListener( ShowTipEvent.SHOW_TIP_TYPE, this.show_tip );
-			//this.stage.addEventListener( Event..MIDDLE_CLICK, this.show_tip );
-			
 			this.addEventListener( MouseEvent.MOUSE_OVER, this.mouseMove );
 		}
 		
-//		private function show_tip( event:ShowTipEvent ):void {
-//			tr.ace( 'show_tip: over '+event.pos );
-//		}
-//		private function show_tip2( event:MouseEvent ):void {
-//			
-//			this.mouseMove( event );
-//		}
 		
 		private function mouseMove( event:Event ):void {
 			// tr.ace( 'over ' + event.target );
@@ -368,7 +355,7 @@ package  {
 					break;
 					
 				case Tooltip.PROXIMITY:
-				tr.ace('prox');
+					tr.ace('prox');
 					this.mouse_move_proximity( event as MouseEvent );
 					break;
 					
@@ -384,8 +371,8 @@ package  {
 			//tr.ace( event.currentTarget );
 			//tr.ace( event.target );
 			
-			if( event.target is Element )
-				this.tooltip.draw( event.target as Element );
+			if ( event.target is has_tooltip )
+				this.tooltip.draw( event.target as has_tooltip );
 			else
 				this.tooltip.hide();
 		}
