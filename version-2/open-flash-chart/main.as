@@ -699,6 +699,9 @@ package  {
 					// X Axis labels used, even so, make the chart
 					// big enough to show all values
 					//
+					
+					tr.ace('#####');
+					tr.aces(this.obs.get_min_x(), this.x_labels.count(), this.obs.get_max_x());
 					this.x_axis.set_range(
 						this.obs.get_min_x(),
 						Math.max( this.x_labels.count(), this.obs.get_max_x() ) );

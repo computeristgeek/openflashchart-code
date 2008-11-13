@@ -1,12 +1,12 @@
-﻿package charts.Elements {
+﻿package charts.series.bars {
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
-//	import com.serialization.json.JSON;
 	import flash.geom.Point;
-	
+	import charts.Elements.Element;
 	
 	public class PointHBar extends Element
 	{
