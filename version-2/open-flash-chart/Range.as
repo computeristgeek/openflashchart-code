@@ -14,7 +14,7 @@
 		}
 		
 		public function count():Number {
-			return this.max - this.min;
+			return this.max - this.min + 1;
 		}
 		
 		public function toString():String {

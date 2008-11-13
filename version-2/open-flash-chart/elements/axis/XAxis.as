@@ -227,10 +227,6 @@ package elements.axis {
 			this.graphics.drawRect( sc.left, sc.bottom, sc.width, this.stroke );
 			this.graphics.endFill();
 			
-						
-			tr.ace('gc');
-			tr.ace(this.style.max);
-			tr.ace(this.steps);
 			
 			for( var i:Number=this.style.min; i <= this.style.max; i+=this.steps )
 			{

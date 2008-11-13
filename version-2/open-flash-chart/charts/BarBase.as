@@ -75,7 +75,7 @@
 			}
 			
 			// 0 is a position, so count it:
-			return max_index+1;
+			return max_index;
 		}
 		
 		public override function get_min_x():Number {

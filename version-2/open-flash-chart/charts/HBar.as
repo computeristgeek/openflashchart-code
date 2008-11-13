@@ -91,6 +91,10 @@
 	
 			return x;
 		}
+		
+		public override function get_min_x():Number {
+			return 0;
+		}
 
 	}
 }

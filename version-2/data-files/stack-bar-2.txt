@@ -31,8 +31,6 @@
   ],
 
   "x_axis":{
-    "max":4,
-    "steps": 1,
     "labels": {
       "labels": ["January","February","March","April"]
     },
