@@ -8,7 +8,7 @@
 	import flash.geom.Point;
 	import charts.Elements.Element;
 	
-	public class PointHBar extends Element
+	public class Horizontal extends Element
 	{
 		private var right:Number;
 		private var left:Number;
@@ -17,7 +17,7 @@
 		public var colour:Number;
 		protected var group:Number;
 		
-		public function PointHBar( index:Number, style:Object, group:Number )
+		public function Horizontal( index:Number, style:Object, group:Number )
 		{
 			super();
 			//

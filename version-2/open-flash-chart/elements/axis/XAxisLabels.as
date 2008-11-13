@@ -193,7 +193,7 @@ package elements.axis {
 		
 		public function count() : Number
 		{
-			return this.axis_labels.length;
+			return this.axis_labels.length-1;
 		}
 		
 		public function get_height() : Number

@@ -1,6 +1,6 @@
 ﻿package charts {
 	import charts.Elements.Element;
-	import charts.series.bars.PointHBar;
+	import charts.series.bars.Horizontal;
 	import string.Utils;
 	import global.Global;
 	
@@ -63,14 +63,14 @@
 			if( default_style.colour is String )
 				default_style.colour = Utils.get_colour( default_style.colour );
 			
-			return new PointHBar( index, default_style, this.group );
+			return new Horizontal( index, default_style, this.group );
 		}
 		
 		public override function resize( sc:ScreenCoordsBase ): void {
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
-				var p:PointHBar = this.getChildAt(i) as PointHBar;
+				var p:Horizontal = this.getChildAt(i) as Horizontal;
 				p.resize( sc, this.axis );
 			}
 		}
@@ -82,9 +82,9 @@
 			// count the non-mask items:
 			//
 			for ( var i:Number = 0; i < this.numChildren; i++ )
-				if( this.getChildAt(i) is PointHBar ) {
+				if( this.getChildAt(i) is Horizontal ) {
 					
-					var h:PointHBar = this.getChildAt(i) as PointHBar;
+					var h:Horizontal = this.getChildAt(i) as Horizontal;
 					x = Math.max( x, h.get_max_x_value() );
 					
 				}
