@@ -1,11 +1,11 @@
-﻿package charts.Elements {
+﻿package charts.series.dots {
 	import charts.Elements.PointDotBase;
 	import flash.display.BlendMode;
 	import flash.display.Sprite;
 	
-	public class PointHollow extends PointDotBase {
+	public class Hollow extends PointDotBase {
 		
-		public function PointHollow( index:Number, style:Object ) {
+		public function Hollow( index:Number, style:Object ) {
 			
 			super( index, style );
 			

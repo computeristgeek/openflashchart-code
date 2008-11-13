@@ -1,6 +1,7 @@
 ﻿package charts {
+	
 	import charts.Elements.Element;
-	import charts.Elements.PointHollow;
+	import charts.series.dots.Hollow;
 	import string.Utils;
 	import flash.display.BlendMode;
 	
@@ -28,7 +29,7 @@
 			//
 			s.width = this.style.width;
 			
-			return new charts.Elements.PointHollow( index, s );
+			return new Hollow( index, s );
 		}
 	}
 }

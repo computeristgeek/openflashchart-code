@@ -8,6 +8,7 @@
 	import charts.Elements.PointDot;
 	import string.Utils;
 	import flash.display.BlendMode;
+	import charts.series.dots.Hollow;
 	
 	public class LineHollow extends LineBase
 	{
@@ -59,7 +60,7 @@
 			//
 			s.width = this.style.width;
 			
-			return new charts.Elements.PointHollow( index, s );
+			return new Hollow( index, s );
 			//return new ChartObjects.Elements.Star( index, s );
 		}
 			

@@ -86,7 +86,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/area-line.txt";
+					var file:String = "../data-files/area-2.txt";
 					//var file:String = "../../../test-data-files/pie-chart-alpha-bug.txt";
 					this.load_external_file( file );
 

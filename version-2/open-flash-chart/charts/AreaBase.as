@@ -72,8 +72,7 @@
 				if( tmp is Element ) {
 					
 					var e:Element = tmp as Element;
-					tr.ace(e.index);
-					tr.ace(e.x + ', ' + e.y);
+					
 					if( first )
 					{
 						
