@@ -1,14 +1,14 @@
-﻿package charts.Elements {
+﻿package charts.series.dots.scatter {
 	
 	import flash.display.Sprite;
 	import charts.Elements.Element;
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
 	
-	public class PointScatter extends Element {
+	public class scatter extends Element {
 		public var radius:Number;
 		
-		public function PointScatter( style:Object ) {
+		public function scatter( style:Object ) {
 
 			this._x = style.x;
 			this._y = style.y;
