@@ -34,22 +34,21 @@
   "x_axis": {
     "offset": false,
     "labels": {
-
-      "rotate": -24,
-
+	  "align":"center",
       "labels": [
-        "January",
-        {"text":"February","rotate":45},
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        {"text":"November","rotate":350},
-        "December"
+        {"text":"January 0","rotate":0},
+		{"text":"January 30","rotate":30},
+        {"text":"January 60","rotate":60},
+        {"text":"January 90","rotate":90},
+        {"text":"January 120","rotate":120},
+        {"text":"January 150","rotate":150},
+		{"text":"January 180","rotate":180},
+        {"text":"January 210","rotate":210},
+        {"text":"January 240","rotate":240},
+        {"text":"January 270","rotate":270},
+        {"text":"January 300","rotate":300},
+        {"text":"January 330","rotate":330},
+        {"text":"January 360","rotate":360}
       ]
     }
   }
