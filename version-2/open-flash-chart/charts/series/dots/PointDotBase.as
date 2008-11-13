@@ -1,4 +1,5 @@
-﻿package charts.Elements {
+﻿package charts.series.dots {
+	
 	import flash.display.Sprite;
 	import charts.Elements.Element;
 	import flash.display.BlendMode;
