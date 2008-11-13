@@ -183,10 +183,8 @@ package {
 		
 		private function get_pos( e:has_tooltip ):flash.geom.Point {
 
-			tr.ace('@@@');
 			var pos:Object = e.get_tip_pos();
-			tr.ace_json( pos );
-			
+
 			var x:Number = (pos.x + this.width + 16) > this.stage.stageWidth ? (this.stage.stageWidth - this.width - 16) : pos.x;
 			
 			var y:Number = pos.y;

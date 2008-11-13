@@ -88,7 +88,10 @@ package {
 		// be outside the drawing area. So we make the chart width smaller so the label
 		// will fit into the screen.
 		//
-		public function jiggle( left:Number, right:Number, x_label_width:Number, count:Number ): Number {
+		//DZ: this implementation chops off the last label on scatter charts because it
+		//    assumes the label is centered on the last "item" (like a bar) instead of 
+		//    at the max edge of the plot.
+		public function jiggle_original( left:Number, right:Number, x_label_width:Number, count:Number ): Number {
 			var r:Number = 0;
 
 			if( x_label_width != 0 )
@@ -109,6 +112,14 @@ package {
 				right = new_right;
 			}
 			return right;
+		}
+		
+		//DZ: this implementation probably add white space on the right side of a
+		//    non-scatter type plot because it assumes that the label is centered at
+		//    the max edge of the plot instead of centered on the last "item" 
+		//    (like a bar)
+		public function jiggle( left:Number, right:Number, x_label_width:Number, count:Number ): Number {
+			return right - (x_label_width / 2);
 		}
 		
 		//
