@@ -34,6 +34,7 @@ package elements.axis {
 				labels:		null,
 				steps:		1,
 				size:		10,
+				align:		'auto',
 				colour:		'#000000'
 			};
 			
@@ -98,7 +99,8 @@ package elements.axis {
 				text:		'',
 				rotate:		style.rotate,
 				size:		style.size,
-				colour:		style.colour
+				colour:		style.colour,
+				align:		style.align
 			};
 
 			
@@ -179,7 +181,7 @@ package elements.axis {
 			fmt.align = "left";
 			title.setTextFormat(fmt);
 			title.autoSize = "left";
-			title.rotate_and_align( label_style.rotate, this );
+			title.rotate_and_align( label_style.rotate, label_style.align, this );
 			
 			// we don't know the x & y locations yet...
 			
@@ -254,7 +256,8 @@ package elements.axis {
 			// and we don't want to truncate it.
 //			return this.mcs[(this.mcs.length-1)]._width;
 			if ( this.numChildren > 0 )
-				return this.getChildAt(this.numChildren - 1).width;
+				// this is a kludge compensating for ScreenCoords dividing the width by 2
+				return AxisLabel(this.getChildAt(this.numChildren - 1)).rightOverhang * 2;
 			else
 				return 0;
 		}
@@ -263,7 +266,8 @@ package elements.axis {
 		public function first_label_width() : Number
 		{
 			if( this.numChildren>0 )
-				return this.getChildAt(0).width;
+				// this is a kludge compensating for ScreenCoords dividing the width by 2
+				return AxisLabel(this.getChildAt(0)).leftOverhang * 2;
 			else
 				return 0;
 		}

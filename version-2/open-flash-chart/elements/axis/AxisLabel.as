@@ -21,75 +21,39 @@ package elements.axis {
 		 * 
 		 * @param	rotation
 		 */
-
-		public function rotate_and_align( rotation:Number, parent:Sprite ): void
-		{
-			// NOTE: We want the labels to be top justified along the X Axis
-			// NOTE: Child rotation is between -180 and 180
-
-			this.rotation = rotation;
+		public function rotate_and_align( rotation:Number, align:String, parent:Sprite ): void
+		{ 
+			rotation = rotation % 360;
+			if (rotation < 0) rotation += 360;
 			
-			var titleRect:Rectangle = this.getBounds(parent);
-			var tempRect:Rectangle;
-
-			if (this.rotation == 0)
+			var myright:Number = this.width * Math.cos(rotation * Math.PI / 180);
+			var myleft:Number = this.height * Math.cos((90 - rotation) * Math.PI / 180);
+			var mytop:Number = this.height * Math.sin((90 - rotation) * Math.PI / 180);
+			var mybottom:Number = this.width * Math.sin(rotation * Math.PI / 180);
+			
+			if (((rotation % 90) == 0) || (align == "center"))
 			{
-				this.xAdj = - titleRect.width / 2;
-				///yAdj += 0;
-			} 
-			else if (this.rotation == -90) 
-			{
-				this.xAdj = - titleRect.width / 2;
-				this.yAdj = titleRect.height;
-			} 
-			else if (this.rotation == 90) 
-			{
-				this.xAdj = titleRect.width / 2;
-				//yAdj += 0;
-			} 
-			else if (Math.abs(this.rotation) == 180) 
-			{
-				this.xAdj = titleRect.width / 2;
-				this.yAdj = titleRect.height;
-			} 
-			else if (this.rotation < -90) //-90
-			{
-				// temporarily change rotation to easily determine x adjustment
-				this.rotation += 180;
-				tempRect = this.getBounds(parent);
-				this.rotation -= 180;
-
-				this.xAdj = titleRect.width + ((3 * tempRect.x) / 2);
-				this.yAdj = -titleRect.y;
-			} 
-			else if (this.rotation < 0) 
-			{
-				// temporarily change rotation to easily determine x adjustment
-				this.rotation += 90;
-				tempRect = this.getBounds(parent);
-				this.rotation -= 90;
-
-				this.xAdj = -titleRect.width - (tempRect.x / 2);
-				this.yAdj = -titleRect.y;
-			} 
-			else if (this.rotation < 90) 
-			{
-				this.xAdj = -titleRect.x / 2;
-				this.yAdj = -titleRect.y;
-			} 
-			else 
-			{
-				// temporarily change rotation to easily determine x adjustment
-				this.rotation -= 90;
-				tempRect = this.getBounds(parent);
-				this.rotation += 90;
-
-				this.xAdj = -tempRect.x / 2;
-				this.yAdj = -titleRect.y;
+				this.xAdj = (myleft - myright) / 2;
 			}
-			
+			else
+			{
+				this.xAdj = (rotation < 180) ? myleft / 2 : -myright + (myleft / 2);
+			}
+
+			if (rotation > 90) {
+				this.yAdj = -mytop;
+			}
+			if (rotation > 180) {
+				this.yAdj = -mytop - mybottom;
+			}
+			if (rotation > 270) {
+				this.yAdj = - mybottom;
+			}
+			this.rotation = rotation;
+
+			var titleRect:Rectangle = this.getBounds(parent);
 			this.leftOverhang = Math.abs(titleRect.x + this.xAdj);
 			this.rightOverhang = Math.abs(titleRect.x + titleRect.width + this.xAdj);
-		}
-	}
+      }
+   }
 }
