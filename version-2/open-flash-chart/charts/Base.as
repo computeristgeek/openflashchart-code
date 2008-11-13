@@ -79,26 +79,38 @@ package charts {
 		 * may be called by main.as to make the X Axis labels
 		 * @return
 		 */
-		public function get_max_x_value():Number {
+		public function get_max_x():Number {
 			
-			var max_index:Number = Number.MIN_VALUE;
-			
+			var max:Number = Number.MIN_VALUE;
+			//
+			// count the non-mask items:
+			//
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				
-				//
-				// some of the children will be mask
-				// Sprites, so filter those out:
-				//
-				if( this.getChildAt(i) is Element ) {
+				if ( this.getChildAt(i) is Element ) {
 					
-					var e:Element = this.getChildAt(i) as Element;
-					max_index = Math.max( max_index, e.index );
-
+					var e:Element = this.getChildAt(i) as Element
+					max = Math.max( max, e.get_x() );
 				}
 			}
+	
+			return max;
+		}
+		
+		public function get_min_x():Number {
 			
-			// 0 is a position, so count it:
-			return max_index+1;
+			var min:Number = Number.MAX_VALUE;
+			//
+			// count the non-mask items:
+			//
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+				if ( this.getChildAt(i) is Element ) {
+					
+					var e:Element = this.getChildAt(i) as Element
+					min = Math.min( min, e.get_x() );
+				}
+			}
+	
+			return min;
 		}
 		
 		//
@@ -109,36 +121,7 @@ package charts {
 		public function draw( val:String, mc:Object ):void {}
 		
 		
-		//
-		// TODO: old remove when tooltips tested
-		//
-		public function inside__( x:Number, y:Number ):Object {
-			var ret:Element = null;
-			
-			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				
-				//
-				// some of the children will be mask
-				// Sprites, so filter those out:
-				//
-				if( this.getChildAt(i) is Element ) {
-					
-					var e:Element = this.getChildAt(i) as Element;
-
-					if( e.inside(x) )
-					{
-						ret = e;
-						break;
-					}
-				}
-			}
-			
-			var dy:Number = 0;
-			if ( ret != null )
-				dy = Math.abs( y - ret.y );
-				
-			return { element:ret, distance_y:dy };
-		}
+		
 		
 		//
 		// TODO: old remove when tooltips tested

@@ -63,6 +63,27 @@
 			}
 		}
 		
+		
+		public override function get_max_x():Number {
+			
+			var max_index:Number = Number.MIN_VALUE;
+			
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+				
+				var e:Element = this.getChildAt(i) as Element;
+				max_index = Math.max( max_index, e.index );
+			}
+			
+			// 0 is a position, so count it:
+			return max_index+1;
+		}
+		
+		public override function get_min_x():Number {
+			return 0;
+		}
+		
+		
+		
 		/*
 				
 			      +-----+

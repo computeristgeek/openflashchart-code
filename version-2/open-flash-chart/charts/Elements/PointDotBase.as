@@ -64,12 +64,6 @@
 			return t;
 		}
 		
-		//
-		// is the mouse above, inside or below this point?
-		//
-		public override function inside( x:Number ):Boolean {
-			return (x > (this.x-(this.radius/2))) && (x < (this.x+(this.radius/2)));
-		}
 	}
 }
 

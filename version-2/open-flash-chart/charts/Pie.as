@@ -148,21 +148,6 @@
 			return new PieSliceContainer( index, default_style );
 		}
 		
-		public override function inside__( x:Number, y:Number ): Object {
-			var shortest:Number = Number.MAX_VALUE;
-			var closest:Element = null;
-			
-			for ( var i:Number = 0; i < this.numChildren; i++ )
-			{
-				var slice:PieSliceContainer = this.getChildAt(i) as PieSliceContainer;
-				if( slice.is_over() )
-					closest = slice.get_slice();
-			}
-			
-			if(closest!=null) tr.ace( closest );
-			
-			return { element:closest, distance_x:0, distance_y:0 };
-		}
 		
 		public override function closest( x:Number, y:Number ): Object {
 			// PIE charts don't do closest to mouse tooltips

@@ -97,12 +97,6 @@
 			return {x:this.tip_pos.x, y:this.tip_pos.y };
 		}
 		
-		//
-		// is the mouse above, inside or below this bar?
-		//
-		public override function inside( x:Number ):Boolean {
-			return (x > this.x) && (x < this.x + this.width);
-		}
 		
 		//
 		// Called by most of the bar charts.

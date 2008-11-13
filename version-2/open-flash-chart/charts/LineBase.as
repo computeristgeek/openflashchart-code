@@ -200,25 +200,7 @@
 			return this.style.colour;
 		}
 		
-		//
-		// TODO this is so wrong. We need to query all the Elements
-		//      for thier X value
-		//
-		public override function get_max_x_value():Number {
-			
-			var max:Number = Number.MIN_VALUE;
-			//
-			// count the non-mask items:
-			//
-			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				if ( this.getChildAt(i) is PointDotBase ) {
-					
-					var p:PointDotBase = this.getChildAt(i) as PointDotBase
-					max = Math.max( max, p.get_x() )
-				}
-			}
-	
-			return max;
-		}
+		
+
 	}
 }

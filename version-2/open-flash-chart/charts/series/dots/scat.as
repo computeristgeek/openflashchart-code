@@ -1,14 +1,14 @@
-﻿package charts.series.dots.scatter {
+﻿package charts.series.dots {
 	
 	import flash.display.Sprite;
 	import charts.Elements.Element;
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
 	
-	public class scatter extends Element {
+	public class scat extends Element {
 		public var radius:Number;
 		
-		public function scatter( style:Object ) {
+		public function scat( style:Object ) {
 
 			this._x = style.x;
 			this._y = style.y;
@@ -59,11 +59,5 @@
 			this.y = sc.get_y_from_val( this._y, (axis==2) );
 		}
 		
-		//
-		// is the mouse above, inside or below this point?
-		//
-		public override function inside( x:Number ):Boolean {
-			return (x > (this.x-(this.radius/2))) && (x < (this.x+(this.radius/2)));
-		}
 	}
 }

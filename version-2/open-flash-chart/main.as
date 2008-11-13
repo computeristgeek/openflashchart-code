@@ -86,7 +86,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/x-axis-range-scatter.txt";
+					var file:String = "../data-files/area-line.txt";
 					//var file:String = "../../../test-data-files/pie-chart-alpha-bug.txt";
 					this.load_external_file( file );
 
@@ -457,8 +457,6 @@ package  {
 			if ( !this.ok )
 				return;			// <-- something is wrong
 		
-			tr.ace(this.radar_axis);
-			tr.ace(this.obs.has_pie());
 			var sc:ScreenCoordsBase;
 			
 			if ( this.radar_axis != null )
@@ -688,8 +686,8 @@ package  {
 					// No X Axis labels set:
 					//
 					
-					tr.ace( 'max x');
-					tr.ace( this.obs.get_max_x() );
+					tr.aces( 'max x', this.obs.get_min_x(), this.obs.get_max_x() );
+					
 					this.x_axis.set_range( this.obs.get_min_x(), this.obs.get_max_x() );
 					this.x_labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
 				}
@@ -700,7 +698,8 @@ package  {
 					// big enough to show all values
 					//
 					
-					// tr.aces(this.obs.get_min_x(), this.x_labels.count(), this.obs.get_max_x());
+					tr.aces('x labels', this.obs.get_min_x(), this.x_labels.count(), this.obs.get_max_x());
+					
 					this.x_axis.set_range(
 						this.obs.get_min_x(),
 						Math.max( this.x_labels.count(), this.obs.get_max_x() ) );

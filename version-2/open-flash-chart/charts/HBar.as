@@ -75,7 +75,7 @@
 			}
 		}
 		
-		public override function get_max_x_value():Number {
+		public override function get_max_x():Number {
 			
 			var x:Number = 0;
 			//
@@ -85,7 +85,7 @@
 				if( this.getChildAt(i) is Horizontal ) {
 					
 					var h:Horizontal = this.getChildAt(i) as Horizontal;
-					x = Math.max( x, h.get_max_x_value() );
+					x = Math.max( x, h.get_max_x() );
 					
 				}
 	

@@ -16,20 +16,25 @@ package charts {
 			this.sets.push( set );
 		}
 		
-		//
-		// TODO: for scatter charts we can't assume 0
-		//
-		public function get_min_x():Number {
-			return 0;
-		}
 		
 		public function get_max_x():Number {
-			var max:Number = -1;
+			
+			var max:Number = Number.MIN_VALUE;
 
 			for each( var o:Base in this.sets )
-				max = Math.max( max, o.get_max_x_value() );
+				max = Math.max( max, o.get_max_x() );
 
 			return max;
+		}
+		
+		public function get_min_x():Number {
+			
+			var min:Number = Number.MAX_VALUE;
+
+			for each( var o:Base in this.sets )
+				min = Math.min( min, o.get_min_x() );
+
+			return min;
 		}
 		
 		// get x, y co-ords of vals
@@ -55,42 +60,6 @@ package charts {
 				s.mouse_out();
 		}
 		
-		private function inside__( x:Number, y:Number ):Element {
-			var o:Object;
-			var s:Base;
-			
-			var inside:Array = new Array();
-			for each( s in this.sets )
-			{
-				o = s.inside__( x, y );
-				if( o.element!=null )
-					inside.push( o );
-			}
-				
-			if ( inside.length > 0 )
-			{
-				// the mouse is above or below all of these
-				// so choose the closest along the Y
-				var e:Object = inside[0];
-				var f:Object;
-				
-				for each( f in inside )
-					if( f.distance_y < e.distance_y )
-						e = f;
-				
-				for each( f in inside )
-					if ( f != e )
-						f.element.set_tip( false );
-					else
-						if( e && e.element )	// <-- pie charts do not return an element
-							e.element.set_tip( true );
-					
-				// tr.ace('inside '+inside.length+'   '+Math.random());
-				return e.element;
-			}
-			
-			return null;
-		}
 		
 		private function closest( x:Number, y:Number ):Element {
 			var o:Object;
@@ -154,7 +123,7 @@ package charts {
 			// filters out all items that are not
 			// above or below the mouse:
 			//
-			var e:Element = this.inside__(x, y);
+			var e:Element = null;// this.inside__(x, y);
 			
 			if ( !e )
 			{

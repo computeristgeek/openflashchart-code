@@ -22,7 +22,7 @@ package {
 			var tmp:Array = [];
 			for each( var o:Object in optionalArgs )
 			{
-				FlashConnect.trace( o.toString() );
+				// FlashConnect.trace( o.toString() );
 				if ( o == null )
 					tmp.push( 'null' );
 				else

@@ -1,6 +1,6 @@
 ﻿package charts {
 	
-	import charts.Elements.PointScatter;
+	import charts.series.dots.scat;
 	import charts.Elements.Element;
 	import string.Utils;
 	import flash.geom.Point;
@@ -33,14 +33,14 @@
 			if( default_style.colour is String )
 				default_style.colour = Utils.get_colour( default_style.colour );
 			
-			return new PointScatter( default_style );
+			return new scat( default_style );
 		}
 		
 		// Draw points...
 		public override function resize( sc:ScreenCoordsBase ): void {
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				var e:PointScatter = this.getChildAt(i) as PointScatter;
+				var e:scat = this.getChildAt(i) as scat;
 				e.resize( sc, this.axis );
 			}
 		}

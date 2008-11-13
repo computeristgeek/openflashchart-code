@@ -100,7 +100,7 @@
 			return {x:this.x+this.width-20, y:this.y};
 		}
 		
-		public function get_max_x_value():Number {
+		public function get_max_x():Number {
 			return this.right;
 		}
 	}

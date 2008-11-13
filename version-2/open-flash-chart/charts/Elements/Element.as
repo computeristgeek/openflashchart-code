@@ -125,12 +125,6 @@
 			return {x:this.x, y:this.y};
 		}
 		
-		//
-		// is the mouse above, inside or below this object?
-		//
-		public function inside( x:Number ):Boolean {
-			return false;
-		}
 		
 		//
 		// this may be overriden by Collection objects

@@ -136,48 +136,6 @@
 			return tmp;
 		}
 		
-		//
-		// TODO: maybe delete this?
-		//
-		//
-		// is the mouse above, inside or below this bar?
-		//
-		public function inside_2( x:Number ):Element {
-			var e:Element;
-			//
-			// is the mouse over any of the bars in the stack?
-			//
-			for ( var i:Number = 0; i < this.numChildren; i++ )
-			{
-				e = this.getChildAt(i) as Element;
-				if( e.is_tip ) {
-					//
-					// LOOK
-					//
-					return e;
-				}
-			}
-			
-			//
-			// is the mouse above or below any of them?
-			// We only need to check one Element
-			//
-			
-			e = this.getChildAt(0) as Element;
-			if ( e.inside( x ) ) {
-				//
-				// we return "this" collection so the
-				// tooltip displays the total
-				//
-				return this;
-			}
-
-			//
-			// the mouse is not over us
-			//
-			return null;
-		}
-		
 		public override function get_tip_pos():Object {
 			//
 			// get top item in stack
