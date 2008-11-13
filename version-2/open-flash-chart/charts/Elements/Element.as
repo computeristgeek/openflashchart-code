@@ -33,10 +33,6 @@
 		
 		public function resize( sc:ScreenCoordsBase, axis:Number ):void {
 			
-			// because of radar co-ords:
-			// this.x = this.screen_x = sc.get_x_from_pos( this._x );
-			// this.y = this.screen_y = sc.get_y_from_val( this._y, (axis==2) );
-			
 			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this._x, this._y, (axis == 2) );
 			this.x = p.x;
 			this.y = p.y;
@@ -51,6 +47,10 @@
 			// dots have x, y in the center of the dot
 			//
 			return new flash.geom.Point( this.x, this.y );
+		}
+		
+		public function get_x(): Number {
+			return this._x;
 		}
 
 		/**

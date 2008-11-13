@@ -1,5 +1,6 @@
 ﻿package charts {
 	import charts.Elements.Element;
+	import charts.Elements.PointDotBase;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.display.BlendMode;
@@ -205,15 +206,19 @@
 		//
 		public override function get_max_x_value():Number {
 			
-			var c:Number = 0;
+			var max:Number = Number.MIN_VALUE;
 			//
 			// count the non-mask items:
 			//
-			for ( var i:Number = 0; i < this.numChildren; i++ )
-				if( this.getChildAt(i) is Element )
-					c++;
+			for ( var i:Number = 0; i < this.numChildren; i++ ) {
+				if ( this.getChildAt(i) is PointDotBase ) {
+					
+					var p:PointDotBase = this.getChildAt(i) as PointDotBase
+					max = Math.max( max, p.get_x() )
+				}
+			}
 	
-			return c;
+			return max;
 		}
 	}
 }

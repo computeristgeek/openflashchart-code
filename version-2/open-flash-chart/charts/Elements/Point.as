@@ -28,26 +28,5 @@ package charts.Elements {
 			this.visible = b;
 			this.line_mask.visible = b;
 		}
-		
-		/*
-		 *
-		public override function make_tooltip( key:String ):void
-		{
-			super.make_tooltip( key );
-			
-			var tmp:String = this.tooltip.replace('#val#',NumberUtils.formatNumber( this._y ));
-			this.tooltip = tmp;
-		}
-		
-		public function mask_parent( s:Sprite ):void {
-		}
-		
-		//
-		// is the mouse above, inside or below this point?
-		//
-		public override function inside( x:Number ):Boolean {
-			return (x > (this.x-(this.radius/2))) && (x < (this.x+(this.radius/2)));
-		}
-		*/
 	}
 }
