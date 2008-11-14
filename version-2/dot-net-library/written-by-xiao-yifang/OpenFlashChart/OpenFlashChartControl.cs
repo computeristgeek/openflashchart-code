@@ -11,8 +11,8 @@ namespace OpenFlashChart
     [Designer(typeof(ChartControlDesigner)), Description("Chart control for open flash chart"), ToolboxData("<{0}:OpenFlashChartControl runat=\"server\" ></{0}:OpenFlashChartControl>")]
     public class OpenFlashChartControl : Control
     {
-        private int width;
-        private int height;
+        private string width;
+        private string height;
         private string externalSWFfile;
         private string externalSWFObjectFile;
         private string loadingmsg;
@@ -29,17 +29,17 @@ namespace OpenFlashChart
        
         private string datafile;
 
-        [DefaultValue(600)]
+        [DefaultValue("300px")]
         [Category("Appearance")]
         [PersistenceMode(PersistenceMode.Attribute)]
-        public int Width
+        public string Width
         {
             get
             {
-                width = 600;
+                width = "300px";
                 if (this.ViewState["width"] != null)
                 {
-                    width = Convert.ToInt32(this.ViewState["width"]);
+                    width = this.ViewState["width"].ToString();
                 }
                 return width;
             }
@@ -49,17 +49,17 @@ namespace OpenFlashChart
                 width = value;
             }
         }
-        [DefaultValue(300)]
+        [DefaultValue("300px")]
         [Category("Appearance")]
         [PersistenceMode(PersistenceMode.Attribute)]
-        public int Height
+        public string Height
         {
             get
             {
-                height = 300;
+                height = "300px";
                 if (this.ViewState["height"] != null)
                 {
-                    height = Convert.ToInt32(this.ViewState["height"]);
+                    height = this.ViewState["height"].ToString();
                 }
                 return height;
             }
@@ -69,26 +69,73 @@ namespace OpenFlashChart
                 height = value;
             }
         }
+
         [Category("Appearance")]
         [PersistenceMode(PersistenceMode.Attribute)]
         public string ExternalSWFfile
         {
-            get { return externalSWFfile; }
-            set { externalSWFfile = value.Trim(); }
+            get
+            {
+                if (this.ViewState["externalswffile"] != null)
+                {
+                    externalSWFfile = this.ViewState["externalswffile"].ToString();
+                }
+                if (externalSWFfile.StartsWith("~"))
+                {
+                    externalSWFfile = this.ResolveUrl(externalSWFfile);
+                }
+                return externalSWFfile;
+            }
+            set
+            {
+                this.ViewState["externalswffile"] = value.Trim();
+                externalSWFfile = value.Trim();
+            }
         }
         [Category("Appearance")]
         [PersistenceMode(PersistenceMode.Attribute)]
         public string ExternalSWFObjectFile
         {
-            get { return externalSWFObjectFile; }
-            set { externalSWFObjectFile = value.Trim(); }
+            get
+            {
+                if (this.ViewState["externalswfobjectfile"] != null)
+                {
+                    externalSWFfile = this.ViewState["externalswfobjectfile"].ToString();
+                }
+                if (externalSWFObjectFile.StartsWith("~"))
+                {
+                    externalSWFObjectFile = this.ResolveUrl(externalSWFObjectFile);
+                }
+                return externalSWFObjectFile;
+            }
+            set
+            {
+                this.ViewState["externalswfobjectfile"] = value.Trim();
+                externalSWFObjectFile = value.Trim();
+            }
         }
-        
-       
+
+
         public string DataFile
         {
-            get { return datafile; }
-            set { datafile = value; }
+            get
+            {
+                if (this.ViewState["datafile"] != null)
+                {
+                    datafile = this.ViewState["datafile"].ToString();
+                }
+                if (datafile.StartsWith("~"))
+                {
+                    datafile = this.ResolveUrl(datafile);
+                }
+
+                return datafile;
+            }
+            set
+            {
+                this.ViewState["datafile"] = value;
+                datafile = value;
+            }
         }
 
         public string LoadingMsg
