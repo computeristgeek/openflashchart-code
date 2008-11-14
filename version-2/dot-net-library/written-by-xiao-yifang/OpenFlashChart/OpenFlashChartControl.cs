@@ -29,14 +29,14 @@ namespace OpenFlashChart
        
         private string datafile;
 
-        [DefaultValue("300px")]
+        [DefaultValue("600px")]
         [Category("Appearance")]
         [PersistenceMode(PersistenceMode.Attribute)]
         public string Width
         {
             get
             {
-                width = "300px";
+                width = "600px";
                 if (this.ViewState["width"] != null)
                 {
                     width = this.ViewState["width"].ToString();
@@ -45,6 +45,8 @@ namespace OpenFlashChart
             }
             set
             {
+                if (!value.EndsWith("%") && !value.EndsWith("px"))
+                    value = value + "px";
                 this.ViewState["width"] = value;
                 width = value;
             }
@@ -65,6 +67,8 @@ namespace OpenFlashChart
             }
             set
             {
+                if (!value.EndsWith("%") && !value.EndsWith("px"))
+                    value = value + "px";
                 this.ViewState["height"] = value;
                 height = value;
             }
