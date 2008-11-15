@@ -18,7 +18,7 @@ package {
 		// tick_offset is set by 3D axis
 		public var tick_offset:Number;
 		private var x_offset:Boolean;
-		private var y_offset:Object;
+		private var y_offset:Boolean;
 		private var bar_groups:Number;
 	
 		
@@ -27,8 +27,7 @@ package {
 							y_axis_right_range:Range,
 							x_axis_range:Range,
 							x_left_label_width:Number, x_right_label_width:Number,
-							three_d:Boolean,
-							x_offset:Boolean, y_offset:Object )
+							three_d:Boolean )
 		{
 			super( top, left, right, bottom );
 			
@@ -49,7 +48,7 @@ package {
 			}
 			
 			this.top = top;
-			this.left = Math.max(left,tmp_left);
+			this.left = Math.max(left, tmp_left);
 			
 			// round this down to the nearest int:
 			this.right = Math.floor( right );
@@ -77,8 +76,10 @@ package {
 			//  +--+--+--+      |-+--+--+--+-+
 			//  0  1  2  3        0  1  2  3
 			//
-			this.x_offset = x_offset;
-			this.y_offset = y_offset;
+			this.x_offset = x_axis_range.offset;
+			
+			tr.aces( 'YYYY', y_axis_range.offset );
+			this.y_offset = y_axis_range.offset;
 				
 			this.bar_groups = 1;
 		}
@@ -217,15 +218,14 @@ package {
 			
 			var r:Range = right_axis ? this.y_right_range : this.y_range;
 			
-			var count:Number = r.count() + ( this.y_offset.offset ? 1 : 0 );
-			var steps:Number = this.height / count;
+			var steps:Number = this.height / r.count();
 			
 			// tr.ace( 'off' );
 			// tr.ace( this.y_offset.offset );
 			// tr.ace( count );
 			
 			var tmp:Number = 0;
-			if( this.y_offset.offset )
+			if( this.y_offset )
 				tmp = (steps / 2);
 				
 			// move up (-Y) to our point (don't forget that y_min will shift it down)

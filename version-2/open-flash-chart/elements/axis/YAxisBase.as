@@ -9,10 +9,7 @@ package elements.axis {
 		protected var stroke:Number;
 		protected var tick_length:Number;
 		protected var colour:Number;
-		//
-		// offset: see ScreenCoords for a details explination
-		//
-		public var offset:Object;
+
 		
 		protected var grid_colour:Number;
 		
@@ -46,8 +43,6 @@ package elements.axis {
 			if ( this.style.steps < 0 )
 				this.style.steps *= -1;
 			
-			this.offset = { 'offset':style.offset, 'value':style.steps };
-			
 		}
 		
 		public function get_style():Object { return null;  }
@@ -60,7 +55,7 @@ package elements.axis {
 		}
 		
 		public function get_range():Range {
-			return new Range( this.style.min, this.style.max, this.style.steps );
+			return new Range( this.style.min, this.style.max, this.style.steps, this.style.offset );
 		}
 		
 		public function resize( label_pos:Number, sc:ScreenCoords ):void {
@@ -72,7 +67,7 @@ package elements.axis {
 		
 		public function die(): void {
 			
-			this.offset = null;
+			//this.offset = null;
 			this.style = null;
 			if (this.labels != null) this.labels.die();
 			this.labels = null;

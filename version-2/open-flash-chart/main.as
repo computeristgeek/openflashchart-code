@@ -86,7 +86,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/x-axis-labels-4.txt";
+					var file:String = "../data-files/y-axis-upside-down-offset.txt";
 					//var file:String = "../../../test-data-files/pie-chart-alpha-bug.txt";
 					this.load_external_file( file );
 
@@ -416,7 +416,7 @@ package  {
 			// this object is used in the mouseMove method
 			this.sc = new ScreenCoords(
 				this.title.get_height(), 0, this.stage.stageWidth, this.stage.stageHeight,
-				null, null, null, 0, 0, false, false, false );
+				null, null, null, 0, 0, false );
 			this.obs.resize( sc );
 			
 			return sc;
@@ -511,8 +511,7 @@ package  {
 				this.x_axis.get_range(),
 				this.x_labels.first_label_width(),
 				this.x_labels.last_label_width(),
-				false,
-				this.x_axis.offset, this.y_axis.offset );
+				false );
 			
 			this.sc.set_bar_groups(this.obs.groups);
 			

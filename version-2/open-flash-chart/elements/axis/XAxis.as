@@ -108,7 +108,7 @@ package elements.axis {
 		// how many items in the X axis?
 		//
 		public function get_range():Range {
-			return new Range( this.style.min, this.style.max, this.steps );
+			return new Range( this.style.min, this.style.max, this.steps, this.offset );
 		}
 		
 		public function get_steps():Number {

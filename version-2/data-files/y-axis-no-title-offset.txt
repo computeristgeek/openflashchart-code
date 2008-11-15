@@ -22,7 +22,7 @@
     "tick-length":  3,
     "colour":       "#d09090",
     "grid-colour":  "#00ff00",
-    "offset":       false,
+    "offset":       true,
     "min":         -4,
     "max":          4,
     "visible":      true,
