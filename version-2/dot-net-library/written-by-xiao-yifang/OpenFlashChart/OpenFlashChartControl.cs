@@ -84,9 +84,12 @@ namespace OpenFlashChart
                 {
                     externalSWFfile = this.ViewState["externalswffile"].ToString();
                 }
-                if (externalSWFfile.StartsWith("~"))
+                if (!string.IsNullOrEmpty(externalSWFfile))
                 {
-                    externalSWFfile = this.ResolveUrl(externalSWFfile);
+                    if (externalSWFfile.StartsWith("~"))
+                    {
+                        externalSWFfile = this.ResolveUrl(externalSWFfile);
+                    }
                 }
                 return externalSWFfile;
             }
@@ -104,11 +107,14 @@ namespace OpenFlashChart
             {
                 if (this.ViewState["externalswfobjectfile"] != null)
                 {
-                    externalSWFfile = this.ViewState["externalswfobjectfile"].ToString();
+                    externalSWFObjectFile = this.ViewState["externalswfobjectfile"].ToString();
                 }
-                if (externalSWFObjectFile.StartsWith("~"))
+                if (!string.IsNullOrEmpty(externalSWFObjectFile))
                 {
-                    externalSWFObjectFile = this.ResolveUrl(externalSWFObjectFile);
+                    if (externalSWFObjectFile.StartsWith("~"))
+                    {
+                        externalSWFObjectFile = this.ResolveUrl(externalSWFObjectFile);
+                    }
                 }
                 return externalSWFObjectFile;
             }
@@ -128,9 +134,12 @@ namespace OpenFlashChart
                 {
                     datafile = this.ViewState["datafile"].ToString();
                 }
-                if (datafile.StartsWith("~"))
+                if (!string.IsNullOrEmpty(datafile))
                 {
-                    datafile = this.ResolveUrl(datafile);
+                    if (datafile.StartsWith("~"))
+                    {
+                        datafile = this.ResolveUrl(datafile);
+                    }
                 }
 
                 return datafile;
