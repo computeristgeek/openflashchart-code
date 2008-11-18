@@ -34,6 +34,9 @@ public partial class datafile_Line : System.Web.UI.Page
       
         chart.Title = new Title("line演示");
         chart.Y_Axis.SetRange(0,35,5);
+        chart.X_Axis.Labels.Color = "#e43456";
+        chart.X_Axis.Steps = 4;
+        chart.Y_Axis.Steps = 3;
         chart.Tooltip = new ToolTip("全局提示：#val#");
         chart.Tooltip.Shadow = true;
         chart.Tooltip.Colour = "#e43456";

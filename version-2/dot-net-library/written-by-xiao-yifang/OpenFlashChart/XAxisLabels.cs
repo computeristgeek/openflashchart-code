@@ -12,6 +12,7 @@ namespace OpenFlashChart
         private IList<AxisLabel> labels;
         private string colour;
         private string rotate;
+        private int? fontsize;
        
         [JsonProperty("steps")]
         public int? Steps
@@ -20,12 +21,12 @@ namespace OpenFlashChart
             {
                 if (this.steps == null)
                     return null;
-                return this.steps.Value;
+                return this.steps;
             }
             set { this.steps = value; }
         }
         [JsonProperty("labels")]
-        [Obsolete("just for json generation,not used.Use 'Values' instead")]
+        [Obsolete("just for json generation,not used.Use SetLabels()")]
         public IList<AxisLabel> AxisLabelValues
         {
             get { return labels; }
@@ -39,6 +40,12 @@ namespace OpenFlashChart
             {
                 labels.Add(new AxisLabel(s));
             }
+        }
+        public void Add(AxisLabel label)
+        {
+            if (labels == null)
+                labels = new List<AxisLabel>();
+            labels.Add(label);
         }
         [JsonProperty("colour")]
         public string Color
@@ -60,6 +67,12 @@ namespace OpenFlashChart
                 if (value)
                     this.rotate = "vertical";
             }
+        }
+        [JsonProperty("size")]
+        public int? FontSize
+        {
+            get { return fontsize; }
+            set { fontsize = value; }
         }
     }
 }
