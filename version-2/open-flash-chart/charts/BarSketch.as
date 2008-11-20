@@ -23,42 +23,18 @@
 			super( style, group );
 		}
 		
-/*
- *
- * FIX THIS::
- *
-		public override function parse_bar( json:Object ):void {
-			var style:Object = {
-				values:				[],
-				colour:				'#3030d0',
-				'outline-colour':	"#000000",
-				text:				'',		// <-- default not display a key
-				'font-size':		12,
-				offset:				3,
-				width:				2
-			};
-			
-			object_helper.merge_2( json, style );
-			
-			this.line_width = style.width;
-			this.colour		= string.Utils.get_colour( style.colour );
-			this.outline_colour = string.Utils.get_colour( style['outline-colour'] );
-			this.key		= style.text;
-			this.font_size	= style['font-size'];
-			this.offset     = style.offset;
-		}
-*/
-		
+
 		//
 		// called from the base object
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
 			
 			var default_style:Object = {
-					colour:				this.style.colour,
-					tip:				this.style.tip,
-					offset:				this.style.offset,
-					'outline-colour':	this.style['outline-colour']
+				colour:				this.style.colour,
+				tip:				this.style.tip,
+				offset:				this.style.offset,
+				'outline-colour':	this.style['outline-colour'],
+				alpha:				this.style.alpha
 			};
 					
 			if( value is Number )

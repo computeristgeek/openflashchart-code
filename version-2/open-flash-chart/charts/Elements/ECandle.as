@@ -9,7 +9,7 @@
 		
 		public function ECandle( index:Number, style:Object, group:Number ) {
 			
-			super(index, style, style.colour, style.tip, group);
+			super(index, style, style.colour, style.tip, style.alpha, group);
 		}
 		
 		//

@@ -15,8 +15,9 @@
 		protected var group:Number;
 		protected var top:Number;
 		protected var bottom:Number;
+		protected var mouse_out_alpha:Number;
 		
-		public function PointBarBase( index:Number, value:Object, colour:Number, tooltip:String, group:Number )
+		public function PointBarBase( index:Number, value:Object, colour:Number, tooltip:String, alpha:Number, group:Number )
 		{
 			super();
 			this.index = index;
@@ -27,7 +28,10 @@
 			this.group = group;
 			this.visible = true;
 			
-			this.alpha = 0.5;
+			// remember what our original alpha is:
+			this.mouse_out_alpha = alpha;
+			// set the sprit alpha:
+			this.alpha = this.mouse_out_alpha;
 			
 			this.addEventListener(MouseEvent.MOUSE_OVER, this.mouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT, this.mouseOut);
@@ -84,7 +88,7 @@
 
 		public override function mouseOut(event:Event):void {
 			this.is_tip = false;
-			Tweener.addTween(this, { alpha:0.5, time:0.8, transition:Equations.easeOutElastic } );
+			Tweener.addTween(this, { alpha:this.mouse_out_alpha, time:0.8, transition:Equations.easeOutElastic } );
 		}
 		
 		// override this:

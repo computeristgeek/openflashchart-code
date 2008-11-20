@@ -7,7 +7,7 @@
 		
 		public function PointBarSketch( index:Number, style:Object, group:Number ) {
 			
-			super( index, style.top, style.colour, style.tip, group );
+			super( index, style.top, style.colour, style.tip, style.alpha, group );
 			this.outline = style['outline-colour'];
 			this.offset = style.offset;
 		}

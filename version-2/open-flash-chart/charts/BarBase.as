@@ -18,7 +18,8 @@
 				colour:				'#3030d0',
 				text:				'',		// <-- default not display a key
 				'font-size':		12,
-				tip:				'#val#<br>#x_label#'
+				tip:				'#val#<br>#x_label#',
+				alpha:				0.6
 			};
 			
 			object_helper.merge_2( json, style );
@@ -82,6 +83,30 @@
 			return 0;
 		}
 		
+		//
+		// override or don't call this if you need better help
+		//
+		protected function get_element_helper( value:Object ): Object {
+			
+			var default_style:Object = {
+				colour:		this.style.colour,
+				tip:		this.style.tip,
+				alpha:		this.style.alpha
+			};
+			
+			if( value is Number )
+				default_style.top = value;
+			else
+				object_helper.merge_2( value, default_style );
+				
+			// our parent colour is a number, but
+			// we may have our own colour:
+			if( default_style.colour is String )
+				default_style.colour = Utils.get_colour( default_style.colour );
+				
+			// tr.ace_json(default_style);
+			return default_style;
+		}
 		
 		
 		/*

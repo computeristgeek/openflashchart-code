@@ -8,7 +8,7 @@
 		public function PointBar3D( index:Number, style:Object, group:Number ) {
 			
 			
-			super(index, style.top, style.colour, style.tip, group);
+			super(index, style.top, style.colour, style.tip, style.alpha, group);
 			
 			var dropShadow:DropShadowFilter = new flash.filters.DropShadowFilter();
 			dropShadow.blurX = 5;

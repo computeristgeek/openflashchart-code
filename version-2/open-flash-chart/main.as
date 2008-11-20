@@ -72,11 +72,11 @@ package  {
 		private var chart_parameters:Object;
 		
 		public function main() {
-			chart_parameters = LoaderInfo(this.loaderInfo).parameters;
-
-			var loading:String = ( this.chart_parameters['loading'] ) ? this.chart_parameters['loading'] : 'Loading data...';
+			this.chart_parameters = LoaderInfo(this.loaderInfo).parameters;
+			if( this.chart_parameters['loading'] == null )
+				this.chart_parameters['loading'] = 'Loading data...';
 				
-			var l:Loading = new Loading(loading);
+			var l:Loading = new Loading(this.chart_parameters['loading']);
 			this.addChild( l );
 
 			this.build_right_click_menu();
@@ -86,8 +86,8 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/y-axis-upside-down-offset.txt";
-					//var file:String = "../../../test-data-files/pie-chart-alpha-bug.txt";
+					var file:String = "../data-files/bar-alpha.txt";
+					//var file:String = "../../../test-data-files/clash.txt";
 					this.load_external_file( file );
 
 					/*
@@ -103,6 +103,9 @@ package  {
 				}
 			}
 			
+			// inform javascript that it can call our reload method
+			ExternalInterface.addCallback("reload", reload); // mf 18nov08, line 110 of original 'main.as'
+		 
 			// inform javascript that it can call our load method
 			ExternalInterface.addCallback("load", load);
 			
@@ -289,6 +292,19 @@ package  {
 			return false;
 		}
 		
+		
+		//
+		// an external interface, used by javascript to
+		// reload JSON from a URL :: mf 18nov08
+		//
+		public function reload( url:String ):void {
+
+			var l:Loading = new Loading(this.chart_parameters['loading']);
+			this.addChild( l );
+			this.load_external_file( url );
+		}
+
+
 		private function load_external_file( file:String ):void {
 			
 			this.URL = file;

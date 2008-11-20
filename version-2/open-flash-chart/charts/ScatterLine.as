@@ -10,7 +10,10 @@
 	
 	public class ScatterLine extends ScatterBase
 	{
-		
+		public var stepgraph:Number = 0;
+		public static const STEP_HORIZONTAL:Number = 1;
+		public static const STEP_VERTICAL:Number = 2;
+
 		public function ScatterLine( json:Object )
 		{
 			this.style = {
@@ -20,7 +23,8 @@
 				text:			'',		// <-- default not display a key
 				'dot-size':		5,
 				'font-size':	12,
-				tip:			'[#x#,#y#] #size#'
+				tip:			'[#x#,#y#] #size#',
+				stepgraph:		0
 			};
 			
 			object_helper.merge_2( json, style );
@@ -33,6 +37,15 @@
 			this.font_size	= style['font-size'];
 			this.circle_size = style['dot-size'];
 			
+			switch (style['stepgraph']) {
+				case 'horizontal':
+					stepgraph = STEP_HORIZONTAL;
+					break;
+				case 'vertical':
+					stepgraph = STEP_VERTICAL;
+					break;
+			}
+     
 			for each( var val:Object in style.values )
 			{
 				if( val['dot-size'] == null )
@@ -68,7 +81,9 @@
 		public function solid_line( sc:ScreenCoordsBase ): void {
 			
 			var first:Boolean = true;
-			
+			var last_x:Number = 0;
+			var last_y:Number = 0;
+
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
 				
 				var tmp:Sprite = this.getChildAt(i) as Sprite;
@@ -91,7 +106,16 @@
 						first = false;
 					}
 					else
+					{
+						if (this.stepgraph == STEP_HORIZONTAL)
+							this.graphics.lineTo(e.x, last_y);
+						else if (this.stepgraph == STEP_VERTICAL)
+							this.graphics.lineTo(last_x, e.y);
+					
 						this.graphics.lineTo(e.x, e.y);
+					}
+					last_x = e.x;
+					last_y = e.y;
 				}
 			}
 		}

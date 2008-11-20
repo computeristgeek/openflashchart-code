@@ -24,4 +24,21 @@ class scatter_line
 	{
 		$this->values = $values;
 	}
+	
+	function set_step_horizontal()
+	{
+		$this->stepgraph = 'horizontal';
+	}
+	
+	function set_step_vertical()
+	{
+		$this->stepgraph = 'vertical';
+	}
+	
+	function set_key( $text, $font_size )
+	{
+		$this->text      = $text;
+		$tmp = 'font-size';
+		$this->$tmp = $font_size;
+	}
 }

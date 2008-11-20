@@ -6,7 +6,7 @@ package charts.Elements {
 	
 		public function PointBar( index:Number, style:Object, group:Number ) {
 			
-			super(index, style, style.colour, style.tip, group);
+			super(index, style, style.colour, style.tip, style.alpha, group);
 		}
 		
 		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {

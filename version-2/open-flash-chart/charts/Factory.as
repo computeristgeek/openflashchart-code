@@ -20,7 +20,7 @@ package charts {
 			
 			for( var i:Number = 0; i < elements.length; i++ )
 			{
-				tr.ace( elements[i]['type'] );
+				// tr.ace( elements[i]['type'] );
 				
 				switch( elements[i]['type'] ) {
 					case 'bar' :
@@ -77,6 +77,36 @@ package charts {
 						
 					case 'bar_glass':
 						collection.add( new BarGlass( elements[i], bar_group ) );
+						bar_group++;
+						break;
+						
+					case 'bar_cylinder':
+						collection.add( new BarCylinder( elements[i], bar_group ) );
+						bar_group++;
+						break;
+
+					case 'bar_cylinder_outline':
+						collection.add( new BarCylinderOutline( elements[i], bar_group ) );
+						bar_group++;
+						break;
+
+					case 'bar_dome':
+						//collection.add( new BarDome( elements[i], bar_group ) );
+						bar_group++;
+						break;
+
+					case 'bar_round':
+						//collection.add( new BarRound( elements[i], bar_group ) );
+						bar_group++;
+						break;
+
+					case 'bar_roundglass':
+						//collection.add( new BarRoundGlass( elements[i], bar_group ) );
+						bar_group++;
+						break;
+
+					case 'bar_round3d':
+						//collection.add( new BarRound3D( elements[i], bar_group ) );
 						bar_group++;
 						break;
 					
