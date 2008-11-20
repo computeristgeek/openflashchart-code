@@ -91,17 +91,17 @@ package charts {
 						break;
 
 					case 'bar_dome':
-						//collection.add( new BarDome( elements[i], bar_group ) );
+						collection.add( new BarDome( elements[i], bar_group ) );
 						bar_group++;
 						break;
 
 					case 'bar_round':
-						//collection.add( new BarRound( elements[i], bar_group ) );
+						collection.add( new BarRound( elements[i], bar_group ) );
 						bar_group++;
 						break;
 
-					case 'bar_roundglass':
-						//collection.add( new BarRoundGlass( elements[i], bar_group ) );
+					case 'bar_round_glass':
+						collection.add( new BarRoundGlass( elements[i], bar_group ) );
 						bar_group++;
 						break;
 

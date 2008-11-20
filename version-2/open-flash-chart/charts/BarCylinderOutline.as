@@ -1,7 +1,6 @@
 ﻿package charts {
 	import charts.Elements.Element;
 	import charts.series.bars.CylinderOutline;
-	import string.Utils;
 
 	public class BarCylinderOutline extends BarBase {
 

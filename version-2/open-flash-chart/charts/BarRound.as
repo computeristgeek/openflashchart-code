@@ -1,11 +1,10 @@
 ﻿package charts {
 	import charts.Elements.Element;
-	import charts.series.bars.Cylinder;
+	import charts.series.bars.Round;
 
-	public class BarCylinder extends BarBase {
+	public class BarRound extends BarBase {
 
-
-		public function BarCylinder( json:Object, group:Number ) {
+		public function BarRound( json:Object, group:Number ) {
 
 			super( json, group );
 		}
@@ -15,7 +14,7 @@
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
 
-			return new Cylinder( index, this.get_element_helper( value ), this.group );
+			return new Round( index, this.get_element_helper( value ), this.group );
 		}
 	}
 }

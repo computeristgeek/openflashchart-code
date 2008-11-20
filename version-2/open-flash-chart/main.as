@@ -86,7 +86,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/bar-alpha.txt";
+					var file:String = "../data-files/bar-cylinder.txt";
 					//var file:String = "../../../test-data-files/clash.txt";
 					this.load_external_file( file );
 
