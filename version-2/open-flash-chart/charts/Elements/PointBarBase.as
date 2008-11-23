@@ -35,6 +35,9 @@
 			
 			this.addEventListener(MouseEvent.MOUSE_OVER, this.mouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT, this.mouseOut);
+			
+			if( value['on-click'] )
+				this.set_on_click( value['on-click'] );
 		}
 		
 		//
@@ -101,6 +104,14 @@
 			return {x:this.tip_pos.x, y:this.tip_pos.y };
 		}
 		
+		//
+		// is the mouse above, inside or below this bar?
+		//
+// TODO: why is this here? I have commented it out -- monk.e.boy
+//
+//		public override function inside( x:Number ):Boolean {
+//			return (x > this.x) && (x < this.x + this.width);
+//		}
 		
 		//
 		// Called by most of the bar charts.

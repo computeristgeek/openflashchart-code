@@ -17,7 +17,8 @@
 			
 			var default_style:Object = {
 					colour:		this.style.colour,
-					tip:		this.style.tip
+					tip:		this.style.tip,
+          'on-click': this.style['on-click']
 			};
 			
 			if( value is Number )

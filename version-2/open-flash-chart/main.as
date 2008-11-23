@@ -493,7 +493,7 @@ package  {
 		}
 			
 		private function resize_chart(): ScreenCoordsBase {
-			
+			tr.ace("£££");
 			//
 			// we want to show the tooltip closest to
 			// items near the mouse, so hook into the
@@ -528,7 +528,7 @@ package  {
 				this.x_labels.first_label_width(),
 				this.x_labels.last_label_width(),
 				false );
-			
+
 			this.sc.set_bar_groups(this.obs.groups);
 			
 			this.x_labels.resize(
@@ -542,7 +542,7 @@ package  {
 			this.x_legend.resize( sc );
 			this.y_legend.resize();
 			this.y_legend_2.resize();
-				
+			
 			this.obs.resize( sc );
 			
 			return sc;
@@ -678,13 +678,14 @@ package  {
 			this.x_axis			= new XAxis( json.x_axis );
 			this.y_axis			= new YAxisLeft( json );
 			this.y_axis_right	= new YAxisRight( json );
-			
+			tr.ace("££££");
 			//
 			// This reads all the 'elements' of the chart
 			// e.g. bars and lines, then creates them as sprites
 			//
 			this.obs			= Factory.MakeChart( json );
 			//
+			tr.ace("££££");
 			
 			// the X Axis labels *may* require info from
 			// this.obs

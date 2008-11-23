@@ -19,10 +19,11 @@
 				text:				'',		// <-- default not display a key
 				'font-size':		12,
 				tip:				'#val#<br>#x_label#',
-				alpha:				0.6
+				alpha:				0.6,
+				'on-click':			null
 			};
 			
-			object_helper.merge_2( json, style );
+			object_helper.merge_2( json, this.style );
 			
 			
 			this.colour		= string.Utils.get_colour( this.style.colour );
@@ -43,9 +44,12 @@
 			this.group = group;
 			
 			this.values = this.style.values;
+			
+			//this.style['onclick'] = json['on-click'];
 
-
+tr.ace("33333");
 			this.add_values();
+tr.ace("33333");
 		}
 		
 		
@@ -91,7 +95,8 @@
 			var default_style:Object = {
 				colour:		this.style.colour,
 				tip:		this.style.tip,
-				alpha:		this.style.alpha
+				alpha:		this.style.alpha,
+				'on-click':	this.style['on-click']
 			};
 			
 			if( value is Number )
@@ -103,7 +108,8 @@
 			// we may have our own colour:
 			if( default_style.colour is String )
 				default_style.colour = Utils.get_colour( default_style.colour );
-				
+			
+				tr.ace("3999999");
 			// tr.ace_json(default_style);
 			return default_style;
 		}

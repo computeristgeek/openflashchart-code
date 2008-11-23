@@ -10,7 +10,7 @@
           public function Round( index:Number, style:Object, group:Number ) {
              
              
-             super(index, style.top, style.colour, style.tip, style.alpha, group);
+             super(index, style, style.colour, style.tip, style.alpha, group);
              
              var dropShadow:DropShadowFilter = new flash.filters.DropShadowFilter();
              dropShadow.blurX = 5;
