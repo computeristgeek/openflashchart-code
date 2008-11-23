@@ -2,7 +2,7 @@ package elements.axis {
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import string.Utils;
-	import charts.Elements.PointBar3D;
+	import charts.series.bars.Bar3D;
 	import com.serialization.json.JSON;
 	import Range;
 	
@@ -167,7 +167,7 @@ package elements.axis {
 			}
 
 			
-			var lighter:Number = PointBar3D.Lighten( this.colour );
+			var lighter:Number = Bar3D.Lighten( this.colour );
 			
 			// TOP
 			var colors:Array = [this.colour,lighter];

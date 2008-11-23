@@ -1,12 +1,13 @@
-﻿package charts.Elements {
+﻿package charts.series.bars {
+	
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.filters.DropShadowFilter;
 	import charts.series.bars.PointBarBase;
 	
-	public class PointBar3D extends PointBarBase {
+	public class Bar3D extends PointBarBase {
 		
-		public function PointBar3D( index:Number, style:Object, group:Number ) {
+		public function Bar3D( index:Number, style:Object, group:Number ) {
 			
 			
 			super(index, style, style.colour, style.tip, style.alpha, group);
@@ -38,7 +39,7 @@
 			this.graphics.lineStyle(0, 0, 0);
 			//set gradient fill
 			
-			var lighter:Number = PointBar3D.Lighten( this.colour );
+			var lighter:Number = Bar3D.Lighten( this.colour );
 			
 			var colors:Array = [this.colour,lighter];
 			var alphas:Array = [1,1];
@@ -63,7 +64,7 @@
 			//
 			var rad:Number = 7;
 			
-			var lighter:Number = PointBar3D.Lighten( this.colour );
+			var lighter:Number = Bar3D.Lighten( this.colour );
 
 			// Darken a light color
 			//var darker:Number = this.colour;
@@ -88,7 +89,7 @@
 			//
 			var rad:Number = 7;
 			
-			var lighter:Number = PointBar3D.Lighten( this.colour );
+			var lighter:Number = Bar3D.Lighten( this.colour );
 			
 			var colors:Array = [this.colour,lighter];
 			var alphas:Array = [1,1];

@@ -86,8 +86,8 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/bar-all-onclick.txt";
-					//var file:String = "../../../test-data-files/clash.txt";
+					//var file:String = "../data-files/bar-all-onclick.txt";
+					var file:String = "../../../test-data-files/radar-hover.txt";
 					this.load_external_file( file );
 
 					/*

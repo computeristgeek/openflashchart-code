@@ -1,6 +1,6 @@
 ﻿package charts {
 	import charts.Elements.Element;
-	import charts.Elements.PointBar3D;
+	import charts.series.bars.Bar3D;
 	import string.Utils;
 	
 	
@@ -15,7 +15,7 @@
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
 
-			return new PointBar3D( index, this.get_element_helper( value ), this.group );
+			return new charts.series.bars.Bar3D( index, this.get_element_helper( value ), this.group );
 		}
 	}
 }

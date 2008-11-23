@@ -76,11 +76,16 @@ package {
 			//  +--+--+--+      |-+--+--+--+-+
 			//  0  1  2  3        0  1  2  3
 			//
-			this.x_offset = x_axis_range.offset;
-			
-			tr.aces( 'YYYY', y_axis_range.offset );
-			this.y_offset = y_axis_range.offset;
-				
+	
+			// PIE charts don't have these:
+			if( x_axis_range ) {
+				this.x_offset = x_axis_range.offset;
+			}
+			if( y_axis_range ) {
+				tr.aces( 'YYYY', y_axis_range.offset );
+				this.y_offset = y_axis_range.offset;
+			}
+   				
 			this.bar_groups = 1;
 		}
 		
