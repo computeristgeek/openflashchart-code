@@ -1,6 +1,8 @@
 ﻿package charts.Elements {
+	
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import charts.series.bars.PointBarBase;
 	
 	public class ECandle extends PointBarBase {
 		protected var high:Number;

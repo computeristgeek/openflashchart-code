@@ -1,6 +1,6 @@
 ﻿package charts.series.bars {
 	
-	import charts.Elements.PointBarBase;
+	import charts.series.bars.PointBarBase;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	

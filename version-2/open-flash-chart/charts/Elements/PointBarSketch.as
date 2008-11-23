@@ -1,5 +1,7 @@
 ﻿package charts.Elements {
+	
 	import flash.display.Sprite;
+	import charts.series.bars.PointBarBase;
 	
 	public class PointBarSketch extends PointBarBase {
 		private var outline:Number;

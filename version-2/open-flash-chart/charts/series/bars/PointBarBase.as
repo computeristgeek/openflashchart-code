@@ -1,4 +1,4 @@
-﻿package charts.Elements {
+﻿package charts.series.bars {
 
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -7,6 +7,7 @@
 	import caurina.transitions.Equations;
 	import flash.geom.Point;
 	import global.Global;
+	import charts.Elements.Element;
 	
 	public class PointBarBase extends Element
 	{
@@ -36,6 +37,10 @@
 			this.addEventListener(MouseEvent.MOUSE_OVER, this.mouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT, this.mouseOut);
 			
+			//
+			// This is UGLY!!! We need to decide if we are passing in a SINGLE style object,
+			// or many parameters....
+			//
 			if( value['on-click'] )
 				this.set_on_click( value['on-click'] );
 		}

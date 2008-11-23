@@ -1,6 +1,6 @@
 ﻿    package charts.series.bars {
 	
-		import charts.Elements.PointBarBase;
+		import charts.series.bars.PointBarBase;
 		import flash.filters.DropShadowFilter;
 		import flash.geom.Matrix;
        

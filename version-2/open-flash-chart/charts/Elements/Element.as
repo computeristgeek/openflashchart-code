@@ -100,10 +100,12 @@
 		}
 		
 		private function mouseUp(event:Event):void {
-			tr.ace( this.link );
-			tr.ace(this.link.substring(0, 4));
 			
-			if ( this.link.substring(0, 5) == 'http:' )
+			if ( this.link.substring(0, 6) == 'trace:' ) {
+				// for the test JSON files:
+				tr.ace( this.link );
+			}
+			else if ( this.link.substring(0, 5) == 'http:' )
 				this.browse_url( this.link );
 			else
 				ExternalInterface.call( this.link, this.index );

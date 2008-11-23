@@ -2,6 +2,7 @@
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.filters.DropShadowFilter;
+	import charts.series.bars.PointBarBase;
 	
 	public class PointBar3D extends PointBarBase {
 		

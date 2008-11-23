@@ -1,8 +1,8 @@
-﻿    package charts.series.bars {
+﻿package charts.series.bars {
 		
-		import charts.Elements.PointBarBase;
-       import flash.filters.DropShadowFilter;
-       import flash.geom.Matrix;
+	import charts.series.bars.PointBarBase;
+	import flash.filters.DropShadowFilter;
+	import flash.geom.Matrix;
        
        public class CylinderOutline extends PointBarBase
        {

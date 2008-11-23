@@ -1,6 +1,7 @@
 ﻿package charts.Elements {
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
+	import charts.series.bars.PointBarBase;
 	
 	public class PointBarGlass extends PointBarBase
 	{
