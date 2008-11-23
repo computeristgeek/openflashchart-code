@@ -1,12 +1,12 @@
-package charts.Elements {
+package charts.series.bars {
 	
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import charts.series.bars.PointBarBase;
 	
-	public class PointBar extends PointBarBase {
+	public class Bar extends PointBarBase {
 	
-		public function PointBar( index:Number, style:Object, group:Number ) {
+		public function Bar( index:Number, style:Object, group:Number ) {
 			
 			super(index, style, style.colour, style.tip, style.alpha, group);
 		}
