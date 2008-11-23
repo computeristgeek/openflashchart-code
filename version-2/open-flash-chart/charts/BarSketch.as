@@ -22,8 +22,7 @@
 			
 			super( style, group );
 		}
-		
-
+	
 		//
 		// called from the base object
 		//
@@ -34,7 +33,8 @@
 				tip:				this.style.tip,
 				offset:				this.style.offset,
 				'outline-colour':	this.style['outline-colour'],
-				alpha:				this.style.alpha
+				alpha:				this.style.alpha,
+				'on-click':			this.style['on-click']
 			};
 					
 			if( value is Number )

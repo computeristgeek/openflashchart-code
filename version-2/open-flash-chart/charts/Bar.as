@@ -15,7 +15,6 @@ package charts {
 		// called from the base object
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
-// 'on-click': this.style['on-click']
 
 			return new PointBar( index, this.get_element_helper( value ), this.group );
 		}
