@@ -31,6 +31,7 @@
 			//  +--+--+--+      |-+--+--+--+-+
 			//  0  1  2  3        0  1  2  3
 			//
+			// Don't forget this is also used in radar axis
 			//
 			if( this.offset )
 				return (this.max - this.min) + 1;

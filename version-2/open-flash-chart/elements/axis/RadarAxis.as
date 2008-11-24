@@ -21,6 +21,7 @@
 				stroke:			2,
 				colour:			'#784016',
 				'grid-colour':	'#F5E1AA',
+				min:			0,
 				max:			null,
 				steps:			1
 			};
@@ -38,8 +39,11 @@
 			this.addChild( this.spoke_labels );
 		}
 		
-		public function get_max():Number {
-			return this.style.max;
+		//
+		// how many items in the X axis?
+		//
+		public function get_range():Range {
+			return new Range( this.style.min, this.style.max, this.style.steps, false );
 		}
 		
 		public function resize( sc:ScreenCoordsRadar ):void

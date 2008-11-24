@@ -453,8 +453,8 @@ package  {
 			// this object is used in the mouseMove method
 			var sc:ScreenCoordsRadar = new ScreenCoordsRadar(top, 0, this.stage.stageWidth, this.stage.stageHeight);
 			
-			sc.set_max( this.radar_axis.get_max() );
-			sc.set_angles( this.obs.get_max_x() );
+			sc.set_range( this.radar_axis.get_range() );
+			sc.set_angles( this.obs.get_max_x()-this.obs.get_min_x()+1 );
 			
 			// resize the axis first because they may
 			// change the radius (to fit the labels on screen)
@@ -493,7 +493,6 @@ package  {
 		}
 			
 		private function resize_chart(): ScreenCoordsBase {
-			tr.ace("£££");
 			//
 			// we want to show the tooltip closest to
 			// items near the mouse, so hook into the

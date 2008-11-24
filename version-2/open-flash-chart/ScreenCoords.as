@@ -4,9 +4,6 @@ package {
 	
 	public class ScreenCoords extends ScreenCoordsBase
 	{
-
-		
-		
 		private var x_range:Range;
 		private var y_range:Range;
 		private var y_right_range:Range;
