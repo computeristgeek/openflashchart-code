@@ -69,7 +69,6 @@
 				alpha:		this.style.alpha
 			};
 			
-			
 			return new StackCollection( index, default_style, this.group );
 		}
 		

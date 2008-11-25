@@ -106,7 +106,7 @@ package charts {
 						break;
 
 					case 'bar_round3d':
-						//collection.add( new BarRound3D( elements[i], bar_group ) );
+						collection.add( new BarRound3D( elements[i], bar_group ) );
 						bar_group++;
 						break;
 					

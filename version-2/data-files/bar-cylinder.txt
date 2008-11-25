@@ -43,6 +43,12 @@
       "alpha":     0.7,
       "colour":    "#CCCC00",
       "values" :   [6,-5,5,7]
+    },
+    {
+      "type":      "bar_round3d",
+      "alpha":     0.7,
+      "colour":    "#CCCC00",
+      "values" :   [6,-5,5,7]
     }
   ],
 
