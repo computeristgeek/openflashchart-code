@@ -86,8 +86,8 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					//var file:String = "../data-files/bar-all-onclick.txt";
-					var file:String = "../../../test-data-files/radar-hover.txt";
+					//var file:String = "../data-files/tooltip-hover.txt";
+					var file:String = "../../../test-data-files/stack.txt";
 					this.load_external_file( file );
 
 					/*
@@ -371,7 +371,6 @@ package  {
 					break;
 					
 				case Tooltip.PROXIMITY:
-					tr.ace('prox');
 					this.mouse_move_proximity( event as MouseEvent );
 					break;
 					
@@ -384,8 +383,8 @@ package  {
 		
 		private function mouse_move_follow( event:MouseEvent ):void {
 
-			//tr.ace( event.currentTarget );
-			//tr.ace( event.target );
+			// tr.ace( event.currentTarget );
+			// tr.ace( event.target );
 			
 			if ( event.target is has_tooltip )
 				this.tooltip.draw( event.target as has_tooltip );
@@ -454,6 +453,7 @@ package  {
 			var sc:ScreenCoordsRadar = new ScreenCoordsRadar(top, 0, this.stage.stageWidth, this.stage.stageHeight);
 			
 			sc.set_range( this.radar_axis.get_range() );
+			// 0-4 = 5 spokes
 			sc.set_angles( this.obs.get_max_x()-this.obs.get_min_x()+1 );
 			
 			// resize the axis first because they may
@@ -677,14 +677,12 @@ package  {
 			this.x_axis			= new XAxis( json.x_axis );
 			this.y_axis			= new YAxisLeft( json );
 			this.y_axis_right	= new YAxisRight( json );
-			tr.ace("££££");
 			//
 			// This reads all the 'elements' of the chart
 			// e.g. bars and lines, then creates them as sprites
 			//
 			this.obs			= Factory.MakeChart( json );
 			//
-			tr.ace("££££");
 			
 			// the X Axis labels *may* require info from
 			// this.obs
@@ -712,12 +710,16 @@ package  {
 					// X Axis labels used, even so, make the chart
 					// big enough to show all values
 					//
-					
 					tr.aces('x labels', this.obs.get_min_x(), this.x_labels.count(), this.obs.get_max_x());
-					
-					this.x_axis.set_range(
-						this.obs.get_min_x(),
-						Math.max( this.x_labels.count(), this.obs.get_max_x() ) );
+					if ( this.x_labels.count() > this.obs.get_max_x() ) {
+						
+						// Data and labesl are OK
+						this.x_axis.set_range( 0, this.x_labels.count() );
+					} else {
+						
+						// There is more data than labels -- oops
+						this.x_axis.set_range( this.obs.get_min_x(), this.obs.get_max_x() );
+					}
 				}
 			}
 			else

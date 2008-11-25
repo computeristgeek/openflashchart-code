@@ -54,7 +54,6 @@
 			var n:Number;	// <-- ugh, leaky variables.
 			var bottom:Number = 0;
 			var top:Number = 0;
-			var odd:Boolean = false;
 			var colr:Number;
 			var count:Number = 0;
 
@@ -70,7 +69,8 @@
 						bottom:		bottom,
 						colour:		colr,		// <-- default colour (may be overriden later)
 						total:		this.total,
-						tip:		this.tooltip
+						tip:		this.tooltip,
+						alpha:		style.alpha
 					}
 				
 					//
@@ -96,7 +96,6 @@
 					this.addChild( p );
 					
 					bottom = top;
-					odd = !odd;
 					count++;
 				}
 			}

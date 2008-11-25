@@ -13,7 +13,7 @@
 			// we are not passed a string value, the value
 			// is set by the parent collection later
 			this.total =  style.total;
-			super( index,  style,  style.colour, style.tip, style.alpha, group );
+			super(index, style, style.colour, style.tip, style.alpha, group);
 		}
 
 		protected override function replace_magic_values( t:String ): String {

@@ -16,7 +16,8 @@
 				colours:			['#FF0000','#00FF00'],	// <-- ugly default colours
 				values:				[],
 				keys:				[],
-				tip:				'#x_label# : #val#<br>Total: #total#'
+				tip:				'#x_label# : #val#<br>Total: #total#',
+				alpha:				0.6
 			};
 			
 			object_helper.merge_2( json, style );
@@ -64,7 +65,8 @@
 			var default_style:Object = {
 				tip:		this.style.tip,
 				values:		value,
-				colours:	this.style.colours
+				colours:	this.style.colours,
+				alpha:		this.style.alpha
 			};
 			
 			
