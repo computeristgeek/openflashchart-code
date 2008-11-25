@@ -32,7 +32,7 @@ public partial class Pie : System.Web.UI.Page
         }
         //values.Add(0.2);
         PieValue pieValue = new PieValue(10);
-        pieValue.Click = "http://www.baidu.com";
+        pieValue.Click = "http://xiao-yifang.blogspot.com";
         values.Add(pieValue);
         pie.Values = values;
         pie.FontSize = 20;
