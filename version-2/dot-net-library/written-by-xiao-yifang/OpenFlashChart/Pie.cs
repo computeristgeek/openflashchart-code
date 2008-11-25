@@ -10,6 +10,7 @@ namespace OpenFlashChart
     {
         private double val;
         private string text;
+        private string click;
         public PieValue(double val)
         {
             this.val = val;
@@ -34,6 +35,12 @@ namespace OpenFlashChart
         {
             get { return text; }
             set { text = value; }
+        }
+        [JsonProperty("on-click")]
+        public string Click
+        {
+            get { return click; }
+            set { click = value; }
         }
     }
     public class Pie : Chart<PieValue>

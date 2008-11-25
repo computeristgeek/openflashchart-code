@@ -31,6 +31,9 @@ public partial class Pie : System.Web.UI.Page
             labels.Add(i.ToString());
         }
         //values.Add(0.2);
+        PieValue pieValue = new PieValue(10);
+        pieValue.Click = "http://www.baidu.com";
+        values.Add(pieValue);
         pie.Values = values;
         pie.FontSize = 20;
        // pie.Alpha = 50;
