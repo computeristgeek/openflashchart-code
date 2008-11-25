@@ -3,9 +3,9 @@
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.filters.DropShadowFilter;
-	import charts.series.bars.PointBarBase;
+	import charts.series.bars.Base;
 	
-	public class Bar3D extends PointBarBase {
+	public class Bar3D extends Base {
 		
 		public function Bar3D( index:Number, style:Object, group:Number ) {
 			

@@ -1,9 +1,9 @@
 ﻿package charts.Elements {
 	
 	import flash.display.Sprite;
-	import charts.series.bars.PointBarBase;
+	import charts.series.bars.Base;
 	
-	public class PointBarOutline extends PointBarBase {
+	public class PointBarOutline extends Base {
 		private var outline:Number;
 		
 		public function PointBarOutline( index:Number, style:Object, group:Number )	{

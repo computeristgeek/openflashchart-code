@@ -9,7 +9,7 @@
 	import global.Global;
 	import charts.Elements.Element;
 	
-	public class BarBase extends Element
+	public class Base extends Element
 	{
 		protected var tip_pos:flash.geom.Point;
 		protected var colour:Number;
@@ -18,7 +18,7 @@
 		protected var bottom:Number;
 		protected var mouse_out_alpha:Number;
 		
-		public function BarBase( index:Number, value:Object, colour:Number, tooltip:String, alpha:Number, group:Number )
+		public function Base( index:Number, value:Object, colour:Number, tooltip:String, alpha:Number, group:Number )
 		{
 			super();
 			this.index = index;

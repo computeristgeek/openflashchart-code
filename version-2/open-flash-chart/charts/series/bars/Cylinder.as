@@ -1,10 +1,10 @@
 ﻿    package charts.series.bars {
 	
-		import charts.series.bars.PointBarBase;
+		import charts.series.bars.Base;
 		import flash.filters.DropShadowFilter;
 		import flash.geom.Matrix;
        
-       public class Cylinder extends PointBarBase
+       public class Cylinder extends Base
        {
           
           public function Cylinder( index:Number, style:Object, group:Number ) {

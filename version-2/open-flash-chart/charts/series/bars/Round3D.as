@@ -1,9 +1,9 @@
 ﻿    package charts.series.bars {
        import flash.filters.DropShadowFilter;
        import flash.geom.Matrix;
-	   import charts.series.bars.PointBarBase;
+	   import charts.series.bars.Base;
        
-       public class Round3D extends PointBarBase
+       public class Round3D extends Base
        {
           
           public function Round3D( index:Number, style:Object, group:Number ) {

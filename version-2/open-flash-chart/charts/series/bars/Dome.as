@@ -1,9 +1,9 @@
 ﻿    package charts.series.bars {
        import flash.filters.DropShadowFilter;
        import flash.geom.Matrix;
-       import charts.series.bars.PointBarBase;
+       import charts.series.bars.Base;
 	   
-       public class Dome extends PointBarBase
+       public class Dome extends Base
        {
           
           public function Dome( index:Number, style:Object, group:Number ) {

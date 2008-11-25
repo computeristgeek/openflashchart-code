@@ -1,10 +1,10 @@
 ﻿    package charts.series.bars {
        import flash.filters.DropShadowFilter;
        import flash.geom.Matrix;
-       import charts.series.bars.PointBarBase;
+       import charts.series.bars.Base;
 	   
 	   
-       public class Round extends PointBarBase
+       public class Round extends Base
        {
           
           public function Round( index:Number, style:Object, group:Number ) {

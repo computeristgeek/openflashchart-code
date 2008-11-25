@@ -1,6 +1,6 @@
 ﻿package charts {
 	import charts.Elements.Element;
-	import charts.series.bars.PointBarBase;
+	import charts.Base;
 	import string.Utils;
 	import global.Global;
 

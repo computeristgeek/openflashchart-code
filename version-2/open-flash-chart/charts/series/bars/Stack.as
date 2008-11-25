@@ -1,11 +1,11 @@
 ﻿package charts.series.bars {
 	
-	import charts.series.bars.PointBarBase;
+	import charts.series.bars.Base;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	
 	
-	public class Stack extends PointBarBase {
+	public class Stack extends Base {
 		private var total:Number;
 		
 		public function Stack( index:Number, style:Object, group:Number ) {

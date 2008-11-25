@@ -1,9 +1,9 @@
 ﻿package charts.Elements {
 	
 	import flash.display.Sprite;
-	import charts.series.bars.PointBarBase;
+	import charts.series.bars.Base;
 	
-	public class PointBarFade extends PointBarBase
+	public class PointBarFade extends Base
 	{
 		
 		public function PointBarFade( index:Number, value:Object, colour:Number, group:Number )

@@ -2,9 +2,9 @@ package charts.series.bars {
 	
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	import charts.series.bars.PointBarBase;
+	import charts.series.bars.Base;
 	
-	public class Bar extends PointBarBase {
+	public class Bar extends Base {
 	
 		public function Bar( index:Number, style:Object, group:Number ) {
 			

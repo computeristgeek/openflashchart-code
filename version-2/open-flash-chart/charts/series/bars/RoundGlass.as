@@ -2,9 +2,9 @@
 
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
-	import charts.series.bars.PointBarBase;
+	import charts.series.bars.Base;
 
-	public class RoundGlass extends PointBarBase
+	public class RoundGlass extends Base
 	{
 
 		public function RoundGlass( index:Number, style:Object, group:Number ) {

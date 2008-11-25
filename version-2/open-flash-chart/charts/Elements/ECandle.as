@@ -2,9 +2,9 @@
 	
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	import charts.series.bars.PointBarBase;
+	import charts.series.bars.Base;
 	
-	public class ECandle extends PointBarBase {
+	public class ECandle extends Base {
 		protected var high:Number;
 		protected var low:Number;
 
