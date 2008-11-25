@@ -21,6 +21,7 @@
 				colour:			'#784016',
 				offset:			false,
 				'grid-colour':	'#F5E1AA',
+				'grid-visible':	true,
 				'3d':			0,
 				steps:			1,
 				visible:		true,
@@ -39,6 +40,12 @@
 		}
 		
 		public override function resize( label_pos:Number, sc:ScreenCoords ):void {
+			
+			super.resize_helper( label_pos, sc, false);
+		}
+		
+		
+		public function __resize( label_pos:Number, sc:ScreenCoords ):void {
 			
 			this.labels.resize( label_pos, sc );
 			

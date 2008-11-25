@@ -29,6 +29,7 @@
 				colour:			'#784016',
 				offset:			false,
 				'grid-colour':	'#F5E1AA',
+				'grid-visible':	false,	// <-- this is off by default for RIGHT axis
 				'3d':			0,
 				steps:			1,
 				visible:		false,
@@ -40,6 +41,14 @@
 		}
 		
 		public override function resize( label_pos:Number, sc:ScreenCoords ):void {
+			
+			super.resize_helper( label_pos, sc, true);
+		}
+		
+	
+		
+		
+		public function ___resize( label_pos:Number, sc:ScreenCoords ):void {
 					
 			if ( !this.style.visible )
 				return;

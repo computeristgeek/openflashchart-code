@@ -58,9 +58,6 @@ package elements.axis {
 			return new Range( this.style.min, this.style.max, this.style.steps, this.style.offset );
 		}
 		
-		public function resize( label_pos:Number, sc:ScreenCoords ):void {
-		}
-		
 		public function get_width():Number {
 			return this.stroke + this.tick_length + this.labels.width;
 		}
@@ -75,6 +72,88 @@ package elements.axis {
 			this.graphics.clear();
 			while ( this.numChildren > 0 )
 				this.removeChildAt(0);
+		}
+		
+		public function resize(label_pos:Number, sc:ScreenCoords):void { }
+		
+		protected function resize_helper(label_pos:Number, sc:ScreenCoords, right:Boolean):void {
+			
+			if( !right )
+				this.labels.resize( label_pos, sc );
+			else
+				this.labels.resize( sc.right + this.stroke + this.tick_length, sc );
+			
+			if ( !this.style.visible )
+				return;
+			
+			this.graphics.clear();
+			this.graphics.lineStyle( 0, 0, 0 );
+			
+			// y axel grid lines
+			//var every:Number = (this.minmax.y_max - this.minmax.y_min) / this.steps;
+			
+			// Set opacity for the first line to 0 (otherwise it overlaps the x-axel line)
+			//
+			// Bug? Does this work on graphs with minus values?
+			//
+			var i2:Number = 0;
+			var i:Number;
+			var y:Number;
+			
+			var min:Number = Math.min(this.style.min, this.style.max);
+			var max:Number = Math.max(this.style.min, this.style.max);
+			
+			if ( this.style['grid-visible'] ) {
+				//
+				// draw GRID lines
+				//
+				
+				//
+				// hack: http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_13989&sliceId=1
+				//
+				max += 0.000004;
+				
+				for( i = min; i <= max; i+=this.style.steps ) {
+					
+					y = sc.get_y_from_val(i, right);
+					this.graphics.beginFill( this.grid_colour, 1 );
+					this.graphics.drawRect( sc.left, y, sc.width, 1 );
+					this.graphics.endFill();
+				}
+			}
+			
+			var pos:Number;
+			
+			if (!right)
+				pos = sc.left - this.stroke;
+			else
+				pos = sc.right;
+			
+			// Axis line:
+			this.graphics.beginFill( this.colour, 1 );
+			this.graphics.drawRect( pos, sc.top, this.stroke, sc.height );
+			this.graphics.endFill();
+			
+			// ticks..
+			var width:Number;
+			for( i = min; i <= max; i+=this.style.steps ) {
+				
+				// start at the bottom and work up:
+				y = sc.get_y_from_val(i, right);
+				
+				var tick_pos:Number;
+				if ( !right )
+					tick_pos = sc.left - this.stroke - this.tick_length;
+				else
+					tick_pos = sc.right + this.stroke +2;
+				
+				this.graphics.beginFill( this.colour, 1 );
+				this.graphics.drawRect( tick_pos, y - (this.stroke / 2), this.tick_length, this.stroke );
+				//this.graphics.drawRect( pos - this.tick_length, y - (this.stroke / 2), this.tick_length, this.stroke );
+				//this.graphics.drawRect( left, y-(this.stroke/2), this.tick_length, this.stroke );
+				this.graphics.endFill();
+					
+			}
 		}
 		
 	}
