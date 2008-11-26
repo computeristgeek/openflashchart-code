@@ -145,7 +145,7 @@ package elements.axis {
 				if ( !right )
 					tick_pos = sc.left - this.stroke - this.tick_length;
 				else
-					tick_pos = sc.right + this.stroke +2;
+					tick_pos = sc.right + this.stroke;
 				
 				this.graphics.beginFill( this.colour, 1 );
 				this.graphics.drawRect( tick_pos, y - (this.stroke / 2), this.tick_length, this.stroke );

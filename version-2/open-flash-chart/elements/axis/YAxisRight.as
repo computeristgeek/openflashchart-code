@@ -44,46 +44,5 @@
 			
 			super.resize_helper( label_pos, sc, true);
 		}
-		
-	
-		
-		
-		public function ___resize( label_pos:Number, sc:ScreenCoords ):void {
-					
-			if ( !this.style.visible )
-				return;
-			
-			//
-			// what if the user wants labes but no axis?
-			//
-			this.labels.resize( sc.right + this.stroke + this.tick_length, sc );
-			
-			this.graphics.clear();
-			
-			// Axis line:
-			this.graphics.lineStyle( 0, 0, 0 );
-			this.graphics.beginFill( this.colour, 1 );
-			this.graphics.drawRect( sc.right, sc.top, this.stroke, sc.height );
-			this.graphics.endFill();
-//			return;
-			
-
-			// ticks..
-			var min:Number = Math.min(this.style.min, this.style.max);
-			var max:Number = Math.max(this.style.min, this.style.max);
-			//var every:Number = (this.minmax.y2_max - this.minmax.y2_min) / this.steps;
-			var left:Number = sc.right + this.stroke;
-			var width:Number;
-			for( var i:Number = min; i <= max; i+=this.style.steps ) {
-				
-				// start at the bottom and work up:
-				var y:Number = sc.get_y_from_val(i, true);
-				this.graphics.beginFill( this.colour, 1 );
-				this.graphics.drawRect( left, y-(this.stroke/2), this.tick_length, this.stroke );
-				this.graphics.endFill();
-					
-			}
-			
-		}
 	}
 }
