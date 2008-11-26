@@ -7,7 +7,7 @@
 	import caurina.transitions.Equations;
 	import flash.geom.Point;
 	import global.Global;
-	import charts.Elements.Element;
+	import charts.series.Element;
 	
 	public class Base extends Element
 	{

@@ -1,6 +1,6 @@
 ﻿package charts {
 	
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import charts.series.dots.PointDotBase;
 	import flash.display.Graphics;
 	import flash.display.Sprite;

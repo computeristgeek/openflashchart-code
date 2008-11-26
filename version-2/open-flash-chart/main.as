@@ -1,6 +1,6 @@
 
 package  {
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import charts.Factory;
 	import charts.ObjectCollection;
 	import charts.series.has_tooltip;

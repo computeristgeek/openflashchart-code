@@ -1,5 +1,5 @@
 ﻿package charts {
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import charts.series.bars.Round;
 
 	public class BarRound extends BarBase {

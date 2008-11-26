@@ -2,7 +2,7 @@
 	import charts.series.pies.PieLabel;
 	import flash.external.ExternalInterface;
 	import string.Utils;
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import charts.series.pies.PieSliceContainer;
 	import global.Global;
 	

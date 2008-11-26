@@ -1,6 +1,6 @@
 ﻿package charts.series.pies {
 	
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import charts.Pie;
 	
 	import flash.display.Sprite;

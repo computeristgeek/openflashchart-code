@@ -1,7 +1,7 @@
 ﻿package charts.series.dots {
 	
 	import flash.display.Sprite;
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import flash.display.BlendMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -31,11 +31,11 @@
 		//
 		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
 			
+			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this.index, this._y, this.y_axis );
 			//
 			// Haha! This is the worst code in the world,
 			// but it is kinda kooky and cool at the same time :-)
 			//
-			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this.index, this._y, true );
 			this.x = this.line_mask.x = p.x;
 			this.y = this.line_mask.y = p.y;
 			

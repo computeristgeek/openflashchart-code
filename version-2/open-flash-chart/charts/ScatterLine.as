@@ -2,7 +2,7 @@
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import charts.series.dots.scat;
 	import string.Utils;
 	import flash.geom.Point;

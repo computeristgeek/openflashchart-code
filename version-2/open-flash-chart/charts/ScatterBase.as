@@ -1,7 +1,7 @@
 ﻿package charts {
 	
 	import charts.series.dots.scat;
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import string.Utils;
 	import flash.geom.Point;
 	

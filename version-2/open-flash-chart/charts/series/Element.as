@@ -1,4 +1,5 @@
-﻿package charts.Elements {
+﻿package charts.series {
+	
 	import charts.series.has_tooltip;
 	import flash.display.Sprite;
 	import string.Utils;
@@ -26,7 +27,7 @@
 		public var is_tip:Boolean;
 		
 		public var line_mask:Sprite;
-		
+		protected var y_axis:Number;
 		
 		
 		public function Element() {}

@@ -1,5 +1,6 @@
 ﻿package charts {
-	import charts.Elements.Element;
+	
+	import charts.series.Element;
 	import charts.Base;
 	import string.Utils;
 	import global.Global;

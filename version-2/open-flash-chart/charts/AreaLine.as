@@ -1,6 +1,6 @@
 ﻿package charts {
 	import charts.Elements.Point;
-	import charts.Elements.Element;
+	import charts.series.Element;
 	
 	public class AreaLine extends AreaBase {
 		

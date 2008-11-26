@@ -1,6 +1,6 @@
 ﻿package charts.series.bars {
 	
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import com.serialization.json.JSON;

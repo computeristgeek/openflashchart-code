@@ -4,7 +4,7 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import charts.Elements.Element;
+	import charts.series.Element;
 	//import charts.series.dots.PointDot;
 	import string.Utils;
 	import flash.display.BlendMode;
@@ -53,7 +53,7 @@
 		//
 		// called from the base object
 		//
-		protected override function get_element( index:Number, value:Object ): charts.Elements.Element {
+		protected override function get_element( index:Number, value:Object ): charts.series.Element {
 			
 			var s:Object = this.merge_us_with_value_object( value );
 			//
@@ -63,7 +63,6 @@
 			s.axis = this.style.axis;
 			
 			return new Hollow( index, s );
-			//return new ChartObjects.Elements.Star( index, s );
 		}
 			
 	}

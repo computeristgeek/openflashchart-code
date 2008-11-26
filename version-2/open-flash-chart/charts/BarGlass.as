@@ -1,5 +1,5 @@
 package charts {
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import charts.Elements.PointBarGlass;
 	import string.Utils;
 	

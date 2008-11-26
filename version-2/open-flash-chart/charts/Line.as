@@ -2,7 +2,7 @@ package charts {
 
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import charts.Elements.Point;
 	import string.Utils;
 	import flash.display.BlendMode;

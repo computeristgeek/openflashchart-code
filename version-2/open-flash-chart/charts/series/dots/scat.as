@@ -1,7 +1,7 @@
 ﻿package charts.series.dots {
 	
 	import flash.display.Sprite;
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
 	

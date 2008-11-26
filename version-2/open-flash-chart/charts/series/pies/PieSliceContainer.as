@@ -1,6 +1,6 @@
 ﻿package charts.series.pies {
 	
-	import charts.Elements.Element;
+	import charts.series.Element;
 	import flash.events.Event;
 	import caurina.transitions.Tweener;
 	import caurina.transitions.Equations;
