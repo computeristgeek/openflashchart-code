@@ -35,7 +35,7 @@
 			// Haha! This is the worst code in the world,
 			// but it is kinda kooky and cool at the same time :-)
 			//
-			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this.index, this._y, (axis == 2) );
+			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this.index, this._y, true );
 			this.x = this.line_mask.x = p.x;
 			this.y = this.line_mask.y = p.y;
 			

@@ -5,7 +5,7 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import charts.Elements.Element;
-	import charts.Elements.PointDot;
+	//import charts.series.dots.PointDot;
 	import string.Utils;
 	import flash.display.BlendMode;
 	import charts.series.dots.Hollow;
@@ -60,6 +60,7 @@
 			// the width of the hollow circle is the same as the width of the line
 			//
 			s.width = this.style.width;
+			s.axis = this.style.axis;
 			
 			return new Hollow( index, s );
 			//return new ChartObjects.Elements.Star( index, s );

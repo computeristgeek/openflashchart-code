@@ -5,7 +5,7 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import charts.Elements.Element;
-	import charts.Elements.PointDot;
+	import charts.series.dots.PointDot;
 	import string.Utils;
 	import flash.display.BlendMode;
 	
