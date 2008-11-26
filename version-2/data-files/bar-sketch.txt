@@ -11,7 +11,7 @@
       "outline-colour":  "#567300",
       "text":            "Sketch",
       "font-size":       10,
-      "offset":          6,
+      "offset":          7,
       "values" :   [
         3,
         8,
@@ -39,8 +39,4 @@
   }
 
 }
-
-/*
-&bar_sketch=50,7,#99FF00,#7030A0,Purple Bar,10&
-*/
 

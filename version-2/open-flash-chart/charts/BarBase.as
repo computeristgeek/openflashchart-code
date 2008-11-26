@@ -21,11 +21,11 @@
 				'font-size':		12,
 				tip:				'#val#<br>#x_label#',
 				alpha:				0.6,
-				'on-click':			null
+				'on-click':			null,
+				'axis':				'left'
 			};
 			
 			object_helper.merge_2( json, this.style );
-			
 			
 			this.colour		= string.Utils.get_colour( this.style.colour );
 			this.key		= this.style.text;
@@ -33,8 +33,6 @@
 
 			// Minor hack, replace all #key# with this key text:
 			this.style.tip = this.style.tip.replace('#key#', this.key);
-			
-//			this.axis = which_axis_am_i_attached_to(data, num);
 			
 			//
 			// bars are grouped, so 3 bar sets on one chart
@@ -45,9 +43,6 @@
 			this.group = group;
 			
 			this.values = this.style.values;
-			
-			//this.style['onclick'] = json['on-click'];
-
 			this.add_values();
 		}
 		
@@ -95,7 +90,8 @@
 				colour:		this.style.colour,
 				tip:		this.style.tip,
 				alpha:		this.style.alpha,
-				'on-click':	this.style['on-click']
+				'on-click':	this.style['on-click'],
+				axis:		this.style.axis
 			};
 			
 			if( value is Number )
@@ -108,7 +104,6 @@
 			if( default_style.colour is String )
 				default_style.colour = Utils.get_colour( default_style.colour );
 			
-				tr.ace("3999999");
 			// tr.ace_json(default_style);
 			return default_style;
 		}

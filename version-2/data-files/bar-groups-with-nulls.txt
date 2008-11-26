@@ -30,17 +30,17 @@
 
   "x_axis":{
     "stroke":1,
-    "tick_height":10,
+    "tick-height":10,
     "colour":"#d000d0",
-    "grid_colour":"#00ff00",
+    "grid-colour":"#00ff00",
     "labels": ["January","February","March","April","May","June","July","August","Spetember"]
    },
 
   "y_axis":{
     "stroke":      4,
-    "tick_length": 3,
+    "tick-length": 3,
     "colour":      "#d000d0",
-    "grid_colour": "#00ff00",
+    "grid-colour": "#00ff00",
     "offset":      0,
     "max":         20
   }

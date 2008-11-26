@@ -14,7 +14,7 @@
       "values" :   [10,-6]
     },
     {
-      "type":      "bar_fade",
+      "type":      "bar_fade-",
       "colour":    "#3334AD",
       "text":      "Stuff",
       "font-size": 10,
@@ -35,7 +35,7 @@
       "values" :   [10,-10]
     },
     {
-      "type":      "filled_bar",
+      "type":      "bar_filled",
       "colour":    "#8822BB",
       "outline-colour": "#8010A0",
       "text":      "Outline",
@@ -47,8 +47,7 @@
 
 
   "x_axis":{
-    "max":    2,
-    "labels": ["Jan","Feb"],
+    "labels": { "labels" :["Jan","Feb"] },
     "3d":     5
   },
 

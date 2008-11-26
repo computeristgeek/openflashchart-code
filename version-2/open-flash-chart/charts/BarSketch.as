@@ -15,7 +15,7 @@
 			//
 			var style:Object = {
 				'outline-colour':	"#000000",
-				offset:				3
+				offset:				6
 			};
 			
 			object_helper.merge_2( json, style );
@@ -28,28 +28,22 @@
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
 			
-			var default_style:Object = {
-				colour:				this.style.colour,
-				tip:				this.style.tip,
-				offset:				this.style.offset,
-				'outline-colour':	this.style['outline-colour'],
-				alpha:				this.style.alpha,
-				'on-click':			this.style['on-click']
-			};
-					
-			if( value is Number )
-				default_style.top = value;
-			else
-				object_helper.merge_2( value, default_style );
-				
+			var default_style:Object = this.get_element_helper( value );
+			
 			// our parent colour is a number, but
 			// we may have our own colour:
 			if( default_style.colour is String )
 				default_style.colour = Utils.get_colour( default_style.colour );
 				
+			if ( !default_style['outline-colour'] )
+				default_style['outline-colour'] = this.style['outline-colour'];
+				
 			if( default_style['outline-colour'] is String )
 				default_style['outline-colour'] = Utils.get_colour( default_style['outline-colour'] );
-				
+			
+			if ( !default_style.offset )
+				default_style.offset = this.style.offset;
+
 			return new PointBarSketch( index, default_style, this.group );
 		}
 	}
