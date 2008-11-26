@@ -8,18 +8,15 @@
     {
       "type":      "line_hollow",
       "colour":    "#CC3399",
-      "fill":      "#343399",
-      "fill-alpha": 0.5,
       "dot-size":  7,
       "values" :   [0,0.37,0.73,1.07,1.36,1.59,1.77]
     },
     {
       "type":      "line_hollow",
-      "colour":    "#CC3399",
-      "fill":      "#343399",
-      "fill-alpha": 0.5,
+      "colour":    "#343399",
       "dot-size":  7,
-      "values" :   [0,0.37,0.73,1.07,1.36,1.59,1.77]
+      "values" :   [0,0.37,0.73,1.07,1.36,1.59,1.77],
+      "axis":      "right"
     }
   ],
 

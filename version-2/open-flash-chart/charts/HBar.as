@@ -26,8 +26,6 @@
 			this.key = json.text;
 			this.font_size = json['font-size'];
 			
-			// this.axis = which_axis_am_i_attached_to(data, num);
-			
 			//
 			// bars are grouped, so 3 bar sets on one chart
 			// will arrange them selves next to each other
@@ -74,7 +72,7 @@
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
 				var p:Horizontal = this.getChildAt(i) as Horizontal;
-				p.resize( sc, this.axis );
+				p.resize( sc );
 			}
 		}
 		

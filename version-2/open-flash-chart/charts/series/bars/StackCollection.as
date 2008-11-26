@@ -102,12 +102,12 @@
 		}
 		
 
-		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase ):void {
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
 				var e:Element = this.getChildAt(i) as Element;
-				e.resize( sc, axis );
+				e.resize( sc );
 			}
 		}
 		

@@ -100,7 +100,7 @@
 		}
 		
 		// override this:
-		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {}
+		public override function resize( sc:ScreenCoordsBase ):void {}
 		
 		//
 		// tooltip.left for bars center over the bar
@@ -123,16 +123,16 @@
 		// Moves the Sprite into the correct position, then
 		// returns the bounds so the bar can draw its self.
 		//
-		protected function resize_helper( sc:ScreenCoords, axis:Number ):Object {
-			var tmp:Object = sc.get_bar_coords( this.index, this.group );
+		protected function resize_helper( sc:ScreenCoords ):Object {
+			var tmp:Object = sc.get_bar_coords(this.index, this.group);
 
-			var bar_top:Number = sc.get_y_from_val(this.top,axis==2);
+			var bar_top:Number = sc.get_y_from_val(this.top, this.right_axis);
 			var bar_bottom:Number;
 			
 			if( this.bottom == Number.MIN_VALUE )
-				bar_bottom = sc.get_y_bottom(axis == 2);
+				bar_bottom = sc.get_y_bottom(this.right_axis);
 			else
-				bar_bottom = sc.get_y_from_val(this.bottom, axis == 2);
+				bar_bottom = sc.get_y_from_val(this.bottom, this.right_axis);
 			
 			var top:Number;
 			var height:Number;

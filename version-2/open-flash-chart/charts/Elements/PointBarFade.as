@@ -11,7 +11,7 @@
 			super(index,value,colour,'',0.6,group);
 		}
 		
-		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase ):void {
 			/*
 			var tmp:Object = sc.get_bar_coords(this._x,this.group);
 			this.screen_x = tmp.x;
@@ -32,7 +32,7 @@
 				height = bar_bottom-this.screen_y;
 			}
 			*/
-			var h:Object = this.resize_helper( sc as ScreenCoords, axis );
+			var h:Object = this.resize_helper( sc as ScreenCoords );
 			
 			this.graphics.clear();
 			this.graphics.beginFill( this.colour, 1.0 );

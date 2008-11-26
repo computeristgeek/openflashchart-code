@@ -51,7 +51,7 @@
 					
 					// tell the point where it is on the screen
 					// we will use this info to place the tooltip
-					e.resize( sc, 0 );
+					e.resize( sc );
 					if( first )
 					{
 						this.graphics.moveTo(e.x, e.y);
@@ -94,7 +94,7 @@
 					
 					// tell the point where it is on the screen
 					// we will use this info to place the tooltip
-					e.resize( sc, 0 );
+					e.resize( sc );
 					if( first )
 					{
 						this.graphics.moveTo(e.x, e.y);
@@ -178,7 +178,8 @@
 				colour:			this.style.colour,
 				'halo-size':	this.style['halo-size'],
 				tip:			this.style.tip,
-				'on-click':		this.style['on-click']
+				'on-click':		this.style['on-click'],
+				'axis':			this.style.axis
 			}
 			
 			if( value is Number )

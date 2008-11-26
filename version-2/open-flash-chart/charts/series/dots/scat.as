@@ -51,12 +51,12 @@
 			}
 		}
 		
-		public override function resize( sc:ScreenCoordsBase, axis:Number ): void {
+		public override function resize( sc:ScreenCoordsBase ): void {
 			//
 			// Look: we have a real X value, so get its screen location:
 			//
 			this.x = sc.get_x_from_val( this._x );
-			this.y = sc.get_y_from_val( this._y, (axis==2) );
+			this.y = sc.get_y_from_val( this._y, this.right_axis );
 		}
 		
 	}

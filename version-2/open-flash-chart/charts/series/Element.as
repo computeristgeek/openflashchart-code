@@ -27,14 +27,17 @@
 		public var is_tip:Boolean;
 		
 		public var line_mask:Sprite;
-		protected var y_axis:Number;
+		protected var right_axis:Boolean;
 		
 		
-		public function Element() {}
+		public function Element()
+		{
+			this.right_axis = false;	
+		}
 		
-		public function resize( sc:ScreenCoordsBase, axis:Number ):void {
+		public function resize( sc:ScreenCoordsBase ):void {
 			
-			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this._x, this._y, (axis == 2) );
+			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this._x, this._y, this.right_axis );
 			this.x = p.x;
 			this.y = p.y;
 		}

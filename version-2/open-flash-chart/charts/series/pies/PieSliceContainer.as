@@ -67,7 +67,7 @@
 		//
 		// the axis makes no sense here, let's override with null and write our own.
 		//
-		public override function resize( sc:ScreenCoordsBase, axis:Number ): void {}
+		public override function resize( sc:ScreenCoordsBase ): void {}
 		
 		public function is_label_on_screen( sc:ScreenCoordsBase, slice_radius:Number ): Boolean {
 			

@@ -24,14 +24,22 @@
 			
 			if ( style['on-click'] )
 				this.set_on_click( style['on-click'] );
+			
+			//
+			// TODO: fix this hack
+			//
+			if ( style.axis )
+				if ( style.axis == 'right' )
+					this.right_axis = true;
+				
 		}
 		
 		//
 		// all dot share the same resize code:
 		//
-		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase ):void {
 			
-			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this.index, this._y, this.y_axis );
+			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this.index, this._y, this.right_axis );
 			//
 			// Haha! This is the worst code in the world,
 			// but it is kinda kooky and cool at the same time :-)

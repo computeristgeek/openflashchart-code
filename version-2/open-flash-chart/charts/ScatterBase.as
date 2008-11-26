@@ -41,7 +41,7 @@
 			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
 				var e:scat = this.getChildAt(i) as scat;
-				e.resize( sc, this.axis );
+				e.resize( sc );
 			}
 		}
 

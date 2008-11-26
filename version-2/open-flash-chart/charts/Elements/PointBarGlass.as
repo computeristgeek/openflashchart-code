@@ -22,10 +22,10 @@
 			this.filters = [dropShadow];
 		}
 		
-		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase ):void {
 			
 			this.graphics.clear();
-			var h:Object = this.resize_helper( sc as ScreenCoords, axis );
+			var h:Object = this.resize_helper( sc as ScreenCoords );
 			if (h.height == 0)
 				return;
 			

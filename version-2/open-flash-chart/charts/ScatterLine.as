@@ -99,7 +99,7 @@
 					
 					// tell the point where it is on the screen
 					// we will use this info to place the tooltip
-					e.resize( sc, 0 );
+					e.resize( sc );
 					if( first )
 					{
 						this.graphics.moveTo(e.x,e.y);

@@ -60,7 +60,6 @@
 			// the width of the hollow circle is the same as the width of the line
 			//
 			s.width = this.style.width;
-			s.axis = this.style.axis;
 			
 			return new Hollow( index, s );
 		}

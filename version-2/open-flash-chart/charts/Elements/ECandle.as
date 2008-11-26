@@ -40,16 +40,16 @@
 			return t;
 		}
 		
-		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase ):void {
 			
 			var s:ScreenCoords = sc as ScreenCoords;
 			var tmp:Object = s.get_bar_coords( this.index, this.group );
 
 			// 
-			var bar_high:Number		= sc.get_y_from_val(this.high, axis==2);
-			var bar_top:Number		= sc.get_y_from_val(this.top, axis==2);
-			var bar_bottom:Number	= sc.get_y_from_val(this.bottom, axis == 2);
-			var bar_low:Number		= sc.get_y_from_val(this.low, axis == 2);
+			var bar_high:Number		= sc.get_y_from_val(this.high, this.right_axis);
+			var bar_top:Number		= sc.get_y_from_val(this.top, this.right_axis);
+			var bar_bottom:Number	= sc.get_y_from_val(this.bottom, this.right_axis);
+			var bar_low:Number		= sc.get_y_from_val(this.low, this.right_axis);
 			
 			var top:Number;
 			var height:Number;

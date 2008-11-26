@@ -32,7 +32,7 @@
 		//
 		// BUG: we assume that all are positive numbers:
 		//
-		public override function resize( sc:ScreenCoordsBase, axis:Number ):void {
+		public override function resize( sc:ScreenCoordsBase ):void {
 			this.graphics.clear();
 			
 			var sc2:ScreenCoords = sc as ScreenCoords;
@@ -41,9 +41,9 @@
 			
 			// move the Sprite into position:
 			this.x = tmp.x;
-			this.y = sc.get_y_from_val( this.top, axis==2 );
+			this.y = sc.get_y_from_val( this.top, this.right_axis );
 			
-			var height:Number = sc.get_y_from_val( this.bottom, axis == 2) - this.y;
+			var height:Number = sc.get_y_from_val( this.bottom, this.right_axis) - this.y;
 
 			this.graphics.beginFill( this.colour, 1 );
 			this.graphics.drawRect( 0, 0, tmp.width, height );

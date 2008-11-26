@@ -23,7 +23,8 @@ package charts {
 				tip:			'#val#',
 				'line-style':	new LineStyle( json['line-style'] ),
 				'on-click':		null,
-				loop:			false
+				loop:			false,
+				'axis':			'left'
 			};
 			
 			object_helper.merge_2( json, this.style );

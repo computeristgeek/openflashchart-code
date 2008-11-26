@@ -48,9 +48,7 @@
 			
 			//this.style['onclick'] = json['on-click'];
 
-tr.ace("33333");
 			this.add_values();
-tr.ace("33333");
 		}
 		
 		
@@ -65,7 +63,7 @@ tr.ace("33333");
 			for ( var i:Number = 0; i < this.numChildren; i++ )
 			{
 				var e:Element = this.getChildAt(i) as Element;
-				e.resize( sc, this.axis );
+				e.resize( sc );
 			}
 		}
 		
