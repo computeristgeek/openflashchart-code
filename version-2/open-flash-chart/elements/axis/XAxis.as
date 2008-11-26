@@ -83,6 +83,9 @@ package elements.axis {
 				this.steps = 1;
 			else
 				this.steps = this.style.steps;
+				
+			if ( this.steps < 1 )
+				this.steps = 1;
 			
 		}
 		
