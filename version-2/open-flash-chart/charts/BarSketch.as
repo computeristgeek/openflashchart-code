@@ -1,6 +1,6 @@
 ﻿package charts {
 	import charts.series.Element;
-	import charts.Elements.PointBarSketch;
+	import charts.series.bars.Sketch;
 	import string.Utils;
 	
 	public class BarSketch extends BarBase {
@@ -44,7 +44,7 @@
 			if ( !default_style.offset )
 				default_style.offset = this.style.offset;
 
-			return new PointBarSketch( index, default_style, this.group );
+			return new Sketch( index, default_style, this.group );
 		}
 	}
 }

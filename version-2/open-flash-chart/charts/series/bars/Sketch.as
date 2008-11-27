@@ -1,13 +1,13 @@
-﻿package charts.Elements {
+﻿package charts.series.bars {
 	
 	import flash.display.Sprite;
 	import charts.series.bars.Base;
 	
-	public class PointBarSketch extends Base {
+	public class Sketch extends Base {
 		private var outline:Number;
 		private var offset:Number;
 		
-		public function PointBarSketch( index:Number, style:Object, group:Number ) {
+		public function Sketch( index:Number, style:Object, group:Number ) {
 			
 			super( index, style, style.colour, style.tip, style.alpha, group );
 			this.outline = style['outline-colour'];
