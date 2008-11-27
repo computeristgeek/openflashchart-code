@@ -1,6 +1,6 @@
 ﻿package charts {
 	import charts.series.Element;
-	import charts.Elements.PointBarOutline;
+	import charts.series.bars.Outline;
 	import string.Utils;
 	
 	public class BarOutline extends BarBase {
@@ -33,7 +33,7 @@
 			if( default_style['outline-colour'] is String )
 				default_style['outline-colour'] = Utils.get_colour( default_style['outline-colour'] );
 				
-			return new PointBarOutline( index, default_style, this.group );
+			return new Outline( index, default_style, this.group );
 		}
 	}
 }

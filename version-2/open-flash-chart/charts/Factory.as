@@ -124,11 +124,21 @@ package charts {
 						collection.add( new BarOutline( elements[i], bar_group ) );
 						bar_group++;
 						break;
+					
+					case 'bar_plastic':
+						collection.add( new BarPlastic( elements[i], bar_group ) );
+						bar_group++;
+						break;
+					
+					case 'bar_plastic_flat':
+						collection.add( new BarPlasticFlat( elements[i], bar_group ) );
+						bar_group++;
+						break;
 						
 					case 'shape':
 						collection.add( new Shape( elements[i] ) );
 						break;
-						
+					
 					case 'candle':
 						collection.add( new Candle( elements[i], bar_group ) );
 						bar_group++;

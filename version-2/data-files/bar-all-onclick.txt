@@ -64,6 +64,18 @@
       "colour":    "#CCCC00",
       "on-click":  "trace:http://example.com",
       "values" :   [{"top":7, "on-click":  "trace:http://google.com"},0,-7]
+    },
+    {
+      "type":      "bar_plastic",
+      "colour":    "#CCCC00",
+      "on-click":  "trace:http://example.com",
+      "values" :   [{"top":7, "on-click":  "trace:http://google.com"},0,-7]
+    },
+    {
+      "type":      "bar_plastic_flat",
+      "colour":    "#CCCC00",
+      "on-click":  "trace:http://example.com",
+      "values" :   [{"top":7, "on-click":  "trace:http://google.com"},0,-7]
     }
   ],
 

@@ -1,6 +1,6 @@
 ﻿package charts {
 	import charts.series.Element;
-	import charts.Elements.ECandle;
+	import charts.series.bars.ECandle;
 	import string.Utils;
 
 	
