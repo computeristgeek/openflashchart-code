@@ -1,6 +1,6 @@
 package charts {
 	import charts.series.Element;
-	import charts.Elements.PointBarGlass;
+	import charts.series.bars.Glass;
 	import string.Utils;
 	
 	public class BarGlass extends BarBase {
@@ -16,7 +16,7 @@ package charts {
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
 
-			return new PointBarGlass( index, this.get_element_helper( value ), this.group );
+			return new Glass( index, this.get_element_helper( value ), this.group );
 		}
 	}
 }

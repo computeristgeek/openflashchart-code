@@ -1,12 +1,13 @@
-﻿package charts.Elements {
+﻿package charts.series.bars {
+	
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Matrix;
 	import charts.series.bars.Base;
 	
-	public class PointBarGlass extends Base
+	public class Glass extends Base
 	{
 		
-		public function PointBarGlass( index:Number, style:Object, group:Number ) {
+		public function Glass( index:Number, style:Object, group:Number ) {
 			
 			
 			super(index, style, style.colour, style.tip, style.alpha, group);
