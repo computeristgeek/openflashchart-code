@@ -10,7 +10,7 @@
     <script type="text/javascript">
 swfobject.embedSWF("open-flash-chart.swf", "my_chart", "550", "500",
   "9.0.0", "expressInstall.swf",
-  {"data-file":"datafile/Pie.aspx"}
+  {"data-file":"datafile/Pie.aspx?a=b&b=a"}
   );
     </script>
 

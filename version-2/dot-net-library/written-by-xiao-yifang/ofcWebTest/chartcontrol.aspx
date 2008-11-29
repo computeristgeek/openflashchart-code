@@ -14,7 +14,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        &nbsp;<cc1:OpenFlashChartControl ID="OpenFlashChartControl1" runat="server" DataFile="datafile/pie.aspx">
+        &nbsp;<cc1:OpenFlashChartControl ID="OpenFlashChartControl1" runat="server" DataFile="datafile/pie.aspx?a=b&b=c">
         </cc1:OpenFlashChartControl>
     
         

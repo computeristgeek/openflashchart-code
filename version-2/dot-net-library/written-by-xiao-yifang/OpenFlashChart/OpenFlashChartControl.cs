@@ -194,10 +194,10 @@ namespace OpenFlashChart
                     Page.Cache.Remove(this.ClientID);
                 Page.Cache.Add(this.ClientID, chart.ToString(), null, Cache.NoAbsoluteExpiration, new TimeSpan(0, 10, 0),
                               CacheItemPriority.Normal, null);
-                builder.Append("ofc_handler.ofc?chartjson=" + this.ClientID + "&ec=" + (EnableCache ? "1" : "0"));
+                builder.Append("ofc_handler.ofc?chartjson=" + this.ClientID + "%26ec=" + (EnableCache ? "1" : "0"));
             }
             else
-                builder.Append(DataFile);
+                builder.Append(HttpUtility.UrlEncode(DataFile));
             builder.Append("\"");
             if (!string.IsNullOrEmpty(loadingmsg))
             {
