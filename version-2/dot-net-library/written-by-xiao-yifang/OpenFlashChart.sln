@@ -49,6 +49,27 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "F:\...\ofcHandlerWeb\", "of
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "F:\临时工作区\AJAXEnabledWebSite1\", "..\..\..\..\..\临时工作区\AJAXEnabledWebSite1\", "{52E38161-BEC5-436D-964B-952131F2D2DB}"
+	ProjectSection(WebsiteProperties) = preProject
+		ProjectReferences = "{213ABC3E-F51E-4A09-A053-BC17E4797BA8}|OpenFlashChart.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/AJAXEnabledWebSite1"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\..\..\临时工作区\AJAXEnabledWebSite1\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\AJAXEnabledWebSite1\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/AJAXEnabledWebSite1"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\..\..\临时工作区\AJAXEnabledWebSite1\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\AJAXEnabledWebSite1\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "3000"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -89,6 +110,16 @@ Global
 		{B47F3D8B-F653-407D-B081-8AF35AF95C83}.Release|Any CPU.ActiveCfg = Debug|.NET
 		{B47F3D8B-F653-407D-B081-8AF35AF95C83}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
 		{B47F3D8B-F653-407D-B081-8AF35AF95C83}.Release|Mixed Platforms.Build.0 = Debug|.NET
+		{52E38161-BEC5-436D-964B-952131F2D2DB}.Debug|.NET.ActiveCfg = Debug|.NET
+		{52E38161-BEC5-436D-964B-952131F2D2DB}.Debug|.NET.Build.0 = Debug|.NET
+		{52E38161-BEC5-436D-964B-952131F2D2DB}.Debug|Any CPU.ActiveCfg = Debug|.NET
+		{52E38161-BEC5-436D-964B-952131F2D2DB}.Debug|Mixed Platforms.ActiveCfg = Debug|.NET
+		{52E38161-BEC5-436D-964B-952131F2D2DB}.Debug|Mixed Platforms.Build.0 = Debug|.NET
+		{52E38161-BEC5-436D-964B-952131F2D2DB}.Release|.NET.ActiveCfg = Debug|.NET
+		{52E38161-BEC5-436D-964B-952131F2D2DB}.Release|.NET.Build.0 = Debug|.NET
+		{52E38161-BEC5-436D-964B-952131F2D2DB}.Release|Any CPU.ActiveCfg = Debug|.NET
+		{52E38161-BEC5-436D-964B-952131F2D2DB}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
+		{52E38161-BEC5-436D-964B-952131F2D2DB}.Release|Mixed Platforms.Build.0 = Debug|.NET
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -17,16 +17,34 @@ namespace OpenFlashChart
         private string externalSWFObjectFile;
         private string loadingmsg;
         private OpenFlashChart chart;
+        private string chart_json;
         private bool _enableCache;
         /// <summary>
         /// Used to hold internal chart
         /// </summary>
         public OpenFlashChart Chart
         {
-            get{ return chart;}
-            set{ chart = value;}
+            get
+            {
+                return chart;
+            }
+            set
+            {
+                chart = value;
+                chart_json = value.ToString();
+                ViewState["chart_json"] = chart_json;
+            }
         }
        
+        private string ChartJson
+        {
+            get
+            {
+                if (ViewState["chart_json"] != null)
+                    return ViewState["chart_json"].ToString();
+                return chart_json;
+            }
+        }
         private string datafile;
 
         [DefaultValue("600px")]
@@ -188,11 +206,11 @@ namespace OpenFlashChart
                 ExternalSWFfile, this.ClientID, Width, Height);
             builder.Append("{\"data-file\":\"");
             //if both chart,datafile exists ,chart win.
-            if(chart!=null)
+            if (ChartJson != null)
             {
                 if (!EnableCache)
                     Page.Cache.Remove(this.ClientID);
-                Page.Cache.Add(this.ClientID, chart.ToString(), null, Cache.NoAbsoluteExpiration, new TimeSpan(0, 10, 0),
+                Page.Cache.Add(this.ClientID, ChartJson, null, Cache.NoAbsoluteExpiration, new TimeSpan(0, 10, 0),
                               CacheItemPriority.Normal, null);
                 builder.Append("ofc_handler.ofc?chartjson=" + this.ClientID + "%26ec=" + (EnableCache ? "1" : "0"));
             }
