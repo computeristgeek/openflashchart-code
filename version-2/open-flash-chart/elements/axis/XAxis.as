@@ -4,7 +4,7 @@ package elements.axis {
 	import string.Utils;
 	import charts.series.bars.Bar3D;
 	import com.serialization.json.JSON;
-	import Range;
+	import Range; 
 	
 	
 	public class XAxis extends Sprite {
