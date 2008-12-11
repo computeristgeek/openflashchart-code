@@ -18,7 +18,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-require_once('OFC/JSON.php');
+if (! function_exists('json_encode'))
+{
+    require_once('OFC/JSON.php');
+}
+
 require_once('OFC/JSON_Format.php');
 
 require_once('OFC/OFC_Elements.php');
@@ -93,8 +97,15 @@ class OFC_Chart
 
 	function toString()
 	{
-		$json = new Services_JSON();
-		return $json->encode( $this );
+		if (function_exists('json_encode'))
+		{
+			return json_encode($this);
+		}
+		else
+		{
+			$json = new Services_JSON();
+			return $json->encode( $this );
+		}
 	}
 
 	function toPrettyString()
