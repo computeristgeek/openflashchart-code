@@ -22,6 +22,9 @@ package elements.axis {
 		private var grid_colour:Number;
 		private var user_ticks:Boolean;
 		private var user_labels:Array;
+		
+		// make this private
+		public var labels:XAxisLabels;
 
 		private var style:Object;
 		
@@ -75,6 +78,9 @@ package elements.axis {
 						this.alt_axis_colour = Utils.get_colour(json.x_label_style.alt_axis_colour);
 				}
 			}
+			
+			this.labels = new XAxisLabels( this.style.labels );
+			this.addChild( this.labels );
 			
 			//
 			// a little hacky, but we inspect the labels
@@ -159,7 +165,7 @@ package elements.axis {
 			return this.steps;
 		}
 		
-		public function resize( sc:ScreenCoords ):void
+		public function resize( sc:ScreenCoords, yPos:Number ):void
 		{
 			this.graphics.clear();
 			
@@ -198,6 +204,8 @@ package elements.axis {
 				this.three_d_axis( sc );
 			else
 				this.two_d_axis( sc );
+			
+			this.labels.resize( sc, yPos );
 		}
 			
 		public function three_d_axis( sc:ScreenCoords ):void
@@ -335,7 +343,17 @@ package elements.axis {
 				return this.three_d_height+12+this.tick_height;
 			}
 			else
-				return this.stroke + this.tick_height;
+				return this.stroke + this.tick_height + this.labels.get_height();
+		}
+		
+		public function first_label_width() : Number
+		{
+			return this.labels.first_label_width();
+		}
+		
+		public function last_label_width() : Number
+		{
+			return this.labels.last_label_width();
 		}
 		
 		public function die(): void {
@@ -345,6 +363,10 @@ package elements.axis {
 			this.graphics.clear();
 			while ( this.numChildren > 0 )
 				this.removeChildAt(0);
+			
+			if (this.labels != null)
+				this.labels.die();
+			this.labels = null;
 		}
 	}
 }

@@ -52,7 +52,7 @@ package  {
 		
 		public  var VERSION:String = "2 Hyperion";
 		private var title:Title = null;
-		private var x_labels:XAxisLabels;
+		//private var x_labels:XAxisLabels;
 		private var x_axis:XAxis;
 		private var radar_axis:RadarAxis;
 		private var x_legend:XLegend;
@@ -86,7 +86,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/x-labels-user-x.txt";
+					var file:String = "../data-files/x-axis-labels-3.txt";
 					//var file:String = "../../../test-data-files/stack.txt";
 					this.load_external_file( file );
 
@@ -511,7 +511,7 @@ package  {
 			var top:Number = this.title.get_height() + this.keys.get_height();
 			
 			var bottom:Number = this.stage.stageHeight;
-			bottom -= (this.x_labels.get_height() + this.x_legend.get_height() + this.x_axis.get_height());
+			bottom -= (this.x_legend.get_height() + this.x_axis.get_height());
 			
 			var right:Number = this.stage.stageWidth;
 			right -= this.y_legend_2.get_width();
@@ -524,18 +524,16 @@ package  {
 				this.y_axis.get_range(),
 				this.y_axis_right.get_range(),
 				this.x_axis.get_range(),
-				this.x_labels.first_label_width(),
-				this.x_labels.last_label_width(),
+				this.x_axis.first_label_width(),
+				this.x_axis.last_label_width(),
 				false );
 
 			this.sc.set_bar_groups(this.obs.groups);
-			
-			this.x_labels.resize(
-				sc,
-				this.stage.stageHeight-(this.x_legend.get_height()+this.x_labels.get_height())	// <-- up from the bottom
-				);
 				
-			this.x_axis.resize( sc );
+			this.x_axis.resize( sc,
+				// can we remove this:
+				this.stage.stageHeight-(this.x_legend.get_height()+this.x_axis.labels.get_height())	// <-- up from the bottom
+				);
 			this.y_axis.resize( this.y_legend.get_width(), sc );
 			this.y_axis_right.resize( 0, sc );
 			this.x_legend.resize( sc );
@@ -686,7 +684,6 @@ package  {
 			
 			// the X Axis labels *may* require info from
 			// this.obs
-			this.x_labels		= new XAxisLabels( json );
 			
 			if( !this.x_axis.range_set() )
 			{
@@ -694,7 +691,7 @@ package  {
 				// the user has not told us how long the X axis
 				// is, so we figure it out:
 				//
-				if( this.x_labels.need_labels ) {
+				if( this.x_axis.labels.need_labels ) {
 					//
 					// No X Axis labels set:
 					//
@@ -702,7 +699,7 @@ package  {
 					tr.aces( 'max x', this.obs.get_min_x(), this.obs.get_max_x() );
 					
 					this.x_axis.set_range( this.obs.get_min_x(), this.obs.get_max_x() );
-					this.x_labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
+					this.x_axis.labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
 				}
 				else
 				{
@@ -710,11 +707,11 @@ package  {
 					// X Axis labels used, even so, make the chart
 					// big enough to show all values
 					//
-					tr.aces('x labels', this.obs.get_min_x(), this.x_labels.count(), this.obs.get_max_x());
-					if ( this.x_labels.count() > this.obs.get_max_x() ) {
+					tr.aces('x labels', this.obs.get_min_x(), this.x_axis.labels.count(), this.obs.get_max_x());
+					if ( this.x_axis.labels.count() > this.obs.get_max_x() ) {
 						
 						// Data and labesl are OK
-						this.x_axis.set_range( 0, this.x_labels.count() );
+						this.x_axis.set_range( 0, this.x_axis.labels.count() );
 					} else {
 						
 						// There is more data than labels -- oops
@@ -725,18 +722,18 @@ package  {
 			else
 			{
 				//range set, but no labels...
-				this.x_labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
+				this.x_axis.labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
 			}
 			
 			// access all our globals through this:
 			var g:Global = Global.getInstance();
 			// this is needed by all the elements tooltip
-			g.x_labels = this.x_labels;
+			g.x_labels = this.x_axis.labels;
 			g.x_legend = this.x_legend;
 
 			//  can pick up X Axis labels for the
 			// tooltips
-			this.obs.tooltip_replace_labels( this.x_labels );
+			this.obs.tooltip_replace_labels( this.x_axis.labels );
 			//
 			//
 			//
@@ -746,7 +743,7 @@ package  {
 			this.addChild( this.x_legend );
 			this.addChild( this.y_legend );
 			this.addChild( this.y_legend_2 );
-			this.addChild( this.x_labels );
+			//this.addChild( this.x_labels );
 			this.addChild( this.y_axis );
 			this.addChild( this.y_axis_right );
 			this.addChild( this.x_axis );
@@ -765,7 +762,6 @@ package  {
 			if ( this.x_legend != null )	this.x_legend.die();
 			if ( this.y_legend != null )	this.y_legend.die();
 			if ( this.y_legend_2 != null )	this.y_legend_2.die();
-			if ( this.x_labels != null )	this.x_labels.die();
 			if ( this.y_axis != null )		this.y_axis.die();
 			if ( this.y_axis_right != null ) this.y_axis_right.die();
 			if ( this.x_axis != null )		this.x_axis.die();
@@ -778,7 +774,6 @@ package  {
 			this.x_legend = null;
 			this.y_legend = null;
 			this.y_legend_2 = null;
-			this.x_labels = null;
 			this.y_axis = null;
 			this.y_axis_right = null;
 			this.x_axis = null;
