@@ -3,14 +3,10 @@ package elements.axis {
 	import string.Utils;
 	
 	public class YAxisBase extends Sprite {
-		//protected var _width:Number=0;
-		//protected var steps:Number;
 		
 		protected var stroke:Number;
 		protected var tick_length:Number;
 		protected var colour:Number;
-
-		
 		protected var grid_colour:Number;
 		
 		public var style:Object;

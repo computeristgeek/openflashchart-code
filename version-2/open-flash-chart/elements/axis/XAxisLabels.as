@@ -7,6 +7,7 @@ package elements.axis {
 	import elements.axis.AxisLabel;
 	import string.Utils;
 	import com.serialization.json.JSON;
+	// import DateUtils;
 	
 	public class XAxisLabels extends Sprite {
 		
@@ -14,11 +15,14 @@ package elements.axis {
 		public var axis_labels:Array;
 		// JSON style:
 		private var style:Object;
+		private var userSpecifiedVisible:Object;
 		
 		//
 		// Ugh, ugly code so we can rotate the text:
 		//
-		[Embed(systemFont='Arial', fontName='spArial', mimeType='application/x-font')]
+		// [Embed(systemFont='Arial', fontName='spArial', mimeType='application/x-font', unicodeRange='U+0020-U+007E')]
+		[Embed(systemFont = 'Arial', fontName = 'spArial', mimeType = 'application/x-font')]
+		
 		public static var ArialFont__:Class;
 
 		function XAxisLabels( json:Object ) {
@@ -30,9 +34,10 @@ package elements.axis {
 			
 			this.style = {
 				rotate:		0,
-				visible:	true,
+				visible:	null,
 				labels:		null,
-				steps:		1,
+				text:		'#val#',  // default to display the position number or x value
+				steps:		null,
 				size:		10,
 				align:		'auto',
 				colour:		'#000000'
@@ -43,8 +48,11 @@ package elements.axis {
 			
 			if( ( json.x_axis != null ) && ( json.x_axis.labels != null ) )
 				object_helper.merge_2( json.x_axis.labels, this.style );
-			
 				
+			// save the user specified visible value foe use with auto_labels
+			this.userSpecifiedVisible = this.style.visible;
+			// for user provided labels, default to visible if not specified
+			if (this.style.visible == null) this.style.visible = true; 
 			
 			// Force rotation value if "rotate" is specified
 			if ( this.style.rotate is String )
@@ -83,10 +91,37 @@ package elements.axis {
 			// if the user has passed labels we don't do this
 			//
 			if ( this.need_labels ) {
-				if ( this.style.visible ) {
-					this.style.steps = steps;
-					for( var i:Number = range.min; i <= range.max; i++ )
-						this.add( NumberUtils.formatNumber( i ), this.style );
+				var rev:Boolean = (range.min >= range.max); // min-max reversed?
+
+				// Use the steps specific to labels if provided by user
+				var lblSteps:Number = 1;
+				if (this.style.steps != null) lblSteps = this.style.steps;
+
+				// force max of 250 labels 
+				if (Math.abs(range.count() / lblSteps) > 250) lblSteps = range.count() / 250;
+
+				// guarantee lblSteps is the proper sign
+				lblSteps = rev ? -Math.abs(lblSteps) : Math.abs(lblSteps);
+
+				// Allow for only displaying some of the labels 
+				var visibleSteps:Number = (this.style["visible-steps"] == null) ? steps : this.style["visible-steps"];
+
+				var tempStyle:Object = {};
+				object_helper.merge_2( this.style, tempStyle );
+				var lblCount:Number = 0;
+				for ( var i:Number = range.min; rev ? i >= range.max : i <= range.max; i += lblSteps ) {
+					tempStyle.x = i;
+					// restore the user specified visble value
+					if (this.userSpecifiedVisible == null)
+					{
+						tempStyle.visible = ((lblCount % visibleSteps) == 0);
+						lblCount++;
+					}
+					else
+					{
+						tempStyle.visible = this.userSpecifiedVisible;
+					}
+					this.add( null, tempStyle );
 				}
 			}
 		}
@@ -96,11 +131,12 @@ package elements.axis {
 			
 			var label_style:Object = {
 				colour:		style.colour,
-				text:		'',
+				text:		style.text,
 				rotate:		style.rotate,
 				size:		style.size,
-				colour:		style.colour,
-				align:		style.align
+				align:		style.align,
+				visible:	style.visible,
+				x:			style.x
 			};
 
 			
@@ -113,32 +149,28 @@ package elements.axis {
 			else
 				object_helper.merge_2( label, label_style );
 
-			
-			// our parent colour is a number, but
-			// we may have our own colour:
-			if( label_style.colour is String )
-				label_style.colour = Utils.get_colour( label_style.colour );
-			
-			this.axis_labels.push( label_style.text );
-
-			//
-			// inheriting the 'visible' attribute
-			// is complext due to the 'steps' value
-			// only some labels will be visible
-			//
-			if( label_style.visible == null )
-			{
-				//
-				// some labels will be invisible due to our parents step value
-				//
-				if ( ( (this.axis_labels.length - 1) % style.steps ) == 0 )
-					label_style.visible = true;
-				else
-					label_style.visible = false;
+			// Replace magic date variables in x label text
+			if (label_style.x != null) {
+				label_style.text = this.replace_magic_values(label_style.text, label_style.x);
 			}
 			
-			var l:TextField = this.make_label( label_style );
-			this.addChild( l );
+			
+			
+			// this.axis_labels.push( label_style.text );
+			// Map X location to label string
+			this.axis_labels[label_style.x] = label_style.text;
+
+			// only create the label if necessary
+			if (label_style.visible) {
+				// our parent colour is a number, but
+				// we may have our own colour:
+				if( label_style.colour is String )
+					label_style.colour = Utils.get_colour( label_style.colour );
+
+				var l:TextField = this.make_label( label_style );
+				
+				this.addChild( l );
+			}
 		}
 		
 		public function get( i:Number ) : String
@@ -186,6 +218,11 @@ package elements.axis {
 			// we don't know the x & y locations yet...
 			
 			title.visible = label_style.visible;
+			if (label_style.x != null)
+			{
+				// store the x value for use in resize
+				title.xVal = label_style.x;
+			}
 			
 			return title;
 		}
@@ -216,29 +253,16 @@ package elements.axis {
 			
 			for( var pos:Number=0; pos < this.numChildren; pos++ )
 			{
-			/*
-			var child:DisplayObject = this.getChildAt(pos);
-				child.x = sc.get_x_tick_pos(pos) - (child.width / 2);
-				child.y = yPos;
-				
-				if( this.style.rotate == 'vertical' )
-					child.y += child.height;
-				
-				if( this.style.rotate == 'diag' )
-					child.y += child.height;
-
-			*/		
 				var child:AxisLabel = this.getChildAt(pos) as AxisLabel;
-				child.x = sc.get_x_tick_pos(pos) + child.xAdj;
+				if (isNaN(child.xVal))
+				{
+					child.x = sc.get_x_tick_pos(pos) + child.xAdj;
+				}
+				else
+				{
+					child.x = sc.get_x_from_val(child.xVal) + child.xAdj;
+				}
 				child.y = yPos + child.yAdj;
-				//
-				//if( this.style.vertical )
-					//child.y += child.height;
-				//
-				//if( this.style.diag )
-					//child.y += child.height;
-
-//				i+=this.style.step;
 			}
 		}
 		
@@ -281,5 +305,12 @@ package elements.axis {
 			while ( this.numChildren > 0 )
 				this.removeChildAt(0);
 		}
+		
+		private function replace_magic_values(labelText:String, xVal:Number):String {
+			labelText = labelText.replace('#val#', NumberUtils.formatNumber(xVal));
+			// labelText = DateUtils.replace_magic_values(labelText, xVal);
+			return labelText;
+		}
+
 	}
 }

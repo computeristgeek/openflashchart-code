@@ -259,14 +259,19 @@ package {
 		//  (e.g. what is the x position for -5 ?)
 		//
 		public override function get_x_from_val( i:Number ):Number {
-
-			var item_width:Number = this.width_() / this.x_range.count();
+			// Patch from DZ:
+			var rev:Boolean = this.x_range.min > this.x_range.max;
+			var count:Number = this.x_range.count();
+			count += (rev && this.x_range.offset) ? -2 : 0;
+			var item_width:Number = this.width_() / count;
+			// end DZ
+			
 			
 			var pos:Number = i-this.x_range.min;
 			
 			var tmp:Number = 0;
 			if( this.x_offset )
-				tmp = (item_width/2);
+				tmp = Math.abs(item_width/2);
 				
 			return this.left_()+tmp+(pos*item_width);
 		}
@@ -275,9 +280,13 @@ package {
 		// get the x location of the n'th item
 		//
 		public override function get_x_from_pos( i:Number ):Number {
-			
-			var item_width:Number = this.width_() / this.x_range.count();
-			
+			// DZ:
+//			var item_width:Number = Math.abs(this.width_() / this.x_range.count());
+			var rev:Boolean = this.x_range.min > this.x_range.max;
+			var count:Number = this.x_range.count();
+			count += (rev && this.x_range.offset) ? -2 : 0;
+			var item_width:Number = Math.abs(this.width_() / count);
+				
 			var tmp:Number = 0;
 			if( this.x_offset )
 				tmp = (item_width/2);

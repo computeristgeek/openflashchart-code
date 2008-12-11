@@ -86,7 +86,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/bar-all-onclick.txt";
+					var file:String = "../data-files/x-labels-user-x.txt";
 					//var file:String = "../../../test-data-files/stack.txt";
 					this.load_external_file( file );
 
@@ -674,7 +674,7 @@ package  {
 			this.x_legend		= new XLegend( json.x_legend );			
 			this.y_legend		= new YLegendLeft( json );
 			this.y_legend_2		= new YLegendRight( json );
-			this.x_axis			= new XAxis( json.x_axis );
+			this.x_axis			= new XAxis( json );
 			this.y_axis			= new YAxisLeft( json );
 			this.y_axis_right	= new YAxisRight( json );
 			//

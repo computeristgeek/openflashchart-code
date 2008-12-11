@@ -4,7 +4,7 @@ package elements.axis {
 	import string.Utils;
 	import charts.series.bars.Bar3D;
 	import com.serialization.json.JSON;
-	import Range; 
+	import Range;
 	
 	
 	public class XAxis extends Sprite {
@@ -20,7 +20,9 @@ package elements.axis {
 		private var colour:Number;
 		public var offset:Boolean;
 		private var grid_colour:Number;
-		
+		private var user_ticks:Boolean;
+		private var user_labels:Array;
+
 		private var style:Object;
 		
 		function XAxis( json:Object )
@@ -39,8 +41,9 @@ package elements.axis {
 			};
 			
 			if( json != null )
-				object_helper.merge_2( json, this.style );
+				object_helper.merge_2( json.x_axis, this.style );
 			
+			this.calcSteps();
 			
 			this.stroke = this.style.stroke;
 			this.tick_height = this.style['tick-height'];
@@ -74,21 +77,57 @@ package elements.axis {
 			}
 			
 			//
-			// this is set later when the chart has more information
+			// a little hacky, but we inspect the labels
+			// to see if we need to display user custom ticks
 			//
-			//this.grid_count = 1;
-			
-			// tick every X value?
-			if ( this.style.steps == null )
-				this.steps = 1;
-			else
-				this.steps = this.style.steps;
-				
-			if ( this.steps < 1 )
-				this.steps = 1;
-			
+			if ((this.style.labels != null) &&
+				(this.style.labels.labels != null) &&
+				(this.style.labels.labels is Array) &&
+				(this.style.labels.labels.length > 0))
+			{
+				this.user_labels = new Array();
+				for each( var lbl:Object in this.style.labels.labels )
+				{
+					if (!(lbl is String)) {
+						if (lbl.x != null) 
+						{
+							var tmpObj:Object = { x: lbl.x };
+							if (lbl["grid-colour"])
+							{
+								tmpObj["grid-colour"] = Utils.get_colour(lbl["grid-colour"]);
+							}
+							else
+							{
+								tmpObj["grid-colour"] = this.grid_colour;
+							}
+							
+							this.user_ticks = true;
+							this.user_labels.push(tmpObj);
+						}
+					}
+				}
+			}
+
 		}
 		
+		private function calcSteps():void {
+			if (this.style.max == null) {
+				this.steps = 1;
+			}
+			else {
+				var xRange:Number = this.style.max - this.style.min;
+				var rev:Boolean = (this.style.min >= this.style.max); // min-max reversed?
+				this.steps = ((this.style.steps != null) && 
+											(this.style.steps != 0)) ? this.style.steps : 1;
+
+				// force max of 250 labels and tick marks
+				if ((Math.abs(xRange) / this.steps) > 250) this.steps = xRange / 250;
+
+				// guarantee lblSteps is the proper sign
+				this.steps = rev ? -Math.abs(this.steps) : Math.abs(this.steps);
+			}
+		}
+
 		//
 		// have we been passed a range? (min and max?)
 		//
@@ -105,6 +144,8 @@ package elements.axis {
 		{
 			this.style.min = min;
 			this.style.max = max;
+			// Calc new steps
+			this.calcSteps();
 		}
 		
 		//
@@ -125,16 +166,32 @@ package elements.axis {
 			//
 			// Grid lines
 			//
-			for( var i:Number=this.style.min; i <= this.style.max; i+=this.steps )
+			if (this.user_ticks) 
 			{
-				if( ( this.alt_axis_step > 1 ) && ( i % this.alt_axis_step == 0 ) )
-					this.graphics.beginFill(this.alt_axis_colour, 1);
-				else
-					this.graphics.beginFill(this.grid_colour, 1);
+				for each( var lbl:Object in this.user_labels )
+				{
+					this.graphics.beginFill(lbl["grid-colour"], 1);
+					var xVal:Number = sc.get_x_from_val(lbl.x);
+					this.graphics.drawRect( xVal, sc.top, 1, sc.height );
+					this.graphics.endFill();
+				}
+			}
+			else
+			{
+				var rev:Boolean = (this.style.min >= this.style.max); // min-max reversed?
+				var tickMax:Number = /*(rev && this.style.offset) ? this.style.max-2 : */ this.style.max
 				
-				var x:Number = sc.get_x_from_val(i);
-				this.graphics.drawRect( x, sc.top, 1, sc.height );
-				this.graphics.endFill();
+				for( var i:Number=this.style.min; rev ? i >= tickMax : i <= tickMax; i+=this.steps )
+				{
+					if( ( this.alt_axis_step > 1 ) && ( i % this.alt_axis_step == 0 ) )
+						this.graphics.beginFill(this.alt_axis_colour, 1);
+					else
+						this.graphics.beginFill(this.grid_colour, 1);
+					
+					xVal = sc.get_x_from_val(i);
+					this.graphics.drawRect( xVal, sc.top, 1, sc.height );
+					this.graphics.endFill();
+				}
 			}
 			
 			if( this.three_d )
@@ -160,13 +217,26 @@ package elements.axis {
 			
 			var w:Number = 1;
 
-			for( var i:Number=0; i < this.style.max; i+=this.steps )
+			if (this.user_ticks) 
 			{
-				var pos:Number = sc.get_x_tick_pos(i);
-				
-				this.graphics.beginFill(this.colour, 1);
-				this.graphics.drawRect( pos, sc.bottom + x_axis_height, w, this.tick_height );
-				this.graphics.endFill();
+				for each( var lbl:Object in this.user_labels )
+				{
+					var xVal:Number = sc.get_x_from_val(lbl.x);
+					this.graphics.beginFill(this.colour, 1);
+					this.graphics.drawRect( xVal, sc.bottom + x_axis_height, w, this.tick_height );
+					this.graphics.endFill();
+				}
+			}
+			else
+			{
+				for( var i:Number=0; i < this.style.max; i+=this.steps )
+				{
+					var pos:Number = sc.get_x_tick_pos(i);
+					
+					this.graphics.beginFill(this.colour, 1);
+					this.graphics.drawRect( pos, sc.bottom + x_axis_height, w, this.tick_height );
+					this.graphics.endFill();
+				}
 			}
 
 			
@@ -231,12 +301,25 @@ package elements.axis {
 			this.graphics.endFill();
 			
 			
-			for( var i:Number=this.style.min; i <= this.style.max; i+=this.steps )
+			if (this.user_ticks) 
 			{
-				var x:Number = sc.get_x_from_val(i);
-				this.graphics.beginFill(this.colour, 1);
-				this.graphics.drawRect( x-(this.stroke/2), sc.bottom + this.stroke, this.stroke, this.tick_height );
-				this.graphics.endFill();
+				for each( var lbl:Object in this.user_labels )
+				{
+					var xVal:Number = sc.get_x_from_val(lbl.x);
+					this.graphics.beginFill(this.colour, 1);
+					this.graphics.drawRect( xVal-(this.stroke/2), sc.bottom + this.stroke, this.stroke, this.tick_height );
+					this.graphics.endFill();
+				}
+			}
+			else
+			{
+				for( var i:Number=this.style.min; i <= this.style.max; i+=this.steps )
+				{
+					xVal = sc.get_x_from_val(i);
+					this.graphics.beginFill(this.colour, 1);
+					this.graphics.drawRect( xVal-(this.stroke/2), sc.bottom + this.stroke, this.stroke, this.tick_height );
+					this.graphics.endFill();
+				}
 			}
 		}
 		
