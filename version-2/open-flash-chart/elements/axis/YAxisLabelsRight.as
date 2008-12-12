@@ -29,7 +29,7 @@
 			}
 			
 			if( !ok && parent.style.visible )
-				values = make_labels( parent.style.min, parent.style.max, true, 1 );
+				values = make_labels( parent.style.min, parent.style.max, true, parent.style.steps );
 			
 			super( values, 1, json, 'y_label_2_', 'y2');
 		}
