@@ -11,6 +11,7 @@ use lib $Server->mappath('.');
 use open_flash_chart;
 
 my $g = chart->new();
+my $y_axis = $g->get_axis('y_axis');
 
 my $e = $g->get_element('line');
 
@@ -18,16 +19,16 @@ my $data = [];
 for( my $i=0; $i<5; $i++ ) {
 	push ( @$data, rand(20) );
 }
-$e->set_values($data);
-$g->add_element($e);
+$e->set_values($data, 0);
+$y_axis->add_element($e);
 
 $e = $g->get_element('line_dot');
 my $data = [];
 for( my $i=0; $i<5; $i++ ) {
 	push ( @$data, rand(30) );
 }
-$e->set_values($data);
-$g->add_element($e);
+$e->set_values($data, 0);
+$y_axis->add_element($e);
 
 
 $e = $g->get_element('line_hollow');
@@ -35,8 +36,8 @@ my $data = [];
 for( my $i=0; $i<5; $i++ ) {
 	push ( @$data, rand(40) );
 }
-$e->set_values($data);
-$g->add_element($e);
+$e->set_values($data, 0);
+$y_axis->add_element($e);
 
 %>
 <html>
@@ -46,7 +47,7 @@ $g->add_element($e);
   <body>
     <h1>OFC Line Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400));
+  $Response->write($g->render_swf({'width'=>600, 'height'=>400}));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>

@@ -15,6 +15,7 @@ my $g = chart->new();
 #$g->{'chart_props'}->{'tooltip'} = {'text'=>'#val#'};
 
 my $e = $g->get_element('pie');
+$e->set_radius(150);
 $g->add_element($e);
   
 %>
@@ -25,7 +26,7 @@ $g->add_element($e);
   <body>
     <h1>OFC Pie Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400));
+  $Response->write($g->render_swf({'width'=>600, 'height'=>400}));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>

@@ -1,11 +1,11 @@
-
 use strict; use warnings;
+
+# This class manages all functions of the open flash chart api.
+package chart;
 
 my $open_flash_chart_seqno = 0;
 my $BOOTSTRAP_COMPLETED = 0;
 
-# This class manages all functions of the open flash chart api.
-package chart;
 sub new() {
   # Constructer for the open_flash_chart_api
   # Sets our default variables
@@ -14,6 +14,7 @@ sub new() {
   my $self  = {};
   bless $self, $class;
   
+  $self->{'open_flash_chart_seqno'} = $open_flash_chart_seqno++;
   $self->{'data_load_type'} = 'inline_js'; # or 'url_callback'  not sure if we still need both
   
   $self->{'chart_props'} = {
@@ -22,39 +23,39 @@ sub new() {
       "text"=>"Default Chart Title",
       "style"=>"{font-size:20px; font-family:Verdana; text-align:center;}"
     },
+    "x_legend"=>{
+      "text" => "1983 to 2008",
+      "style"=> "{font-size: 20px; color: #778877;}"
+    },
   };
 
-  my $x = axis->new('x_axis');
-  $x->set_min(undef);
-  $x->set_max(undef);
+	#setup default axis
+  my $x = $self->get_axis('x_axis');
   $x->set_labels({"labels"=>["January","February","March","April","May"]});
-  
-  my $y = axis->new('y_axis');
-  $y->set_steps(1);
-  
-  $self->{'axis'} = {
-  	'x_axis' => $x,
-  	'y_axis' => $y
-  };
+  my $y = $self->get_axis('y_axis');
+
   $self->{'elements'} = [];
   
   return $self;
 }
 
-# props are at the chart level, such as axis
-sub get_axis() {
-  my ($self, $name) = @_;
-  
-  my $e=undef;
-  eval("\$e = ${name}->new();");
-  if ( defined($e) ) {
-    return $e;
-  } 
+sub bootstrap_completed {
+	my ($self, $value) = @_;
+	$BOOTSTRAP_COMPLETED = $value if defined($value);
+	return $BOOTSTRAP_COMPLETED;
 }
 
-sub add_axis() {
-  my ($self, $prop) = @_;
-  push(@{$self->{'props'}}, $prop);
+sub get_axis {
+	my ($self, $axis_name) = @_;
+	if ( !defined($self->{'axis'}->{$axis_name}) ) {
+		$self->{'axis'}->{$axis_name} = axis->new($axis_name);
+	}
+	return $self->{'axis'}->{$axis_name}
+}
+
+sub set_axis() {
+  my ($self, $axis) = @_;
+  $self->{'axis'}->{$axis->{'name'}} = $axis;
 }
 
 # elements are the data series items, usually containing values to plot
@@ -68,52 +69,36 @@ sub get_element() {
   } 
 }
 
+# Should be not used for single value elements
+# Your axis min/max will not be set
 sub add_element() {
   my ($self, $element) = @_;
-  if ( defined($element->{'use_extremes'}) && $element->{'use_extremes'} == 1 ) {
-  	$self->use_extremes();
-  }
   push(@{$self->{'elements'}}, $element);
 }
 
-sub use_extremes {
-  my ($self) = @_;
-
-  for ( keys %{$self->{'axis'}} ) {
-  	$self->{'axis'}->{$_}->{'props'}->{'max'} = 'a';
-  	$self->{'axis'}->{$_}->{'props'}->{'min'} = 'a';
-  }  
-}
 
 sub render_chart_data() {
   my ($self) = @_;
 
   my $tmp = '';
 
-  my $ext = $self->collect_extremes();
-  
   $tmp .= "{";
   $tmp .= main::to_json($self->{'chart_props'});
 
+	#render axis data
   for ( keys %{$self->{'axis'}} ) {
-    if ( defined($self->{'axis'}->{$_}->{'props'}->{'max'}) ) {
-    	if ($self->{'axis'}->{$_}->{'props'}->{'max'} eq 'a') {
-  			$self->{'axis'}->{$_}->{'props'}->{'max'} = main::smooth_max($ext->{$_ . '_max'});
-  		}
-  	}
-		
-		if ( defined($self->{'axis'}->{$_}->{'props'}->{'min'}) ) {
-    	if ($self->{'axis'}->{$_}->{'props'}->{'min'} eq 'a') {
-  			$self->{'axis'}->{$_}->{'props'}->{'min'} = main::smooth_min($ext->{$_ . '_min'});
-  		}
-  	}
-  	
     $tmp .= $self->{'axis'}->{$_}->to_json();
+    
+    for my $element ( @{$self->{'axis'}->{$_}->{'elements'}} ) {
+    	#$main::Response->write($element);
+    	$self->add_element($element);
+    }
   }  
 
   if ( @{$self->{'elements'}} > 0 ) {
     $tmp .= "\n".'"elements" : [';
     for my $s ( @{$self->{'elements'}} ) {
+    	#$main::Response->write($s);
       $tmp .= $s->to_json() . ',';  
     }  
     $tmp =~ s/,$//g;
@@ -129,50 +114,81 @@ sub render_chart_data() {
 #
 #
 sub render_swf {
-  my ($self, $width, $height, $data) = @_;
+	my ($self, $props) = @_;
+  #my ($self, $width, $height, $data) = @_;
  
+	$props->{'height'} = '300' if !defined($props->{'height'});
+	$props->{'width'} = '400' if !defined($props->{'width'});
+	$props->{'data'} = '' if !defined($props->{'data'});
+	$props->{'class'} = 'ofc-chart' if !defined($props->{'class'});
+	
+  my $open_flash_chart_seqno = $self->{'open_flash_chart_seqno'};
+
   my $html = '';
-  $height = '300px' if !defined($height);
-  $width = '400px' if !defined($width);
-  $data = '' if !defined($data);
-  $open_flash_chart_seqno++;
-  
   if ( $self->{'data_load_type'} eq 'inline_js' ) {
-  	$data = $self->render_chart_data();
+  	my $data = $self->render_chart_data();
     if ($BOOTSTRAP_COMPLETED == 0 ) {
+      $html .= '<script type="text/javascript" src="jquery-1.2.6.min.js" ></script>';
     	$html .= '<script type="text/javascript" src="json/json2.js"></script>';
       $html .= '<script type="text/javascript" src="swfobject.js"></script>';
+      $html .= qq^
+        <script type="text/javascript">
+          OFC = {};
+          OFC.jquery = {
+              name: "jQuery",
+              version: function(src) { return \$('#'+ src)[0].get_version() },
+              rasterize: function (src, dst) { \$('#'+ dst).replaceWith(OFC.jquery.image(src)) },
+              image: function(src) { return "<img src='data:image/png;base64," + \$('#'+src)[0].get_img_binary() + "' />"},
+              popup: function(src) {
+                  var img_win = window.open('', 'Charts: Export as Image')
+                  with(img_win.document) {
+                      write('<html><head><title>Charts: Export as Image<\/title><\/head><body>' + OFC.jquery.image(src) + '<\/body><\/html>') }
+               }
+          }
+          // Using an object as namespaces is JS Best Practice. I like the Control.XXX style.
+          //if (!Control) {var Control = {}}
+          //if (typeof(Control == "undefined")) {var Control = {}}
+          if (typeof(Control == "undefined")) {var Control = {OFC: OFC.jquery}}
+           
+           
+          // By default, right-clicking on OFC and choosing "save image locally" calls this function.
+          // You are free to change the code in OFC and call my wrapper (Control.OFC.your_favorite_save_method)
+          // function save_image() { alert(1); Control.OFC.popup('my_chart') }
+          function save_image() { OFC.jquery.popup('ofc_div_1') }
+          function moo() { alert(99); };
+        </script>          
+      ^;
       $BOOTSTRAP_COMPLETED = 1;
     }
     $html .= qq^
       <script type="text/javascript">
-        swfobject.embedSWF("open-flash-chart.swf", "ofc_div_$open_flash_chart_seqno", "$width", "$height", "9.0.0", "expressInstall.swf", {"get-data":"get_data_$open_flash_chart_seqno","loading":"loading..."} );
+        swfobject.embedSWF("open-flash-chart.swf", "ofc_div_$open_flash_chart_seqno", "$props->{'width'}", "$props->{'height'}", "9.0.0", "expressInstall.swf", {"get-data":"get_data_$open_flash_chart_seqno","loading":"loading..."} );
         function get_data_$open_flash_chart_seqno() {
           return JSON.stringify(data_$open_flash_chart_seqno);
         }
         var data_$open_flash_chart_seqno = $data;
       </script>
-      <div id="ofc_div_$open_flash_chart_seqno"></div>
-    ^;
+      <div id="ofc_div_$open_flash_chart_seqno" class="$props->{'class'}"></div>
+      ^;
   } else {
     $html .= qq^
     <object
       classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
       codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0"
-      width="$width"
-      height="$height"
+      width="$props->{'width'}"
+      height="$props->{'height'}"
       id="ofc_div_$open_flash_chart_seqno"
       align="middle">
     <param name="allowScriptAccess" value="sameDomain" />
-    <param name="movie" value="open-flash-chart.swf?width=$width&height=$height&data=$data"/>
+    <param name="movie" value="open-flash-chart.swf?width=$props->{'width'}&height=$props->{'height'}&data=$props->{'data'}"/>
     <param name="quality" value="high" />
     <param name="bgcolor" value="#FFFFFF" />
     <embed
-      src="open-flash-chart.swf?width=$width&height=$height&data=$data"
+      src="open-flash-chart.swf?width=$props->{'width'}&height=$props->{'height'}&data=$props->{'data'}"
       quality="high"
       bgcolor="#FFFFFF"
-      width="$width"
-      height="$height"
+      width="$props->{'width'}"
+      height="$props->{'height'}"
       name="open-flash-chart"
       align="middle"
       allowScriptAccess="sameDomain"
@@ -186,17 +202,6 @@ sub render_swf {
   return $html;
 }
 
-sub collect_extremes() {
-  my ($self) = @_;
-  
-  my $ext = extreme->new();
-    
-  for my $e ( @{$self->{'elements'}} ) {
-		$ext->aggregate_extremes($e->{'extremes'});
-  }
- 
-  return $ext;
-}
 
 
 
@@ -226,7 +231,9 @@ sub new() {
   my $class = ref($proto) || $proto;
   my $self  = {};
 
-	$self->{'extremes'} = extreme->new();
+	$self->{'min_value'} = undef;
+	$self->{'max_value'} = undef;
+	
   $self->{'element_props'} =  {
     'type'      => '',
     'values'    => [1.5,1.69,1.88,2.06,2.21],
@@ -235,29 +242,33 @@ sub new() {
 }
 
 sub set_values {
-  my ($self, $values_arg) = @_;
+  my ($self, $values_arg, $min, $max) = @_;
+  
   $self->{'element_props'}->{'values'} = $values_arg if defined($values_arg);
-  $self->set_extremes();
+  $self->set_min_max($min, $max);
 }
 
-sub set_extremes {
-  my ($self) = @_;
+sub set_min_max {
+  my ($self, $min, $max) = @_;
 
-  my $extremes = extreme->new();
+  $self->{'max_value'} = $max if defined($max);
+  $self->{'min_value'} = $min if defined($min);
+
   for ( @{$self->{'element_props'}->{'values'}} ) {
     if ( ref($_) eq 'HASH' || ref($_) eq 'ARRAY' ) {
-      return $extremes;
+    	#multi value/axis chart
+      return undef;
     }
-    $extremes->{'y_axis_max'} = $_ if !defined($extremes->{'y_axis_max'});
-    if ( $_ > $extremes->{'y_axis_max'} ) {
-      $extremes->{'y_axis_max'} = $_;
-    }
-    $extremes->{'y_axis_min'} = $_ if !defined($extremes->{'y_axis_min'});
-    if ( $_ < $extremes->{'y_axis_min'} ) {
-      $extremes->{'y_axis_min'} = $_;
-    }
-  }
-  $self->{'extremes'} = $extremes;
+    
+    #standard single value chart, could be y, y-right, etc.
+    if ( !defined($max) ) {
+	    $self->{'max_value'} = $_ if ( !defined($self->{'max_value'}) || $_ > $self->{'max_value'} );
+	  }
+		if ( !defined($min) ) {
+			$self->{'min_value'} = $_ if ( !defined($self->{'min_value'}) || $_ < $self->{'min_value'} );	  }
+  	}
+
+	return 1;
 }
 
 sub to_json() {
@@ -281,6 +292,7 @@ sub AUTOLOAD {
 	
 	$name =~ s/^set_//; # strip set_
 	$name =~ s/^get_//; # strip get_
+	$name =~ s/_/-/gi;
 
 	unless (exists $self->{'element_props'}->{$name} ) {
 	  cluck "'$name' is not a valid property in class $type";
@@ -307,10 +319,7 @@ sub new() {
   $self->{'element_props'}->{'colour'} = main::random_color();
   $self->{'element_props'}->{'text'} = 'text';
   $self->{'element_props'}->{'font-size'} = 10;
-
-  #$self->{'element_props'}->{'show_y2'} = 'false';
-  #$self->{'element_props'}->{'y2_lines'} = [];
-  #$self->{'element_props'}->{'values_2'} = [];
+  $self->{'element_props'}->{'axis'} = undef;
 
   return $self;
 }
@@ -477,33 +486,41 @@ sub new() {
   return $self;
 }
 
-#stackbar must override set_extremes() because of nested value list
-sub set_extremes {
-  my ($self) = @_;
-  
-  my $ext = extreme->new();
-  
+#stackbar must override set_min_max() because of nested value list
+sub set_min_max {
+  my ($self, $min, $max) = @_;
+
+  $self->{'max_value'} = $max if defined($max);
+  $self->{'min_value'} = $max if defined($min);
+
+	my $max_bar_val;
   for my $v ( @{$self->{'element_props'}->{'values'}} ) {
-  	# each bar
-    my $bar_ext = extreme->new();
-    
-    if (ref($v) eq 'ARRAY') {
+  	#each bar
+  	my $this_bar_val;
+    if ( ref($v) eq 'ARRAY' ) {
+    	#multi value/axis chart
       for ( @$v ) {
-      	# each bar piece
+      	#each bar piece
         next if !defined($_->{'val'});
-        
-        my $bar_max = $bar_ext->get_y_axis_max();
-        if ( !defined($bar_max) ) {
-          $bar_ext->set_y_axis_max($_->{'val'});
-        } else {
-          $bar_ext->set_y_axis_max($_->{'val'} + $bar_max);
-        }
+				
+				if ( !defined($this_bar_val) ) {
+					$this_bar_val = $_->{'val'};
+				} else {
+					$this_bar_val += $_->{'val'};
+				}
       }
     }
-    $ext->aggregate_extremes($bar_ext);
+  	$max_bar_val = $this_bar_val if ( !defined($max_bar_val) || $max_bar_val < $this_bar_val );
   }
   
-  $self->{'extremes'} = $ext;
+  if ( !defined($max) ) {
+    $self->{'max_value'} = $max_bar_val;
+  }
+	if ( !defined($min) ) {
+    $self->{'min_value'} = 0;
+  }
+  
+	return 1;
 }
 
 
@@ -521,11 +538,94 @@ sub new() {
   $self->{'element_props'}->{'border'} = 2;
   $self->{'element_props'}->{'animate'} = 1;
   $self->{'element_props'}->{'start-angle'} = 0;
-  
+  $self->{'element_props'}->{'radius'} = 200;
+  $self->{'element_props'}->{'tip'} = '';
+  $self->{'element_props'}->{'label-colour'} = '#000';
   $self->{'element_props'}->{'values'} = [ {'value'=>rand(255), 'label'=>'linux'}, {'value'=>rand(255), 'label'=>'windows'}, {'value'=>rand(255), 'label'=>'vax'}, {'value'=>rand(255), 'label'=>'NexT'}, {'value'=>rand(255), 'label'=>'solaris'}];
 
   return $self;
 }
+sub set_pie_values() {
+  my ($self, $values, $labels, $links ) = @_;
+  
+  $self->{'element_props'}->{'values'} = [];
+
+  my @l_values = @$values if defined($values) || ();
+  my @l_labels = @$labels if defined($labels) || ();
+  my @l_links = @$links if defined($links) || ();
+  
+  while ( @l_labels < @l_values ) {
+ 		push(@l_labels, '');
+  }
+  while ( @l_links < @l_values ) {
+ 		push(@l_links, '');
+  }
+
+  my $total=0;
+  for my $v ( @l_values ) {
+    $total=$total + $v;
+  }
+  if ( $total == 0 ) {
+  	return undef;
+  }
+  
+  my $pie_total = 0;
+  my $biggest_pie_slice = 0;
+  my $too_small_value = 0;
+  my $too_small_label = '';
+  for ( my $i=0; $i < @l_values; $i++) {
+    $l_values[$i] = sprintf("%.1f", ($l_values[$i] / $total) * 100.0);
+    # you can't have a zero pie slice
+    if ( $l_values[$i] == 0.0 ) {
+    	splice(@l_values, $i, 1);
+    	splice(@l_labels, $i, 1);
+    	splice(@l_links, $i, 1);
+    	$i--;
+    	next;
+    } elsif ($l_values[$i] < 3.0) {
+    	$pie_total += $l_values[$i];
+    	$too_small_value = $too_small_value + $l_values[$i];
+   		$too_small_label = $l_labels[$i] . '/' . $too_small_label;
+    	splice(@l_values, $i, 1);
+    	splice(@l_labels, $i, 1);
+    	splice(@l_links, $i, 1);
+    	$i--;
+    	next;
+    }
+    
+    $pie_total += $l_values[$i];
+    if ( $l_values[$i] > $l_values[$biggest_pie_slice] ) {
+      $biggest_pie_slice = $i;
+    }
+  }
+  
+  #adjust for rounding errors, and fill to 100% on biggest pie slice
+  $l_values[$biggest_pie_slice] += (100.0 - $pie_total);
+
+	#get rid of the tailing / from the too small label
+	$too_small_label =~ s/\/$//;
+	if (length($too_small_label) > 20 ) {
+		$too_small_label = substr($too_small_label,0,25) . "...";
+	}
+
+	if ( $too_small_value > 0 ) {
+		push(@l_values, $too_small_value);
+		$too_small_label =~ s/ $//;
+		push(@l_labels, $too_small_label);
+		push(@l_links,'');
+	}
+
+  #$self->{pie_values} = join(',',@l_values);
+  #$self->{pie_labels} = join(',',@l_labels);
+  #$self->{pie_links}  = join(',',@l_links);
+
+	for ( my $i=0; $i < @l_values; $i++ ) {
+	#  push( @$plist, {'value'=>$s->{'values'}->[$i], 'label'=>$self->{'x_ticks'}->[$i], 'font-size'=>12, } );
+	  push(@{$self->{'element_props'}->{'values'}}, {'value'=>$l_values[$i], 'label'=>$l_labels[$i]});
+
+	}
+}
+
 
 
 package scatter;
@@ -536,7 +636,6 @@ sub new() {
   my $self  = {};
   bless $self, $class;
   $self = $self->SUPER::new();
-  $self->{'use_extremes'} = 1;	# scatter needs x-y min-maxes to print
   $self->{'element_props'}->{'type'} = __PACKAGE__;
   $self->{'element_props'}->{'values'} = [
     {"x"=>-5,  "y"=>-5 },
@@ -583,12 +682,7 @@ package axis;
 use Carp qw(cluck);
 
 our $AUTOLOAD;
-sub new() {
-  my ($proto, $name) = @_;
-  my $class = ref($proto) || $proto;
-  my $self  = {};
-  $self->{'name'} = $name; # x_axis | y_axis | y_axis_right
-  $self->{'props'} =  {
+our $defaults = {
   	'labels' =>       undef,
 		'stroke' =>				undef,
 		'tick-length' =>	undef,
@@ -599,14 +693,46 @@ sub new() {
 		'steps' =>				undef,
 		'visible' =>			undef,
 		'min' =>					undef,
-		'max' =>					'a'
-  };
+		'max' =>					undef,
+};
+
+sub new() {
+  my ($proto, $name) = @_;
+  my $class = ref($proto) || $proto;
+  my $self  = {};
+  $self->{'name'} = $name; # x_axis | y_axis | y_axis_right
+  $self->{'elements'} = [];
+
+	#props are rendered into json
+  %{$self->{'props'}} =  %$defaults;
+  
   return bless $self, $class;
+}
+
+sub add_element() {
+  my ($self, $element) = @_;
+	
+  push(@{$self->{'elements'}}, $element);
+ 	$self->set_min_max();
+}
+
+sub set_min_max {
+  my ($self) = @_;
+
+  for my $e ( @{$self->{'elements'}} ) {
+    $self->{'props'}->{'max'} = $e->{'max_value'} if ( !defined($self->{'props'}->{'max'}) || $self->{'props'}->{'max'} < $e->{'max_value'}  );
+    $self->{'props'}->{'min'} = $e->{'min_value'} if ( !defined($self->{'props'}->{'min'}) || $self->{'props'}->{'min'} > $e->{'min_value'}  );
+  }
+  
+  $self->{'props'}->{'max'} = main::smooth_max($self->{'props'}->{'max'});
+  $self->{'props'}->{'steps'} = $self->{'props'}->{'max'} / 10;
+  
+	return 1;
 }
 
 sub to_json() {
   my ($self) = @_;
-  my $json = main::to_json($self->{'props'}, $self->{'name'});
+  my $json = main::to_json($self->{'props'}, $self->{'name'}, __PACKAGE__);
   #$json =~ s/,$//g;
   return $json;
 }
@@ -628,56 +754,6 @@ sub AUTOLOAD {
 	  return $self->{'props'}->{"$name"} = shift;
 	} else {
     return $self->{'props'}->{"$name"};
-	}
-}
-sub DESTROY {  }
-
-
-
-################################
-sub _____EXTREMES_OBJECT_____(){}
-################################
-package extreme;
-use Carp qw(cluck);
-our $AUTOLOAD;
-sub new() {
-  my ($proto) = @_;
-  my $class = ref($proto) || $proto;
-  my $self = {'x_axis_max' => undef, 'x_axis_min' => undef, 'y_axis_max' => undef, 'y_axis_min' => undef, 'other' => undef};
-
-  return bless $self, $class;
-}
-
-sub aggregate_extremes {
-	my ($self, $ext2) = @_;
-	
-	for my $key ('x_axis_max', 'x_axis_min', 'y_axis_max', 'y_axis_min') {
-		if ( $key =~ /_max/ ) {
-			$self->{$key} = $ext2->{$key} if ( !defined($self->{$key}) || $self->{$key} < $ext2->{$key} );
-		} else {
-			$self->{$key} = $ext2->{$key} if ( !defined($self->{$key}) || $self->{$key} > $ext2->{$key} );
-		}
-	}
-}
-
-sub AUTOLOAD {
-	my $self = shift;
-	my $type = ref($self) or warn "$self is not an object";
-
-	my $name = $AUTOLOAD;
-	$name =~ s/.*://;   # strip fully-qualified portion
-	$name =~ s/^set_//; # strip set_
-	$name =~ s/^get_//; # strip get_
-
-	unless (exists $self->{$name} ) {
-	  cluck "'$name' is not a valid property in class $type";
-	  return undef;
-	}
-
-	if (@_) {
-	  return $self->{"$name"} = shift;
-	} else {
-    return $self->{"$name"};
 	}
 }
 sub DESTROY {  }
@@ -730,7 +806,7 @@ sub to_json {
   		return;
   	}
   	
-    if ( $data_structure =~ /^-{0,1}[\d.]+$/ ) {
+    if ( $data_structure =~ /^-{0,1}[\d.]+$/ || $data_structure eq 'null') {
       #number
       $tmp.= $data_structure;
     } else {
@@ -786,12 +862,17 @@ sub smoother {
 	my $min_max = shift;
 	my $n = $number;
 	
+	#$n = $n + $n % 10;
+	#return $n;
+	
 	if ( $min_max eq 'max' ) {
-		$n+=1;
+		$n = int($n + 0.99 * ($n <=> 0));
 	} else {
-		$n-=1;
+		$n = int($n - 0.99 * ($n <=> 0));
 	}
-  if ( $n <= 10 ) { $n = int($n) }
+	
+	if ( $n <= 1 ) { $n = 1 }
+  elsif ( $n < 10 ) { $n = $n }
   elsif ( $n < 30 ) { $n = $n + (-$n % 5) }
  	elsif ( $n < 100 ) { $n = $n + (-$n % 10) }
  	elsif ( $n < 500 ) { $n = $n + (-$n % 50) }

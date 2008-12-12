@@ -10,7 +10,6 @@ use open_flash_chart;
 #NEW CHART DEFINITION
 my $chart = chart->new();
 
-
 #BACKGROUND COLOR. ATTENTION: IT MUST BE SET BEFORE TITLE
 #COLORE DI SFONDO. ATTENZIONE: VA SETTATO PRIMA DEL TITOLO
 $chart->{'chart_props'} = {'bg_colour' => '#efefef'};
@@ -34,7 +33,7 @@ $chart->{'chart_props'}->{'x_legend'} = {'text'=>'x_legend', 'style'=>'font-size
 
 #X AXIS DEFINITION
 #DEFINIZIONE ASSE DELLE X
-my $chart_x = axis->new('x_axis');
+my $chart_x = $chart->get_axis('x_axis');
 
 #X AXIS LABEL DEFINITION
 #DEFINIZIONE ETICHETTE ASSE DELLE X
@@ -78,43 +77,8 @@ $chart_x->set_max(3);
 
 #Y AXIS DEFINITION
 #DEFINIZIONE ASSE DELLE Y
-my $chart_y = axis->new('y_axis');
+my $chart_y = $chart->get_axis('y_axis');
 
-#Y AXIS PARAMETER DEFINITION. VIA FUNCTION (THIS METHOD IS OVERWRITTEN IF DIRECT METHOD IS USED)
-#DEFINIZIONE PARAMETRI ASSE DELLE Y. Tramite funzioni (viene sovrascritto se si usa anche il metoro diretto)
-#$chart_y->set_steps(10);
-#$chart_y->set_colour( '#000000' );
-#$chart_y->{'props'} = {'grid-colour' => '#000000'};
-
-#Y AXIS PARAMETER DEFINITION. VIA DIRECT METHOD
-#DEFINIZIONE PARAMETRI ASSE DELLE X. Tramite inserimento diretto
-$chart_y->{'props'} =  {
-		'labels' => undef,
-		'stroke' => undef,
-		'tick-length' => undef,
-		'colour' => '#000000',
-		'offset' => undef,
-		'grid-colour' => undef,
-		'3d' => undef,
-		'steps' => '5',
-		'visible' => undef,
-#Y AXIS RANGE SETTINGS. INSERT 'a'  IF YOU WOULD LIKE TO USE DEDICATED FUNCTION SET_MIN() AND SET_MAX()
-#SET DELLA SCALA DELL'ASSE Y. Inserire 'a' per poter usare le funzioni dedicate set_min() e set_max()
-		'min' => 'a',
-		'max' => 'a'
-};
-
-#Y AXIS RANGE SETTINGS. IF NO VALUE IS PASSED AUTOMATIC VALUE IS CALCULATED
-#SET DELLA SCALA DELL'ASSE Y. SE NON PRESENTE NESSUN VALORE VIENE CALCOLATA AUTOMATICAMENTE
-$chart_y->set_min(0);
-$chart_y->set_max();
-
-#INSERT AXIS IN THE CHART
-#INSERIEMENTO DEGLI ASSI ALL'INTERNO DEL GRAFICO
-$chart->{'axis'} = {
-	'x_axis' => $chart_x,
-	'y_axis' => $chart_y
-};
 
 #TYPE OF CHART FOR THE ELEMENT
 #SELEZIONE DEL TIPO DI GRAFICO PER L'ELEMENTO
@@ -174,7 +138,7 @@ $chart_element->{'element_props'}->{'width'} = 2; #for line
 
 #INSERT ELEMENT IN THE CHART
 #INSERIMENTO DELL'ELEMENTO NEL GRAFICO
-$chart->add_element($chart_element);
+$chart_x->add_element($chart_element);
 
 #PRINT OF THE DATA IN THE JSON FORMAT
 #STAMPA DEI DATI NEL FORMATO JSON 
@@ -192,7 +156,7 @@ print '
 
 #INSERT OF THE CHART IN THE HTML
 #INSERIMENTO DEL GRAFICO NELL'HTML
-print $chart->render_swf(400, 400);
+print $chart->render_swf({'width'=>600, 'height'=>400});
 
 print'
 <p>

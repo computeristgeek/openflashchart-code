@@ -33,7 +33,7 @@ $g->add_element($e);
   <body>
     <h1>OFC Scatter Test</h1>
 <%
-  $Response->write($g->render_swf(600, 400, '?data=1&'.time()));
+  $Response->write($g->render_swf({'width'=>600, 'height'=>400}));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 </body>

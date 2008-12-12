@@ -11,6 +11,8 @@ use lib $Server->mappath('.');
 use open_flash_chart;
 
 my $g = chart->new();
+my $y_axis = $g->get_axis('y_axis');
+
 $g->{'chart_props'}->{'tooltip'} = {'text'=>'Hollow Tip #val#<br>I See...'};
 
 
@@ -19,16 +21,16 @@ my $data = [];
 for( my $i=0; $i<5; $i++ ) {
 	push ( @$data, rand(20) );
 }
-$e->set_values($data);
-$g->add_element($e);
+$e->set_values($data, 0);
+$y_axis->add_element($e);
 
 my $f = $g->get_element('area_hollow');
 $data = [];
 for( my $i=0; $i<5; $i++ ) {
 	push ( @$data, rand(40) );
 }
-$f->set_values($data);
-$g->add_element($f);
+$f->set_values($data, 0);
+$y_axis->add_element($f);
 
 %>
 <html>
@@ -38,7 +40,7 @@ $g->add_element($f);
   <body>
     <h1>OFC Area Hollow Test</h1>
 <%
-    $Response->write($g->render_swf(600, 400, '?data=1&'.time()));
+    $Response->write($g->render_swf({'width'=>600, 'height'=>400}));
 %>
 <!--#INCLUDE FILE = "list_all_tests.inc"-->
 
