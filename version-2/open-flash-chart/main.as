@@ -146,7 +146,7 @@ package  {
 			// b64.encodeBytes(q);
 			
 			b64.encodeBytes(b);
-			return b64.flush();
+			return b64.toString();
 			
 			/*
 			var b64:Base64Encoder = new Base64Encoder();
