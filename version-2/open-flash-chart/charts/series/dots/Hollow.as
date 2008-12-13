@@ -31,7 +31,6 @@
 			this.graphics.beginFill(0, 0);
 			this.graphics.drawCircle( 0, 0, style['dot-size'] );
 			this.graphics.endFill();
-
 			//
 			// MASK
 			//
@@ -42,7 +41,6 @@
 			s.blendMode = BlendMode.ERASE;
 			
 			this.line_mask = s;
-			
 			this.attach_events();
 			
 		}

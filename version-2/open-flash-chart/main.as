@@ -86,7 +86,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/x-axis-labels-3.txt";
+					var file:String = "../data-files/scatter-line-step-vertical.txt";
 					//var file:String = "../../../test-data-files/stack.txt";
 					this.load_external_file( file );
 
@@ -147,6 +147,9 @@ package  {
 			
 			b64.encodeBytes(b);
 			return b64.toString();
+			
+			// commented out by J vander? why?
+			// return b64.flush();
 			
 			/*
 			var b64:Base64Encoder = new Base64Encoder();
@@ -668,62 +671,20 @@ package  {
 		// build grid, axis, legends and key
 		//
 		private function build_chart_background( json:Object ):void {
-			
-			this.x_legend		= new XLegend( json.x_legend );			
-			this.y_legend		= new YLegendLeft( json );
-			this.y_legend_2		= new YLegendRight( json );
-			this.x_axis			= new XAxis( json );
-			this.y_axis			= new YAxisLeft( json );
-			this.y_axis_right	= new YAxisRight( json );
 			//
 			// This reads all the 'elements' of the chart
 			// e.g. bars and lines, then creates them as sprites
 			//
 			this.obs			= Factory.MakeChart( json );
 			//
+			this.x_legend		= new XLegend( json.x_legend );			
+			this.y_legend		= new YLegendLeft( json );
+			this.y_legend_2		= new YLegendRight( json );
+			this.x_axis			= new XAxis( json, this.obs.get_min_x(), this.obs.get_max_x() );
+			this.y_axis			= new YAxisLeft( json );
+			this.y_axis_right	= new YAxisRight( json );
 			
-			// the X Axis labels *may* require info from
-			// this.obs
 			
-			if( !this.x_axis.range_set() )
-			{
-				//
-				// the user has not told us how long the X axis
-				// is, so we figure it out:
-				//
-				if( this.x_axis.labels.need_labels ) {
-					//
-					// No X Axis labels set:
-					//
-					
-					tr.aces( 'max x', this.obs.get_min_x(), this.obs.get_max_x() );
-					
-					this.x_axis.set_range( this.obs.get_min_x(), this.obs.get_max_x() );
-					this.x_axis.labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
-				}
-				else
-				{
-					//
-					// X Axis labels used, even so, make the chart
-					// big enough to show all values
-					//
-					tr.aces('x labels', this.obs.get_min_x(), this.x_axis.labels.count(), this.obs.get_max_x());
-					if ( this.x_axis.labels.count() > this.obs.get_max_x() ) {
-						
-						// Data and labesl are OK
-						this.x_axis.set_range( 0, this.x_axis.labels.count() );
-					} else {
-						
-						// There is more data than labels -- oops
-						this.x_axis.set_range( this.obs.get_min_x(), this.obs.get_max_x() );
-					}
-				}
-			}
-			else
-			{
-				//range set, but no labels...
-				this.x_axis.labels.auto_label( this.x_axis.get_range(), this.x_axis.get_steps() );
-			}
 			
 			// access all our globals through this:
 			var g:Global = Global.getInstance();

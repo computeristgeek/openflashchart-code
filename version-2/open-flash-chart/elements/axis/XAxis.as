@@ -28,7 +28,7 @@ package elements.axis {
 
 		private var style:Object;
 		
-		function XAxis( json:Object )
+		function XAxis( json:Object, min:Number, max:Number )
 		{
 			// default values
 			this.style = {
@@ -79,13 +79,59 @@ package elements.axis {
 				}
 			}
 			
-			this.labels = new XAxisLabels( this.style.labels );
+			this.labels = new XAxisLabels( json );
 			this.addChild( this.labels );
+						
+			// the X Axis labels *may* require info from
+			// this.obs
+			if( !this.range_set() )
+			{
+				//
+				// the user has not told us how long the X axis
+				// is, so we figure it out:
+				//
+				if( this.labels.need_labels ) {
+					//
+					// No X Axis labels set:
+					//
+					
+					// tr.aces( 'max x', this.obs.get_min_x(), this.obs.get_max_x() );
+					this.set_range( min, max );
+				}
+				else
+				{
+					//
+					// X Axis labels used, even so, make the chart
+					// big enough to show all values
+					//
+					// tr.aces('x labels', this.obs.get_min_x(), this.x_axis.labels.count(), this.obs.get_max_x());
+					if ( this.labels.count() > max ) {
+						
+						// Data and labesl are OK
+						this.set_range( 0, this.labels.count() );
+					} else {
+						
+						// There is more data than labels -- oops
+						this.set_range( min, max );
+					}
+				}
+			}
+			else
+			{
+				//range set, but no labels...
+				this.labels.auto_label( this.get_range(), this.get_steps() );
+			}
 			
-			//
-			// a little hacky, but we inspect the labels
-			// to see if we need to display user custom ticks
-			//
+			// custom ticks:
+			this.make_user_ticks();
+		}
+		
+		//
+		// a little hacky, but we inspect the labels
+		// to see if we need to display user custom ticks
+		//
+		private function make_user_ticks():void {
+			
 			if ((this.style.labels != null) &&
 				(this.style.labels.labels != null) &&
 				(this.style.labels.labels is Array) &&
@@ -113,7 +159,6 @@ package elements.axis {
 					}
 				}
 			}
-
 		}
 		
 		private function calcSteps():void {
@@ -152,6 +197,8 @@ package elements.axis {
 			this.style.max = max;
 			// Calc new steps
 			this.calcSteps();
+			
+			this.labels.auto_label( this.get_range(), this.get_steps() );
 		}
 		
 		//

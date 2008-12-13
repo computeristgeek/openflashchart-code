@@ -31,7 +31,7 @@
 			if ( style.axis )
 				if ( style.axis == 'right' )
 					this.right_axis = true;
-				
+			
 		}
 		
 		//

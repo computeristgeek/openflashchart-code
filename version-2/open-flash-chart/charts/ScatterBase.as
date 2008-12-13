@@ -4,6 +4,7 @@
 	import charts.series.Element;
 	import string.Utils;
 	import flash.geom.Point;
+	import flash.display.Sprite;
 	
 	public class ScatterBase extends Base {
 
@@ -21,6 +22,7 @@
 			
 			var default_style:Object = {
 				'dot-size':		this.style['dot-size'],
+				'halo-size':	this.style['halo-size'],
 				width:			this.style.width,	// stroke
 				colour:			this.style.colour,
 				tip:			this.style.tip
@@ -39,9 +41,18 @@
 		// Draw points...
 		public override function resize( sc:ScreenCoordsBase ): void {
 			
+			var tmp:Sprite;
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
-				var e:scat = this.getChildAt(i) as scat;
-				e.resize( sc );
+				tmp = this.getChildAt(i) as Sprite;
+				
+				//
+				// filter out the line masks
+				//
+				if( tmp is Element )
+				{
+					var e:scat = tmp as scat;
+					e.resize( sc );
+				}
 			}
 		}
 

@@ -29,7 +29,8 @@ package elements.axis {
 			
 			this.need_labels = true;
 			
-			var style:XLabelStyle = new XLabelStyle( json.x_labels );
+			// TODO: remove this and the class
+			// var style:XLabelStyle = new XLabelStyle( json.x_labels );
 			
 			
 			this.style = {

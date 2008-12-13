@@ -14,6 +14,7 @@
 				colour:			'#3030d0',
 				text:			'',		// <-- default not display a key
 				'dot-size':		5,
+				'halo-size':	2,
 				'font-size':	12,
 				tip:			'[#x#,#y#] #size#'
 			};

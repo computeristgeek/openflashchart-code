@@ -7,6 +7,8 @@
 	import string.Utils;
 	import flash.geom.Point;
 	import flash.display.Sprite;
+	import flash.display.BlendMode;
+	
 	
 	public class ScatterLine extends ScatterBase
 	{
@@ -16,12 +18,19 @@
 
 		public function ScatterLine( json:Object )
 		{
+			//
+			// so the mask child can punch a hole through the line
+			//
+			this.blendMode = BlendMode.LAYER;
+			//
+			
 			this.style = {
 				values:			[],
 				width:			2,
 				colour:			'#3030d0',
 				text:			'',		// <-- default not display a key
 				'dot-size':		5,
+				'halo-size':	2,
 				'font-size':	12,
 				tip:			'[#x#,#y#] #size#',
 				stepgraph:		0
