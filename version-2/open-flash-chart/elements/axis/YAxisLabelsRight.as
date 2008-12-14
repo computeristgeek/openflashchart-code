@@ -7,13 +7,16 @@
 			
 			var values:Array;
 			var ok:Boolean = false;
+			var lblText:String = "#val#";
 			
 			if( json.y_axis_right )
 			{
-				if( json.y_axis_right.labels )
+				if( json.y_axis_right.labels is Array )
 				{
 					values = [];
-					var i:Number = 0;
+					
+					// use passed in min if provided else zero
+					var i:Number = (json.y_axis_right && json.y_axis_right.min) ? json.y_axis_right.min : 0;
 					for each( var s:String in json.y_axis_right.labels )
 					{
 						values.push( { val:s, pos:i } );
@@ -23,15 +26,46 @@
 					//
 					// alter the MinMax object:
 					//
-					parent.set_y_max( values.length - 1 );
+					// use passed in max if provided else the number of values less 1
+					i = (json.y_axis_right && json.y_axis_right.max) ? json.y_axis_right.max : values.length - 1;
+					parent.set_y_max( i );
 					ok = true;
 				}
+				else if ( json.y_axis_right.labels is Object ) 
+				{
+					i = (json.y_axis_right && json.y_axis_right.min) ? json.y_axis_right.min : 0;
+					if ( json.y_axis_right.labels.text is String ) lblText = json.y_axis_right.labels.text;
+
+					if ( json.y_axis_right.labels.labels is Array )
+					{
+						values = [];
+						for each( var obj:Object in json.y_axis_right.labels.labels )
+						{
+							if (obj is Number) 
+							{
+								values.push( { val:lblText, pos:obj } );
+								i = (obj > i) ? obj as Number : i;
+							}
+							else if (obj.y is Number)
+							{
+								s = (obj.text is String) ? obj.text : lblText;
+								var lblStyle:Object = { val:s, pos:obj.y }
+								if (obj.colour != null) lblStyle.colour = obj.colour;
+								if (obj.size != null) lblStyle.size = obj.size;
+								if (obj.rotate != null) lblStyle.rotate = obj.rotate;
+								values.push( lblStyle );
+								i = (obj.y > i) ? obj.y : i;
+							}
+						}
+						ok = true;
+					}
+				}				
 			}
 			
 			if( !ok && parent.style.visible )
-				values = make_labels( parent.style.min, parent.style.max, true, parent.style.steps );
+				values = make_labels( parent.style.min, parent.style.max, true, 1, lblText );
 			
-			super( values, 1, json, 'y_label_2_', 'y2');
+			super( values, 1, json, 'y_label_2_', 'y_axis_right');
 		}
 
 		// move y axis labels to the correct x pos
@@ -41,17 +75,22 @@
 			var tf:YTextField;
 			
 			for( i=0; i<this.numChildren; i++ ) {
-				// right align
+				// left align
 				tf = this.getChildAt(i) as YTextField;
-				tf.x = left - tf.width + maxWidth;
+				tf.x = left; // - tf.width + maxWidth;
 			}
 			
 			// now move it to the correct Y, vertical center align
 			for ( i=0; i < this.numChildren; i++ ) {
 				tf = this.getChildAt(i) as YTextField;
-				tf.y = box.get_y_from_val( tf.y_val, true ) - (tf.height / 2);
+				if (tf.rotation != 0) {
+					tf.y = box.get_y_from_val( tf.y_val, true ) + (tf.height / 2);
+				}
+				else {
+					tf.y = box.get_y_from_val( tf.y_val, true ) - (tf.height / 2);
+				}
 				if (tf.y < 0 && box.top == 0) // Tried setting tf.height but that didnt work 
-					tf.y = this.rotate == "vertical" ? tf.height : tf.textHeight - tf.height;
+					tf.y = (tf.rotation != 0) ? tf.height : tf.textHeight - tf.height;
 			}
 		}
 	}

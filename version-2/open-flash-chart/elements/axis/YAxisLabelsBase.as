@@ -4,31 +4,41 @@
 	import flash.text.TextFormat;
 	import org.flashdevelop.utils.FlashConnect;
 	import br.com.stimuli.string.printf;
+	import string.Utils;
 	
 	public class YAxisLabelsBase extends Sprite {
 		private var steps:Number;
 		private var right:Boolean;
-		protected var rotate:String;
+		protected var style:Object;
 		
-		public function YAxisLabelsBase( values:Array, steps:Number, json:Object, name:String, style_name:String ) {
+		public function YAxisLabelsBase( values:Array, steps:Number, json:Object, name:String, axis_name:String ) {
 
 			this.steps = steps;
 			
-			var style:YLabelStyle = new YLabelStyle( json, name );
+			var lblStyle:YLabelStyle = new YLabelStyle( json, name );
+			this.style = lblStyle.style;
+			
+			// Default to using "rotate" from the y_axis level
+			if ( json[axis_name] && json[axis_name].rotate ) {
+				this.style.rotate = json[axis_name].rotate;
+			}
+
+			// Next override with any values at the y_axis.labels level
+			if (( json[axis_name] != null ) && 
+				( json[axis_name].labels != null ) ) {
+				object_helper.merge_2( json[axis_name].labels, this.style );
+			}
 			
 			// are the Y Labels visible?
-			if( !style.show_labels )
+			if( !this.style.show_labels )
 				return;
-				
-			if( json.y_axis && json.y_axis.rotate )
-				this.rotate = json.y_axis.rotate;
-				
+			
 			// labels
 			var pos:Number = 0;
 			
 			for each ( var v:Object in values )
 			{
-				var tmp:YTextField = this.make_label( v.val, style );
+				var tmp:YTextField = this.make_label( v );
 				tmp.y_val = v.pos;
 				this.addChild(tmp);
 				
@@ -40,7 +50,7 @@
 		// use Y Min, Y Max and Y Steps to create an array of
 		// Y labels:
 		//
-		protected function make_labels( min:Number, max:Number, right:Boolean, steps:Number ):Array {
+		protected function make_labels( min:Number, max:Number, right:Boolean, steps:Number, lblText:String ):Array {
 			var values:Array = [];
 			
 			var min_:Number = Math.min( min, max );
@@ -51,8 +61,7 @@
 			
 			var eek:Number = 0;
 			for( var i:Number = min_; i <= max_; i+=steps ) {
-				
-				values.push( { val:printf('%.3f',i), pos:i } );
+				values.push( { val:lblText, pos:i } );
 				
 				// make sure we don't generate too many labels:
 				if( eek++ > 250 ) break;
@@ -60,7 +69,7 @@
 			return values;
 		}
 		
-		private function make_label( title:String, style:YLabelStyle ):YTextField
+		private function make_label( json:Object ):YTextField
 		{
 			
 			
@@ -69,19 +78,23 @@
 			// these have to be deleted by hand or else flash goes wonky.
 			// In an ideal world we would put this code in the object
 			// distructor method, but I don't think actionscript has these :-(
-
+			
+			var lblStyle:Object = { };
+			object_helper.merge_2( this.style, lblStyle );
+			object_helper.merge_2( json, lblStyle );
+			lblStyle.colour = string.Utils.get_colour(lblStyle.colour);
 			
 			var tf:YTextField = new YTextField();
 			//tf.border = true;
-			tf.text = title;
+			tf.text = this.replace_magic_values(lblStyle.val, lblStyle.pos);
 			var fmt:TextFormat = new TextFormat();
-			fmt.color = style.colour;
-			fmt.font = this.rotate == "vertical" ? "spArial" : "Verdana";
-			fmt.size = style.size;
+			fmt.color = lblStyle.colour;
+			fmt.font = lblStyle.rotate == "vertical" ? "spArial" : "Verdana";
+			fmt.size = lblStyle.size;
 			fmt.align = "right";
 			tf.setTextFormat(fmt);
 			tf.autoSize = "right";
-			if (rotate == "vertical")
+			if (lblStyle.rotate == "vertical")
 			{
 				tf.rotation = 270;
 				tf.embedFonts = true;
@@ -110,6 +123,11 @@
 			
 			while ( this.numChildren > 0 )
 				this.removeChildAt(0);
+		}
+
+		private function replace_magic_values(labelText:String, yVal:Number):String {
+			labelText = labelText.replace('#val#', NumberUtils.formatNumber(yVal));
+			return labelText;
 		}
 	}
 }

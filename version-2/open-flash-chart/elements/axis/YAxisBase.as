@@ -12,6 +12,8 @@ package elements.axis {
 		public var style:Object;
 		
 		protected var labels:YAxisLabelsBase;
+		private var user_labels:Array;
+		private var user_ticks:Boolean;
 		
 		function YAxisBase( json:Object, name:String )
 		{
@@ -38,6 +40,35 @@ package elements.axis {
 				
 			if ( this.style.steps < 0 )
 				this.style.steps *= -1;
+			
+			if ((this.style.labels != null) &&
+				(this.style.labels.labels != null) &&
+				(this.style.labels.labels is Array) &&
+				(this.style.labels.labels.length > 0))
+			{
+				this.user_labels = new Array();
+				for each( var lbl:Object in this.style.labels.labels )
+				{
+					if (!(lbl is String)) {
+						if (lbl.y != null) 
+						{
+							var tmpObj:Object = { y: lbl.y };
+							if (lbl["grid-colour"])
+							{
+								tmpObj["grid-colour"] = Utils.get_colour(lbl["grid-colour"]);
+							}
+							else
+							{
+								tmpObj["grid-colour"] = this.grid_colour;
+							}
+							
+							this.user_ticks = true;
+							this.user_labels.push(tmpObj);
+						}
+					}
+				}
+			}
+
 			
 		}
 		
@@ -103,18 +134,30 @@ package elements.axis {
 				//
 				// draw GRID lines
 				//
-				
-				//
-				// hack: http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_13989&sliceId=1
-				//
-				max += 0.000004;
-				
-				for( i = min; i <= max; i+=this.style.steps ) {
+				if (this.user_ticks) 
+				{
+					for each( var lbl:Object in this.user_labels )
+					{
+						y = sc.get_y_from_val(lbl.y, right);
+						this.graphics.beginFill(lbl["grid-colour"], 1);
+						this.graphics.drawRect( sc.left, y, sc.width, 1 );
+						this.graphics.endFill();
+					}
+				}
+				else
+				{
+					//
+					// hack: http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_13989&sliceId=1
+					//
+					max += 0.000004;
 					
-					y = sc.get_y_from_val(i, right);
-					this.graphics.beginFill( this.grid_colour, 1 );
-					this.graphics.drawRect( sc.left, y, sc.width, 1 );
-					this.graphics.endFill();
+					for( i = min; i <= max; i+=this.style.steps ) {
+						
+						y = sc.get_y_from_val(i, right);
+						this.graphics.beginFill( this.grid_colour, 1 );
+						this.graphics.drawRect( sc.left, y, sc.width, 1 );
+						this.graphics.endFill();
+					}
 				}
 			}
 			
@@ -132,23 +175,44 @@ package elements.axis {
 			
 			// ticks..
 			var width:Number;
-			for( i = min; i <= max; i+=this.style.steps ) {
-				
-				// start at the bottom and work up:
-				y = sc.get_y_from_val(i, right);
-				
-				var tick_pos:Number;
-				if ( !right )
-					tick_pos = sc.left - this.stroke - this.tick_length;
-				else
-					tick_pos = sc.right + this.stroke;
-				
-				this.graphics.beginFill( this.colour, 1 );
-				this.graphics.drawRect( tick_pos, y - (this.stroke / 2), this.tick_length, this.stroke );
-				//this.graphics.drawRect( pos - this.tick_length, y - (this.stroke / 2), this.tick_length, this.stroke );
-				//this.graphics.drawRect( left, y-(this.stroke/2), this.tick_length, this.stroke );
-				this.graphics.endFill();
+			if (this.user_ticks) 
+			{
+				for each( lbl in this.user_labels )
+				{
+					y = sc.get_y_from_val(lbl.y, right);
 					
+					if ( !right )
+						tick_pos = sc.left - this.stroke - this.tick_length;
+					else
+						tick_pos = sc.right + this.stroke;
+					
+					this.graphics.beginFill( this.colour, 1 );
+					this.graphics.drawRect( tick_pos, y - (this.stroke / 2), this.tick_length, this.stroke );
+					//this.graphics.drawRect( pos - this.tick_length, y - (this.stroke / 2), this.tick_length, this.stroke );
+					//this.graphics.drawRect( left, y-(this.stroke/2), this.tick_length, this.stroke );
+					this.graphics.endFill();
+				}
+			}
+			else
+			{
+				for( i = min; i <= max; i+=this.style.steps ) {
+					
+					// start at the bottom and work up:
+					y = sc.get_y_from_val(i, right);
+					
+					var tick_pos:Number;
+					if ( !right )
+						tick_pos = sc.left - this.stroke - this.tick_length;
+					else
+						tick_pos = sc.right + this.stroke;
+					
+					this.graphics.beginFill( this.colour, 1 );
+					this.graphics.drawRect( tick_pos, y - (this.stroke / 2), this.tick_length, this.stroke );
+					//this.graphics.drawRect( pos - this.tick_length, y - (this.stroke / 2), this.tick_length, this.stroke );
+					//this.graphics.drawRect( left, y-(this.stroke/2), this.tick_length, this.stroke );
+					this.graphics.endFill();
+						
+				}
 			}
 		}
 		

@@ -86,7 +86,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/scatter-line-step-vertical.txt";
+					var file:String = "../data-files/y-labels-user-y.txt";
 					//var file:String = "../../../test-data-files/stack.txt";
 					this.load_external_file( file );
 
@@ -145,11 +145,17 @@ package  {
 			// var q:ByteArray = encoder.encode(bmp);
 			// b64.encodeBytes(q);
 			
+			//
+			//
+			//
 			b64.encodeBytes(b);
 			return b64.toString();
-			
+			//
 			// commented out by J vander? why?
 			// return b64.flush();
+			//
+			//
+			
 			
 			/*
 			var b64:Base64Encoder = new Base64Encoder();
