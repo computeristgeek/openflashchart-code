@@ -102,7 +102,7 @@ package {
 			this.graphics.drawRoundRect(
 				0,0,
 				width+10, height + 5,
-				this.style.rounded,this.style.rounded );
+				this.style.rounded, this.style.rounded );
 		}
 			
 		private function make_one_tip( e:has_tooltip, x:Number ):Object {
