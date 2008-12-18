@@ -28,6 +28,9 @@
 				tip:			this.style.tip
 			};
 			
+			// Apply dot style defined at the plot level
+			object_helper.merge_2( this.style['dot-style'], default_style );
+			// Apply attributes defined at the value level
 			object_helper.merge_2( value, default_style );
 				
 			// our parent colour is a number, but

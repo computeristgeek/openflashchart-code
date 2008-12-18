@@ -231,10 +231,14 @@ package charts {
 				if( this.getChildAt(i) is Element ) {
 		
 					e = this.getChildAt(i) as Element;
-				
-					p = e.get_mid_point();
-					if ( p.x == x )
-						tmp.push( e );
+					// Prevent invisible points from showing tooltips
+					// For scatter line area
+					if (e.visible)
+					{
+						p = e.get_mid_point();
+						if ( p.x == x )
+							tmp.push( e );
+					}
 				}
 			}
 			

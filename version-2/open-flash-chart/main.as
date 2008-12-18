@@ -86,7 +86,7 @@ package  {
 			{
 				// no data found -- debug mode?
 				try {
-					var file:String = "../data-files/bug.txt";
+					var file:String = "../data-files/scatter-anchors.txt";
 					//var file:String = "../../../test-data-files/stack.txt";
 					this.load_external_file( file );
 

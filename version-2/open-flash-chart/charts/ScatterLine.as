@@ -93,6 +93,44 @@
 			var last_x:Number = 0;
 			var last_y:Number = 0;
 
+			var areaClosed:Boolean = true;
+			var isArea:Boolean = false;
+			var areaBaseX:Number = NaN;
+			var areaBaseY:Number = NaN;
+			var areaColour:Number = this.colour;
+			var areaAlpha:Number = 0.4;
+			var areaStyle:Object = this.style['area-style'];
+			if (areaStyle != null)
+			{
+				isArea = true;
+				if (areaStyle.x != null)
+				{
+					areaBaseX = areaStyle.x;
+				}
+				if (areaStyle.y != null)
+				{
+					areaBaseY = areaStyle.y;
+				}
+				if (areaStyle.colour != null)
+				{
+					areaColour = string.Utils.get_colour( areaStyle.colour );
+				}
+				if (areaStyle.alpha != null)
+				{
+					areaAlpha = areaStyle.alpha;
+				}
+				if (!isNaN(areaBaseX)) 
+				{
+					// Convert X Value to screen position
+					areaBaseX = sc.get_x_from_val(areaBaseX);
+				}
+				if (!isNaN(areaBaseY)) 
+				{
+					// Convert Y Value to screen position
+					areaBaseY = sc.get_y_from_val(areaBaseY);  // TODO: Allow for right Y-Axis??
+				}
+			}
+			
 			for ( var i:Number = 0; i < this.numChildren; i++ ) {
 				
 				var tmp:Sprite = this.getChildAt(i) as Sprite;
@@ -109,9 +147,42 @@
 					// tell the point where it is on the screen
 					// we will use this info to place the tooltip
 					e.resize( sc );
-					if( first )
+					if (!e.visible)
 					{
-						this.graphics.moveTo(e.x,e.y);
+						// Creates a gap in the plot and closes out the current area if defined
+						if ((isArea) && (i > 0))
+						{
+							// draw an invisible line back to the base and close the fill
+							areaX = isNaN(areaBaseX) ? last_x : areaBaseX;
+							areaY = isNaN(areaBaseY) ? last_y : areaBaseY;
+							this.graphics.lineStyle( 0, areaColour, 0 );
+							this.graphics.lineTo(areaX, areaY);
+							this.graphics.endFill();
+							areaClosed = true;
+						}
+						first = true;
+					}
+					else if( first )
+					{
+						if (isArea)
+						{
+							// draw an invisible line from the base to the point
+							var areaX:Number = isNaN(areaBaseX) ? e.x : areaBaseX;
+							var areaY:Number = isNaN(areaBaseY) ? e.y : areaBaseY;
+							// Begin the fill for the area
+							this.graphics.beginFill(areaColour, areaAlpha);
+							this.graphics.lineStyle( 0, areaColour, 0 );
+							this.graphics.moveTo(areaX, areaY);
+							this.graphics.lineTo(e.x, e.y);
+							areaClosed = false;
+							// change the line style back to normal
+							this.graphics.lineStyle( this.style.width, this.style.colour, 1.0 );
+						}
+						else
+						{
+							// just move to the point
+							this.graphics.moveTo(e.x, e.y);
+						}
 						first = false;
 					}
 					else
@@ -126,6 +197,17 @@
 					last_x = e.x;
 					last_y = e.y;
 				}
+			}
+
+			// Close out the area if defined
+			if (isArea && !areaClosed)
+			{
+				// draw an invisible line back to the base and close the fill
+				areaX = isNaN(areaBaseX) ? last_x : areaBaseX;
+				areaY = isNaN(areaBaseY) ? last_y : areaBaseY;
+				this.graphics.lineStyle( 0, areaColour, 0 );
+				this.graphics.lineTo(areaX, areaY);
+				this.graphics.endFill();
 			}
 		}
 		

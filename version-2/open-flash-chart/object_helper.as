@@ -20,12 +20,8 @@
 			
 			for (var prop:String in json ) {
 				
-				// if has property
-				//if( defaults[prop] != null )
-				//{
-					tr.ace( prop +' = ' + json[prop]);
-					defaults[prop] = json[prop];
-				//}
+				// tr.ace( prop +' = ' + json[prop]);
+				defaults[prop] = json[prop];
 			}
 		}
 	}
