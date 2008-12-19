@@ -157,9 +157,12 @@
 				if ( !this.is_tip )
 				{
 					Tweener.addTween(this, {scaleX:1.3, time:0.4, transition:"easeoutbounce"} );
-					Tweener.addTween(this, {scaleY:1.3, time:0.4, transition:"easeoutbounce"} );
-					Tweener.addTween(this.line_mask, {scaleX:1.3, time:0.4, transition:"easeoutbounce"} );
-					Tweener.addTween(this.line_mask, {scaleY:1.3, time:0.4, transition:"easeoutbounce"} );
+					Tweener.addTween(this, {scaleY:1.3, time:0.4, transition:"easeoutbounce" } );
+					if (this.line_mask != null)
+					{
+						Tweener.addTween(this.line_mask, {scaleX:1.3, time:0.4, transition:"easeoutbounce"} );
+						Tweener.addTween(this.line_mask, {scaleY:1.3, time:0.4, transition:"easeoutbounce" } );
+					}
 				}
 				this.is_tip = true;
 			}
@@ -169,8 +172,11 @@
 				Tweener.removeTweens(this.line_mask);
 				this.scaleX = 1;
 				this.scaleY = 1;
-				this.line_mask.scaleX = 1;
-				this.line_mask.scaleY = 1;
+				if (this.line_mask != null)
+				{
+					this.line_mask.scaleX = 1;
+					this.line_mask.scaleY = 1;
+				}
 				this.is_tip = false;
 			}
 		}

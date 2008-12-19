@@ -2,6 +2,7 @@
 	
 	import charts.series.dots.scat;
 	import charts.series.Element;
+	import charts.series.dots.dot_factory;
 	import string.Utils;
 	import flash.geom.Point;
 	import flash.display.Sprite;
@@ -38,7 +39,8 @@
 			if( default_style.colour is String )
 				default_style.colour = Utils.get_colour( default_style.colour );
 			
-			return new scat( default_style );
+			// return new scat( default_style );
+			return dot_factory.make( default_style );
 		}
 		
 		// Draw points...
