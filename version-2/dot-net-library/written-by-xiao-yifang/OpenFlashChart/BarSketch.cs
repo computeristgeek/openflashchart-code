@@ -5,7 +5,7 @@ using JsonFx.Json;
 
 namespace OpenFlashChart
 {
-    public class BarSketch:Chart<Double>
+    public class BarSketch:BarBase
     {
         private string outlinecolour;
         private int? offset;

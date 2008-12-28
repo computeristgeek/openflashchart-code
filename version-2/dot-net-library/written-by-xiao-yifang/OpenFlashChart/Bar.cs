@@ -49,10 +49,14 @@ namespace OpenFlashChart
             set { tip = value; }
         }
     }
-    public class Bar:Chart<BarValue >
+    public class Bar:BarBase
     {
         public Bar(){
             this.ChartType = "bar";
+        }
+        public void Add(BarValue barValue)
+        {
+            this.Values.Add(barValue);
         }
         
     }

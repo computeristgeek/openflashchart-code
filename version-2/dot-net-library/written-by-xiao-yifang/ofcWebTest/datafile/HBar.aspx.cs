@@ -23,9 +23,9 @@ public partial class datafile_HBar : System.Web.UI.Page
         bar.Text = "Test";
 
         bar.FontSize = 10;
-        bar.AppendValue(new HBarValue(0,5));
-        bar.AppendValue(new HBarValue(6,8));
-        bar.AppendValue(new HBarValue(8,10));
+        bar.Add(new HBarValue(0,5));
+        bar.Add(new HBarValue(6, 8));
+        bar.Add(new HBarValue(8, 10));
         chart.AddElement(bar);
          chart.Y_Axis.SetLabels(new string[] { "hbar1", "hbar2", "hbar3" });
         chart.Tooltip = new ToolTip("提示:#val#");

@@ -41,11 +41,15 @@ namespace OpenFlashChart
             set { tip = value; }
         }
     }
-    public class HBar:Chart<HBarValue>
+    public class HBar:BarBase
     {
         public HBar()
         {
             this.ChartType = "hbar";
+        }
+        public void Add(HBarValue hBarValue)
+        {
+            this.Values.Add(hBarValue);
         }
     }
 }

@@ -40,13 +40,16 @@ namespace OpenFlashChart
            set { val = value; }
        }
    }
-    public class BarStack:Chart<BarStackValue>
+    public class BarStack:BarBase
     {
         public BarStack()
         {
             this.ChartType = "bar_stack";
         }
-
+        public void Add(BarStackValue barStackValue)
+        {
+            this.Values.Add(barStackValue);
+        }
         public void AddStack(List<BarStackValue> barStackValues)
         {
             base.Values.Add(barStackValues);

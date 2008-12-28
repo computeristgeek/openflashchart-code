@@ -82,11 +82,6 @@ namespace OpenFlashChart
             }
             get { return this.values; }
         }
-        [Obsolete("use Add()")]
-        public void AppendValue(T v)
-        {
-            this.values.Add(v);
-        }
         public void Add(T v)
         {
             this.values.Add(v);

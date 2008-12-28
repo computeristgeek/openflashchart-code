@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OpenFlashChart
 {
-    public class Bar3D:Chart<double >
+    public class Bar3D:BarBase
     {
 
         public Bar3D()

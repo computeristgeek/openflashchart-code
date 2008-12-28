@@ -22,12 +22,15 @@ namespace OpenFlashChart
             set { outline_color = value; }
         }
     }
-    public class BarFilled : Chart<BarFilledValue>
+    public class BarFilled : BarBase
     {
         public BarFilled()
         {
             this.ChartType = "bar_filled";
         }
-
+        public void Add(BarFilledValue barFilledValue)
+        {
+            this.Values.Add(barFilledValue);
+        }
     }
 }

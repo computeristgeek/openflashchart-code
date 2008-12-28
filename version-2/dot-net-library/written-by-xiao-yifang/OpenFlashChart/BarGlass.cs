@@ -13,11 +13,15 @@ namespace OpenFlashChart
            
         }
     }
-    public class BarGlass : Chart<BarGlassValue>
+    public class BarGlass : BarBase
     {
         public BarGlass()
         {
             this.ChartType = "bar_glass";
+        }
+        public  void Add(BarGlassValue barGlassValue)
+        {
+            this.Values.Add(barGlassValue);
         }
     }
 }
