@@ -9,9 +9,9 @@
 	import string.Utils;
 	import flash.geom.Point;
 	
-	public class star extends PointDotBase {
+	public class anchor extends PointDotBase {
 		
-		public function star( index:Number, value:Object ) {
+		public function anchor( index:Number, value:Object ) {
 			
 			// optional parameter defaults:
 			var style:Object = {
@@ -19,14 +19,13 @@
 				// are are here to prevent bugs...
 				width:			2,
 				colour:			'#3030d0',
-				tip:			'Star [#x#,#y#] #size#',
+				tip:			'Anchor [#x#,#y#] #size#',
 				'dot-size':		5,
 				'halo-size':	2,
 				alpha:			1,
 				// these are optional and may not be set
-				hollow:					false,
-				'background-alpha':		0,
-				rotation:				0
+				rotation:		0,
+				sides:			3
 				
 			};
 			
@@ -34,10 +33,19 @@
 			style.colour = string.Utils.get_colour( style.colour );
 			
 			// scatter charts have x, y (not value):
-	//		if( style.value == null)
-	//			style.value = style.y;
+		//	if( style.value == null)
+		//		style.value = style.y;
 
 			super( index, style );
+
+			// override the basics in PointDotBase:
+//			if ( style.x != null )
+//			{
+//				this._x = style.x;
+//				this._y = style.y;
+//				this.index = Number.MIN_VALUE;
+//			}
+				
 			
 			this.visible = true;
 
@@ -80,15 +88,16 @@
 
 				this.graphics.lineStyle( style.width, style.colour, style.alpha );
 
-				this.drawStar_2(this.graphics, this.radius, style.rotation);
+				this.drawAnchor(this.graphics, this.radius, style.sides, rotation);
 				// Check to see if part of the line needs to be erased
+				//trace("haloSize = ", haloSize);
 				if (style['halo-size'] > 0)
 				{
 					style['halo-size'] += this.radius;
 					var s:Sprite = new Sprite();
 					s.graphics.lineStyle( 0, 0, 0 );
 					s.graphics.beginFill( 0, 1 );
-					this.drawStar_2(s.graphics, style['halo-size'], style.rotation);
+					this.drawAnchor(s.graphics, style['halo-size'], style.sides, rotation);
 					s.blendMode = BlendMode.ERASE;
 					s.graphics.endFill();
 					this.line_mask = s;
@@ -128,20 +137,22 @@
 			}
 		}
 		
-		private function drawStar_2( aGraphics:Graphics, aRadius:Number, 
-									aRotation:Number ):void 
+		
+
+		private function drawAnchor( aGraphics:Graphics, aRadius:Number, 
+										aSides:Number, aRotation:Number ):void 
 		{
-			var angle:Number = 360 / 10;
-			
-			// Start at top point (unrotated)
-			var degrees:Number = -90 + aRotation;
-			for (var ix:int = 0; ix < 11; ix++)
+			if (aSides < 3) aSides = 3;
+			if (aSides > 360) aSides = 360;
+			var angle:Number = 360 / aSides;
+			for (var ix:int = 0; ix <= aSides; ix++)
 			{
-				var rad:Number;
-				rad = (ix % 2 == 0) ? aRadius : aRadius/2;
-				var xVal:Number = calcXOnCircle(rad, degrees);
-				var yVal:Number = calcYOnCircle(rad, degrees);
-				if(ix == 0)
+				// Move start point to vertical axis (-90 degrees)
+				var degrees:Number = -90 + aRotation + (ix % aSides) * angle;
+				var xVal:Number = calcXOnCircle(aRadius, degrees);
+				var yVal:Number = calcYOnCircle(aRadius, degrees);
+				
+				if (ix == 0)
 				{
 					aGraphics.moveTo(xVal, yVal);
 				}
@@ -149,7 +160,6 @@
 				{
 					aGraphics.lineTo(xVal, yVal);
 				}
-				degrees += angle;
 			}
 		}
 		

@@ -16,8 +16,26 @@
 			
 			super();
 			this.is_tip = false;
-			this.index = this._x = index;
-			this._y = Number( style.value );
+			
+			
+			// line charts have a value and no X,
+			// scatter charts have x, y (not value):
+			if( style.y == null)
+				style.y = style.value;
+		
+			this._y = Number( style.y );
+			
+			tr.aces( 'x', style.x );
+			// no X passed in so calculate it from the index
+			if( style.x == null )
+			{
+				this.index = this._x = index;
+			}
+			else
+			{
+				this._x = style.x;
+				this.index = Number.MIN_VALUE;
+			}
 			
 			this.radius = style['dot-size'];
 			this.tooltip = this.replace_magic_values( style.tip );
@@ -36,7 +54,7 @@
 		
 		//
 		// all dot share the same resize code:
-		//
+		/*
 		public override function resize( sc:ScreenCoordsBase ):void {
 
 			var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this.index, this._y, this.right_axis );
@@ -47,6 +65,34 @@
 			this.x = this.line_mask.x = p.x;
 			this.y = this.line_mask.y = p.y;
 			
+		}
+		*/
+		
+		public override function resize( sc:ScreenCoordsBase ): void {
+			
+			if ( this.index != Number.MIN_VALUE ) {
+	
+				var p:flash.geom.Point = sc.get_get_x_from_pos_and_y_from_val( this.index, this._y, this.right_axis );
+				this.x = p.x;
+				this.y = p.y;
+			}
+			else
+			{
+
+				//
+				// Look: we have a real X value, so get its screen location:
+				//
+				this.x = sc.get_x_from_val( this._x );
+				this.y = sc.get_y_from_val( this._y, this.right_axis );
+			}
+			
+			// Move the mask so it is in the proper place also
+			// this all needs to be moved into the base class
+			if (this.line_mask != null)
+			{
+				this.line_mask.x = this.x;
+				this.line_mask.y = this.y;
+			}
 		}
 		
 		public override function set_tip( b:Boolean ):void {

@@ -64,13 +64,7 @@
 			if( s.type == null )
 				s.type = 'hollow-dot';
 			
-			//return new Hollow( index, s );
-			tr.aces('i ', index);
-			//return dot_factory.make( index, s );
-			var tmp:Element = dot_factory.make( index, s );
-			tr.aces('line hollow index', tmp.index);
-			return tmp;
+			return dot_factory.make( index, s );
 		}
-			
 	}
 }
