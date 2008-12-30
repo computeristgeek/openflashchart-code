@@ -142,15 +142,15 @@
 			}
 			
 		}
-		
-		private function replace_magic_values( t:String ): String {
+		/*
+		protected function replace_magic_values( t:String ): String {
 			
 			t = t.replace('#x#', NumberUtils.formatNumber(this._x));
 			t = t.replace('#y#', NumberUtils.formatNumber(this._y));
 			t = t.replace('#size#', NumberUtils.formatNumber(this.radius));
 			return t;
 		}
-		
+		*/
 		public override function set_tip( b:Boolean ):void {
 			if ( b )
 			{
@@ -198,15 +198,6 @@
 			}
 		}
 
-		private function calcXOnCircle(aRadius:Number, aDegrees:Number):Number
-		{
-			return aRadius * Math.cos(aDegrees / 180 * Math.PI);
-		}
-		
-		private function calcYOnCircle(aRadius:Number, aDegrees:Number):Number
-		{
-			return aRadius * Math.sin(aDegrees / 180 * Math.PI);
-		}
 		
 		private function drawAnchor( aGraphics:Graphics, aRadius:Number, 
 										aSides:Number, aRotation:Number ):void 

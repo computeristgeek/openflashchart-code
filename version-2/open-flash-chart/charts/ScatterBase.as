@@ -40,7 +40,7 @@
 				default_style.colour = Utils.get_colour( default_style.colour );
 			
 			// return new scat( default_style );
-			return dot_factory.make( default_style );
+			return dot_factory.make( 0, default_style );
 		}
 		
 		// Draw points...
@@ -55,7 +55,7 @@
 				//
 				if( tmp is Element )
 				{
-					var e:scat = tmp as scat;
+					var e:Element = tmp as Element;
 					e.resize( sc );
 				}
 			}

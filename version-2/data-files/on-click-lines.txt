@@ -1,7 +1,7 @@
 {
   "y_legend":{
     "text":   "Time of day",
-    "style": "{color: #736AFF;}"
+    "style": "{color: #736AFF; font-siz: 10px;}"
   },
 
   "elements":[

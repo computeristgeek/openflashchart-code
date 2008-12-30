@@ -7,12 +7,15 @@
 	public class Hollow extends PointDotBase {
 		
 		public function Hollow( index:Number, style:Object ) {
-			
+			tr.aces('h i', index);
 			super( index, style );
 			
 			this.visible = true;
 			
 			this.graphics.clear();
+			//
+			// fill a big circle
+			//
 			this.graphics.lineStyle( 0, 0, 0 );
 			this.graphics.beginFill( style.colour, 1 );
 			this.graphics.drawCircle( 0, 0, style['dot-size']);
@@ -20,7 +23,7 @@
 			// punch out the hollow circle:
 			//
 			this.graphics.drawCircle( 0, 0, style['dot-size']-style.width);
-			this.graphics.endFill();
+			this.graphics.endFill();	// <-- LOOK
 			//
 			// HACK: we fill an invisible circle over
 			//       the hollow circle so the mouse over

@@ -231,14 +231,18 @@ package charts {
 				if( this.getChildAt(i) is Element ) {
 		
 					e = this.getChildAt(i) as Element;
+					
+					//
+					// Point elements are invisible by default.
+					//
 					// Prevent invisible points from showing tooltips
 					// For scatter line area
-					if (e.visible)
-					{
+					//if (e.visible)
+					//{
 						p = e.get_mid_point();
 						if ( p.x == x )
 							tmp.push( e );
-					}
+					//}
 				}
 			}
 			

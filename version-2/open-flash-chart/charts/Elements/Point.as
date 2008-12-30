@@ -14,6 +14,7 @@ package charts.Elements {
 			this.graphics.lineStyle( 0, 0, 0 );
 			this.graphics.beginFill( style.colour, 1 );
 			this.graphics.drawCircle( 0, 0, style['dot-size'] );
+			this.visible = false;
 			this.attach_events();
 			
 			var s:Sprite = new Sprite();
@@ -27,6 +28,7 @@ package charts.Elements {
 		}
 		
 		public override function set_tip( b:Boolean ):void {
+			
 			this.visible = b;
 			this.line_mask.visible = b;
 		}

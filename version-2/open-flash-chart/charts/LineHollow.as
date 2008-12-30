@@ -9,6 +9,7 @@
 	import string.Utils;
 	import flash.display.BlendMode;
 	import charts.series.dots.Hollow;
+	import charts.series.dots.dot_factory;
 	
 	public class LineHollow extends LineBase
 	{
@@ -60,8 +61,15 @@
 			// the width of the hollow circle is the same as the width of the line
 			//
 			s.width = this.style.width;
+			if( s.type == null )
+				s.type = 'hollow-dot';
 			
-			return new Hollow( index, s );
+			//return new Hollow( index, s );
+			tr.aces('i ', index);
+			//return dot_factory.make( index, s );
+			var tmp:Element = dot_factory.make( index, s );
+			tr.aces('line hollow index', tmp.index);
+			return tmp;
 		}
 			
 	}
