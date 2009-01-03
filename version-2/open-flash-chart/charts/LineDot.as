@@ -51,11 +51,19 @@
 		
 		//
 		// called from the BaseLine object
-		//
+		/*
 		protected override function get_element( index:Number, value:Object ): Element {
 
 			var s:Object = this.merge_us_with_value_object( value );
+			//
+			// the width of the hollow circle is the same as the width of the line
+			//
+			s.width = this.style.width;
+			if( s.type == null )
+				s.type = 'solid-dot';
+				
 			return new PointDot( index, s );
 		}
+		*/
 	}
 }

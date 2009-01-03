@@ -53,7 +53,7 @@
 		
 		//
 		// called from the base object
-		//
+		/*
 		protected override function get_element( index:Number, value:Object ): charts.series.Element {
 			
 			var s:Object = this.merge_us_with_value_object( value );
@@ -66,5 +66,6 @@
 			
 			return dot_factory.make( index, s );
 		}
+		*/
 	}
 }
