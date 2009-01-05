@@ -8,7 +8,7 @@
 		
 		public function LineStyle( json:Object ) {
 		
-			tr.ace(json);
+			// tr.ace(json);
 			
 			// default values:
 			this.style = 'solid';

@@ -6,8 +6,14 @@
 		
 		public static function make( index:Number, style:Object ):PointDotBase {
 			
-			tr.aces( 'dot factory type:', style.type);
-			switch (style['type'])
+		tr.ace(8);
+			style = style as Properties;
+			tr.aces( 'dot factory type:', style.get('type'));
+			style.set('type', 'anchor');
+			tr.aces( 'dot factory type:', style.get('type'));
+			
+			
+			switch( style.get('type') )
 			{
 				case 'star':
 					return new star(index, style);

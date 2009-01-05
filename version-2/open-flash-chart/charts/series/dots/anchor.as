@@ -13,6 +13,14 @@
 		
 		public function anchor( index:Number, value:Object ) {
 			
+			//
+			//
+			//
+			value = value as Properties;
+			//
+			//
+			//
+			
 			// optional parameter defaults:
 			var style:Object = {
 				// these will be set by the parent (line, scatter, etc...)
@@ -29,8 +37,8 @@
 				
 			};
 			
-			object_helper.merge_2( value, style );
-			style.colour = string.Utils.get_colour( style.colour );
+			//object_helper.merge_2( value, style );
+			style.colour = string.Utils.get_colour( style.get('colour') );
 			
 			// scatter charts have x, y (not value):
 		//	if( style.value == null)
@@ -38,15 +46,6 @@
 
 			super( index, style );
 
-			// override the basics in PointDotBase:
-//			if ( style.x != null )
-//			{
-//				this._x = style.x;
-//				this._y = style.y;
-//				this.index = Number.MIN_VALUE;
-//			}
-				
-			
 			this.visible = true;
 
 			if (style.alpha == null)

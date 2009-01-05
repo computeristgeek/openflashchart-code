@@ -32,14 +32,6 @@ package charts {
 						collection.add( new Line( elements[i] ) );
 						break;
 						
-					case 'line_dot':
-						collection.add( new LineDot( elements[i] ) );
-						break;
-					
-					case 'line_hollow':
-						collection.add( new LineHollow( elements[i] ) );
-						break;
-						
 					case 'area_hollow':
 						collection.add( new AreaHollow( elements[i] ) );
 						break;

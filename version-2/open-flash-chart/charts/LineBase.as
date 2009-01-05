@@ -23,15 +23,24 @@
 		//
 		protected override function get_element( index:Number, value:Object ): Element {
 
-			var s:Object = this.merge_us_with_value_object( value );
+//			var s:Object = this.merge_us_with_value_object( value );
 			//
 			// the width of the hollow circle is the same as the width of the line
 			//
-			s.width = this.style.width;
-			if( s.type == null )
-				s.type = 'solid-dot';
+//			s.width = this.style.width;
+//			if( s.type == null )
+//				s.type = 'dot';
+
+var tmp:Properties;
+			if( value is Number )
+				tmp = new Properties( { value:value }, this.style['--dot-style']);
+			else
+				tmp = new Properties( value, this.style['--dot-style']);
 				
-			return dot_factory.make( index, s );
+	tr.ace(7);
+	
+	tr.aces(7.5, tmp.get('type'));
+			return dot_factory.make( index, tmp );
 		}
 		
 		

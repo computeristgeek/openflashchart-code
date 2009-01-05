@@ -6,11 +6,13 @@
 
   "elements":[
     {
-      "type":      "line_hollow",
+      "type":      "line",
       "colour":    "#736AFF",
       "text":      "Avg. wave height (cm)",
       "font-size": 10,
       "width":     2,
+	  "dot-style":    { "type":"anchor", "sides":3, "alpha":1, "hollow":true, "background-colour":"#a44a80", 
+						"background-alpha": 0.4, "width":1, "tip":"type = anchor\nsides = 3\nhollow" },
       "dot-size":  4,
       "halo-size": 1,
       "values" :   [
