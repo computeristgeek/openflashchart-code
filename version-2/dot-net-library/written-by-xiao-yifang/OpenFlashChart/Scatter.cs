@@ -10,13 +10,19 @@ namespace OpenFlashChart
         private double x;
         private double y;
         private int? dotsize;
-        public ScatterValue(double x,double y,int dotsize)
+        public ScatterValue(double x, double y)
         {
-            this.x=x;
-            this.y=y;
-            if(dotsize>0)
-                this.dotsize=dotsize;
+            this.x = x;
+            this.y = y;
         }
+        public ScatterValue(double x, double y, int dotsize)
+        {
+            this.x = x;
+            this.y = y;
+            if (dotsize > 0)
+                this.dotsize = dotsize;
+        }
+        
         [JsonProperty("x")]
         public double X
         {
@@ -43,7 +49,10 @@ namespace OpenFlashChart
    public class Scatter:Chart<ScatterValue>
     {
        private int? dotsize;
-
+       public Scatter()
+       {
+           this.ChartType = "scatter";
+       }
        public Scatter(string color,int? dotsize)
        {
            this.ChartType = "scatter";
@@ -53,7 +62,7 @@ namespace OpenFlashChart
        [JsonProperty("dot-size")]
        public int? DotSize
        {
-           get { return this.dotsize.Value; }
+           get { return this.dotsize; }
            set { this.dotsize = value; }
        }
     }

@@ -64,6 +64,7 @@
     <Compile Include="LineBase.cs" />
     <Compile Include="LineDot.cs" />
     <Compile Include="LineHollow.cs" />
+    <Compile Include="LineScatter.cs" />
     <Compile Include="OpenFlashChart.cs" />
     <Compile Include="OpenFlashChartControl.cs" />
     <Compile Include="Pie.cs" />
