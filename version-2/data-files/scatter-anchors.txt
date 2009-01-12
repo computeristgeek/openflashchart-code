@@ -36,7 +36,7 @@
 					{"x": 4, "y": 4, "type":"anchor", "sides":6, "tip":"type = anchor\nsides = 6\nhollow" },
 					{"x": 5, "y": 4, "type":"anchor", "sides":7, "tip":"type = anchor\nsides = 7\nhollow" },
 					{"x": 6, "y": 4, "type":"anchor", "sides":8, "tip":"type = anchor\nsides = 8\nhollow" },
-					{"x": 7, "y": 4, "type":"anchor", "sides":9, "tip":"type = anchor\nsides = 9\nhollow" },
+					{"x": 7, "y": 4, "type":"anchor", "sides":9, "tip":"type = anchor\nsides = 9\nhollow", "hollow":true, "background-colour":"#ffffff" },
 					{"x": 8, "y": 4, "type":"anchor", "sides":10, "tip":"type = anchor\nsides = 10\nhollow" }
 					]
     }
