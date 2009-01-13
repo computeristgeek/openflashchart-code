@@ -41,14 +41,6 @@
               "9:00am","9:10","9:20"]
   },
 
-/*
-
-x_label_style = 13,0x9933CC,0,6
-y_label_style = none
-bg_colour = 0xDFFFDF
-
-*/
-
   "y_axis":{
     "max":   3
   }

@@ -29,7 +29,7 @@
 
 		"loop":      true,
 		"values" :   [
-			15, 14, {"value":13,"colour":"#FF0000","tip":"monkies"}, 12, 11, 10
+			15, 14, {"value":13,"colour":"#FF0000","tip":"monkies", "background-alpha": 0.9}, 12, 11, 10
 		]
     }
   ],

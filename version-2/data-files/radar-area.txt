@@ -14,9 +14,10 @@
 		"width":     3,
 		"font-size": 10,
 		"dot-style": {
-			"type":"dot",
-			"dot-size":  7},
-		"tip":       "Orange<br>#val#",
+			"type":			"dot",
+			"tip":			"Orange<br>#val#",
+			"dot-size":		5},
+		
 		"loop":      true,
 		"values" :   [3,3,9,9,9,3,3]
 	},
@@ -30,9 +31,10 @@
 		"width":     3,
 		"font-size": 10,
 		"dot-style": {
-			"type":"hollow-dot",
-			"dot-size":  7},
-		"tip":       "Lime<br>#val#",
+			"type":		"hollow-dot",
+			"tip":		"Lime<br>#val#",
+			"dot-size":	5},
+		
 		"loop":      true,
 		"values" :   [9,9,3,3,3,9,9]
 	}
