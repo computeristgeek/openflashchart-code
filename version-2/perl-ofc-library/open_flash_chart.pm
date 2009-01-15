@@ -117,8 +117,8 @@ sub render_swf {
 	my ($self, $props) = @_;
   #my ($self, $width, $height, $data) = @_;
  
-	$props->{'height'} = '300' if !defined($props->{'height'});
-	$props->{'width'} = '400' if !defined($props->{'width'});
+	$props->{'height'} = '300px' if !defined($props->{'height'});
+	$props->{'width'} = '400px' if !defined($props->{'width'});
 	$props->{'data'} = '' if !defined($props->{'data'});
 	$props->{'class'} = 'ofc-chart' if !defined($props->{'class'});
 	
@@ -143,6 +143,7 @@ sub render_swf {
                   var img_win = window.open('', 'Charts: Export as Image')
                   with(img_win.document) {
                       write('<html><head><title>Charts: Export as Image<\/title><\/head><body>' + OFC.jquery.image(src) + '<\/body><\/html>') }
+                      close();
                }
           }
           // Using an object as namespaces is JS Best Practice. I like the Control.XXX style.
@@ -214,7 +215,6 @@ sub render_swf {
 
 
 #Not Yet Supported
-#"area_hollow",
 #"hbar",
 
 
@@ -343,33 +343,11 @@ sub new() {
   $self = $self->SUPER::new();
   $self->{'element_props'}->{'type'} = __PACKAGE__;
   $self->{'element_props'}->{'width'} = 2;
+  $self->{'element_props'}->{'dot-style'} = {}; #{'type'=>'solid-dot', 'colour'=>'#a44a80', 'dot-size'=>6, 'tip'=>'#val#<br>#x_label#'};
   return $self;
 }
-package line_dot;
-our @ISA = qw(line);
-sub new() {
-  my ($proto) = @_;
-  my $class = ref($proto) || $proto;
-  my $self  = {};
-  bless $self, $class;
-  $self = $self->SUPER::new();
-  $self->{'element_props'}->{'type'} = __PACKAGE__;
-  $self->{'element_props'}->{'dot-size'} = 6;
-  return $self;
-}
-package line_hollow;
-our @ISA = qw(line);
-sub new() {
-  my ($proto) = @_;
-  my $class = ref($proto) || $proto;
-  my $self  = {};
-  bless $self, $class;
-  $self = $self->SUPER::new();
-  $self->{'element_props'}->{'type'} = __PACKAGE__;
-  $self->{'element_props'}->{'dot-size'} = 8;
-  return $self;
-}
-package area_hollow;
+
+package area;
 our @ISA = qw(bar_and_line_base);
 sub new() {
   my ($proto) = @_;
@@ -381,7 +359,7 @@ sub new() {
   $self->{'element_props'}->{'width'} = 2;
   $self->{'element_props'}->{'fill'} = '';
   $self->{'element_props'}->{'text'} = '';
-  $self->{'element_props'}->{'dot-size'} = 5;
+  $self->{'element_props'}->{'dot-style'} = {};
   $self->{'element_props'}->{'halo-size'} = 2;
   $self->{'element_props'}->{'fill-alpha'} = 0.6;
   return $self;
@@ -490,9 +468,6 @@ sub new() {
 sub set_min_max {
   my ($self, $min, $max) = @_;
 
-  $self->{'max_value'} = $max if defined($max);
-  $self->{'min_value'} = $max if defined($min);
-
 	my $max_bar_val;
   for my $v ( @{$self->{'element_props'}->{'values'}} ) {
   	#each bar
@@ -512,7 +487,9 @@ sub set_min_max {
     }
   	$max_bar_val = $this_bar_val if ( !defined($max_bar_val) || $max_bar_val < $this_bar_val );
   }
-  
+
+  $self->{'max_value'} = $max if defined($max);
+  $self->{'min_value'} = $min if defined($min);
   if ( !defined($max) ) {
     $self->{'max_value'} = $max_bar_val;
   }
@@ -539,7 +516,7 @@ sub new() {
   $self->{'element_props'}->{'animate'} = 1;
   $self->{'element_props'}->{'start-angle'} = 0;
   $self->{'element_props'}->{'radius'} = 200;
-  $self->{'element_props'}->{'tip'} = '';
+  $self->{'element_props'}->{'tip'} = '#val#';
   $self->{'element_props'}->{'label-colour'} = '#000';
   $self->{'element_props'}->{'values'} = [ {'value'=>rand(255), 'label'=>'linux'}, {'value'=>rand(255), 'label'=>'windows'}, {'value'=>rand(255), 'label'=>'vax'}, {'value'=>rand(255), 'label'=>'NexT'}, {'value'=>rand(255), 'label'=>'solaris'}];
 
@@ -645,34 +622,38 @@ sub new() {
     {"x"=>-5,  "y"=>5,  "dot-size"=>5},
     {"x"=>0.5, "y"=>1,  "dot-size"=>15}
   ];
+  $self->{"element_props"}->{"dot-style"} = {"type"=>"solid-dot"};
 
   return $self;
 }
-sub set_extremes {
-  my ($self) = @_;
-  my $extremes = extreme->new();
-  
+sub set_min_max {
+  my ($self, $min, $max) = @_;
+
+	my $max_calc;
+	my $min_calc;
   for ( @{$self->{'element_props'}->{'values'}} ) {
-    $extremes->{'y_axis_max'} = $_->{'y'} if !defined($extremes->{'y_axis_max'});
-    if ( $_->{'y'} > $extremes->{'y_axis_max'} ) {
-      $extremes->{'y_axis_max'} = $_->{'y'};
+    $max_calc = $_->{'y'} if !defined($max_calc);
+    if ( $_->{'y'} > $max_calc ) {
+      $max_calc = $_->{'y'};
     }
-    $extremes->{'y_axis_min'} = $_->{'y'} if !defined($extremes->{'y_axis_min'});
-    if ( $_->{'y'} < $extremes->{'y_axis_min'} ) {
-      $extremes->{'y_axis_min'} = $_->{'y'};
+    $min_calc = $_->{'y'} if !defined($min_calc);
+    if ( $_->{'y'} < $min_calc ) {
+      $min_calc = $_->{'y'};
     }
-
-    $extremes->{'x_axis_max'} = $_->{'x'} if !defined($extremes->{'x_axis_max'});
-    if ( $_->{'x'} > $extremes->{'x_axis_max'} ) {
-      $extremes->{'x_axis_max'} = $_->{'x'};
-    }
-    $extremes->{'x_axis_min'} = $_->{'x'} if !defined($extremes->{'x_axis_min'});
-    if ( $_->{'x'} < $extremes->{'x_axis_min'} ) {
-      $extremes->{'x_axis_min'} = $_->{'x'};
-    }
-
   }
-  $self->{'extremes'} = $extremes;
+
+  $self->{'max_value'} = $max if defined($max);
+  $self->{'min_value'} = $min if defined($min);
+  if ( !defined($max) ) {
+    $self->{'max_value'} = $max_calc;
+  }
+	if ( !defined($min) ) {
+    $self->{'min_value'} = $min_calc;
+  }
+  
+	return 1;
+
+
 }
 
 #############################

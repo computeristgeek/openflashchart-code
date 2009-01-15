@@ -130,7 +130,6 @@ $chart_element->{'element_props'}->{'text'} = '';
 $chart_element->{'element_props'}->{'colour'} = random_color();
 $chart_element->{'element_props'}->{'font-size'} = 10;
 $chart_element->{'element_props'}->{'width'} = 2; #for line
-#$chart_element->{'element_props'}->{'dot-size'} = 6; #for line_dot and line_hallow and area_hallow
 #$chart_element->{'element_props'}->{'width'} = 2; #for area_hallow
 #$chart_element->{'element_props'}->{'fill'} = ''; #for area_hallow
 #$chart_element->{'element_props'}->{'halo-size'} = 2; #for area_hallow

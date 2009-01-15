@@ -52,16 +52,20 @@ $y_axis->add_element($e2);
 %>
 <html>
   <head>
-    <title>OFC Bar Test</title>
+    <title>OFC Test Suite - PERL</title>
+    <link type="text/css" rel="stylesheet" media="all" href="style.css"/>
   </head>
   <body>
-    <h1>OFC Bar Test</h1>
+  	<!--#INCLUDE FILE = "list_all_tests.inc"-->
+    <h3>Bar Test</h3>
 <%
     $Response->write($g->render_swf({'width'=>600, 'height'=>400}));
-    $Response->write('<br>');
+    $Response->write('<p>Should have one 2D plain, and one 2D outline bars with height=rnd(40)</p>');
+    $Response->write('<br/><hr/>');
     $Response->write($g2->render_swf({'width'=>600, 'height'=>400}));
+    $Response->write('<p>Should have one 3D plain and one 3D bar glass with height=rnd(40)</p>');
 %>
-<!--#INCLUDE FILE = "list_all_tests.inc"-->
+
 
 </body>
 </html>
