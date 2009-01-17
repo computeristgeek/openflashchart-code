@@ -1,8 +1,14 @@
 ﻿{
-  "y_legend":{
-    "text":   "Time of day",
-    "style": "{color: #736AFF;}"
-  },
+	"y_legend":{
+		"text":   "Time of day",
+		"style": "{color: #736AFF;}"
+	},
+	
+	"menu":{
+		"colour":			"#E0E0ff",
+		"outline-colour":	"#707070",
+		"camera-text":		"Save as image"
+	},
 
 	"elements":[
 		{
