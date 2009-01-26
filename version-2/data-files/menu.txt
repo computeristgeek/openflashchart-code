@@ -7,7 +7,20 @@
 	"menu":{
 		"colour":			"#E0E0ff",
 		"outline-colour":	"#707070",
-		"camera-text":		"Save as image"
+		"values" : [
+				{
+					"type":		"camera-icon",
+					"text":		"Save as image"
+				},
+				{
+					"type":		"camera-icon",
+					"text":		"Save as image 2"
+				},
+				{
+					"type":		"camera-icon",
+					"text":		"3!!"
+				}
+			]
 	},
 
 	"elements":[
