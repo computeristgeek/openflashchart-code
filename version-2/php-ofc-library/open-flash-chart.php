@@ -49,6 +49,8 @@ include_once 'ofc_radar_axis_labels.php';
 include_once 'ofc_radar_spoke_labels.php';
 include_once 'ofc_line_style.php';
 
+include_once 'ofc_default_dot_style.php';
+
 class open_flash_chart
 {
 	function open_flash_chart()

@@ -4,7 +4,7 @@ class line_base
 {
 	function line_base()
 	{
-		$this->type      = "line_dot";
+		$this->type      = "line";
 		$this->text      = "Page views";
 		$tmp = 'font-size';
 		$this->$tmp = 10;
