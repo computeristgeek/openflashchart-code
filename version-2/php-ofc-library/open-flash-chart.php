@@ -49,7 +49,7 @@ include_once 'ofc_radar_axis_labels.php';
 include_once 'ofc_radar_spoke_labels.php';
 include_once 'ofc_line_style.php';
 
-include_once 'ofc_default_dot_style.php';
+include_once 'dot_base.php';
 
 class open_flash_chart
 {

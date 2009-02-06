@@ -6,6 +6,10 @@ class bar_base
 {
 	function bar_base(){}
 
+	/**
+	 * @param $text as string the key text
+	 * @param $size as integer, size in pixels
+	 */
 	function set_key( $text, $size )
 	{
 		$this->text = $text;
@@ -13,26 +17,43 @@ class bar_base
 		$this->$tmp = $size;
 	}
 
+	/**
+	 * @param $v as an array, a mix of:
+	 * 	- integer
+	 * 	- specific bar class
+	 */
 	function set_values( $v )
 	{
 		$this->values = $v;		
 	}
 	
+	/**
+	 * see set_values
+	 */
 	function append_value( $v )
 	{
 		$this->values[] = $v;		
 	}
 	
+	/**
+	 * @param $colour as string, a HEX colour, e.g. '#ff0000' red
+	 */
 	function set_colour( $colour )
 	{
 		$this->colour = $colour;	
 	}
 
+	/**
+	 * @param $alpha as real number (range 0 to 1), e.g. 0.5 is half transparent
+	 */
 	function set_alpha( $alpha )
 	{
 		$this->alpha = $alpha;	
 	}
 	
+	/**
+	 * @param $tip as string, the tip to show. May contain various magic variables.
+	 */
 	function set_tooltip( $tip )
 	{
 		$this->tip = $tip;	

@@ -12,7 +12,7 @@ class line
 		$this->values    = array();
 	}
 	
-	function set_default_dot_dtyle( $style )
+	function set_default_dot_style( $style )
 	{
 		$tmp = 'dot-style';
 		$this->$tmp = $style;	
