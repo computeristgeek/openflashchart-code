@@ -1,20 +1,18 @@
 {
   "title":{
-    "text":"Area Chart",
+    "text":"Right Y Axis",
     "style":"{font-size: 30px;}"
   },
 
   "elements":[
     {
-      "type":      "line_hollow",
+      "type":      "line",
       "colour":    "#CC3399",
-      "dot-size":  7,
       "values" :   [0,0.37,0.73,1.07,1.36,1.59,1.77]
     },
     {
-      "type":      "line_hollow",
+      "type":      "line",
       "colour":    "#343399",
-      "dot-size":  7,
       "values" :   [0,0.37,0.73,1.07,1.36,1.59,1.77],
       "axis":      "right"
     }
@@ -23,13 +21,15 @@
   "y_axis":{
     "max":          2,
     "grid-visible":  true,
-    "grid-colour":  "#FF0000"
+    "grid-colour":  "#CC3399",
+	"colour":		"#CC3399"
   },
 
   "y_axis_right":{    
     "max":           3,
     "grid-visible":  true,
-    "grid-colour":  "#0000FF"
+    "grid-colour":  "#0000FF",
+	"colour":		"#0000FF"
   }
 
 }

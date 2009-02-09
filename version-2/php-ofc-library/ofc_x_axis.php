@@ -4,17 +4,27 @@ class x_axis
 {
 	function x_axis(){}
 
+	/**
+	 * @param $stroke as integer, with of the line
+	 */
 	function set_stroke( $stroke )
 	{
 		$this->stroke = $stroke;	
 	}
 	
+	/**
+	 *@param $colour as string HEX colour
+	 *@param $grid_colour as string HEX colour
+	 */
 	function set_colours( $colour, $grid_colour )
 	{
 		$this->set_colour( $colour );
 		$this->set_grid_colour( $grid_colour );
 	}
 	
+	/**
+	 *@param $colour as string HEX colour
+	 */
 	function set_colour( $colour )
 	{
 		$this->colour = $colour;	
@@ -32,7 +42,9 @@ class x_axis
 		$this->$tmp = $colour;
 	}
 	
-	// $o is a boolean
+	/**
+	 * @param $o is a boolean
+	 */
 	function set_offset( $o )
 	{
 		$this->offset = $o?true:false;	
@@ -43,6 +55,10 @@ class x_axis
 		$this->steps = $steps;
 	}
 	
+	/**
+	 * @param $val as an integer, the height in pixels of the 3D bar. Mostly
+	 * used for the 3D bar chart.
+	 */
 	function set_3d( $val )
 	{
 		$tmp = '3d';
@@ -55,10 +71,10 @@ class x_axis
 		$this->labels = $x_axis_labels;
 	}
 	
-	//
-	// helper function to make the examples
-	// simpler.
-	//
+	/**
+	 * Sugar syntax: helper function to make the examples simpler.
+	 * @param $a is an array of labels
+	 */
 	function set_labels_from_array( $a )
 	{
 		$x_axis_labels = new x_axis_labels();

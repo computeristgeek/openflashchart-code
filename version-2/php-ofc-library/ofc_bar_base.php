@@ -19,8 +19,8 @@ class bar_base
 
 	/**
 	 * @param $v as an array, a mix of:
-	 * 	- integer
-	 * 	- specific bar class
+	 * 	- a bar_value class. You can use this to customise the paramters of each bar.
+	 * 	- integer. This is the Y position of the top of the bar.
 	 */
 	function set_values( $v )
 	{

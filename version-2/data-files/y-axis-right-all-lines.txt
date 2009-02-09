@@ -6,7 +6,7 @@
 
   "elements":[
     {
-      "type":       "line_hollow",
+      "type":       "line",
       "colour":     "#CC3399",
       "values" :    [2,2],
       "axis":       "right"
@@ -19,7 +19,7 @@
       "axis":       "right"
     },
     {
-      "type":      "line_dot",
+      "type":      "line",
       "values" :   [4,4] ,
       "axis":      "right"
     }
