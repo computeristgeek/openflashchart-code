@@ -16,6 +16,14 @@ class bar_base
 		$tmp = 'font-size';
 		$this->$tmp = $size;
 	}
+	
+	/**
+	 * syntatical sugar.
+	 */
+	function key( $text, $size )
+	{
+		$this->set_key( $text, $size );
+	}
 
 	/**
 	 * @param $v as an array, a mix of:
@@ -41,6 +49,14 @@ class bar_base
 	function set_colour( $colour )
 	{
 		$this->colour = $colour;	
+	}
+	
+	/**
+	 *syntatical sugar
+	 */
+	function colour( $colour )
+	{
+		$this->set_colour( $colour );
 	}
 
 	/**

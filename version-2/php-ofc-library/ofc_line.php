@@ -18,6 +18,12 @@ class line
 		$this->$tmp = $style;	
 	}
 	
+	/**
+	 * @param $v as array, can contain any combination of:
+	 *  - integer, Y position of the point
+	 *  - any class that inherits from dot_base
+	 *  - <b>null</b>
+	 */
 	function set_values( $v )
 	{
 		$this->values = $v;		
@@ -43,10 +49,13 @@ class line
 		$this->colour = $colour;
 	}
 	
-	function set_dot_size( $size )
+	/**
+	 * sytnatical sugar for set_colour
+	 */
+	function colour( $colour )
 	{
-		$tmp = 'dot-size';
-		$this->$tmp = $size;		
+		$this->set_colour( $colour );
+		return $this;
 	}
 	
 	function set_halo_size( $size )
@@ -93,4 +102,9 @@ class line
     {
         $this->text = $text;
     }
+	
+	function attach_to_right_y_axis()
+	{
+		$this->axis = 'right';
+	}
 }

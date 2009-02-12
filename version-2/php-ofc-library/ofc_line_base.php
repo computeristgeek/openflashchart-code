@@ -87,4 +87,6 @@ class line_base
     {
         $this->text = $text;
     }
+	
+	
 }

@@ -9,9 +9,10 @@ class x_axis_labels
 		$this->steps = $steps;
 	}
 	
-	//
-	// An array of [x_axis_label or string]
-	//
+	/**
+	 *
+	 * @param $labels as an array of [x_axis_label or string]
+	 */
 	function set_labels( $labels )
 	{
 		$this->labels = $labels;
@@ -22,11 +23,17 @@ class x_axis_labels
 		$this->colour = $colour;
 	}
 	
+	/**
+	 * font size in pixels
+	 */
 	function set_size( $size )
 	{
 		$this->size = $size;
 	}
 	
+	/**
+	 * rotate labels
+	 */
 	function set_vertical()
 	{
 		$this->rotate = "vertical";

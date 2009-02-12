@@ -5,7 +5,7 @@ class x_axis
 	function x_axis(){}
 
 	/**
-	 * @param $stroke as integer, with of the line
+	 * @param $stroke as integer, with of the line and ticks
 	 */
 	function set_stroke( $stroke )
 	{
@@ -43,13 +43,16 @@ class x_axis
 	}
 	
 	/**
-	 * @param $o is a boolean
+	 * @param $o is a boolean. If true, the X axis start half a step in
 	 */
 	function set_offset( $o )
 	{
 		$this->offset = $o?true:false;	
 	}
 	
+	/**
+	 * @param $steps as integer. Which ticks are visible.
+	 */
 	function set_steps( $steps )
 	{
 		$this->steps = $steps;
@@ -65,6 +68,7 @@ class x_axis
 		$this->$tmp				= $val;		
 	}
 	
+
 	function set_labels( $x_axis_labels )
 	{
 		//$this->labels = $v;
@@ -85,6 +89,9 @@ class x_axis
 			$x_axis_labels->set_steps( $this->steps );
 	}
 	
+	/**
+	 * min and max.
+	 */
 	function set_range( $min, $max )
 	{
 		$this->min = $min;
