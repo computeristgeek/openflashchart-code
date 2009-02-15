@@ -18,11 +18,26 @@ class dot_base
 	}
 	
 	/**
-	 * The value (Y position)
+	 * For line charts that only require a Y position
+	 * for each point.
+	 * @param $value as integer, the Y position
 	 */
 	function value( $value )
 	{
 		$this->value = $value;
+	}
+	
+	/**
+	 * For scatter charts that require an X and Y position for
+	 * each point.
+	 * 
+	 * @param $x as integer
+	 * @param $y as integer
+	 */
+	function position( $x, $y )
+	{
+		$this->x = $x;
+		$this->y = $y;
 	}
 	
 	/**
@@ -70,6 +85,21 @@ class dot_base
 		$tmp = 'halo-size';
 		$this->$tmp = $size;
 		return $this;
+	}
+	
+	/**
+	 * @param $do as string. One of three options (examples):
+	 *  - "http://example.com" - browse to this URL
+	 *  - "https://example.com" - browse to this URL
+	 *  - "trace:message" - print this message in the FlashDevelop debug pane
+	 *  - all other strings will be called as Javascript functions, so a string "hello_world"
+	 *  will call the JS function "hello_world(index)". It passes in the index of the
+	 *  point.
+	 */
+	function on_click( $do )
+	{
+		$tmp = 'on-click';
+		$this->$tmp = $do;
 	}
 }
 

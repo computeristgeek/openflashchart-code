@@ -12,6 +12,15 @@ class line
 		$this->values    = array();
 	}
 	
+	/**
+	 * Set the default dot that all the real
+	 * dots inherit their properties from. If you set the
+	 * default dot to be red, all values in your chart that
+	 * do not specify a colour will be red. Same for all the
+	 * other attributes such as tooltip, on-click, size etc...
+	 * 
+	 * @param $style as any class that inherits base_dot
+	 */
 	function set_default_dot_style( $style )
 	{
 		$tmp = 'dot-style';
