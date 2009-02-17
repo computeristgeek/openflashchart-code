@@ -6,47 +6,7 @@ using JsonFx.Json;
 
 namespace OpenFlashChart
 {
-    public class LineDotValue
-    {
-        private double? val;
-        private string tip;
-        private string color;
-        public LineDotValue()
-        {}
-        public LineDotValue(double val)
-        {
-            this.val = val;
-        }
-        public LineDotValue(double val,string tip,string color)
-        {
-            this.val = val;
-            this.tip = tip;
-            this.color = color;
-        }
-        public LineDotValue(double val,  string color)
-        {
-            this.val = val;
-            this.color = color;
-        }
-        [JsonProperty("value")]
-        public double? Value
-        {
-            get { return val; }
-            set { val = value; }
-        }
-        [JsonProperty("tip")]
-        public string Tip
-        {
-            get { return tip; }
-            set { tip = value; }
-        }
-        [JsonProperty("colour")]
-        public string Color
-        {
-            get { return color; }
-            set { color = value; }
-        }
-    }
+    
     public class LineBase : Chart<LineDotValue>
     {
         private int width;
@@ -57,7 +17,8 @@ namespace OpenFlashChart
         
         public LineBase()
         {
-            this.ChartType = "line_dot";
+            this.ChartType = "line";
+            this.DotStyleType.Type = DotType.SOLID_DOT;
           
            
         }

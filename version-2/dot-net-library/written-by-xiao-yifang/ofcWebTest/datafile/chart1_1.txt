@@ -68,7 +68,7 @@
 					],
 				"font-size": 0,
 				"fillalpha": 0.35,
-				"type": "line_hollow"
+				"type": "line"
 			}
 		]
 }

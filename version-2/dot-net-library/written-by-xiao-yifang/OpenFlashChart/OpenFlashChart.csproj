@@ -35,6 +35,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Area.cs" />
     <Compile Include="AreaBase.cs" />
     <Compile Include="AreaHollow.cs" />
     <Compile Include="AreaLine.cs" />
@@ -46,11 +47,14 @@
     <Compile Include="BarGlass.cs" />
     <Compile Include="BarSketch.cs" />
     <Compile Include="BarStack.cs" />
+    <Compile Include="BarType.cs" />
     <Compile Include="Chart.cs" />
     <Compile Include="AxisLabel.cs" />
     <Compile Include="ChartBase.cs" />
     <Compile Include="ChartControlDesigner.cs" />
     <Compile Include="ChartElement.cs" />
+    <Compile Include="DotStyle.cs" />
+    <Compile Include="DotType.cs" />
     <Compile Include="HBar.cs" />
     <Compile Include="JSON\JsonIgnoreAttribute.cs" />
     <Compile Include="JSON\JsonNameAttribute.cs" />
@@ -63,6 +67,7 @@
     <Compile Include="Line.cs" />
     <Compile Include="LineBase.cs" />
     <Compile Include="LineDot.cs" />
+    <Compile Include="LineDotValue.cs" />
     <Compile Include="LineHollow.cs" />
     <Compile Include="LineScatter.cs" />
     <Compile Include="OpenFlashChart.cs" />

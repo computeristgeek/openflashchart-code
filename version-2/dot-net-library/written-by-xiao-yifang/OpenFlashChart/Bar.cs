@@ -51,9 +51,19 @@ namespace OpenFlashChart
     }
     public class Bar:BarBase
     {
-        public Bar(){
+        public Bar()
+        {
             this.ChartType = "bar";
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string BarType
+        {
+            get { return this.ChartType; }
+            set { this.ChartType = value; }
+        }
+        
         public void Add(BarValue barValue)
         {
             this.Values.Add(barValue);

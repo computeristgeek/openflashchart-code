@@ -40,7 +40,7 @@ public partial class Pie : System.Web.UI.Page
 
         //pie.Colour = "#fff";
         pie.Colours = new string[]{"#04f","#1ff","#6ef","#f30"};
-        pie.Tooltip="#val# of #total##percent# of 100%";
+        pie.Tooltip="#x_label#,#val# of #total##percent# of 100%";
         chart.AddElement(pie);
         string s = chart.ToPrettyString();
         Response.Clear();

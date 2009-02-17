@@ -4,11 +4,7 @@ using System.Text;
 
 namespace OpenFlashChart
 {
-    public class Line : LineBase
+    public class Area:AreaBase
     {
-        public Line()
-        {
-            this.ChartType = "line";
-        }
     }
 }

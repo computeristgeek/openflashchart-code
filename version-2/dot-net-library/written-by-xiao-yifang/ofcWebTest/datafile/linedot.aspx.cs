@@ -20,13 +20,27 @@ public partial class datafile_linedot : System.Web.UI.Page
         {
             int temp = rand.Next(30);
             if (temp > 20)
-                data1.Add(new LineDotValue(temp, "#fe0"));
+                data1.Add(new LineDotValue(temp, "your tip","#fe0fe0"));
             else
             {
                 data1.Add(temp);
             }
         }
+        LineDotValue dotValue1 = new LineDotValue(rand.Next(30));
+        dotValue1.Sides = 3;
 
+        dotValue1.DotType = DotType.HOLLOW_DOT;
+        data1.Add(dotValue1);
+        LineDotValue dotValue2 = new LineDotValue(rand.Next(30));
+        dotValue2.IsHollow = true;
+        dotValue2.DotType = DotType.STAR;
+        data1.Add(dotValue2);
+
+        LineDotValue dotValue3 = new LineDotValue(rand.Next(30));
+        dotValue3.Sides = 4;
+
+        dotValue3.DotType = DotType.DOT;
+        data1.Add(dotValue3);
         OpenFlashChart.LineHollow line1 = new LineHollow();
         line1.Values = data1;
         line1.HaloSize = 0;

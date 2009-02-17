@@ -1,22 +1,20 @@
-﻿{
+{
 	"title": 
 		{
-			"text": "中文测试",
+			"text": "\u4E2D\u6587\u6D4B\u8BD5",
 			"style": "{font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;}"
 		},
 	"x_axis": 
 		{
-			"offset": false,
 			"labels": 
 				{
-					"steps": 1,
-					"labels": 
-						[
-							"中文测试"
-						]
-					
+					"rotate": "vertical"
 				},
-			"steps": 1
+			"offset": false,
+			"steps": 2,
+			"min": 0,
+			"max": 20,
+			"3d": 0
 		},
 	"y_axis": 
 		{
@@ -24,14 +22,16 @@
 			"offset": 0,
 			"steps": 5,
 			"min": 0,
-			"max": 15
+			"max": 15,
+			"3d": 0
 		},
 	"elements": 
 		[
 			{
 				"width": 2,
 				"dot-size": 5,
-				"halo-size": 0,
+				"halo-size": 1,
+				"loop": false,
 				"values": 
 					[
 						7,
@@ -66,9 +66,13 @@
 						6.1172558591138655,
 						6.4691105534220457
 					],
-				"font-size": 0,
 				"fillalpha": 0.35,
-				"type": "line"
+				"type": "line_hollow"
 			}
-		]
+		],
+	"y_legend": 
+		{
+			"text": "Y\u8F74\u5750\u6807",
+			"style": "{font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;}"
+		}
 }

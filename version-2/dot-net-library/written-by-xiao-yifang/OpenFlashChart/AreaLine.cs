@@ -4,11 +4,12 @@ using System.Text;
 
 namespace OpenFlashChart
 {
+    [Obsolete("use Area instead")]
     public class AreaLine:AreaBase
     {
         public AreaLine()
         {
-            this.ChartType = "area_line";
+           // this.ChartType = "area_line";
         }
     }
 }

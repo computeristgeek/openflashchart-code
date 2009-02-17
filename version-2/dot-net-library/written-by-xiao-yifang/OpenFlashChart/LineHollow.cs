@@ -8,7 +8,9 @@ namespace OpenFlashChart
     {
         public LineHollow()
         {
-            this.ChartType = "line_hollow";
+            //this.ChartType = "line_hollow";
+            this.DotStyleType.IsHollow = true;
+            this.DotStyleType.Type = DotType.HOLLOW_DOT;
         }
     }
 }

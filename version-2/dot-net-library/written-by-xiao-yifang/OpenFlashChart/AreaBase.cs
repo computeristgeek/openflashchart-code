@@ -15,7 +15,7 @@ namespace OpenFlashChart
 
         protected AreaBase()
         {
-            this.ChartType = "area_line";
+            this.ChartType = "area";
         }
         [JsonProperty("fill")]
         public string FillColor

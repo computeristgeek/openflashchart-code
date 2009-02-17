@@ -53,6 +53,7 @@ public partial class _Default : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
         chart.Title = new Title("new Title");
+        OpenFlashChartControl1.Chart = chart;
     }
     protected void Button2_Click(object sender, EventArgs e)
     {

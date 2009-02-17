@@ -8,7 +8,7 @@ namespace OpenFlashChart
     {
         public LineDot()
         {
-            this.ChartType = "line_dot";
+            this.DotStyleType.Type = DotType.DOT;
         }
     }
 }

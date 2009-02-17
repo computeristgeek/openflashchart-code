@@ -9,6 +9,7 @@ namespace OpenFlashChart
         public LineScatter()
         {
             this.ChartType = "scatter_line";
+            this.DotStyleType.Type = DotType.SOLID_DOT;
         }
     }
 }
