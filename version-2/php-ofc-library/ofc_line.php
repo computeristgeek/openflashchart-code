@@ -5,10 +5,6 @@ class line
 	function line()
 	{
 		$this->type      = "line";
-		$this->text      = "Page views";
-		$tmp = 'font-size';
-		$this->$tmp = 10;
-		
 		$this->values    = array();
 	}
 	

@@ -16,7 +16,7 @@
       "values" :   [
         2,
         3,
-        {"value":6.5,"label":"hello (6.5)", "tip":"99 bottles of beer","on-click":"http://eden"},
+        {"value":6.5,"label":"hello (#val#)", "tip":"99 bottles of beer","on-click":"http://eden"},
         {"value":6.5,"on-click":"my_function"}
       ]
     }
