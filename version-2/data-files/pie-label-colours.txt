@@ -17,22 +17,25 @@
       "start_angle" : 135,
 	  "radius":200,
 	  "no-labels":false,
-      "animate" : true,
+      "ani--mate" : true,
 	  //"label-colour":0,  // leave out or set to null for auto-colour labels
       "values" : [
         {
           "value" : 135,
           "label" : "Label Num 1 - click to google",
 		  "label-colour":"0xFF0000",         // Override the label colour
-		  "on-click":"http://www.google.com"
+		  "on-click":"http://www.google.com",
+		  "animate":[{"type":"bounce","distance":5}]
         },
         {
           "value" : 135,
-          "label" : "Label Num 2"
+          "label" : "Label Num 2",
+		  "animate":[{"type":"bounce","distance":5}]
         },
         {
           "value" : 135,
-          "label" : "Label Num 3"
+          "label" : "Label Num 3",
+		  "animate":[{"type":"bounce","distance":5},{"type":"fade"}]
         },
         {
           "value" : 135,
