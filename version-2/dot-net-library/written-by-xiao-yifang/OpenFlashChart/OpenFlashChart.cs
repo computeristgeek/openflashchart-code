@@ -17,6 +17,7 @@ namespace OpenFlashChart
         private YAxis y_axis_right;
         private Legend x_legend;
         private Legend y_legend;
+        private Legend y2_legend;
         private string bgcolor;
         private RadarAxis radar_axis;
         private ToolTip tooltip;
@@ -90,6 +91,12 @@ namespace OpenFlashChart
         {
             get { return y_legend; }
             set { y_legend = value; }
+        }
+        [JsonProperty("y2_legend")]
+        public Legend Y_RightLegend
+        {
+            get { return y2_legend; }
+            set { y2_legend = value; }
         }
         [JsonProperty("bg_colour")]
         public string Bgcolor
