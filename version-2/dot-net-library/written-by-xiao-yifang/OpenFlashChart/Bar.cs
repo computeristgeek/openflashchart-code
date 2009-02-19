@@ -58,6 +58,7 @@ namespace OpenFlashChart
         /// <summary>
         /// 
         /// </summary>
+        [JsonIgnore]
         public string BarType
         {
             get { return this.ChartType; }

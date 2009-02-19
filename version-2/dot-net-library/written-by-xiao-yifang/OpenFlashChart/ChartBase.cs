@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using JsonFx.Json;
 
@@ -16,10 +17,31 @@ namespace OpenFlashChart
         private string text;
         private string tooltip;
         private DotStyle dotstyle;
+        private bool attachtorightaxis;
         protected ChartBase()
         {
             this.values = new ArrayList();
             FillAlpha = 0.35;
+            attachtorightaxis = false;
+        }
+        public void AttachToRightAxis(bool attach)
+        {
+            attachtorightaxis = attach;
+        }
+        [JsonProperty("axis")]
+        [Description("use AttachToRight(),this property only for json generate.")]
+        public string axis
+        {
+            get
+            {
+               if (attachtorightaxis)
+                    return "right";
+               return null;
+            }
+            set//when json serialize,it'll check CanWrite Property.
+            {
+                ;
+            }
         }
         [JsonProperty("colour")]
         public  string Colour
