@@ -35,16 +35,54 @@ class pie_value
 		$tmp = 'on-click';
 		$this->$tmp = $event;
 	}
-
+	
+	
+	/**
+	 * An object that inherits from base_pie_animation
+	 */
+	function add_animation( $animation )
+	{
+		if( !isset( $this->animate ) )
+			$this->animate = array();
+			
+		$this->animate[] = $animation;
+		
+		return $this;
+	}
 }
 
+class base_pie_animation{}
+
+class pie_fade extends base_pie_animation
+{
+	function pie_fade()
+	{
+		$this->type="fade";
+	}
+}
+
+class pie_bounce extends base_pie_animation
+{
+	/**
+	 * Bounce the pie slice out a little
+	 *
+	 * @param $distance as integer, distance to bounce in pixels
+	 */
+	function pie_bounce( $distance )
+	{
+		$this->type="bounce";
+		$this->distance = $distance;
+	}
+}
+
+/**
+ * Make a pie chart and fill it with pie slices
+ */
 class pie
 {
 	function pie()
 	{
 		$this->type      		= 'pie';
-		$this->colours     		= array("#d01f3c","#356aa0","#C79810");
-		$this->border			= 2;
 	}
 	
 	function set_colours( $colours )
@@ -52,20 +90,63 @@ class pie
 		$this->colours = $colours;
 	}
 	
+	/**
+	 * Sugar wrapped around set_colours
+	 */
+	function colours( $colours )
+	{
+		$this->set_colours( $colours );
+		return $this;
+	}
+	
+	/**
+	 * @param $alpha as float (0-1) 0.75 = 3/4 visible
+	 */
 	function set_alpha( $alpha )
 	{
 		$this->alpha = $alpha;
+	}
+	
+	/**
+	 *sugar wrapped set_alpha
+	 **/
+	function alpha( $alpha )
+	{
+		$this->set_alpha( $alpha );
+		return $this;
 	}
 	
 	function set_values( $v )
 	{
 		$this->values = $v;		
 	}
-	
-	// boolean
-	function set_animate( $animate )
+
+	function values( $v )
 	{
-		$this->animate = $animate;
+		$this->set_values( $v );		
+	}
+	
+	/**
+	 * HACK to keep old code working.
+	 */
+	function set_animate( $bool )
+	{
+		if( $bool )
+			$this->add_animation( new pie_fade() );
+			
+	}
+	
+	/**
+	 * An object that inherits from base_pie_animation
+	 */
+	function add_animation( $animation )
+	{
+		if( !isset( $this->animate ) )
+			$this->animate = array();
+			
+		$this->animate[] = $animation;
+		
+		return $this;
 	}
 	
 	// real
@@ -75,9 +156,27 @@ class pie
 		$this->$tmp = $angle;
 	}
 	
+	function start_angle($angle)
+	{
+		$this->set_start_angle( $angle );
+		return $this;
+	}
+	
+	/**
+	 * @param $tip as string. The tooltip text. May contain magic varibles
+	 */
 	function set_tooltip( $tip )
 	{
 		$this->tip = $tip;
+	}
+	
+	/**
+	 * sugar for set_tooltip
+	 */
+	function tooltip( $tip )
+	{
+		$this->set_tooltip( $tip );
+		return $this;
 	}
 	
 	function set_gradient_fill()
@@ -86,10 +185,28 @@ class pie
 		$this->$tmp = true;
 	}
 	
+	function gradient_fill()
+	{
+		$this->set_gradient_fill();
+		return $this;
+	}
+	
+	/**
+	 * By default each label is the same colour as the slice,
+	 * but you can ovveride that behaviour using this method.
+	 * 
+	 * @param $label_colour as string HEX colour;
+	 */
 	function set_label_colour( $label_colour )
 	{
 		$tmp = 'label-colour';
 		$this->$tmp = $label_colour;	
+	}
+	
+	function label_colour( $label_colour )
+	{
+		$this->set_label_colour( $label_colour );
+		return $this;
 	}
 	
 	/**
