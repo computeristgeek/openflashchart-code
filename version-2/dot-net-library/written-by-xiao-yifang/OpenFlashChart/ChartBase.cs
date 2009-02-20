@@ -30,7 +30,7 @@ namespace OpenFlashChart
         }
         [JsonProperty("axis")]
         [Description("use AttachToRight(),this property only for json generate.")]
-        public string axis
+        public string AttachedAxis
         {
             get
             {
@@ -38,9 +38,9 @@ namespace OpenFlashChart
                     return "right";
                return null;
             }
-            set//when json serialize,it'll check CanWrite Property.
+            set
             {
-                ;
+                attachtorightaxis = string.Compare(value,"right",StringComparison.CurrentCultureIgnoreCase)==0;
             }
         }
         [JsonProperty("colour")]

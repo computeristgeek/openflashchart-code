@@ -7,10 +7,10 @@ namespace OpenFlashChart
 {
     public class BarValue
     {
-        private double? bottom;
-        private double? top;
-        private string color;
-        private string tip;
+        protected double? bottom;
+        protected double? top;
+        protected string color;
+        protected string tip;
         public BarValue()
         {
             

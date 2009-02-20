@@ -24,7 +24,8 @@ namespace OpenFlashChart
         public const string BAR_FILLED = "bar_filled";
         public const string BAR_PLASTIC = "bar_plastic";
         public const string BAR_PLASTIC_FLAT = "bar_plastic_flat";
-       
+
+        public const string CANDLE = "candle";
 
     }
 }

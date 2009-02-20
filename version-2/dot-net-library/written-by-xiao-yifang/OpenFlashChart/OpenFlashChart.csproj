@@ -48,6 +48,7 @@
     <Compile Include="BarSketch.cs" />
     <Compile Include="BarStack.cs" />
     <Compile Include="BarType.cs" />
+    <Compile Include="Candle.cs" />
     <Compile Include="Chart.cs" />
     <Compile Include="AxisLabel.cs" />
     <Compile Include="ChartBase.cs" />
