@@ -81,8 +81,10 @@
     <Compile Include="ToolTip.cs" />
     <Compile Include="WebHandler\ofcHandler.cs" />
     <Compile Include="XAxis.cs" />
+    <Compile Include="AxisLabels.cs" />
     <Compile Include="XAxisLabels.cs" />
     <Compile Include="YAxis.cs" />
+    <Compile Include="YAxisLabels.cs" />
     <Compile Include="YAxisRight.cs" />
   </ItemGroup>
   <ItemGroup>

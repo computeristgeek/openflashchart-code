@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OpenFlashChart
 {
-    public class XAxisLabels:AxisLabels
+    public class YAxisLabels:AxisLabels
     {
     }
 }

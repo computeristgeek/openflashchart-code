@@ -18,6 +18,8 @@ namespace OpenFlashChart
        
         private double? min;
         private double? max;
+        private bool offset;
+
         [JsonProperty("stroke")]
         public int? Stroke
         {
@@ -71,6 +73,21 @@ namespace OpenFlashChart
         {
             get { return _3d; }
             set { _3d = value; }
+        }
+
+        [JsonProperty("offset")]
+        public bool Offset
+        {
+            set { offset = value; }
+            get { return offset; }
+        }
+
+        
+
+        public void SetRange(double? min, double? max)
+        {
+            Max = max;
+            Min = min;
         }
     }
 }
