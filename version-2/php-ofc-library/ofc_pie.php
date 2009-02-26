@@ -53,6 +53,9 @@ class pie_value
 
 class base_pie_animation{}
 
+/**
+ * fade the pie slice from $alpha (pie set_alpha) to 100% opaque.
+ */
 class pie_fade extends base_pie_animation
 {
 	function pie_fade()
@@ -61,11 +64,12 @@ class pie_fade extends base_pie_animation
 	}
 }
 
+/**
+ * Bounce the pie slice out a little
+ */
 class pie_bounce extends base_pie_animation
 {
 	/**
-	 * Bounce the pie slice out a little
-	 *
 	 * @param $distance as integer, distance to bounce in pixels
 	 */
 	function pie_bounce( $distance )
