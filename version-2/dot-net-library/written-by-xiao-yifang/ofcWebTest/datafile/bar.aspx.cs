@@ -21,7 +21,7 @@ public partial class bar : System.Web.UI.Page
 
         Bar bar = new OpenFlashChart.Bar();
         Random random = new Random();
-        bar.Colour = "#345";
+        bar.Colour = "#344565";
         
         bar.FillAlpha = 0.4;
         bar.Text = "Test";
