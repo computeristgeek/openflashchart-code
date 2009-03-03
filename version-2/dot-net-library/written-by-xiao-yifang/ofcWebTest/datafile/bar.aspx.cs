@@ -43,7 +43,7 @@ public partial class bar : System.Web.UI.Page
         //yaxis.SetRange(0, 20);
         //chart.Y_Axis = yaxis;
         chart.Y_Axis.SetRange(0,24,3);
-        bar.Tooltip = "提示:#top#<br>#bottom#<br>#val#";
+        bar.Tooltip = "提示:label,#x_label#<br/>#top#<br>#bottom#<br>#val#";
         string s = chart.ToPrettyString();
 
         Response.Clear();
