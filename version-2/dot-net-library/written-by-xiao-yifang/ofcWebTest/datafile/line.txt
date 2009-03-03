@@ -1,21 +1,125 @@
-{ "elements": [ { "type": "line_hollow", "width": 2, "colour": "#DFC329", "dot-size": 3, "tip": "#x_label#:#val#", "values": [ 1.5, 1.6986693307951, { "value": 1.8894183423087, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.064642473395, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.2173560908995, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.3414709848079, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.4320390859672, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.4854497299885, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.4995736030415, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.4738476308782, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.4092974268257, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.3084964038196, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.1754631805512, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.0155013718215, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 1.8349881501559, "colour": "#D02020", "tip": "#val#
-Your text here" }, 1.6411200080599, 1.4416258565724, 1.2444588979732, 1.0574795567051, 0.88814210905728, 0.74319750469207, 0.62842422758641, 0.54839792611048, 0.50630899636654, 0.50383539116416, 0.54107572533686, 0.61654534427985, 0.72723551244401, 0.86873336212768, 1.0353978205862, 1.2205845018011, 1.4169105971825, 1.6165492048505, { "value": 1.8115413635134, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 1.9941133511386, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.1569865987188, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.2936678638492, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.3987080958116, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.4679196720315, "colour": "#D02020", "tip": "#val#
-Your text here" }, { "value": 2.4985433453746, "colour": "#D02020", "tip": "#val#
-Your text here" } ] } ], "title": { "text": "Advanced dot lines" }, "y_axis": { "min": 0, "max": 3, "steps": 1 } }
+{
+	"title": 
+		{
+			"text": "line\u6F14\u793A",
+			"style": "{font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;}"
+		},
+	"x_axis": 
+		{
+			"labels": 
+				{
+					"colour": "#e43456"
+				},
+			"steps": 4,
+			"3d": 0,
+			"offset": false
+		},
+	"y_axis": 
+		{
+			"tick-length": 0,
+			"labels": 
+				{
+					"colour": "#ef6745"
+				},
+			"colour": "#ef6745",
+			"steps": 3,
+			"min": 0,
+			"max": 35,
+			"3d": 0,
+			"offset": 1
+		},
+	"y_axis_right": 
+		{
+			"tick-length": 4,
+			"labels": 
+				{},
+			"steps": 8,
+			"min": 0,
+			"max": 60,
+			"3d": 0,
+			"offset": false
+		},
+	"elements": 
+		[
+			{
+				"width": 2,
+				"dot-size": 5,
+				"halo-size": 0,
+				"loop": false,
+				"tip": "\u63D0\u793A\uFF1A#val#",
+				"values": 
+					[
+						9,
+						25,
+						16,
+						14,
+						24,
+						25,
+						12,
+						25,
+						2,
+						15,
+						1,
+						11
+					],
+				"fillalpha": 0.35,
+				"type": "line",
+				"dot-style": 
+					{
+						"type": "solid-dot",
+						"tip": "#x_label#\u003Cbr>#val#",
+						"colour": "#467533"
+					}
+			},
+			{
+				"width": 3,
+				"dot-size": 4,
+				"halo-size": 1,
+				"loop": false,
+				"axis": "right",
+				"tip": "\u63D0\u793A\uFF1A#val#",
+				"values": 
+					[
+						30,
+						40,
+						39,
+						15,
+						42,
+						25,
+						15,
+						0,
+						16,
+						39,
+						41,
+						47
+					],
+				"fillalpha": 0.35,
+				"type": "line",
+				"dot-style": 
+					{
+						"type": "solid-dot",
+						"tip": "#x_label#\u003Cbr>#val#",
+						"colour": "#fe4567"
+					}
+			}
+		],
+	"y_legend": 
+		{
+			"text": "\u4E2D\u6587test",
+			"style": "{font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;}"
+		},
+	"y2_legend": 
+		{
+			"text": "test y legend right",
+			"style": "{font-size: 20px; color:#0000ff; font-family: Verdana; text-align: center;}"
+		},
+	"tooltip": 
+		{
+			"text": "\u5168\u5C40\u63D0\u793A\uFF1A#val#",
+			"shadow": true,
+			"rounded": 1,
+			"stroke": 2,
+			"colour": "#e43456",
+			"mouse": 0
+		}
+}

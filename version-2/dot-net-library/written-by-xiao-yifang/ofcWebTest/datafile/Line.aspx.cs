@@ -55,6 +55,9 @@ public partial class datafile_Line : System.Web.UI.Page
         chart.X_Axis.Labels.Color = "#e43456";
         chart.X_Axis.Steps = 4;
         chart.Y_Axis.Steps = 3;
+        chart.Y_Axis.Colour = "#ef6745";
+        chart.Y_Axis.Labels.Color = "#ef6745";
+        chart.Y_Axis.Offset = true;
         chart.Y_RightLegend = new Legend("test y legend right");
         chart.Y_Axis_Right = new YAxis();
         chart.Y_Axis_Right.Steps = 8;
