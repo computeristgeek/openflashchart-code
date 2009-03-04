@@ -44,6 +44,7 @@ class x_axis
 	
 	/**
 	 * @param $o is a boolean. If true, the X axis start half a step in
+	 * This defaults to True
 	 */
 	function set_offset( $o )
 	{
@@ -68,7 +69,10 @@ class x_axis
 		$this->$tmp				= $val;		
 	}
 	
-
+	/**
+	 * @param $x_axis_labels as an x_axis_labels object
+	 * Use this to customize the labels (colour, font, etc...)
+	 */
 	function set_labels( $x_axis_labels )
 	{
 		//$this->labels = $v;

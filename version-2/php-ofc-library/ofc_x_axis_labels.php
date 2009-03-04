@@ -36,6 +36,11 @@ class x_axis_labels
 	 */
 	function set_vertical()
 	{
-		$this->rotate = "vertical";
+		$this->rotate = 270;
+	}
+	
+	function rotate( $angle )
+	{
+		$this->rotate = $angle;
 	}
 }
