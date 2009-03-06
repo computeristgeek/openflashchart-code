@@ -1,5 +1,17 @@
 <?php
 
+class y_axis_labels
+{
+	function y_axis_labels()
+	{	
+	}
+	
+	function set_text($text)
+	{
+		$this->text = $text;
+	}
+}
+
 class y_axis_base
 {
 	function y_axis_base(){}
@@ -55,6 +67,15 @@ class y_axis_base
 	}
 	
 	/**
+	 * Sugar for set_range
+	 */
+	function range( $min, $max, $steps=1 )
+	{
+		$this->set_range( $min, $max, $steps );
+		return $this;
+	}
+	
+	/**
 	 * @param $off as Boolean. If true the Y axis is nudged up half a step.
 	 */
 	function set_offset( $off )
@@ -75,6 +96,22 @@ class y_axis_base
 	}
 	
 	/**
+	 * Pass in some text for each label. This can contain magic variables "#val#" which
+	 * will get replaced with the value for that Y axis label. Useful for:
+	 * - "£#val#"
+	 * - "#val#%"
+	 * - "#val# million"
+	 * 
+	 * @param $text as string.
+	 */
+	function set_label_text( $text )
+	{
+		$tmp = new y_axis_labels();
+		$tmp->set_text( $text );
+		$this->labels = $tmp;
+	}
+	
+	/**
 	 * @param $steps as integer.
 	 *
 	 * Only show every $steps label, e.g. every 10th
@@ -82,5 +119,13 @@ class y_axis_base
 	function set_steps( $steps )
 	{
 		$this->steps = $steps;	
+	}
+	
+	/**
+	 * Make the labels show vertical
+	 */
+	function set_vertical()
+	{
+		$this->rotate = "vertical";
 	}
 }

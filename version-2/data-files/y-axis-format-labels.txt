@@ -1,9 +1,5 @@
-{
-  "title":{
-    "text":"Area Chart",
-    "style":"{font-size: 30px;}"
-  },
-
+﻿{
+  
   "y_legend":{
     "text":"OFC",
     "style":"{font-size: 12px; color:#736AFF;}"
@@ -23,16 +19,20 @@
     }
   ],
 
+
   "y_axis":{
-    "stroke":       4,
-    "tick-length":  10,
+    "stroke":       1,
+    "tick-length":  3,
     "colour":       "#d09090",
     "grid-colour":  "#00ff00",
-    "offset":       false,
-    "min":         -4,
-    "max":          4,
+    "max":          40000,
     "visible":      true,
-    "steps":        2
-  }
+    "steps":        10000
+  },
+  
+	"num_decimals": 3,
+	"is_fixed_num_decimals_forced": true,
+	"is_decimal_separator_comma": true,
+	"is_thousand_separator_disabled": true
 
 }

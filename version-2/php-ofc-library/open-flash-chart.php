@@ -118,6 +118,25 @@ class open_flash_chart
 		$this->tooltip = $tooltip;	
 	}
 	
+	/**
+	 * This is a bit funky :(
+	 *
+	 * @param $num_decimals as integer. Truncate the decimals to $num_decimals, e.g. set it
+	 * to 5 and 3.333333333 will display as 3.33333. 2.0 will display as 2 (or 2.00000 - see below)
+	 * @param $is_fixed_num_decimals_forced as boolean. If true it will pad the decimals.
+	 * @param $is_decimal_separator_comma as boolean
+	 * @param $is_thousand_separator_disabled as boolean
+	 *
+	 * This needs a bit of love and attention
+	 */
+	function set_number_format($num_decimals, $is_fixed_num_decimals_forced, $is_decimal_separator_comma, $is_thousand_separator_disabled )
+	{
+		$this->num_decimals = $num_decimals;
+		$this->is_fixed_num_decimals_forced = $is_fixed_num_decimals_forced;
+		$this->is_decimal_separator_comma = $is_decimal_separator_comma;
+		$this->is_thousand_separator_disabled = $is_thousand_separator_disabled;
+	}
+	
 	function toString()
 	{
 		if (function_exists('json_encode'))
