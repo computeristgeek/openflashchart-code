@@ -27,23 +27,26 @@ public partial class bar : System.Web.UI.Page
         bar.Text = "Test";
      
         bar.FontSize = 10;
-        List<double> values = new List<double>();
+        List<object> values = new List<object>();
         for (int i = 0; i < 12; i++)
             values.Add(random.Next(i, i * 2));
+        BarValue barValue = new BarValue(12);
+        barValue.OnClick = "http://xiao-yifang.blogspot.com";
+        values.Add(barValue);
         bar.Values = values;
         chart.AddElement(bar);
-        //XAxis xaxis = new XAxis();
-        //// xaxis.Labels = new AxisLabel("text","#ef0",10,"vertical");
+        XAxis xaxis = new XAxis();
+        xaxis.Labels.SetLabels(new string[] { "text", "#ef0", "10", "vertical" });
         //xaxis.Steps = 1;
         //xaxis.Offset = true;
         ////xaxis.SetRange(-2, 15);
-        //chart.X_Axis = xaxis;
+        chart.X_Axis = xaxis;
         //YAxis yaxis = new YAxis();
         //yaxis.Steps = 4;
         //yaxis.SetRange(0, 20);
         //chart.Y_Axis = yaxis;
         chart.Y_Axis.SetRange(0,24,3);
-        bar.Tooltip = "提示:label,#x_label#<br/>#top#<br>#bottom#<br>#val#";
+        bar.Tooltip = "提示:label:#x_label#<br>#top#<br>#bottom#<br>#val#";
         string s = chart.ToPrettyString();
 
         Response.Clear();

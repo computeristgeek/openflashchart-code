@@ -33,15 +33,15 @@ public partial class datafile_Line : System.Web.UI.Page
         //line1.DotStyleType.Type = DotType.ANCHOR;
         //line1.DotStyleType.Type = DotType.BOW;
         line1.DotStyleType.Colour = "#467533";
-        line1.Tooltip = "提示：#val#";
+        line1.Tooltip = "#x_label#<br>提示：#val#";
 
-        OpenFlashChart.Line line2 = new Line();
+        OpenFlashChart.LineDot line2 = new LineDot();
         line2.Values = data2;
         line2.HaloSize = 1;
         line2.Width = 3;
         line2.DotSize = 4;
         line2.DotStyleType.Tip = "#x_label#<br>#val#";
-        //line1.DotStyleType.Type = DotType.ANCHOR;
+        line1.DotStyleType.Type = DotType.ANCHOR;
         //line1.DotStyleType.Type = DotType.BOW;
         line2.DotStyleType.Colour = "#fe4567";
         line2.Tooltip = "提示：#val#";

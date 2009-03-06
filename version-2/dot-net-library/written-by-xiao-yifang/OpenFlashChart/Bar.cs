@@ -11,6 +11,7 @@ namespace OpenFlashChart
         protected double? top;
         protected string color;
         protected string tip;
+        private string onclick;
         public BarValue()
         {
             
@@ -47,6 +48,12 @@ namespace OpenFlashChart
         {
             get { return tip; }
             set { tip = value; }
+        }
+        [JsonProperty("on-click")]
+        public string OnClick
+        {
+            get { return onclick; }
+            set { onclick = value; }
         }
     }
     public class Bar:BarBase
