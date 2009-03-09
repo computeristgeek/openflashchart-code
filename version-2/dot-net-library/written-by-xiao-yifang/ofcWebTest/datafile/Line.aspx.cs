@@ -35,7 +35,7 @@ public partial class datafile_Line : System.Web.UI.Page
         line1.DotStyleType.Colour = "#467533";
         line1.Tooltip = "#x_label#<br>提示：#val#";
 
-        OpenFlashChart.LineDot line2 = new LineDot();
+        OpenFlashChart.Line line2 = new Line();
         line2.Values = data2;
         line2.HaloSize = 1;
         line2.Width = 3;
