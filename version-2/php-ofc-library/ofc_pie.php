@@ -120,14 +120,24 @@ class pie
 		return $this;
 	}
 	
+	/**
+	 * @param $v as array containing one of
+	 *  - null
+	 *  - real or integer number
+	 *  - a pie_value object
+	 */
 	function set_values( $v )
 	{
 		$this->values = $v;		
 	}
 
+	/**
+	 * sugar for set_values
+	 */
 	function values( $v )
 	{
-		$this->set_values( $v );		
+		$this->set_values( $v );
+		return $this;
 	}
 	
 	/**
@@ -153,13 +163,18 @@ class pie
 		return $this;
 	}
 	
-	// real
+	/**
+	 * @param $angle as real number
+	 */
 	function set_start_angle( $angle )
 	{
 		$tmp = 'start-angle';
 		$this->$tmp = $angle;
 	}
 	
+	/**
+	 * sugar for set_start_angle
+	 */
 	function start_angle($angle)
 	{
 		$this->set_start_angle( $angle );
@@ -226,5 +241,17 @@ class pie
 	{
 		$tmp = 'on-click';
 		$this->$tmp = $event;
+	}
+	
+	/**
+	 * Fix the radius of the pie chart. Take a look at the magic variable #radius#
+	 * for helping figure out what radius to set it to.
+	 * 
+	 * @param $radius as number
+	 */
+	function radius( $radius )
+	{
+		$this->radius = $radius;
+		return $this;
 	}
 }
