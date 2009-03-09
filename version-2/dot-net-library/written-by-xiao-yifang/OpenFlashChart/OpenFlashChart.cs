@@ -21,6 +21,10 @@ namespace OpenFlashChart
         private string bgcolor;
         private RadarAxis radar_axis;
         private ToolTip tooltip;
+        private int? num_decimals;
+        private bool? is_fixed_num_decimals_forced;
+        private bool? is_decimal_separator_comma;
+        private bool? is_thousand_separator_disabled;
 
         public OpenFlashChart()
         {
@@ -119,6 +123,30 @@ namespace OpenFlashChart
             }
             set { this.radar_axis = value; }
         }
+        [JsonProperty("num_decimals")]
+        public int? NumDecimals
+        {
+            get { return num_decimals; }
+            set { num_decimals = value; }
+        }
+        [JsonProperty("is_fixed_num_decimals_forced")]
+        public bool? IsFixedNumDecimalsForced
+        {
+            get { return is_fixed_num_decimals_forced; }
+            set { is_fixed_num_decimals_forced = value; }
+        }
+        [JsonProperty("is_decimal_separator_comma")]
+        public bool? IsDecimalSeparatorComma
+        {
+            get { return is_decimal_separator_comma; }
+            set { is_decimal_separator_comma = value; }
+        }
+        [JsonProperty("is_thousand_separator_disabled")]
+        public bool? IsThousandSeparatorDisabled
+        {
+            get { return is_thousand_separator_disabled; }
+            set { is_thousand_separator_disabled = value; }
+        }
 
         public override string ToString()
         {
@@ -130,6 +158,7 @@ namespace OpenFlashChart
             }
             return sw.ToString();
         }
+
         public string ToPrettyString()
         {
             StringWriter sw = new StringWriter(CultureInfo.InvariantCulture);
