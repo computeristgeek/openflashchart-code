@@ -54,6 +54,7 @@ include_once 'ofc_radar_spoke_labels.php';
 include_once 'ofc_line_style.php';
 
 include_once 'dot_base.php';
+include_once 'ofc_menu.php';
 
 class open_flash_chart
 {
@@ -135,6 +136,16 @@ class open_flash_chart
 		$this->is_fixed_num_decimals_forced = $is_fixed_num_decimals_forced;
 		$this->is_decimal_separator_comma = $is_decimal_separator_comma;
 		$this->is_thousand_separator_disabled = $is_thousand_separator_disabled;
+	}
+	
+	/**
+	 * This is experimental and will change as we make it work
+	 * 
+	 * @param $m as ofc_menu
+	 */
+	function set_menu($m)
+	{
+		$this->menu = $m;
 	}
 	
 	function toString()
