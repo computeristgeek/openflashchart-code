@@ -13,12 +13,13 @@
 					"text":		"Save as image"
 				},
 				{
-					"type":		"camera-icon",
+					"type":		"text",
 					"text":		"Save as image 2"
 				},
 				{
 					"type":		"camera-icon",
-					"text":		"3!!"
+					"text":		"3!!",
+					"javascript-function":	"my_function"
 				}
 			]
 	},
