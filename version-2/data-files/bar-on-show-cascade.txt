@@ -16,7 +16,7 @@
       "colour":    "#9933CC",
       "text":      "Page views",
       "font-size": 10,
-	  "on-show":	{"type": "pop", "cascade":1},
+	  "on-show":	{"type": "pop", "cascade":1, "delay":2.5},
       "values" :   [9,6,7,9,5,7,6,9,7]
     },
     {
