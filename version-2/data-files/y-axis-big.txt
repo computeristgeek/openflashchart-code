@@ -23,15 +23,20 @@
     }
   ],
 
-  "y_axis":{
-    "stroke":       4,
-    "tick-length":  10,
-    "colour":       "#d09090",
-    "grid-colour":  "#00ff00",
-    "offset":       false,
-    "max":          100000,
-    "visible":      true,
-    "steps":        2
-  }
+	"y_axis":{
+		"stroke":       4,
+		"tick-length":  10,
+		"colour":       "#d09090",
+		"grid-colour":  "#00ff00",
+		"offset":       false,
+		"max":          100000,
+		"visible":      true,
+		"steps":        2,	/* <-- ERROR: this gets changed by the chart */
+		"labels": {
+			"text":		"left #val#", 
+			"colour":	"#DD30DD",
+			"size":		12
+		}
+	}
 
 }
