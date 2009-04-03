@@ -59,14 +59,42 @@ function ofc_axis() {
 	this.set_steps = function(steps) {
 		this.steps = steps;
 	}
+
+	this.set_stroke = function(stroke) {
+		this.stroke = stroke;
+	}
+
+	this.set_colour = function(colour) {
+		this.colour = colour;
+	}
+
+	this.set_grid_colour = function(grid_colour) {
+		this['grid-colour'] = grid_colour;
+	}
+
+	this.set_offset = function(offset) {
+		this.offset = offset;
+	}
 }
 
 ofc_x_axis.prototype = new ofc_axis();
 function ofc_x_axis() {
+	this.set_tick_height = function(tick_height) {
+		this['tick-height'] = tick_height;
+	}
 
+	this.set_3d = function(threeD) {
+		this['3d'] = threeD;
+	}
 }
 
 ofc_y_axis.prototype = new ofc_axis();
 function ofc_y_axis() {
+	this.set_tick_length = function(tick_length) {
+		this['tick-length'] = tick_length;
+	}
 
+	this.set_grid_visible = function(grid_visible) {
+		this['grid-visible'] = grid_visible;
+	}
 }
