@@ -24,10 +24,11 @@
   ],
 
 	"y_axis":{
-		"stroke":       4,
+		"stroke":       1,
 		"tick-length":  10,
-		"colour":       "#d09090",
+		"colour":       "#202020",
 		"grid-colour":  "#00ff00",
+		"grid-visible": false,
 		"offset":       false,
 		"max":          100000,
 		"visible":      true,
