@@ -35,6 +35,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimationSeries.cs" />
     <Compile Include="Area.cs" />
     <Compile Include="AreaBase.cs" />
     <Compile Include="AreaHollow.cs" />

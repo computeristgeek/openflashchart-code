@@ -1,2 +1,71 @@
-{ "elements": [ { "type": "pie", "colours": [ "#1F8FA1", "#848484", "#CACFBE", "#DEF799" ], "border": 2, "start-angle": 35, "animate": true, "label-colour": "#432BAF", "gradient-fill": true, "tip": "#val# of #total#
-#percent# of 100%", "values": [ 2, 3, 4, { "value": 6.5, "label": "BIG", "colour": "#FF33C9", "label-colour": "#FF653F", "font-size": 24 }, { "value": 6.5, "label": "6.5" }, 3, 4, 2 ] } ], "title": { "text": "Pork Pie, Mmmmm" } }
+{
+  "elements": [
+    {
+      "type": "pie",
+      "alpha": 0.5,
+      "animate": [
+        {
+          "type": "fade"
+        },
+        {
+          "type": "bounce",
+          "distance": 5
+        }
+      ],
+      "start-angle": 0,
+      "tip": "#percent#",
+      "colours": [
+        "#d01f3c",
+        "#356aa0",
+        "#C79810"
+      ],
+      "values": [
+        {
+          "value": 0,
+          "label": "Spermicides"
+        },
+        {
+          "value": 1,
+          "label": "Safe period"
+        },
+        {
+          "value": 1,
+          "label": "Cap"
+        },
+        {
+          "value": 3,
+          "label": "Injection"
+        },
+        {
+          "value": 4,
+          "label": "Withdrawal"
+        },
+        {
+          "value": 5,
+          "label": "IUD"
+        },
+        {
+          "value": 19,
+          "label": "Condom"
+        },
+        {
+          "value": 21,
+          "label": "Sergical"
+        },
+        {
+          "value": 21,
+          "label": "None"
+        },
+        {
+          "value": 27,
+          "label": "Pill"
+        }
+      ]
+    }
+  ],
+  "title": {
+    "text": "Current use of contraception",
+    "style": "color: #f0f0f0; font-size: 20px"
+  },
+  "bg_colour": "#202020"
+}

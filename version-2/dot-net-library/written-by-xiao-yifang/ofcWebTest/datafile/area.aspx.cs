@@ -25,17 +25,20 @@ public partial class datafile_area : System.Web.UI.Page
             data1.Add(rand.Next(30));
         }
 
-        OpenFlashChart.AreaLine area = new AreaLine();
+        OpenFlashChart.Area area = new Area();
         area.Values = data1;
         area.HaloSize = 0;
         area.Width = 2;
         area.DotSize = 5;
+        area.FontSize = 12;
         area.DotStyleType.Tip = "#x_label#<br>#val#";
         //area.DotStyleType.Type = DotType.ANCHOR;
         area.DotStyleType.Type = DotType.BOW;
         area.DotStyleType.Colour = "#467533";
         area.Tooltip = "提示：#val#";
-
+        area.Colour = "#CC3399";
+        area.FillColor = "#343399";
+        area.FillAlpha = .5;
         chart.AddElement(area);
         chart.Y_Legend = new Legend("中文test");
         chart.Title = new Title("line演示");
@@ -43,6 +46,7 @@ public partial class datafile_area : System.Web.UI.Page
         chart.X_Axis.Labels.Color = "#e43456";
         chart.X_Axis.Steps = 4;
         chart.Y_Axis.Steps = 3;
+        
         chart.Tooltip = new ToolTip("全局提示：#val#");
         chart.Tooltip.Shadow = true;
         chart.Tooltip.Colour = "#e43456";

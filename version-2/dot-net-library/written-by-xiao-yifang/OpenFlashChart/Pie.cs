@@ -48,9 +48,10 @@ namespace OpenFlashChart
         private int border;
         private IEnumerable<String> colours;
         private double alpha;
-        private bool animate;
+        private AnimationSeries animate;
         private double start_angle;
-        private bool gradientfill;
+        private bool? gradientfill;
+        private bool? nolabels;
 
         public Pie()
         {
@@ -58,8 +59,8 @@ namespace OpenFlashChart
             this.border = 2;
             this.colours = new string[] { "#d01f3c", "#356aa0", "#C79810" };
             this.alpha = 0.6;
-            this.animate = true;
-            gradientfill = true;
+            //this.animate = true;
+            //gradientfill = true;
 
         }
         [JsonProperty("colours")]
@@ -81,10 +82,20 @@ namespace OpenFlashChart
         public double Alpha
         {
             get { return alpha; }
-            set { alpha = value; }
+            set
+            {
+                if (value < 0)
+                    alpha = 0;
+                else if ((value >= 0) && (value <= 1))
+                    alpha = value;
+                else if ((value > 1)&&(value<=100))
+                    alpha = value/100;
+                else
+                    alpha = 1.0;
+            }
         }
         [JsonProperty("animate")]
-        public bool Animate
+        public AnimationSeries Animate
         {
             get { return animate; }
             set { animate = value; }
@@ -96,10 +107,16 @@ namespace OpenFlashChart
             set { start_angle = value; }
         }
         [JsonProperty("gradient-fill")]
-        public bool GradientFillMode
+        public bool? GradientFillMode
         {
             get { return gradientfill; }
             set { gradientfill = value; }
+        }
+        [JsonProperty("no-labels")]
+        public bool? NoLabels
+        {
+            get { return nolabels; }
+            set { nolabels = value; }
         }
     }
 }

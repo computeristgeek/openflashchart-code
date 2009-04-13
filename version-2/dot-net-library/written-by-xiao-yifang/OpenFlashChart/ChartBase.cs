@@ -89,7 +89,7 @@ namespace OpenFlashChart
             set { text = value; }
         }
 
-        [JsonProperty("fillalpha")]
+        [JsonProperty("fill-alpha")]
         public double FillAlpha
         {
             get { return fillalpha; }

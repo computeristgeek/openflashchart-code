@@ -1,17 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using OpenFlashChart;
-using BarSketch=OpenFlashChart.BarSketch;
-using Legend=OpenFlashChart.Legend;
 
 public partial class Pie : System.Web.UI.Page
 {
@@ -36,12 +25,19 @@ public partial class Pie : System.Web.UI.Page
         values.Add(pieValue);
         pie.Values = values;
         pie.FontSize = 20;
-       // pie.Alpha = 50;
+        pie.Alpha = .5;
+        AnimationSeries animationSeries = new AnimationSeries();
+        animationSeries.Add(new Animation("bounce",5));
+        pie.Animate = animationSeries;
+        //pie.GradientFillMode = false;
+        
+        //pie.FillAlpha = 10;
 
         //pie.Colour = "#fff";
         pie.Colours = new string[]{"#04f","#1ff","#6ef","#f30"};
         pie.Tooltip="#label#,#val# of #total##percent# of 100%";
         chart.AddElement(pie);
+        chart.Bgcolor = "#202020";
         string s = chart.ToPrettyString();
         Response.Clear();
         Response.CacheControl = "no-cache";
