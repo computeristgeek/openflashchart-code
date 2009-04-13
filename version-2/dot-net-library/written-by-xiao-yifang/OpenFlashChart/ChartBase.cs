@@ -22,6 +22,7 @@ namespace OpenFlashChart
         {
             this.values = new ArrayList();
             FillAlpha = 0.35;
+            colour = "#CC3399";
             attachtorightaxis = false;
         }
         public void AttachToRightAxis(bool attach)
