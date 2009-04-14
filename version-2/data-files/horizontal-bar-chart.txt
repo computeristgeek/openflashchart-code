@@ -15,7 +15,7 @@
       "values" :   [{"right":10},{"right":15},{"left":5,"right":15}]
     }
   ],
-  "x_axis":{
+  "x_axis_":{
     "min":    0,
     "max":    20,
     "offset": false,
@@ -26,10 +26,9 @@
   "y_axis":{
     "offset":      true,
     "labels": ["slashdot.org","digg.com","reddit.com"]
-    
   },
 
-  "tooltip":{
+  "tooltip_":{
     "mouse": 0
   }
 }
