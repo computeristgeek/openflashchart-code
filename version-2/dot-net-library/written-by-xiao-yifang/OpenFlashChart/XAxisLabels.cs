@@ -6,5 +6,6 @@ namespace OpenFlashChart
 {
     public class XAxisLabels:AxisLabels
     {
+        
     }
 }

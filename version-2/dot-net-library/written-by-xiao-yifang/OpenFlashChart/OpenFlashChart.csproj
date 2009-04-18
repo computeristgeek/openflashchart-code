@@ -85,6 +85,7 @@
     <Compile Include="AxisLabels.cs" />
     <Compile Include="XAxisLabels.cs" />
     <Compile Include="YAxis.cs" />
+    <Compile Include="YAxisLabel.cs" />
     <Compile Include="YAxisLabels.cs" />
     <Compile Include="YAxisRight.cs" />
   </ItemGroup>
