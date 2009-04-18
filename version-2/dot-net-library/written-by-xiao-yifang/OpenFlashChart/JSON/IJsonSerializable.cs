@@ -33,25 +33,11 @@ using System;
 namespace JsonFx.Json
 {
 	/// <summary>
-	/// Parse Tokens
+	/// Allows classes to control their own JSON serialization
 	/// </summary>
-	internal enum JsonToken
+	public interface IJsonSerializable
 	{
-		End,
-		Undefined,
-		Null,
-		False,
-		True,
-		NaN,
-		PositiveInfinity,
-		NegativeInfinity,
-		Number,
-		String,
-		ArrayStart,
-		ArrayEnd,
-		ObjectStart,
-		ObjectEnd,
-		NameDelim,
-		ValueDelim
+		void ReadJson(JsonReader reader);
+		void WriteJson(JsonWriter writer);
 	}
 }

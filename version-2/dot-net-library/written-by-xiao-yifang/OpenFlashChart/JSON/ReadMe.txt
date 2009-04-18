@@ -1,6 +1,6 @@
-JsonFx.NET - BuildTools
+JsonFx.NET - JSON Serializer
 
-The JsonFx.NET JSON parser/serializer functions like XML Serialization in .NET
+The JsonFx.NET JSON parser/serializer functions similarly to the XmlSerializer in .NET
 
 Serializes and deserializes any Dictionary<String, T> and IDictionary with
 String keys directly as a JSON object
@@ -14,7 +14,14 @@ common .NET Types directly as JSON primitives
 Serializes and deserializes strongly-typed custom classes (similarly to XML
 Serialization in .NET Framework)
 
-Ignores block and line comments when deserializing
+Serializes C# 3.0 Anonymous Types directly as JSON objects
+
+Serializes C# 3.0 LINQ Queries as JSON arrays of objects (by enumerating the results)
+
+Follows Postel's Law ("Be conservative in what you do; be liberal in what you accept from others.")
+by accepting handling many non-JSON JavaScript concepts:
+	- Common literals such as "Infinity", "NaN", and "undefined"
+	- Ignores block and line comments when deserializing
 
 Optional ability to control serialization via attributes/interfaces:
 
@@ -41,3 +48,7 @@ Optional Type-Hinting improves deserializing to strongly-typed objects
 Optional PrettyPrint mode helps with debugging / human-readability
 
 	JsonFx.Json.JsonWriter.PrettyPrint
+
+Optional custom DateTime serialization override
+
+	JsonFx.Json.JsonWriter.DateTimeSerializer

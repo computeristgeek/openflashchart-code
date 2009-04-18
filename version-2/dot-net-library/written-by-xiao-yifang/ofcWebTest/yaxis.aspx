@@ -10,7 +10,7 @@
     <script type="text/javascript">
 swfobject.embedSWF("open-flash-chart.swf", "my_chart", "100%", "500",
   "9.0.0", "expressInstall.swf",
-  {"data-file":"datafile/yaxis1.txt"}
+  {"data-file":"datafile/yaxis.aspx"}
   );
     </script>
 

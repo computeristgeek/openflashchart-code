@@ -58,11 +58,13 @@
     <Compile Include="DotStyle.cs" />
     <Compile Include="DotType.cs" />
     <Compile Include="HBar.cs" />
+    <Compile Include="JSON\IJsonSerializable.cs" />
     <Compile Include="JSON\JsonIgnoreAttribute.cs" />
     <Compile Include="JSON\JsonNameAttribute.cs" />
     <Compile Include="JSON\JsonPropertyAttribute.cs" />
     <Compile Include="JSON\JsonReader.cs" />
     <Compile Include="JSON\JsonSerializationException.cs" />
+    <Compile Include="JSON\JsonSpecifiedPropertyAttribute.cs" />
     <Compile Include="JSON\JsonToken.cs" />
     <Compile Include="JSON\JsonWriter.cs" />
     <Compile Include="Legend.cs" />

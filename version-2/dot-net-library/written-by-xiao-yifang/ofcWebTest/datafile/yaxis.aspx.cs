@@ -39,8 +39,9 @@ public partial class datafile_yaxis : System.Web.UI.Page
         chart.Y_Axis_Right = new YAxis();
         chart.Y_Axis_Right.TickLength=5;
         chart.Y_Axis_Right.Stroke = 10;
+        line1.AttachToRightAxis(true);
         //chart.Y_Axis_Right.Steps = 4;
-        chart.Y_Axis_Right.SetRange(0,20,10);
+        chart.Y_Axis_Right.SetRange(0,30,10);
         //chart.Y_Axis_Right
         chart.Tooltip = new ToolTip("全局提示：#val#");
         chart.Tooltip.Shadow = true;

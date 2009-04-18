@@ -1,11 +1,11 @@
-#region BuildTools License
+#region License
 /*---------------------------------------------------------------------------------*\
 
-	BuildTools distributed under the terms of an MIT-style license:
+	Distributed under the terms of an MIT-style license:
 
 	The MIT License
 
-	Copyright (c) 2006-2008 Stephen M. McKamey
+	Copyright (c) 2006-2009 Stephen M. McKamey
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 	THE SOFTWARE.
 
 \*---------------------------------------------------------------------------------*/
-#endregion BuildTools License
+#endregion License
 
 using System;
 using System.IO;
@@ -40,32 +40,27 @@ using System.Xml;
 namespace JsonFx.Json
 {
 	/// <summary>
+	/// Represents a proxy method for serialization of types which do not implement IJsonSerializable.
+	/// </summary>
+	/// <typeparam name="T">the type for this proxy</typeparam>
+	/// <param name="writer">the JsonWriter to serialize to</param>
+	/// <param name="value">the value to serialize</param>
+	public delegate void WriteDelegate<T>(JsonWriter writer, T value);
+
+	/// <summary>
 	/// Writer for producing JSON data.
 	/// </summary>
 	public class JsonWriter : IDisposable
 	{
 		#region Constants
 
-		internal const string TypeGenericIDictionary = "System.Collections.Generic.IDictionary`2";
+		public const string JsonMimeType = "application/json";
 
-		private const string TypeBoolean = "System.Boolean";
-		private const string TypeChar = "System.Char";
-		private const string TypeByte = "System.Byte";
-		private const string TypeInt16 = "System.Int16";
-		private const string TypeInt32 = "System.Int32";
-		private const string TypeInt64 = "System.Int64";
-		private const string TypeSByte = "System.SByte";
-		private const string TypeUInt16 = "System.UInt16";
-		private const string TypeUInt32 = "System.UInt32";
-		private const string TypeUInt64 = "System.UInt64";
-		private const string TypeSingle = "System.Single";
-		private const string TypeDouble = "System.Double";
-		private const string TypeDecimal = "System.Decimal";
-
-		private const string ErrorGenericIDictionary = "Types which implement Generic IDictionary<TKey, TValue> also need to implement IDictionary to be serialized.";
+		private const string AnonymousTypePrefix = "<>f__AnonymousType";
+		private const string ErrorMaxDepth = "The maxiumum depth of {0} was exceeded. Check for cycles in object graph.";
 
 		#endregion Constants
-		
+
 		#region Fields
 
 		private readonly TextWriter writer = null;
@@ -73,11 +68,12 @@ namespace JsonFx.Json
 		private bool strictConformance = true;
 
 		private bool prettyPrint = false;
-
 	    private bool skipNullValue = false;
 		private bool useXmlSerializationAttributes = false;
 		private int depth = 0;
+		private int maxDepth = 25;
 		private string tab = "\t";
+		private WriteDelegate<DateTime> dateTimeSerializer = null;
 
 		#endregion Fields
 
@@ -147,17 +143,33 @@ namespace JsonFx.Json
 		/// </summary>
 		public string Tab
 		{
-			get { return tab; }
-			set { tab = value; }
+			get { return this.tab; }
+			set { this.tab = value; }
 		}
 
 		/// <summary>
-		/// Gets and sets the lien terminator string
+		/// Gets and sets the line terminator string
 		/// </summary>
 		public string NewLine
 		{
 			get { return this.writer.NewLine; }
 			set { this.writer.NewLine = value; }
+		}
+
+		/// <summary>
+		/// Gets and sets the maximum depth to be serialized.
+		/// </summary>
+		public int MaxDepth
+		{
+			get { return this.maxDepth; }
+			set
+			{
+				if (value < 1)
+				{
+					throw new ArgumentOutOfRangeException("MaxDepth must be a positive integer as it controls the maximum nesting level of serialized objects.");
+				}
+				this.maxDepth = value;
+			}
 		}
 
 		/// <summary>
@@ -189,17 +201,54 @@ namespace JsonFx.Json
 	        get { return skipNullValue; }
 	        set { skipNullValue = value; }
 	    }
+		/// <summary>
+		/// Gets and sets a proxy formatter to use for DateTime serialization
+		/// </summary>
+		public WriteDelegate<DateTime> DateTimeSerializer
+		{
+			get { return this.dateTimeSerializer; }
+			set { this.dateTimeSerializer = value; }
+		}
 
-	    #endregion Properties
+		/// <summary>
+		/// Gets the underlying TextWriter.
+		/// </summary>
+		public TextWriter TextWriter
+		{
+			get { return this.writer; }
+		}
+
+		#endregion Properties
+
+		#region Static Methods
+
+		/// <summary>
+		/// A fast method for serializing an object to JSON
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string Serialize(object value)
+		{
+			StringBuilder output = new StringBuilder();
+
+			using (JsonWriter writer = new JsonWriter(output))
+			{
+				writer.Write(value);
+			}
+
+			return output.ToString();
+		}
+
+		#endregion Static Methods
 
 		#region Public Methods
 
-		public virtual void Write(object value)
+		public void Write(object value)
 		{
 			this.Write(value, false);
 		}
 
-		private void Write(object value, bool isProperty)
+		protected virtual void Write(object value, bool isProperty)
 		{
 			if (isProperty && this.prettyPrint)
 			{
@@ -212,81 +261,135 @@ namespace JsonFx.Json
 				return;
 			}
 
-			
-			
+			if (value is IJsonSerializable)
+			{
+				try
+				{
+					if (isProperty)
+					{
+						this.depth++;
+						if (this.depth > this.maxDepth)
+						{
+							throw new JsonSerializationException(String.Format(JsonWriter.ErrorMaxDepth, this.maxDepth));
+						}
+						this.WriteLine();
+					}
+					((IJsonSerializable)value).WriteJson(this);
+				}
+				finally
+				{
+					if (isProperty)
+					{
+						this.depth--;
+					}
+				}
+				return;
+			}
 
+			// must test enumerations before value types
 			if (value is Enum)
 			{
 				this.Write((Enum)value);
 				return;
 			}
 
-			if (value is String)
-			{
-				this.Write((String)value);
-				return;
-			}
-
-			// IDictionary test must happen BEFORE IEnumerable test
-			// since IDictionary implements IEnumerable
-			if (value is IDictionary)
-			{
-				try
-				{
-					if (isProperty)
-					{
-						this.depth++;
-						this.WriteLine();
-					}
-					this.WriteObject((IDictionary)value);
-				}
-				finally
-				{
-					if (isProperty)
-					{
-						this.depth--;
-					}
-				}
-				return;
-			}
-
+			// Type.GetTypeCode() allows us to more efficiently switch type
+			// plus cannot use 'is' for ValueTypes
 			Type type = value.GetType();
-			if (type.GetInterface(JsonWriter.TypeGenericIDictionary) != null)
+			switch (Type.GetTypeCode(type))
 			{
-				throw new JsonSerializationException(JsonWriter.ErrorGenericIDictionary);
-			}
-
-			if (value is IEnumerable)
-			{
-				if (value is XmlNode)
+				case TypeCode.Boolean:
 				{
-					this.Write((System.Xml.XmlNode)value);
+					this.Write((Boolean)value);
 					return;
 				}
-
-				try
+				case TypeCode.Byte:
 				{
-					if (isProperty)
-					{
-						this.depth++;
-						this.WriteLine();
-					}
-					this.WriteArray((IEnumerable)value);
+					this.Write((Byte)value);
+					return;
 				}
-				finally
+				case TypeCode.Char:
 				{
-					if (isProperty)
-					{
-						this.depth--;
-					}
+					this.Write((Char)value);
+					return;
 				}
-				return;
-			}
-
-			if (value is DateTime)
-			{
-				this.Write((DateTime)value);
-				return;
+				case TypeCode.DateTime:
+				{
+					this.Write((DateTime)value);
+					return;
+				}
+				case TypeCode.DBNull:
+				case TypeCode.Empty:
+				{
+					this.writer.Write(JsonReader.LiteralNull);
+					return;
+				}
+				case TypeCode.Decimal:
+				{
+					// From MSDN:
+					// Conversions from Char, SByte, Int16, Int32, Int64, Byte, UInt16, UInt32, and UInt64
+					// to Decimal are widening conversions that never lose information or throw exceptions.
+					// Conversions from Single or Double to Decimal throw an OverflowException
+					// if the result of the conversion is not representable as a Decimal.
+					this.Write((Decimal)value);
+					return;
+				}
+				case TypeCode.Double:
+				{
+					this.Write((Double)value);
+					return;
+				}
+				case TypeCode.Int16:
+				{
+					this.Write((Int16)value);
+					return;
+				}
+				case TypeCode.Int32:
+				{
+					this.Write((Int32)value);
+					return;
+				}
+				case TypeCode.Int64:
+				{
+					this.Write((Int64)value);
+					return;
+				}
+				case TypeCode.SByte:
+				{
+					this.Write((SByte)value);
+					return;
+				}
+				case TypeCode.Single:
+				{
+					this.Write((Single)value);
+					return;
+				}
+				case TypeCode.String:
+				{
+					this.Write((String)value);
+					return;
+				}
+				case TypeCode.UInt16:
+				{
+					this.Write((UInt16)value);
+					return;
+				}
+				case TypeCode.UInt32:
+				{
+					this.Write((UInt32)value);
+					return;
+				}
+				case TypeCode.UInt64:
+				{
+					this.Write((UInt64)value);
+					return;
+				}
+				default:
+				case TypeCode.Object:
+				{
+					// all others must be explicitly tested
+					break;
+				}
 			}
 
 			if (value is Guid)
@@ -313,101 +416,90 @@ namespace JsonFx.Json
 				return;
 			}
 
-			// cannot use 'is' for ValueTypes, using string comparison
-			// these are ordered based on an intuitive sense of their
-			// frequency of use for nominally better switch performance
-			switch (type.FullName)
+			// IDictionary test must happen BEFORE IEnumerable test
+			// since IDictionary implements IEnumerable
+			if (value is IDictionary)
 			{
-				case JsonWriter.TypeDouble:
+				try
 				{
-					this.Write((Double)value);
-					return;
-				}
-				case JsonWriter.TypeInt32:
-				{
-					this.Write((Int32)value);
-					return;
-				}
-				case JsonWriter.TypeBoolean:
-				{
-					this.Write((Boolean)value);
-					return;
-				}
-				case JsonWriter.TypeDecimal:
-				{
-					// From MSDN:
-					// Conversions from Char, SByte, Int16, Int32, Int64, Byte, UInt16, UInt32, and UInt64
-					// to Decimal are widening conversions that never lose information or throw exceptions.
-					// Conversions from Single or Double to Decimal throw an OverflowException
-					// if the result of the conversion is not representable as a Decimal.
-					this.Write((Decimal)value);
-					return;
-				}
-				case JsonWriter.TypeByte:
-				{
-					this.Write((Byte)value);
-					return;
-				}
-				case JsonWriter.TypeInt16:
-				{
-					this.Write((Int16)value);
-					return;
-				}
-				case JsonWriter.TypeInt64:
-				{
-					this.Write((Int64)value);
-					return;
-				}
-				case JsonWriter.TypeChar:
-				{
-					this.Write((Char)value);
-					return;
-				}
-				case JsonWriter.TypeSingle:
-				{
-					this.Write((Single)value);
-					return;
-				}
-				case JsonWriter.TypeUInt16:
-				{
-					this.Write((UInt16)value);
-					return;
-				}
-				case JsonWriter.TypeUInt32:
-				{
-					this.Write((UInt32)value);
-					return;
-				}
-				case JsonWriter.TypeUInt64:
-				{
-					this.Write((UInt64)value);
-					return;
-				}
-				case JsonWriter.TypeSByte:
-				{
-					this.Write((SByte)value);
-					return;
-				}
-				default:
-				{
-					// structs and classes
-					try
+					if (isProperty)
 					{
-						if (isProperty)
+						this.depth++;
+						if (this.depth > this.maxDepth)
 						{
-							this.depth++;
-							this.WriteLine();
+							throw new JsonSerializationException(String.Format(JsonWriter.ErrorMaxDepth, this.maxDepth));
 						}
-						this.WriteObject(value);
+						this.WriteLine();
 					}
-					finally
+					this.WriteObject((IDictionary)value);
+				}
+				finally
+				{
+					if (isProperty)
 					{
-						if (isProperty)
-						{
-							this.depth--;
-						}
+						this.depth--;
 					}
+				}
+				return;
+			}
+
+			if (type.GetInterface(JsonReader.TypeGenericIDictionary) != null)
+			{
+				throw new JsonSerializationException(String.Format(JsonReader.ErrorGenericIDictionary, type));
+			}
+
+			// IDictionary test must happen BEFORE IEnumerable test
+			// since IDictionary implements IEnumerable
+			if (value is IEnumerable)
+			{
+				if (value is XmlNode)
+				{
+					this.Write((System.Xml.XmlNode)value);
 					return;
+				}
+
+				try
+				{
+					if (isProperty)
+					{
+						this.depth++;
+						if (this.depth > this.maxDepth)
+						{
+							throw new JsonSerializationException(String.Format(JsonWriter.ErrorMaxDepth, this.maxDepth));
+						}
+						this.WriteLine();
+					}
+					this.WriteArray((IEnumerable)value);
+				}
+				finally
+				{
+					if (isProperty)
+					{
+						this.depth--;
+					}
+				}
+				return;
+			}
+
+			// structs and classes
+			try
+			{
+				if (isProperty)
+				{
+					this.depth++;
+					if (this.depth > this.maxDepth)
+					{
+						throw new JsonSerializationException(String.Format(JsonWriter.ErrorMaxDepth, this.maxDepth));
+					}
+					this.WriteLine();
+				}
+				this.WriteObject(value, type);
+			}
+			finally
+			{
+				if (isProperty)
+				{
+					this.depth--;
 				}
 			}
 		}
@@ -417,11 +509,55 @@ namespace JsonFx.Json
 			this.Write(Convert.ToBase64String(value));
 		}
 
+		public virtual void WriteHexString(byte[] value)
+		{
+			if (value == null || value.Length == 0)
+			{
+				this.Write(String.Empty);
+				return;
+			}
+
+			StringBuilder builder = new StringBuilder();
+
+			// Loop through each byte of the binary data 
+			// and format each one as a hexadecimal string
+			for (int i=0; i<value.Length; i++)
+			{
+				builder.Append(value[i].ToString("x2"));
+			}
+
+			// the hexadecimal string
+			this.Write(builder.ToString());
+		}
+
 		public virtual void Write(DateTime value)
 		{
-			// UTC DateTime in ISO-8601
-			value = value.ToUniversalTime();
-			this.Write(String.Format("{0:s}Z", value));
+			if (this.dateTimeSerializer != null)
+			{
+				this.dateTimeSerializer(this, value);
+				return;
+			}
+
+			switch (value.Kind)
+			{
+				case DateTimeKind.Local:
+				{
+					value = value.ToUniversalTime();
+					goto case DateTimeKind.Utc;
+				}
+				case DateTimeKind.Utc:
+				{
+					// UTC DateTime in ISO-8601
+					this.Write(String.Format("{0:s}Z", value));
+					break;
+				}
+				default:
+				{
+					// DateTime in ISO-8601
+					this.Write(String.Format("{0:s}", value));
+					break;
+				}
+			}
 		}
 
 		public virtual void Write(Guid value)
@@ -443,7 +579,9 @@ namespace JsonFx.Json
 				{
 					flagNames[i] = JsonNameAttribute.GetJsonName(flags[i]);
 					if (String.IsNullOrEmpty(flagNames[i]))
+					{
 						flagNames[i] = flags[i].ToString("f");
+					}
 				}
 				enumName = String.Join(", ", flagNames);
 			}
@@ -451,7 +589,9 @@ namespace JsonFx.Json
 			{
 				enumName = JsonNameAttribute.GetJsonName(value);
 				if (String.IsNullOrEmpty(enumName))
+				{
 					enumName = value.ToString("f");
+				}
 			}
 
 			this.Write(enumName);
@@ -630,7 +770,7 @@ namespace JsonFx.Json
 
 		public virtual void Write(XmlNode value)
 		{
-			// TODO: translate XML to JSON
+			// TODO: auto-translate XML to JsonML
 			this.Write(value.OuterXml);
 		}
 
@@ -645,6 +785,10 @@ namespace JsonFx.Json
 			this.writer.Write(JsonReader.OperatorArrayStart);
 
 			this.depth++;
+			if (this.depth > this.maxDepth)
+			{
+				throw new JsonSerializationException(String.Format(JsonWriter.ErrorMaxDepth, this.maxDepth));
+			}
 			try
 			{
 				foreach (object item in value)
@@ -681,6 +825,10 @@ namespace JsonFx.Json
 			this.writer.Write(JsonReader.OperatorObjectStart);
 
 			this.depth++;
+			if (this.depth > this.maxDepth)
+			{
+				throw new JsonSerializationException(String.Format(JsonWriter.ErrorMaxDepth, this.maxDepth));
+			}
 			try
 			{
 				foreach (object name in value.Keys)
@@ -712,17 +860,19 @@ namespace JsonFx.Json
 			this.writer.Write(JsonReader.OperatorObjectEnd);
 		}
 
-		protected virtual void WriteObject(object value)
+		protected virtual void WriteObject(object value, Type type)
 		{
 			bool appendDelim = false;
 
 			this.writer.Write(JsonReader.OperatorObjectStart);
 
 			this.depth++;
+			if (this.depth > this.maxDepth)
+			{
+				throw new JsonSerializationException(String.Format(JsonWriter.ErrorMaxDepth, this.maxDepth));
+			}
 			try
 			{
-				Type objType = value.GetType();
-
 				if (!String.IsNullOrEmpty(this.TypeHintName))
 				{
 					if (appendDelim)
@@ -737,30 +887,35 @@ namespace JsonFx.Json
 					this.WriteLine();
 					this.Write(this.TypeHintName);
 					this.writer.Write(JsonReader.OperatorNameDelim);
-					this.Write(objType.FullName, true);
+					this.Write(type.FullName+", "+type.Assembly.GetName().Name, true);
 				}
 
+				bool anonymousType = type.IsGenericType && type.Name.StartsWith(JsonWriter.AnonymousTypePrefix);
+
 				// serialize public properties
-				PropertyInfo[] properties = objType.GetProperties();
+				PropertyInfo[] properties = type.GetProperties();
 				foreach (PropertyInfo property in properties)
 				{
-					if (!property.CanWrite || !property.CanRead)
+					if (!property.CanRead)
 					{
 						continue;
 					}
 
-					if (this.IsIgnored(objType, property, value))
+					if (!property.CanWrite && !anonymousType)
+					{
+						continue;
+					}
+
+					if (this.IsIgnored(type, property, value))
 					{
 						continue;
 					}
 
 					object propertyValue = property.GetValue(value, null);
-
                     if ((propertyValue == null) && SkipNullValue)
                     {
                         continue;
                     }
-
 					if (this.IsDefaultValue(property, propertyValue))
 					{
 						continue;
@@ -788,7 +943,7 @@ namespace JsonFx.Json
 				}
 
 				// serialize public fields
-				FieldInfo[] fields = objType.GetFields();
+				FieldInfo[] fields = type.GetFields();
 				foreach (FieldInfo field in fields)
 				{
 					if (!field.IsPublic || field.IsStatic)
@@ -796,13 +951,12 @@ namespace JsonFx.Json
 						continue;
 					}
 
-					if (this.IsIgnored(objType, field, value))
+					if (this.IsIgnored(type, field, value))
 					{
 						continue;
 					}
 
 					object fieldValue = field.GetValue(value);
-                   
 					if (this.IsDefaultValue(field, fieldValue))
 					{
 						continue;
@@ -879,7 +1033,19 @@ namespace JsonFx.Json
 				return true;
 			}
 
-			
+			string specifiedProperty = JsonSpecifiedPropertyAttribute.GetJsonSpecifiedProperty(member);
+			if (!String.IsNullOrEmpty(specifiedProperty))
+			{
+				PropertyInfo specProp = objType.GetProperty(specifiedProperty);
+				if (specProp != null)
+				{
+					object isSpecified = specProp.GetValue(obj, null);
+					if (isSpecified is Boolean && !Convert.ToBoolean(isSpecified))
+					{
+						return true;
+					}
+				}
+			}
 
 			if (this.UseXmlSerializationAttributes)
 			{
@@ -936,7 +1102,6 @@ namespace JsonFx.Json
 		private static Enum[] GetFlagList(Type enumType, object value)
 		{
 			ulong longVal = Convert.ToUInt64(value);
-			string[] enumNames = Enum.GetNames(enumType);
 			Array enumValues = Enum.GetValues(enumType);
 
 			List<Enum> enums = new List<Enum>(enumValues.Length);
@@ -980,12 +1145,89 @@ namespace JsonFx.Json
 
 		#endregion Private Methods
 
+		#region Utility Methods
+
+		/// <summary>
+		/// Verifies is a valid EcmaScript variable expression.
+		/// </summary>
+		/// <param name="varExpr">the variable expression</param>
+		/// <returns>varExpr</returns>
+		public static string EnsureValidIdentifier(string varExpr, bool nested)
+		{
+			return JsonWriter.EnsureValidIdentifier(varExpr, nested, true);
+		}
+
+		/// <summary>
+		/// Verifies is a valid EcmaScript variable expression.
+		/// </summary>
+		/// <param name="varExpr">the variable expression</param>
+		/// <returns>varExpr</returns>
+		/// <remarks>
+		/// http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf
+		/// 
+		/// IdentifierName =
+		///		IdentifierStart | IdentifierName IdentifierPart
+		/// IdentifierStart =
+		///		Letter | '$' | '_'
+		/// IdentifierPart =
+		///		IdentifierStart | Digit
+		/// </remarks>
+		public static string EnsureValidIdentifier(string varExpr, bool nested, bool throwOnEmpty)
+		{
+			if (String.IsNullOrEmpty(varExpr))
+			{
+				if (throwOnEmpty)
+				{
+					throw new ArgumentException("Variable expression is empty.");
+				}
+				return String.Empty;
+			}
+
+			varExpr = varExpr.Replace(" ", "");
+
+			bool indentPart = false;
+
+			// TODO: ensure not a keyword
+			foreach (char ch in varExpr)
+			{
+				if (indentPart)
+				{
+					if (ch == '.' && nested)
+					{
+						// reset to IndentifierStart
+						indentPart = false;
+						continue;
+					}
+
+					if (Char.IsDigit(ch))
+					{
+						continue;
+					}
+				}
+
+				// can be start or part
+				if (Char.IsLetterOrDigit(ch) || ch == '_' || ch == '$'||ch=='-')
+				{
+					indentPart = true;
+					continue;
+				}
+
+				throw new ArgumentException("Variable expression \""+varExpr+"\" is not supported.");
+			}
+
+			return varExpr;
+		}
+
+		#endregion Utility Methods
+
 		#region IDisposable Members
 
 		void IDisposable.Dispose()
 		{
 			if (this.writer != null)
+			{
 				this.writer.Dispose();
+			}
 		}
 
 		#endregion IDisposable Members
