@@ -22,8 +22,7 @@
   "x_axis":{
     "offset":  false,
     "min":     -5,
-    "max":    5/*,
-    "labels":["mon","tue","wed","thur","fri","sat","sun"]*/
+    "max":    5/*,"labels":["mon","tue","wed","thur","fri","sat","sun"]*/
   },
 
   "y_axis":{

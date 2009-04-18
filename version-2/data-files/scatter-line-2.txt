@@ -12,8 +12,7 @@
       "alpha":     0.6,
       "border":    2,
       "animate":   0,
-	  "dot-size":  3,
-	  "line-style": { "style":"dash", "off":2 },
+	  "dot-style": {"type":"solid-dot"},
 	  "values" :   [
 					// Draw a 60 sided object to approximate a circle
 					{"x": 0, "y": -80 },
