@@ -46,4 +46,12 @@ class y_axis_labels
 	{
 		$this->rotate = $angle;
 	}
+	
+	/**
+	 * @param $text default text that all labels inherit
+	 */
+	function set_text( $text )
+	{
+		$this->text = $text;
+	}
 }
