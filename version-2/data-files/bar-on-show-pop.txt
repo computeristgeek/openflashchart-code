@@ -11,7 +11,7 @@
 
   "elements":[
     {
-      "type":      "bar",
+      "type":      "b-ar",
       "alpha":     0.5,
       "colour":    "#9933CC",
       "text":      "Page views",
@@ -24,7 +24,7 @@
       "colour":    "#CC9933",
       "text":      "Page views 2",
       "font-size": 10,
-	  "on-show":	{"type": "grow-up"},
+	  "on-show":	{"type": "pop", "delay":0.5, "cascade":0.6},
       "values" :   [4,9,6,7,9,5,7,6,9]
     }
   ],

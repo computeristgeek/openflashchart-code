@@ -7,8 +7,8 @@ class bar_on_show
 	function __construct($type, $cascade, $delay)
 	{
 		$this->type = $type;
-		$this->cascade = $cascade;
-		$this->delay = $delay;
+		$this->cascade = (float)$cascade;
+		$this->delay = (float)$delay;
 	}
 }
 
