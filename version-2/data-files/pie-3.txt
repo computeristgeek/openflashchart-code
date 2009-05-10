@@ -6,7 +6,7 @@
       "tip":           "#label#<br>$#val# (#percent#)",
       "colours":       ["#00ff00","#ff0000","#0000ff"],
       "alpha":         0.3,
-      "animate":       0,
+      "animate":		[ { "type": "fade" }],
       "start-angle":   90,      
       "gradient-fill": true,
       "no-labe-ls":     true,

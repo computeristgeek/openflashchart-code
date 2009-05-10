@@ -14,7 +14,7 @@
 			"dot-style": {
 				"type":"solid-dot", "colour":"#a44a80", "dot-size": 3,
 				"tip":"#val#<br>#x_label#" },
-			"on-show":	{"type": "shrink-in", "cascade":1, "delay":0.5},
+			"on-show":	{"type": "pop-up", "cascade":1, "delay":0.5},
 			"values" :   [
 				1.5,1.69,1.88,2.06,2.21,2.34,2.43,
 				2.48,2.49,2.47,2.40,2.30,2.17,2.01,

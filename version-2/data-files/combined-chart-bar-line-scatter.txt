@@ -37,6 +37,20 @@
                      {"x":3.5,  "y":193, "tip":"HELLO" },
                      {"x":7, "y":190,  "dot-size":7}
                    ]
+    },
+	{
+      "type":      "scatter",
+      "colour":    "#FFB900",
+      "text":      "Avg",
+      "font-size": 10,
+      "dot-style": {"type":"anchor", "sides":4, "rotation":45, "colour":"#6D9934", "hollow":false},
+      "values" :   [
+                     {"x":3,  "y":192},
+					 {"x":3.2,  "y":192},
+					 {"x":4,  "y":192},
+					 {"x":4.5,  "y":192},
+                     {"x":8, "y":190}
+                   ]
     }
   ],
   
