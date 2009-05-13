@@ -10,10 +10,10 @@ namespace OpenFlashChart
         {
             int pos = 0;
             if (labels == null)
-                labels = new List<AxisLabel>();
+                labels = new List<object>();
             foreach (string s in labelsvalue)
             {
-                labels.Add(new YAxisLabel(s, pos));
+                labels.Add(s);
                 pos++;
             }
         }

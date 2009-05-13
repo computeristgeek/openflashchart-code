@@ -53,9 +53,10 @@ public partial class datafile_Line : System.Web.UI.Page
         chart.Title = new Title("line演示");
         chart.Y_Axis.SetRange(0,35,5);
         chart.X_Axis.Labels.Color = "#e43456";
+        chart.X_Axis.Labels.VisibleSteps = 3;
         chart.Y_Axis.Labels.FormatString = "$#val#";
         chart.X_Axis.SetLabels(new string[]{"test1","test2"});
-        chart.Y_Axis.SetLabels(new string[] { "test1", "test2", "test1", "test2", "test1", "test2" });
+        //chart.Y_Axis.SetLabels(new string[] { "test1", "test2", "test1", "test2", "test1", "test2" });
         chart.X_Axis.Steps = 4;
         chart.Y_Axis.Steps = 3;
         chart.Y_Axis.Colour = "#ef6745";
