@@ -40,6 +40,7 @@ public partial class ChineseCharacter : System.Web.UI.Page
         chart.X_Axis.SetLabels(new string[] { "中文测试" ,"第二"});
         
         chart.X_Axis.Steps = 2;
+        chart.X_Axis.Labels.VisibleSteps = 2;
 
         chart.X_Axis.Labels.Vertical = true;
         Response.Clear();
