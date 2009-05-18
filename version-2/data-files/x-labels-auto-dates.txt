@@ -9,10 +9,10 @@
     "max": 1221368400,
     "steps": 86400,        // <-- seconds in a day
     "labels":{
-      "rotate":"vertical",
+      "rotate":345,
       "steps":86400,
       "visible-steps":2,
-      "text":"#date#"      // <-- apply default date format to X axis labels
+      "text":"#date:l jS, M Y#"      // <-- apply default date format to X axis labels
     }
   },
 
