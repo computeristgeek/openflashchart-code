@@ -14,6 +14,7 @@ namespace OpenFlashChart
         private int halosize;
         private string onclick;
         private bool loop;
+        private Animation onshow=new Animation();
         
         public LineBase()
         {
@@ -59,6 +60,12 @@ namespace OpenFlashChart
         {
             get { return loop; }
             set { loop = value; }
+        }
+        [JsonProperty("on-show")]
+        public Animation OnShowAnimation
+        {
+            get { return onshow; }
+            set { onshow = value; }
         }
     }
 }

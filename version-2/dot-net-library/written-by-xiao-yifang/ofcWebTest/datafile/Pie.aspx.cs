@@ -26,9 +26,9 @@ public partial class Pie : System.Web.UI.Page
         pie.Values = values;
         pie.FontSize = 20;
         pie.Alpha = .5;
-        AnimationSeries animationSeries = new AnimationSeries();
-        animationSeries.Add(new Animation("bounce", 5));
-        pie.Animate = animationSeries;
+        PieAnimationSeries pieAnimationSeries = new PieAnimationSeries();
+        pieAnimationSeries.Add(new PieAnimation("bounce", 5));
+        pie.Animate = pieAnimationSeries;
         //pie.GradientFillMode = false;
         
         //pie.FillAlpha = 10;

@@ -18,6 +18,13 @@ namespace OpenFlashChart
         private string colour;
         private int? dotsize;
         private string onclick;
+        private Animation onshow = new Animation();
+        [JsonProperty("on-show")]
+        public Animation OnShowAnimation
+        {
+            get { return onshow; }
+            set { onshow = value; }
+        }
         [JsonProperty("type")]
         public  String Type
         {

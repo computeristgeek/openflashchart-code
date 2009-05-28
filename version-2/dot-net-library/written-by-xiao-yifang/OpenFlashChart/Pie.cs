@@ -48,7 +48,7 @@ namespace OpenFlashChart
         private int border;
         private IEnumerable<String> colours;
         private double alpha;
-        private AnimationSeries animate;
+        private PieAnimationSeries animate;
         private double start_angle;
         private bool? gradientfill;
         private bool? nolabels;
@@ -95,7 +95,7 @@ namespace OpenFlashChart
             }
         }
         [JsonProperty("animate")]
-        public AnimationSeries Animate
+        public PieAnimationSeries Animate
         {
             get { return animate; }
             set { animate = value; }
