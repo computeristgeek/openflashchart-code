@@ -17,6 +17,7 @@ namespace OpenFlashChart
         private string tip;
         private string colour;
         private int? dotsize;
+        private string onclick;
         [JsonProperty("type")]
         public  String Type
         {
@@ -76,6 +77,12 @@ namespace OpenFlashChart
         {
             get { return dotsize; }
             set { dotsize = value; }
+        }
+        [JsonProperty("on-click")]
+        public string OnClick
+        {
+            get { return onclick; }
+            set { onclick = value; }
         }
     }
 }

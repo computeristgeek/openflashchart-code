@@ -12,7 +12,7 @@ namespace OpenFlashChart
         private int width;
         private int dotsize;
         private int halosize;
-        private string _onclick;
+        private string onclick;
         private bool loop;
         
         public LineBase()
@@ -24,13 +24,16 @@ namespace OpenFlashChart
         }
         public void SetOnClickFunction(string func)
         {
-            this._onclick = func;
+            this.DotStyleType.OnClick = func;
+            this.onclick = func;
         }
-        [JsonProperty("on-click")]
         public virtual string OnClick
         {
-            set { this._onclick = value; }
-            get { return this._onclick; }
+            set
+            {
+                SetOnClickFunction(value);
+            }
+            get { return this.onclick; }
         }
         [JsonProperty("width")]
         public virtual int Width

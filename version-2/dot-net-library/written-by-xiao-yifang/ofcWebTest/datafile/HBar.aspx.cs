@@ -27,7 +27,8 @@ public partial class datafile_HBar : System.Web.UI.Page
         bar.Add(new HBarValue(6, 8));
         bar.Add(new HBarValue(8, 10));
         chart.AddElement(bar);
-         chart.Y_Axis.SetLabels(new string[] { "hbar1", "hbar2", "hbar3" });
+        //chart.Y_Axis.SetLabels(new string[] { "hbar1", "hbar2", "hbar3" });
+        //chart.Y_Axis.Labels.Steps = 3;
         chart.Tooltip = new ToolTip("提示:#val#");
         string s = chart.ToPrettyString();
 
