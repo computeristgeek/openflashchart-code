@@ -12,7 +12,7 @@ namespace OpenFlashChart
         private double? halosize;
         private bool loop;
         private string fillcolour;
-
+        private Animation onshow = new Animation();
         protected AreaBase()
         {
             this.ChartType = "area";
@@ -48,6 +48,12 @@ namespace OpenFlashChart
         {
             get { return halosize; }
             set { halosize = value; }
+        }
+        [JsonProperty("on-show")]
+        public Animation OnShowAnimation
+        {
+            get { return onshow; }
+            set { onshow = value; }
         }
     }
 }
