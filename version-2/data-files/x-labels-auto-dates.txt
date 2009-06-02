@@ -19,10 +19,16 @@
   "elements":[
     {
       "type":      "scatter_line",
-      "colour":	   "#1f3cd0",
+      "colours":   ["#1f3cd0"],
+      "alpha":     0.6,
+      "border":    2,
+      "animate":   0,
+	  "dot-style": {
+		  "tip":       "#date:d M y#<br>#y#\n(left axis)",     // User formatted date
+		  "type":"solid-dot"},
+		
       "width": 4,
       "text":      "Test with Unix Timestamp as X Value",
-      "tip":       "#date:d M y#<br>#y#\n(left axis)",     // User formatted date
       "values" :   [
             {"x":1220245200, "y":10}, // 1220245200 = unix time stamp for 01 Sep 2008
             {"x":1220331600, "y":20},
