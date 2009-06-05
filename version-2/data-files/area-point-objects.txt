@@ -1,7 +1,7 @@
 {
 "elements": [
 	{
-		"type": "area_hollow",
+		"type": "area",
 		"fill-alpha": 0.4,
 		"values": [
 			{

@@ -11,7 +11,7 @@
 
   "elements":[
     {
-      "type":      "area_line",
+      "type":      "area",
       "colour":    "#CC3399",
       "fill":      "#343399",
       "fill-alpha": 0.5,
