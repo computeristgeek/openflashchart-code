@@ -23,7 +23,8 @@ public partial class bar : System.Web.UI.Page
         Random random = new Random();
         bar.Colour = "#344565";
         
-        bar.FillAlpha = 0.4;
+        bar.Alpha = 0.8;
+        
         bar.Text = "Test";
      
         bar.FontSize = 10;

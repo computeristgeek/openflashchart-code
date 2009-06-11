@@ -12,6 +12,7 @@ namespace OpenFlashChart
         private string type;
         protected IList values;
         private double fillalpha;
+        private double alpha;
         private double? fontsize;
         private string colour;
         private string text;
@@ -95,6 +96,12 @@ namespace OpenFlashChart
         {
             get { return fillalpha; }
             set { fillalpha = value; }
+        }
+        [JsonProperty("alpha")]
+        public double Alpha
+        {
+            get { return alpha; }
+            set { alpha = value; }
         }
 
         [JsonProperty("type")]
