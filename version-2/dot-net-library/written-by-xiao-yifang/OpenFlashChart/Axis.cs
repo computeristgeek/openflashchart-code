@@ -10,16 +10,19 @@ namespace OpenFlashChart
     {
         private int? stroke;
         private string colour;
-        private string grid_colour;
+        private string gridColour;
         
       
         private int? steps;
-        private int _3d;
+        private int _3D;
        
         private double? min;
         private double? max;
         private bool offset;
-
+        public Axis()
+        {
+            offset = true;
+        }
         [JsonProperty("stroke")]
         public int? Stroke
         {
@@ -35,8 +38,8 @@ namespace OpenFlashChart
         [JsonProperty("grid-colour")]
         public string GridColour
         {
-            set { this.grid_colour = value; }
-            get { return this.grid_colour; }
+            set { this.gridColour = value; }
+            get { return this.gridColour; }
         }
         [JsonProperty("steps")]
         public int? Steps
@@ -49,7 +52,7 @@ namespace OpenFlashChart
         public void SetColors(string color,string gridcolor)
         {
             this.colour = color;
-            this.grid_colour = gridcolor;
+            this.gridColour = gridcolor;
         }
         public void Set3D(int width)
         {
@@ -71,8 +74,8 @@ namespace OpenFlashChart
         [JsonProperty("3d")]
         public int Axis3D
         {
-            get { return _3d; }
-            set { _3d = value; }
+            get { return _3D; }
+            set { _3D = value; }
         }
 
         [JsonProperty("offset")]
