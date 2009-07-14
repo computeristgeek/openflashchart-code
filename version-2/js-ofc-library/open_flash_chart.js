@@ -1,9 +1,9 @@
 function ofc_chart() {
+	this.elements = [];
+
 	this.set_title = function(title) {
 		this.title = title;
 	};
-
-	this.elements = [];
 	this.add_element = function(new_element) {
 		this.elements.push(new_element);
 	};
@@ -19,8 +19,8 @@ function ofc_chart() {
 
 function ofc_element(type) {
 	this.type = type;
-
 	this.values = [];
+
 	this.set_values = function(values) {
 		this.values = values;
 	};
@@ -36,17 +36,17 @@ function ofc_element(type) {
 }
 
 function ofc_line() {
-	ofc_element.apply(this, ["line"]);
+	ofc_element.apply(this, ['line']);
 }
 ofc_line.prototype = new ofc_element();
 
 function ofc_bar() {
-	ofc_element.apply(this, ["bar"]);
+	ofc_element.apply(this, ['bar']);
 }
 ofc_bar.prototype = new ofc_element();
 
 function ofc_scatter(colour) {
-	ofc_element.apply(this, ["scatter"]);
+	ofc_element.apply(this, ['scatter']);
 	this.set_colour(colour);
 
 	this.set_default_dot_style = function(dot_style) {
@@ -56,7 +56,7 @@ function ofc_scatter(colour) {
 ofc_scatter.prototype = new ofc_element();
 
 function ofc_scatter_line(colour) {
-	ofc_element.apply(this, ["scatter_line"]);
+	ofc_element.apply(this, ['scatter_line']);
 	this.set_colour(colour);
 
 	this.set_default_dot_style = function(dot_style) {
@@ -64,11 +64,11 @@ function ofc_scatter_line(colour) {
 	};
 
 	this.set_step_horizontal = function() {
-		this.stepgraph = "horizontal";
+		this.stepgraph = 'horizontal';
 	};
 
 	this.set_step_vertical = function() {
-		this.stepgraph = "vertical";
+		this.stepgraph = 'vertical';
 	};
 }
 ofc_scatter_line.prototype = new ofc_element();
@@ -148,31 +148,124 @@ function ofc_dot_base(type, value) {
 }
 
 function ofc_dot(value) {
-	ofc_dot_base.apply(this, ["dot", value]);
+	ofc_dot_base.apply(this, ['dot', value]);
 }
 ofc_dot.prototype = new ofc_dot();
 
 function ofc_hollow_dot(value) {
-	ofc_dot_base.apply(this, ["hollow-dot", value]);
+	ofc_dot_base.apply(this, ['hollow-dot', value]);
 }
 ofc_hollow_dot.prototype = new ofc_dot_base();
 
 function ofc_solid_dot(value) {
-	ofc_dot_base.apply(this, ["solid-dot", value]);
+	ofc_dot_base.apply(this, ['solid-dot', value]);
 }
 ofc_solid_dot.prototype = new ofc_dot();
 
 function ofc_star(value) {
-	ofc_dot_base.apply(this, ["star", value]);
+	ofc_dot_base.apply(this, ['star', value]);
 }
 ofc_star.prototype = new ofc_dot_base();
 
 function ofc_bow(value) {
-	ofc_dot_base.apply(this, ["bow", value]);
+	ofc_dot_base.apply(this, ['bow', value]);
 }
 ofc_bow.prototype = new ofc_dot_base();
 
 function ofc_anchor(value) {
-	ofc_dot_base.apply(this, ["anchor", value]);
+	ofc_dot_base.apply(this, ['anchor', value]);
 }
 ofc_anchor.prototype = new ofc_dot_base();
+
+function ofc_pie() {
+	ofc_element.apply(this, ['pie']);
+
+	this.add_animation = function(animation) {
+		if (!this.animate) {
+			this.animate = [];
+		}
+		this.animate.push(animation);
+	};
+
+	this.set_alpha = function(alpha) {
+		this.alpha = alpha;
+	};
+
+	this.set_colours = function(colours) {
+		this.colours = colours;
+	};
+
+	this.set_start_angle = function(start_angle) {
+		this['start-angle'] = start_angle;
+	};
+
+	this.set_tooltip = function(tip) {
+		this.tip = tip;
+	};
+
+	this.set_gradient_fill = function() {
+		this['gradient-fill'] = true;
+	};
+
+	this.set_label_colour = function (label_colour) {
+		this['label-colour'] = label_colour;
+	};
+
+	this.set_no_labels = function() {
+		this['no-labels'] = true;
+	};
+
+	this.on_click = function(event) {
+		this['on-click'] = event;
+	};
+
+	this.radius = function(radius) {
+		this.radius = radius;
+	};
+}
+ofc_pie.prototype = new ofc_element();
+
+function ofc_pie_value(value, label) {
+	this.value = value;
+	this.label = label;
+
+	this.set_colour = function(colour) {
+		this.colour = colour;
+	};
+
+	this.set_label = function(label, label_colour, font_size) {
+		this.label = label;
+		this['label-colour'] = label_colour;
+		this['font-size'] = font_size;
+	};
+
+	this.set_tooltip = function(tip) {
+		this.tip = tip;
+	};
+
+	this.on_click = function(event) {
+		this['on-click'] = event;
+	};
+
+	this.add_animation = function(animation) {
+		if (!this.animate) {
+			this.animate = [];
+		}
+		this.animate.push(animation);
+	};
+}
+
+function ofc_base_pie_animation(type) {
+	this.type = type;
+}
+
+function ofc_pie_fade() {
+	ofc_base_pie_animation.apply(this, ['fade']);
+}
+ofc_pie_fade.prototype = new ofc_base_pie_animation();
+
+function ofc_pie_bounce(distance) {
+	ofc_base_pie_animation.apply(this, ['bounce']);
+	this.distance = distance;
+}
+ofc_pie_bounce.prototype = new ofc_base_pie_animation();
