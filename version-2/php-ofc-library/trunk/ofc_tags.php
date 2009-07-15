@@ -78,12 +78,21 @@ class ofc_tags
 		return $this;
 	}
 	
+	/**
+	 * This can contain some HTML, e.g:
+	 *  - "More <a href="javascript:alert(12);">info</a>"
+	 *  - "<a href="http://teethgrinder.co.uk">ofc</a>"
+	 */
 	function text($text)
 	{
 		$this->text = $text;
 		return $this;
 	}
 	
+	/**
+	 * This works, but to get the mouse pointer to change
+	 * to a little hand you need to use <a href=""> -- see text
+	 */
 	function on_click($on_click)
 	{
 		$this->{'on-click'} = $on_click;

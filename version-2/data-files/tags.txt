@@ -31,12 +31,28 @@
 	            {"x":6,"y":6},
 	            {"x":7,"y":9},
 
+				{"x":1,"y":13, "colour":"#0000F0", "underline": true,
+				 "text":"<a href=\"http://moo.com\">Click</a>", "on-cl--ick":"http://www.google.com"
+				},
+				 
+				{"x":1,"y":12.2, "colour":"#0000F0", "underline": true,
+				 "text":"<a href=\"#\">Call JS</a>", "on-click":"trace:farts"
+				},
+				
 				/* And one using the right axis just because we can */
 	            {"x":2,"y":78,"axis":"right", "pad-y":16, "font-size":20,
 				 "colour":"#00BB00","font":"Arial Black", "rotate":0,
 				 "text":"Click Tag to\nGoogle!!", "on-click":"http://www.google.com"
 				 }
+				 
 			]
+	},
+	{
+		"type":		"arrow",
+		"start":	{"x":2,"y":5},
+		"end":		{"x":4,"y":7},
+		"barb-length":	10,
+		"colour":	"#ff00ff"
 	},
     {
       "type":      "bar_glass",
