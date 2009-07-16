@@ -13,7 +13,8 @@
     {
       "type":      "candle",
       "alpha":     0.5,
-      "colour":    "#9933CC",
+      "colour":    "#40d040",
+      "negative-colour":    "#d04040",
       "text":      "Burn baby, burn",
       "font-size": 10,
 	  "on-show":	{"type": "po-p", "cascade":1, "delay":0},

@@ -91,7 +91,7 @@ class ofc_tags
 	
 	/**
 	 * This works, but to get the mouse pointer to change
-	 * to a little hand you need to use <a href=""> -- see text
+	 * to a little hand you need to use "<a href="">stuff</a>"-- see text()
 	 */
 	function on_click($on_click)
 	{
