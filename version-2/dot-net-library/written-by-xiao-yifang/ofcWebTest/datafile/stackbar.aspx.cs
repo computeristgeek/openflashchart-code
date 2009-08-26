@@ -19,6 +19,7 @@ public partial class datafile_stackbar : System.Web.UI.Page
         chart.Title = new Title("Stack Bar");
 
         BarStack bar = new OpenFlashChart.BarStack();
+        
         List<BarStackValue> barStackValues = new List<BarStackValue>() ;
         barStackValues.Add(2);
            barStackValues.Add( new BarStackValue(3))
@@ -41,7 +42,8 @@ public partial class datafile_stackbar : System.Web.UI.Page
 
         chart.Y_Axis.Set3D(3);
         chart.Y_Axis.Steps = 4;
-
+        bar.AddBarStackKey(new BarStackKey("#eeff00","test1",12));
+        bar.AddBarStackKey(new BarStackKey("#456879","test2",16));
         string s = chart.ToPrettyString();
         Response.Clear();
         Response.CacheControl = "no-cache";

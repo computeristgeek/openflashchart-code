@@ -130,7 +130,7 @@ namespace OpenFlashChart
         //public abstract Double GetMinValue();
         //public abstract Double GetMaxValue();
         
-        public  void Set_Key(string key, double font_size)
+        public virtual void Set_Key(string key, double font_size)
         {
             this.Text = key;
             FontSize = font_size;
