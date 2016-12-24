@@ -124,7 +124,7 @@ package {
 
 		
 		public static function ace_json( json:Object ):void {
-			tr.ace(JSON.serialize(json));
+			tr.ace(com.serialization.json.JSON.serialize(json));
 		}
 	}
 }

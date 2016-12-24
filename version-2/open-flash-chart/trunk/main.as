@@ -688,7 +688,7 @@ package  {
 			var ok:Boolean = false;
 			
 			try {
-				var json:Object = JSON.deserialize( json_string );
+				var json:Object = com.serialization.json.JSON.deserialize( json_string );
 				ok = true;
 			}
 			catch (e:Error) {
@@ -730,7 +730,7 @@ package  {
 		private function build_chart( json:Object ):void {
 			
 			tr.ace('----');
-			tr.ace(JSON.serialize(json));
+			tr.ace(com.serialization.json.JSON.serialize(json));
 			tr.ace('----');
 			
 			if ( this.obs != null )
