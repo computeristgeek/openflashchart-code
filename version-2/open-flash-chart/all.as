@@ -1,17 +1,15 @@
-﻿/* */
-
+/* AS3JS File */
 package {
-	
-	import flash.display.Sprite;
-	import flash.display.Stage;
-    import flash.text.TextField;
-    import flash.text.TextFieldType;
-	import flash.text.TextFormat;
-	import flash.events.Event;
-	import flash.text.TextFieldAutoSize;
-	//import string.Css;
-	import flash.text.StyleSheet;
-	import flash.events.TextEvent;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.Stage;
+    //removeMeIfWant flash.text.TextField;
+    //removeMeIfWant flash.text.TextFieldType;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.text.TextFieldAutoSize;
+	////removeMeIfWant string.Css;
+	//removeMeIfWant flash.text.StyleSheet;
+	//removeMeIfWant flash.events.TextEvent;
 
 	
 	
@@ -79,8 +77,11 @@ package {
 			
 		}
 	}
-}package {
-	import flash.external.ExternalInterface;
+}
+
+/* AS3JS File */
+package{
+	//removeMeIfWant flash.external.ExternalInterface;
 	
 	/**
 	 * This manages all External calls, not all players have this ability (Flex does not,
@@ -129,7 +130,10 @@ package {
 			
 		}
 	}
-}package {
+}
+
+/* AS3JS File */
+package{
 	
 	public class JsonErrorMsg extends ErrorMsg {
 		
@@ -154,8 +158,11 @@ package {
 			super( tmp );
 		}
 	}
-}package {
-	import com.serialization.json.JSON;
+}
+
+/* AS3JS File */
+package{
+	//removeMeIfWant com.serialization.json.JSON;
 	
 	/**
 	 * A simple function to inspect the JSON for items
@@ -195,12 +202,14 @@ package {
 * @version 0.1
 */
 
-package  {
-	import flash.display.Sprite;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
-	import flash.events.Event;
-	import flash.filters.DropShadowFilter;
+
+/* AS3JS File */
+package{
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.text.TextField;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.filters.DropShadowFilter;
 
 	public class Loading extends Sprite {
 		private var tf:TextField;
@@ -295,59 +304,61 @@ package  {
 	
 }
 
-package  {
-	import charts.series.Element;
-	import charts.Factory;
-	import charts.ObjectCollection;
-	import elements.menu.Menu;
-	import charts.series.has_tooltip;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
+
+/* AS3JS File */
+package{
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.Factory;
+	//removeMeIfWant charts.ObjectCollection;
+	//removeMeIfWant elements.menu.Menu;
+	//removeMeIfWant charts.series.has_tooltip;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
 	
 	// for image upload:
-	import flash.events.ProgressEvent;
-	import flash.net.URLVariables;
+	//removeMeIfWant flash.events.ProgressEvent;
+	//removeMeIfWant flash.net.URLVariables;
 	
-	import flash.display.Sprite;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
-	import string.Utils;
-	import global.Global;
-	import com.serialization.json.JSON;
-	import flash.external.ExternalInterface;
-	import flash.ui.ContextMenu;
-	import flash.ui.ContextMenuItem;
-	import flash.events.IOErrorEvent;
-	import flash.events.ContextMenuEvent;
-	import flash.system.System;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.net.URLLoader;
+	//removeMeIfWant flash.net.URLRequest;
+	//removeMeIfWant flash.display.StageAlign;
+	//removeMeIfWant flash.display.StageScaleMode;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant global.Global;
+	//removeMeIfWant com.serialization.json.JSON;
+	//removeMeIfWant flash.external.ExternalInterface;
+	//removeMeIfWant flash.ui.ContextMenu;
+	//removeMeIfWant flash.ui.ContextMenuItem;
+	//removeMeIfWant flash.events.IOErrorEvent;
+	//removeMeIfWant flash.events.ContextMenuEvent;
+	//removeMeIfWant flash.system.System;
 	
-	import flash.display.LoaderInfo;
+	//removeMeIfWant flash.display.LoaderInfo;
 
 	// export the chart as an image
-	import com.adobe.images.PNGEncoder;
-	import com.adobe.images.JPGEncoder;
-	import mx.utils.Base64Encoder;
-	// import com.dynamicflash.util.Base64;
-	import flash.display.BitmapData;
-	import flash.utils.ByteArray;
-	import flash.net.URLRequestHeader;
-	import flash.net.URLRequestMethod;
-	import flash.net.URLLoaderDataFormat;
-	import elements.axis.XAxis;
-	import elements.axis.XAxisLabels;
-	import elements.axis.YAxisBase;
-	import elements.axis.YAxisLeft;
-	import elements.axis.YAxisRight;
-	import elements.axis.RadarAxis;
-	import elements.Background;
-	import elements.labels.XLegend;
-	import elements.labels.Title;
-	import elements.labels.Keys;
-	import elements.labels.YLegendBase;
-	import elements.labels.YLegendLeft;
-	import elements.labels.YLegendRight;
+	//removeMeIfWant com.adobe.images.PNGEncoder;
+	//removeMeIfWant com.adobe.images.JPGEncoder;
+	//removeMeIfWant mx.utils.Base64Encoder;
+	// //removeMeIfWant com.dynamicflash.util.Base64;
+	//removeMeIfWant flash.display.BitmapData;
+	//removeMeIfWant flash.utils.ByteArray;
+	//removeMeIfWant flash.net.URLRequestHeader;
+	//removeMeIfWant flash.net.URLRequestMethod;
+	//removeMeIfWant flash.net.URLLoaderDataFormat;
+	//removeMeIfWant elements.axis.XAxis;
+	//removeMeIfWant elements.axis.XAxisLabels;
+	//removeMeIfWant elements.axis.YAxisBase;
+	//removeMeIfWant elements.axis.YAxisLeft;
+	//removeMeIfWant elements.axis.YAxisRight;
+	//removeMeIfWant elements.axis.RadarAxis;
+	//removeMeIfWant elements.Background;
+	//removeMeIfWant elements.labels.XLegend;
+	//removeMeIfWant elements.labels.Title;
+	//removeMeIfWant elements.labels.Keys;
+	//removeMeIfWant elements.labels.YLegendBase;
+	//removeMeIfWant elements.labels.YLegendLeft;
+	//removeMeIfWant elements.labels.YLegendRight;
 	
 	
 	public class main extends Sprite {
@@ -1225,8 +1236,10 @@ package  {
 	}
 	
 }
-package {
-	import object_helper;
+
+/* AS3JS File */
+package{
+	//removeMeIfWant object_helper;
 	
 	public class NumberFormat
 	{
@@ -1320,7 +1333,10 @@ package {
 			return _instanceY2;
 		}
 	}
-}package {
+}
+
+/* AS3JS File */
+package{
 	public class NumberUtils {
 
 
@@ -1415,7 +1431,10 @@ package {
 		}
 
 	}
-}package {
+}
+
+/* AS3JS File */
+package{
 	
 	public class object_helper {
 		
@@ -1442,7 +1461,10 @@ package {
 			}
 		}
 	}
-}package {
+}
+
+/* AS3JS File */
+package{
 	public class Parser {
 
 		//test if undefined or null
@@ -1603,7 +1625,10 @@ package {
 		}
 		
 	}
-}package {
+}
+
+/* AS3JS File */
+package{
 	public class PointCandle extends Point
 	{
 		public var width:Number;
@@ -1644,7 +1669,10 @@ package {
 			return {x:this.x+(this.width/2), y:this.y};
 		}
 	}
-}package {
+}
+
+/* AS3JS File */
+package{
 	public class PointHLC// extends Point
 	{
 	//	private var numDecimals:Number =5;
@@ -1686,10 +1714,13 @@ package {
 			return null;
 		}
 	}
-}package {
+}
 
-	import flash.utils.Dictionary;
-	import string.Utils;
+/* AS3JS File */
+package{
+
+	//removeMeIfWant flash.utils.Dictionary;
+	//removeMeIfWant string.Utils;
 	
 	public class Properties extends Object
 	{
@@ -1777,7 +1808,10 @@ package {
 			this._parent = null;
 		}
 	}
-}package {
+}
+
+/* AS3JS File */
+package{
 	
 	public class Range
 	{
@@ -1822,9 +1856,12 @@ package {
 			return 'Range : ' + this.min +', ' + this.max;
 		}
 	}
-}package {
-	import flash.geom.Point;
-	import charts.series.dots.Point;
+}
+
+/* AS3JS File */
+package{
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant charts.series.dots.Point;
 	
 	public class ScreenCoords extends ScreenCoordsBase
 	{
@@ -2216,8 +2253,11 @@ package {
 	
 		}
 	}
-}package {
-	import flash.geom.Point;
+}
+
+/* AS3JS File */
+package{
+	//removeMeIfWant flash.geom.Point;
 	
 	public class ScreenCoordsBase
 	{
@@ -2265,8 +2305,11 @@ package {
 		
 		public function get_x_from_pos( i:Number ):Number { return -1; }
 	}
-}package {
-	import flash.geom.Point;
+}
+
+/* AS3JS File */
+package{
+	//removeMeIfWant flash.geom.Point;
 
 	public class ScreenCoordsRadar extends ScreenCoordsBase
 	{
@@ -2351,8 +2394,11 @@ package {
 			return p.y;
 		}
 	}
-}package {
-	import flash.events.Event;
+}
+
+/* AS3JS File */
+package{
+	//removeMeIfWant flash.events.Event;
 
 	public class ShowTipEvent extends flash.events.Event {
 		public static const SHOW_TIP_TYPE:String = "ShowTipEvent";
@@ -2365,22 +2411,25 @@ package {
 			this.pos = pos;
 		}
 	}
-}package {
+}
 
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
-	import flash.filters.DropShadowFilter;
-	// import charts.Elements.Element;
-	import com.serialization.json.JSON;
-	import string.Utils;
-	import string.Css;
-	import object_helper;
-	import charts.series.has_tooltip;
+/* AS3JS File */
+package{
+
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant flash.geom.Rectangle;
+	//removeMeIfWant flash.text.TextField;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant flash.filters.DropShadowFilter;
+	// //removeMeIfWant charts.Elements.Element;
+	//removeMeIfWant com.serialization.json.JSON;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant string.Css;
+	//removeMeIfWant object_helper;
+	//removeMeIfWant charts.series.has_tooltip;
 	
 	public class Tooltip extends Sprite {
 		// JSON style:
@@ -2716,9 +2765,11 @@ package {
 		}
 	}
 }
-package {
-	import org.flashdevelop.utils.FlashConnect;
-	import com.serialization.json.JSON;
+
+/* AS3JS File */
+package{
+	//removeMeIfWant org.flashdevelop.utils.FlashConnect;
+	//removeMeIfWant com.serialization.json.JSON;
 	
 	public class tr {
 		
@@ -2845,7 +2896,10 @@ package {
 			tr.ace(com.serialization.json.JSON.serialize(json));
 		}
 	}
-}package string {
+}
+
+/* AS3JS File */
+package string {
 
 	public class Css {
 		public var text_align:String;
@@ -3109,7 +3163,10 @@ package {
 			this.display			= undefined;
 		}
 	}
-}package string
+}
+
+/* AS3JS File */
+package string
 {
 	public class DateUtils
 	{
@@ -3387,6 +3444,8 @@ package {
 * @version 0.1
 */
 
+
+/* AS3JS File */
 package string {
 
 	public class Utils {
@@ -3414,12 +3473,14 @@ package string {
 	}
 	
 }
+
+/* AS3JS File */
 package org.flashdevelop.utils
 {	
-	import flash.net.*;
-	import flash.events.*;
-	import flash.utils.*;
-	import flash.xml.*;
+	//removeMeIfWant flash.net.*;
+	//removeMeIfWant flash.events.*;
+	//removeMeIfWant flash.utils.*;
+	//removeMeIfWant flash.xml.*;
 	
 	/**
 	* Connects a flash movie thru XmlSocket to the FlashDevelop program.
@@ -3613,9 +3674,11 @@ package org.flashdevelop.utils
 	}
 	
 }
+
+/* AS3JS File */
 package org.flashdevelop.utils
 {
-	import flash.system.*;
+	//removeMeIfWant flash.system.*;
 	
 	/**
 	* Connects a flash movie from the ActiveX component to the FlashDevelop program.
@@ -3672,6 +3735,8 @@ package org.flashdevelop.utils
 	}
 	
 }
+
+/* AS3JS File */
 package org.flashdevelop.utils 
 {
 	/**
@@ -3693,11 +3758,13 @@ package org.flashdevelop.utils
 	}
 
 }
+
+/* AS3JS File */
 package global {
 	
-	import elements.axis.AxisLabel;
-	import elements.labels.XLegend;
-	import elements.axis.XAxisLabels;
+	//removeMeIfWant elements.axis.AxisLabel;
+	//removeMeIfWant elements.labels.XLegend;
+	//removeMeIfWant elements.axis.XAxisLabels;
 	
 	public class Global {
 		private static var instance:Global = null;
@@ -3754,12 +3821,15 @@ package global {
 			return this.tooltip;
 		}
 	}
-}package elements {
+}
+
+/* AS3JS File */
+package elements {
 	
-	import flash.display.Sprite;
-	import string.Utils;
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.net.URLLoader;
+	//removeMeIfWant flash.net.URLRequest;
 	
 	public class Background extends Sprite {
 		
@@ -3873,9 +3943,12 @@ package global {
 			this.graphics.clear();
 		}
 	}
-}package {
+}
+
+/* AS3JS File */
+package{
 		
-	import flash.display.Sprite;
+	//removeMeIfWant flash.display.Sprite;
 
 	class InnerBackground extends Sprite {
 		private var colour:Number=0;
@@ -3949,10 +4022,14 @@ package global {
 			this.mc._y = box.top;
 		}
 		
-	}package elements.axis {
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	import string.Utils;
+	}
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant string.Utils;
 	
 	
 	public class RadarAxis extends Sprite {
@@ -4071,11 +4148,14 @@ package global {
 				this.removeChildAt(0);
 		}
 	}
-}package elements.axis {
-	import flash.text.TextField;
-	import flash.display.Sprite;
-	import flash.text.TextFormat;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant flash.text.TextField;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant string.Utils;
 	
 	public class RadarAxisLabels extends Sprite{
 
@@ -4204,12 +4284,15 @@ package global {
 				this.removeChildAt(0);
 		}
 	}
-}package elements.axis {
-	import flash.text.TextField;
-	import flash.display.Sprite;
-	import flash.text.TextFormat;
-	import string.Utils;
-	import flash.geom.Point;
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant flash.text.TextField;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.geom.Point;
 	
 	public class RadarSpokeLabels extends Sprite{
 
@@ -4373,11 +4456,13 @@ package global {
 	}
 }/* */
 
+
+/* AS3JS File */
 package elements.axis {
 	
-	import flash.display.Sprite;
-    import flash.text.TextField;
-	import flash.geom.Rectangle;
+	//removeMeIfWant flash.display.Sprite;
+    //removeMeIfWant flash.text.TextField;
+	//removeMeIfWant flash.geom.Rectangle;
 	
 	public class AxisLabel extends TextField {
 		public var xAdj:Number = 0;
@@ -4429,13 +4514,16 @@ package elements.axis {
 			this.rightOverhang = Math.abs(titleRect.x + titleRect.width + this.xAdj);
       }
    }
-}package elements.axis {
-	import flash.display.Sprite;
-	import flash.geom.Matrix;
-	import string.Utils;
-	import charts.series.bars.Bar3D;
-	import com.serialization.json.JSON;
-	import Range;
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Matrix;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant charts.series.bars.Bar3D;
+	//removeMeIfWant com.serialization.json.JSON;
+	//removeMeIfWant Range;
 	
 	
 	public class XAxis extends Sprite {
@@ -4846,17 +4934,19 @@ package elements.axis {
 		}
 	}
 }
+
+/* AS3JS File */
 package elements.axis {
-	import flash.display.Sprite;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
-	import flash.display.DisplayObject;
-	import flash.geom.Rectangle;
-	import elements.axis.AxisLabel;
-	import string.Utils;
-	import string.DateUtils;
-	import com.serialization.json.JSON;
-	// import DateUtils;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.text.TextField;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant flash.display.DisplayObject;
+	//removeMeIfWant flash.geom.Rectangle;
+	//removeMeIfWant elements.axis.AxisLabel;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant string.DateUtils;
+	//removeMeIfWant com.serialization.json.JSON;
+	// //removeMeIfWant DateUtils;
 	
 	public class XAxisLabels extends Sprite {
 		
@@ -5184,8 +5274,10 @@ package elements.axis {
 
 	}
 }
+
+/* AS3JS File */
 package elements.axis {
-	import string.Utils;
+	//removeMeIfWant string.Utils;
 		
 	public class XLabelStyle
 	{
@@ -5227,9 +5319,12 @@ package elements.axis {
 				this.show_labels = true;
 		}
 	}
-}package elements.axis {
-	import flash.display.Sprite;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant string.Utils;
 	
 	public class YAxisBase extends Sprite {
 		
@@ -5604,13 +5699,16 @@ package elements.axis {
 			}
 		}
 	}
-}package elements.axis {
-	import flash.display.Sprite;
-	import elements.axis.YTextField;
-	import flash.text.TextFormat;
-	import org.flashdevelop.utils.FlashConnect;
-	import br.com.stimuli.string.printf;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant elements.axis.YTextField;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant org.flashdevelop.utils.FlashConnect;
+	//removeMeIfWant br.com.stimuli.string.printf;
+	//removeMeIfWant string.Utils;
 	
 	public class YAxisLabelsBase extends Sprite {
 		
@@ -5865,8 +5963,11 @@ package elements.axis {
 			return labelText;
 		}
 	}
-}package elements.axis {
-	import flash.text.TextField;
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant flash.text.TextField;
 	
 	public class YAxisLabelsLeft extends YAxisLabelsBase {
 
@@ -5911,8 +6012,11 @@ package elements.axis {
 			}
 		}
 	}
-}package elements.axis {
-	import flash.text.TextField;
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant flash.text.TextField;
 	
 	public class YAxisLabelsRight extends YAxisLabelsBase {
 		
@@ -5950,8 +6054,11 @@ package elements.axis {
 			}
 		}
 	}
-}package elements.axis {
-	import flash.display.Sprite;
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant flash.display.Sprite;
 	
 	public class YAxisLeft extends YAxisBase {
 
@@ -5987,8 +6094,11 @@ package elements.axis {
 			super.resize_helper( label_pos, sc, false);
 		}
 	}
-}package elements.axis {
-	import flash.display.Sprite;
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant flash.display.Sprite;
 	
 	public class YAxisRight extends YAxisBase {
 
@@ -6032,8 +6142,11 @@ package elements.axis {
 			super.resize_helper( label_pos, sc, true);
 		}
 	}
-}package elements.axis {
-	import string.Utils;
+}
+
+/* AS3JS File */
+package elements.axis {
+	//removeMeIfWant string.Utils;
 	
 	public class YLabelStyle
 	{
@@ -6077,9 +6190,12 @@ package elements.axis {
 			}
 		}
 	}
-}package elements.axis {
+}
+
+/* AS3JS File */
+package elements.axis {
 	
-	import flash.text.TextField;
+	//removeMeIfWant flash.text.TextField;
 	
 	public class YTextField extends TextField {
 		public var y_val:Number;
@@ -6095,16 +6211,18 @@ package elements.axis {
 	}
 }/* */
 
+
+/* AS3JS File */
 package elements.labels {
 	
-	import flash.display.Sprite;
-	import flash.display.Stage;
-    import flash.text.TextField;
-    import flash.text.TextFieldType;
-	import flash.text.TextFormat;
-	import flash.events.Event;
-	import flash.text.TextFieldAutoSize;
-	import string.Css;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.Stage;
+    //removeMeIfWant flash.text.TextField;
+    //removeMeIfWant flash.text.TextFieldType;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.text.TextFieldAutoSize;
+	//removeMeIfWant string.Css;
 	
 	
 	public class BaseLabel extends Sprite {
@@ -6162,13 +6280,16 @@ package elements.labels {
 				this.removeChildAt(0);
 		}
 	}
-}package elements.labels {
-	import charts.Base;
-	import charts.ObjectCollection;
-	import flash.display.Sprite;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
-	import org.flashdevelop.utils.FlashConnect;
+}
+
+/* AS3JS File */
+package elements.labels {
+	//removeMeIfWant charts.Base;
+	//removeMeIfWant charts.ObjectCollection;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.text.TextField;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant org.flashdevelop.utils.FlashConnect;
 	
 	public class Keys extends Sprite {
 		private var _height:Number = 0;
@@ -6282,18 +6403,20 @@ package elements.labels {
 	}
 }/* */
 
+
+/* AS3JS File */
 package elements.labels {
 	
-	import flash.display.Sprite;
-	import flash.display.Stage;
-    import flash.text.TextField;
-    import flash.text.TextFieldType;
-	import flash.text.TextFormat;
-	import flash.text.StyleSheet;
-	import flash.events.Event;
-	import flash.text.TextFieldAutoSize;
-	import string.Css;
-	import string.Utils;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.Stage;
+    //removeMeIfWant flash.text.TextField;
+    //removeMeIfWant flash.text.TextFieldType;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant flash.text.StyleSheet;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.text.TextFieldAutoSize;
+	//removeMeIfWant string.Css;
+	//removeMeIfWant string.Utils;
 	
 	public class Title extends BaseLabel {
 		public var colour:Number;
@@ -6358,9 +6481,12 @@ package elements.labels {
 					this.css.margin_bottom;
 		}
 	}
-}package elements.labels {
-	import org.flashdevelop.utils.FlashConnect;
-	import string.Css;
+}
+
+/* AS3JS File */
+package elements.labels {
+	//removeMeIfWant org.flashdevelop.utils.FlashConnect;
+	//removeMeIfWant string.Css;
 	
 	public class XLegend extends BaseLabel {
 
@@ -6401,18 +6527,21 @@ package elements.labels {
 		}
 	
 	}
-}package elements.labels {
-	import org.flashdevelop.utils.FlashConnect;
-	import flash.display.Sprite;
-	import flash.display.Stage;
-	import flash.text.*;
-	import flash.events.Event;
-	import flash.text.TextFieldAutoSize;
-	import flash.display.Loader;
-	import flash.events.Event;
-	import flash.net.URLRequest;
-	import string.Utils;
-	import string.Css;
+}
+
+/* AS3JS File */
+package elements.labels {
+	//removeMeIfWant org.flashdevelop.utils.FlashConnect;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.Stage;
+	//removeMeIfWant flash.text.*;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.text.TextFieldAutoSize;
+	//removeMeIfWant flash.display.Loader;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.net.URLRequest;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant string.Css;
 
 
 	public class YLegendBase extends Sprite {
@@ -6490,7 +6619,10 @@ package elements.labels {
 				this.removeChildAt(0);
 		}
 	}
-}package elements.labels {
+}
+
+/* AS3JS File */
+package elements.labels {
 	
 	public class YLegendLeft extends YLegendBase {
 		
@@ -6506,7 +6638,10 @@ package elements.labels {
 			this.x = 0;
 		}
 	}
-}package elements.labels {
+}
+
+/* AS3JS File */
+package elements.labels {
 	public class YLegendRight extends YLegendBase {
 		
 		public function YLegendRight( json:Object ) {
@@ -6521,15 +6656,18 @@ package elements.labels {
 			this.x = this.stage.stageWidth-this.getChildAt(0).width;
 		}
 	}
-}package elements.menu {
+}
 
-	import flash.display.Sprite;
-	import flash.events.MouseEvent;
-	import flash.external.ExternalInterface;
+/* AS3JS File */
+package elements.menu {
+
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant flash.external.ExternalInterface;
 	
-	import flash.text.TextField;
-    import flash.text.TextFieldType;
-	import flash.text.TextFormat;
+	//removeMeIfWant flash.text.TextField;
+    //removeMeIfWant flash.text.TextFieldType;
+	//removeMeIfWant flash.text.TextFormat;
 
 	public class CameraIcon extends menuItem {
 		
@@ -6563,6 +6701,8 @@ package elements.labels {
 		}
 	}
 }
+
+/* AS3JS File */
 package elements.menu {
 
 	public class DefaultCameraIconProperties extends Properties
@@ -6583,7 +6723,10 @@ package elements.menu {
 	
 		}
 	}
-}package elements.menu {
+}
+
+/* AS3JS File */
+package elements.menu {
 
 	public class DefaultMenuProperties extends Properties
 	{
@@ -6600,15 +6743,18 @@ package elements.menu {
 	
 		}
 	}
-}package elements.menu {
+}
 
-	import flash.display.Sprite;
-	import flash.events.MouseEvent;
-	import elements.menu.menuItem;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import string.Utils;
-	import flash.filters.DropShadowFilter;
+/* AS3JS File */
+package elements.menu {
+
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant elements.menu.menuItem;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.filters.DropShadowFilter;
 	
 	public class Menu extends Sprite {
 		
@@ -6725,16 +6871,19 @@ package elements.menu {
 			
 		}
 	}
-}package elements.menu {
+}
 
-	import flash.display.Sprite;
-	import flash.events.MouseEvent;
-	import flash.external.ExternalInterface;
-	import flash.text.TextField;
-    import flash.text.TextFieldType;
-	import flash.text.TextFormat;
-	import flash.filters.GlowFilter;
-	import string.Utils;
+/* AS3JS File */
+package elements.menu {
+
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant flash.external.ExternalInterface;
+	//removeMeIfWant flash.text.TextField;
+    //removeMeIfWant flash.text.TextFieldType;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant flash.filters.GlowFilter;
+	//removeMeIfWant string.Utils;
 
 	public class menuItem extends Sprite {
 		
@@ -6838,6 +6987,8 @@ package elements.menu {
 		}
 	}
 }
+
+/* AS3JS File */
 package elements.menu {
 	
 	public class menu_item_factory {
@@ -6856,41 +7007,11 @@ package elements.menu {
 			}
 		}
 	}
-}package br.com.stimuli.string{
+}
 
-        /**
-        *   Creates a string with variable substitutions. Very similiar to printf, specially python's printf
-        *   @param raw The string to be substituted.
-        *   @param rest  The objects to be substitued, can be positional or by properties inside the object (in wich case only one object can be passed)
-        *   @return The formated and substitued string. 
-        *   @example
-        *   <pre>
-        *   import br.com.stimuli.string.printf;
-        *   // objects are substitued in the other they appear
-        *   
-        *   printf("This is an %s lybrary for creating %s", "Actioscript 3.0", "strings");
-        *   // outputs: "This is an Actioscript 3.0 lybrary for creating strings";
-        *   // you can also format numbers:
-        *   
-        *   printf("You can also display numbers like PI: %f, and format them to a fixed precision, such as PI with 3 decimal places %.3f", Math.PI, Math.PI);
-        *   // outputs: " You can also display numbers like PI: 3.141592653589793, and format them to a fixed precision, such as PI with 3 decimal places 3.142"
-        *   // Instead of positional (the order of arguments to print f, you can also use propertie of an object):
-        *   var userInfo : Object = {
-        	"name": "Arthur Debert",
-        	"email": "arthur@stimuli.com.br",
-        	"website":"http://www.stimuli.com.br/",
-        	"ocupation": "developer"
-        }
-        *   
-        *   printf("My name is %(name)s and I am a %(ocupation)s. You can read more on my personal %(website)s, or reach me through my %(email)s", userInfo);
-        *   // outputs: "My name is Arthur Debert and I am a developer. You can read more on my personal http://www.stimuli.com.br/, or reach me through my arthur@stimuli.com.br"
-        *   // you can also use date parts:
-        *   var date : Date = new Date();
-        *   printf("Today is %d/%m/%Y", date, date, date)
-        *   
-        *   </pre>
-        *   @see br.com.stimuli.string 
-        */
+/* AS3JS File */
+package br.com.stimuli.string{
+
          public function printf(raw : String, ...rest) : String{
          	/**
 			* Pretty ugly!
@@ -7035,7 +7156,6 @@ package elements.menu {
             buffer.push(raw.substr(match.endIndex, raw.length - match.endIndex));
             return buffer.join("");
         }
-    }
 
 
 // internal usage
@@ -7095,6 +7215,9 @@ function truncateNumber(raw : Number, decimals :int =2) : Number {
     var power : int = Math.pow(10, decimals);
    return Math.round(raw * ( power )) / power;
 }
+}
+
+/* AS3JS File */
 package caurina.transitions {
 
 	/**
@@ -7213,6 +7336,8 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package caurina.transitions {
 	
 	public class Equations {
@@ -7879,6 +8004,8 @@ package caurina.transitions {
 		}
 	}
 }
+
+/* AS3JS File */
 package caurina.transitions {
 
 	/**
@@ -7950,13 +8077,16 @@ package caurina.transitions {
 		
 	}
 
-}package caurina.transitions {
+}
 
-	import flash.filters.BitmapFilter;
-	import flash.filters.BlurFilter;
-//	import flash.filters.GlowFilter;
-	import flash.geom.ColorTransform;
-	import flash.media.SoundTransform;
+/* AS3JS File */
+package caurina.transitions {
+
+	//removeMeIfWant flash.filters.BitmapFilter;
+	//removeMeIfWant flash.filters.BlurFilter;
+//	//removeMeIfWant flash.filters.GlowFilter;
+	//removeMeIfWant flash.geom.ColorTransform;
+	//removeMeIfWant flash.media.SoundTransform;
 
 	/**
 	 * SpecialPropertiesDefault
@@ -8374,6 +8504,8 @@ package caurina.transitions {
 
 	}
 }
+
+/* AS3JS File */
 package caurina.transitions {
 	
 	/**
@@ -8418,7 +8550,10 @@ package caurina.transitions {
 			return value;
 		}
 	}
-}package caurina.transitions {
+}
+
+/* AS3JS File */
+package caurina.transitions {
 
 	/**
 	 * SpecialPropertyModifier
@@ -8460,6 +8595,8 @@ package caurina.transitions {
 	}
 
 }
+
+/* AS3JS File */
 package caurina.transitions {
 
 	/**
@@ -8535,11 +8672,13 @@ http://code.google.com/p/tweener/
 http://code.google.com/p/tweener/wiki/License
 */
 
+
+/* AS3JS File */
 package caurina.transitions {
 	
-	import flash.display.*;
-	import flash.events.Event;
-	import flash.utils.getTimer;
+	//removeMeIfWant flash.display.*;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.utils.getTimer;
 
 	public class Tweener {
 	
@@ -9537,7 +9676,7 @@ package caurina.transitions {
 		 * @return					The identification string of the current Tweener version, composed of an identification of the platform version ("AS2", "AS2_FL7", or "AS3") followed by space and then the version number.
 		 * @example The following code returns the current used version of Tweener:
 		 * <listing version="3.0">
-		 * import caurina.transitions.Tweener;
+		 * //removeMeIfWant caurina.transitions.Tweener;
 		 *
 		 * var tVersion:String = Tweener.getVersion();
 		 * trace ("Using Tweener version " + tVersion + "."); // Outputs: "Using Tweener version AS3 1.24.47."</listing>
@@ -9569,8 +9708,10 @@ package caurina.transitions {
 
 	}
 }
+
+/* AS3JS File */
 package caurina.transitions {
-    import caurina.transitions.AuxFunctions;
+    //removeMeIfWant caurina.transitions.AuxFunctions;
 	/**
 	 * The tween list object. Stores all of the properties and information that pertain to individual tweens.
 	 *
@@ -9786,15 +9927,17 @@ package caurina.transitions {
 
 	
 }
+
+/* AS3JS File */
 package charts {
-	import charts.series.Element;
-	import charts.series.dots.PointDotBase;
-	import charts.series.dots.Point;
-	import string.Utils;
-	import flash.display.BlendMode;
-	import flash.geom.Point;
-	import flash.display.Sprite;
-	import charts.series.dots.DefaultDotProperties;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.dots.PointDotBase;
+	//removeMeIfWant charts.series.dots.Point;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant charts.series.dots.DefaultDotProperties;
 
 	public class Area extends Line {
 		private var fill_colour:Number;
@@ -9900,10 +10043,13 @@ package charts {
 		}
 	
 	}
-}package charts {
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant string.Utils;
 	
 	public class Arrow extends Base {
 		
@@ -9965,10 +10111,13 @@ package charts {
 			
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.Bar3D;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Bar3D;
+	//removeMeIfWant string.Utils;
 	
 	
 	public class Bar3D extends BarBase {
@@ -9985,10 +10134,13 @@ package charts {
 			return new charts.series.bars.Bar3D( index, this.get_element_helper_prop( value ), this.group );
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.Bar;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Bar;
+	//removeMeIfWant string.Utils;
 
 	
 	public class Bar extends BarBase {
@@ -10006,12 +10158,15 @@ package charts {
 			return new charts.series.bars.Bar( index, this.get_element_helper_prop( value ), this.group );
 		}
 	}
-}package charts {
+}
+
+/* AS3JS File */
+package charts {
 	
-	import charts.series.Element;
-	import charts.Base;
-	import string.Utils;
-	import global.Global;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.Base;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant global.Global;
 
 	
 	public class BarBase extends Base
@@ -10188,10 +10343,13 @@ package charts {
 			this.props.die();
 		}
 	}
-}package charts {
-	import charts.Elements.Element;
-	import charts.Elements.PointBarCandle;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.Elements.Element;
+	//removeMeIfWant charts.Elements.PointBarCandle;
+	//removeMeIfWant string.Utils;
 	
 	public class BarCandle extends BarBase {
 		//private var line_width:Number;
@@ -10253,9 +10411,12 @@ package charts {
 			return new PointBarCandle( x, value, this.line_width, this.colour, this.group );
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.Cylinder;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Cylinder;
 
 	public class BarCylinder extends BarBase {
 
@@ -10273,9 +10434,12 @@ package charts {
 			return new Cylinder( index, this.get_element_helper_prop( value ), this.group );
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.CylinderOutline;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.CylinderOutline;
 
 	public class BarCylinderOutline extends BarBase {
 
@@ -10292,9 +10456,12 @@ package charts {
 			return new CylinderOutline( index, this.get_element_helper_prop( value ), this.group );
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.Dome;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Dome;
 
 	public class BarDome extends BarBase {
 
@@ -10313,9 +10480,12 @@ package charts {
 		}
 
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.Elements.PointBarFade;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.Elements.PointBarFade;
 	
 	public class BarFade extends BarBase {
 		
@@ -10330,10 +10500,13 @@ package charts {
 			return new PointBarFade( index, value, this.colour, this.group );
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.Glass;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Glass;
+	//removeMeIfWant string.Utils;
 	
 	public class BarGlass extends BarBase {
 
@@ -10351,10 +10524,13 @@ package charts {
 			return new Glass( index, this.get_element_helper_prop( value ), this.group );
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.Outline;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Outline;
+	//removeMeIfWant string.Utils;
 	
 	public class BarOutline extends BarBase {
 		private var outline_colour:Number;
@@ -10400,10 +10576,12 @@ package charts {
 			return new Outline( index, default_style, this.group );
 		}
 	}
-}    package charts {
-       import charts.series.Element;
-	import charts.series.bars.Plastic;
-       import string.Utils;
+}    
+/* AS3JS File */
+package charts {
+       //removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Plastic;
+       //removeMeIfWant string.Utils;
        
        public class BarPlastic extends BarBase {
 
@@ -10422,11 +10600,13 @@ package charts {
 		}
         
        }
-    }    package charts {
+    }    
+/* AS3JS File */
+package charts {
 		
-       import charts.series.Element;
-	import charts.series.bars.PlasticFlat;
-       import string.Utils;
+       //removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.PlasticFlat;
+       //removeMeIfWant string.Utils;
        
        public class BarPlasticFlat extends BarBase {
 
@@ -10445,9 +10625,12 @@ package charts {
 		}
           
        }
-    }package charts {
-	import charts.series.Element;
-	import charts.series.bars.Round3D;
+    }
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Round3D;
        
        public class BarRound3D extends BarBase {
 
@@ -10465,9 +10648,12 @@ package charts {
 			return new charts.series.bars.Round3D( index, this.get_element_helper_prop( value ), this.group );
 		}
 	   }
-    }package charts {
-	import charts.series.Element;
-	import charts.series.bars.Round;
+    }
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Round;
 
 	public class BarRound extends BarBase {
 
@@ -10484,9 +10670,12 @@ package charts {
 			return new Round( index, this.get_element_helper_prop( value ), this.group );
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.RoundGlass;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.RoundGlass;
 
 	public class BarRoundGlass extends BarBase {
 
@@ -10504,10 +10693,13 @@ package charts {
 			return new RoundGlass( index, this.get_element_helper_prop( value ), this.group );
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.Sketch;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Sketch;
+	//removeMeIfWant string.Utils;
 	
 	public class BarSketch extends BarBase {
 		private var outline_colour:Number;
@@ -10563,12 +10755,15 @@ package charts {
 			return new Sketch( index, default_style, this.group );
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.StackCollection;
-	import string.Utils;
-	import com.serialization.json.JSON;
-	import flash.geom.Point;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.StackCollection;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant com.serialization.json.JSON;
+	//removeMeIfWant flash.geom.Point;
 	
 	
 	public class BarStack extends BarBase {
@@ -10677,12 +10872,15 @@ package charts {
 			return tmp;
 		}
 	}
-}package charts {
+}
 
-	import flash.display.Sprite;
-	import charts.series.Element;
-	import flash.geom.Point;
-	import elements.axis.XAxisLabels;
+/* AS3JS File */
+package charts {
+
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant elements.axis.XAxisLabels;
 	
 	public class Base extends Sprite {
 		
@@ -11116,10 +11314,13 @@ package charts {
 				this.removeChildAt(0);
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.ECandle;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.ECandle;
+	//removeMeIfWant string.Utils;
 
 	
 	public class Candle extends BarBase {
@@ -11147,8 +11348,11 @@ package charts {
 			return new ECandle( index, default_style, this.group );
 		}
 	}
-}package charts {
-	import com.serialization.json.JSON;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant com.serialization.json.JSON;
 	
 	public class Factory
 	{
@@ -11322,11 +11526,14 @@ package charts {
 			return collection;
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import charts.series.bars.Horizontal;
-	import string.Utils;
-	import global.Global;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.bars.Horizontal;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant global.Global;
 	
 	public class HBar extends Base {
 		
@@ -11422,20 +11629,23 @@ package charts {
 		}
 
 	}
-}package charts {
+}
 
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import charts.series.Element;
-	import flash.display.BlendMode;
-	import flash.display.Sprite;
+/* AS3JS File */
+package charts {
+
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant flash.display.Sprite;
 	
-	import charts.series.dots.DefaultDotProperties;
-	import charts.series.dots.dot_factory;
+	//removeMeIfWant charts.series.dots.DefaultDotProperties;
+	//removeMeIfWant charts.series.dots.dot_factory;
 	
-	import flash.utils.Timer;
-	import flash.events.TimerEvent;
-	import charts.series.dots.PointDotBase;
+	//removeMeIfWant flash.utils.Timer;
+	//removeMeIfWant flash.events.TimerEvent;
+	//removeMeIfWant charts.series.dots.PointDotBase;
 	
 	public class Line extends Base
 	{
@@ -11742,16 +11952,19 @@ package charts {
 			return this.props.get_colour('colour');
 		}
 	}
-}package charts {
+}
+
+/* AS3JS File */
+package charts {
 	
-	import charts.series.Element;
-	import charts.series.dots.PointDotBase;
-	import flash.display.Graphics;
-	import flash.display.Sprite;
-	import flash.display.BlendMode;
-	import string.Utils;
-	// import charts.series.dots.PointDot;
-	import charts.series.dots.dot_factory;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.dots.PointDotBase;
+	//removeMeIfWant flash.display.Graphics;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant string.Utils;
+	// //removeMeIfWant charts.series.dots.PointDot;
+	//removeMeIfWant charts.series.dots.dot_factory;
 	
 	
 	public class LineBase extends Base
@@ -11968,16 +12181,19 @@ package charts {
 			return this.style.colour;
 		}
 	}
-}package charts {
-	//import caurina.transitions.Tweener;
+}
 
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import charts.series.Element;
-	import charts.series.dots.PointDot;
-	import string.Utils;
-	import flash.display.BlendMode;
+/* AS3JS File */
+package charts {
+	////removeMeIfWant caurina.transitions.Tweener;
+
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.dots.PointDot;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.display.BlendMode;
 	
 	public class LineDot extends LineBase
 	{
@@ -12036,18 +12252,21 @@ package charts {
 		}
 		*/
 	}
-}package charts {
-	//import caurina.transitions.Tweener;
+}
 
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import charts.series.Element;
-	//import charts.series.dots.PointDot;
-	import string.Utils;
-	import flash.display.BlendMode;
-	import charts.series.dots.Hollow;
-	import charts.series.dots.dot_factory;
+/* AS3JS File */
+package charts {
+	////removeMeIfWant caurina.transitions.Tweener;
+
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant charts.series.Element;
+	////removeMeIfWant charts.series.dots.PointDot;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant charts.series.dots.Hollow;
+	//removeMeIfWant charts.series.dots.dot_factory;
 	
 	public class LineHollow extends LineBase
 	{
@@ -12106,7 +12325,10 @@ package charts {
 		}
 		*/
 	}
-}package charts {
+}
+
+/* AS3JS File */
+package charts {
 
 	public class LineStyle extends Object
 	{
@@ -12126,10 +12348,13 @@ package charts {
 			object_helper.merge_2( json, this );
 		}
 	}
-}package charts {
-	import charts.series.Element;
-	import flash.geom.Point;
-	import elements.axis.XAxisLabels;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant elements.axis.XAxisLabels;
 
 	public class ObjectCollection
 	{
@@ -12414,16 +12639,19 @@ package charts {
 				o.die();
 		}
 	}
-}package charts {
-	import charts.series.pies.PieLabel;
-	import flash.external.ExternalInterface;
-	import string.Utils;
-	import charts.series.Element;
-	import charts.series.pies.PieSliceContainer;
-	import charts.series.pies.DefaultPieProperties;
-	import global.Global;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant charts.series.pies.PieLabel;
+	//removeMeIfWant flash.external.ExternalInterface;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.pies.PieSliceContainer;
+	//removeMeIfWant charts.series.pies.DefaultPieProperties;
+	//removeMeIfWant global.Global;
 	
-	import flash.display.Sprite;
+	//removeMeIfWant flash.display.Sprite;
 
 	public class Pie extends Base
 	{
@@ -12789,10 +13017,12 @@ package charts {
 		}
 	}
 }
+
+/* AS3JS File */
 package charts {
 
-	import string.Utils;
-	import charts.series.dots.DefaultDotProperties;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant charts.series.dots.DefaultDotProperties;
 	
 	public class Scatter extends ScatterBase
 	{
@@ -12830,15 +13060,18 @@ package charts {
 			this.add_values();
 		}
 	}
-}package charts {
+}
+
+/* AS3JS File */
+package charts {
 	
-	import charts.series.dots.scat;
-	import charts.series.Element;
-	import charts.series.dots.dot_factory;
-	import string.Utils;
-	import flash.geom.Point;
-	import flash.display.Sprite;
-	import charts.series.dots.DefaultDotProperties;
+	//removeMeIfWant charts.series.dots.scat;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.dots.dot_factory;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant charts.series.dots.DefaultDotProperties;
 	
 	public class ScatterBase extends Base {
 
@@ -12935,17 +13168,20 @@ package charts {
 			}
 		}
 	}
-}package charts {
+}
+
+/* AS3JS File */
+package charts {
 	
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import charts.series.Element;
-	import charts.series.dots.scat;
-	import string.Utils;
-	import flash.geom.Point;
-	import flash.display.Sprite;
-	import flash.display.BlendMode;
-	import charts.series.dots.DefaultDotProperties;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.series.dots.scat;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant charts.series.dots.DefaultDotProperties;
 	
 	
 	public class ScatterLine extends ScatterBase
@@ -13148,10 +13384,13 @@ package charts {
 		}
 		
 	}
-}package charts {
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	import string.Utils;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant string.Utils;
 	
 	public class Shape extends Base {
 		
@@ -13194,11 +13433,14 @@ package charts {
 			this.graphics.endFill();
 		}
 	}
-}package charts {
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	import string.Utils;
-	import charts.series.tags.Tag;
+}
+
+/* AS3JS File */
+package charts {
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant charts.series.tags.Tag;
 	
 	public class Tags extends Base {
 		
@@ -13251,10 +13493,13 @@ package charts {
 		}
 	}
 	
-}package charts.Elements {
+}
+
+/* AS3JS File */
+package charts.Elements {
 	
-	import flash.display.Sprite;
-	import charts.series.bars.Base;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant charts.series.bars.Base;
 	
 	public class PointBarFade extends Base
 	{
@@ -13299,11 +13544,14 @@ package charts {
 			this.graphics.endFill();
 		}
 	}
-}package charts.Elements {
-	import charts.Elements.PointDotBase;
-	import flash.display.BlendMode;
-	import flash.display.Graphics;
-	import flash.display.Sprite;
+}
+
+/* AS3JS File */
+package charts.Elements {
+	//removeMeIfWant charts.Elements.PointDotBase;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant flash.display.Graphics;
+	//removeMeIfWant flash.display.Sprite;
 	
 	public class Star extends PointDotBase {
 		
@@ -13365,21 +13613,23 @@ package charts {
 	}
 }
 
+
+/* AS3JS File */
 package charts.series {
 	
-	import charts.series.has_tooltip;
-	import flash.display.Sprite;
-	import string.Utils;
-	import global.Global;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import flash.geom.Point;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
-	import flash.external.ExternalInterface;
-	import elements.axis.XAxisLabels;
+	//removeMeIfWant charts.series.has_tooltip;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant global.Global;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant flash.net.URLRequest;
+	//removeMeIfWant flash.net.navigateToURL;
+	//removeMeIfWant flash.external.ExternalInterface;
+	//removeMeIfWant elements.axis.XAxisLabels;
 	
 	public class Element extends Sprite implements has_tooltip {
 		//
@@ -13545,7 +13795,10 @@ package charts.series {
 			}
 		}
 	}
-}package charts.series {
+}
+
+/* AS3JS File */
+package charts.series {
 	
 	/**
 	 * anything that wants to use our tooltips
@@ -13564,12 +13817,15 @@ package charts.series {
 		// back to the ground state. Not hovered.
 		function set_tip( b:Boolean ):void;
 	}
-}package charts.series.bars {
+}
+
+/* AS3JS File */
+package charts.series.bars {
 	
-	import flash.display.Sprite;
-	import flash.geom.Matrix;
-	import flash.filters.DropShadowFilter;
-	import charts.series.bars.Base;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Matrix;
+	//removeMeIfWant flash.filters.DropShadowFilter;
+	//removeMeIfWant charts.series.bars.Base;
 	
 	public class Bar3D extends Base {
 		
@@ -13700,11 +13956,14 @@ package charts.series {
 			return red << 16 | green << 8 | blue;
 		}
 	}
-}package charts.series.bars {
+}
+
+/* AS3JS File */
+package charts.series.bars {
 	
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	import charts.series.bars.Base;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant charts.series.bars.Base;
 	
 	public class Bar extends Base {
 	
@@ -13728,17 +13987,20 @@ package charts.series {
 		}
 		
 	}
-}package charts.series.bars {
+}
 
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.display.Sprite;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import flash.geom.Point;
-	import global.Global;
-	import charts.series.Element;
-	import string.Utils;
+/* AS3JS File */
+package charts.series.bars {
+
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant global.Global;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant string.Utils;
 	
 	public class Base extends Element
 	{
@@ -13965,11 +14227,14 @@ package charts.series {
 			}
 		}	
 	}
-}package charts.series.bars {
+}
 
-	import charts.series.bars.Base;
-	import flash.filters.DropShadowFilter;
-	import flash.geom.Matrix;
+/* AS3JS File */
+package charts.series.bars {
+
+	//removeMeIfWant charts.series.bars.Base;
+	//removeMeIfWant flash.filters.DropShadowFilter;
+	//removeMeIfWant flash.geom.Matrix;
 
 	public class Cylinder extends Base
 	{
@@ -14188,11 +14453,14 @@ package charts.series {
 			return 1;
 		}
 	}
-}package charts.series.bars {
+}
+
+/* AS3JS File */
+package charts.series.bars {
 		
-	import charts.series.bars.Base;
-	import flash.filters.DropShadowFilter;
-	import flash.geom.Matrix;
+	//removeMeIfWant charts.series.bars.Base;
+	//removeMeIfWant flash.filters.DropShadowFilter;
+	//removeMeIfWant flash.geom.Matrix;
 
 	public class CylinderOutline extends Base {
 
@@ -14431,10 +14699,13 @@ package charts.series {
           }
           
        }
-    }package charts.series.bars {
-	import flash.filters.DropShadowFilter;
-	import flash.geom.Matrix;
-	import charts.series.bars.Base;
+    }
+
+/* AS3JS File */
+package charts.series.bars {
+	//removeMeIfWant flash.filters.DropShadowFilter;
+	//removeMeIfWant flash.geom.Matrix;
+	//removeMeIfWant charts.series.bars.Base;
 
 	public class Dome extends Base
 	{
@@ -14885,11 +15156,14 @@ package charts.series {
           }
           
        }
-    }package charts.series.bars {
+    }
+
+/* AS3JS File */
+package charts.series.bars {
 	
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	import charts.series.bars.Base;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant charts.series.bars.Base;
 	
 	public class ECandle extends Base {
 		protected var high:Number;
@@ -15057,11 +15331,14 @@ package charts.series {
 		}
 			
 	}
-}package charts.series.bars {
+}
+
+/* AS3JS File */
+package charts.series.bars {
 	
-	import flash.filters.DropShadowFilter;
-	import flash.geom.Matrix;
-	import charts.series.bars.Base;
+	//removeMeIfWant flash.filters.DropShadowFilter;
+	//removeMeIfWant flash.geom.Matrix;
+	//removeMeIfWant charts.series.bars.Base;
 	
 	public class Glass extends Base
 	{
@@ -15172,15 +15449,18 @@ package charts.series {
 			this.graphics.endFill();
 		}
 	}
-}package charts.series.bars {
+}
+
+/* AS3JS File */
+package charts.series.bars {
 	
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import flash.geom.Point;
-	import charts.series.Element;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant charts.series.Element;
 	
 	public class Horizontal extends Element
 	{
@@ -15278,10 +15558,13 @@ package charts.series {
 			return this.right;
 		}
 	}
-}package charts.series.bars {
+}
+
+/* AS3JS File */
+package charts.series.bars {
 	
-	import flash.display.Sprite;
-	import charts.series.bars.Base;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant charts.series.bars.Base;
 	
 	public class Outline extends Base {
 		private var outline:Number;
@@ -15309,9 +15592,12 @@ package charts.series {
 			
 		}
 	}
-}package charts.series.bars {
-	import flash.filters.DropShadowFilter;
-	import flash.geom.Matrix;
+}
+
+/* AS3JS File */
+package charts.series.bars {
+	//removeMeIfWant flash.filters.DropShadowFilter;
+	//removeMeIfWant flash.geom.Matrix;
 
 	public class Plastic extends Base
 	{
@@ -15568,9 +15854,11 @@ package charts.series {
           }
                 
        }
-    }    package charts.series.bars {
-       import flash.filters.DropShadowFilter;
-       import flash.geom.Matrix;
+    }    
+/* AS3JS File */
+package charts.series.bars {
+       //removeMeIfWant flash.filters.DropShadowFilter;
+       //removeMeIfWant flash.geom.Matrix;
        
        public class PlasticFlat extends Base
        {
@@ -15879,10 +16167,12 @@ package charts.series {
           }
                 
        }
-    }    package charts.series.bars {
-       import flash.filters.DropShadowFilter;
-       import flash.geom.Matrix;
-	   import charts.series.bars.Base;
+    }    
+/* AS3JS File */
+package charts.series.bars {
+       //removeMeIfWant flash.filters.DropShadowFilter;
+       //removeMeIfWant flash.geom.Matrix;
+	   //removeMeIfWant charts.series.bars.Base;
        
        public class Round3D extends Base
        {
@@ -16359,10 +16649,12 @@ package charts.series {
           }
           
        }
-    }    package charts.series.bars {
-       import flash.filters.DropShadowFilter;
-       import flash.geom.Matrix;
-       import charts.series.bars.Base;
+    }    
+/* AS3JS File */
+package charts.series.bars {
+       //removeMeIfWant flash.filters.DropShadowFilter;
+       //removeMeIfWant flash.geom.Matrix;
+       //removeMeIfWant charts.series.bars.Base;
 	   
 	   
        public class Round extends Base
@@ -16675,11 +16967,14 @@ package charts.series {
           }
           
        }
-    }package charts.series.bars {
+    }
 
-	import flash.filters.DropShadowFilter;
-	import flash.geom.Matrix;
-	import charts.series.bars.Base;
+/* AS3JS File */
+package charts.series.bars {
+
+	//removeMeIfWant flash.filters.DropShadowFilter;
+	//removeMeIfWant flash.geom.Matrix;
+	//removeMeIfWant charts.series.bars.Base;
 
 	public class RoundGlass extends Base
 	{
@@ -17078,10 +17373,13 @@ package charts.series {
           }
           
        }
-    }package charts.series.bars {
+    }
+
+/* AS3JS File */
+package charts.series.bars {
 	
-	import flash.display.Sprite;
-	import charts.series.bars.Base;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant charts.series.bars.Base;
 	
 	public class Sketch extends Base {
 		private var outline:Number;
@@ -17138,11 +17436,14 @@ package charts.series {
 			
 		}
 	}
-}package charts.series.bars {
+}
+
+/* AS3JS File */
+package charts.series.bars {
 	
-	import charts.series.bars.Base;
-	import flash.display.Sprite;
-	import flash.geom.Point;
+	//removeMeIfWant charts.series.bars.Base;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Point;
 	
 	
 	public class Stack extends Base {
@@ -17184,14 +17485,17 @@ package charts.series {
 			this.graphics.endFill();
 		}
 	}
-}package charts.series.bars {
+}
+
+/* AS3JS File */
+package charts.series.bars {
 	
-	import charts.series.Element;
-	import flash.display.Sprite;
-	import flash.geom.Point;
-	import com.serialization.json.JSON;
-	import string.Utils;
-	import elements.axis.XAxisLabels;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant com.serialization.json.JSON;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant elements.axis.XAxisLabels;
 	
 	public class StackCollection extends Element {
 		
@@ -17360,16 +17664,19 @@ package charts.series {
 			}
 		}
 	}
-}package charts.series.dots {
+}
+
+/* AS3JS File */
+package charts.series.dots {
 	
-	import flash.display.Sprite;
-	import flash.display.Graphics;
-	import flash.display.BlendMode;
-	import charts.series.Element;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import string.Utils;
-	import flash.geom.Point;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.Graphics;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.geom.Point;
 	
 	public class anchor extends PointDotBase {
 		
@@ -17492,16 +17799,19 @@ package charts.series {
 		}
 		
 	}
-}package charts.series.dots {
+}
+
+/* AS3JS File */
+package charts.series.dots {
 	
-	import flash.display.Sprite;
-	import flash.display.Graphics;
-	import flash.display.BlendMode;
-	import charts.series.Element;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import string.Utils;
-	import flash.geom.Point;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.Graphics;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.geom.Point;
 	
 	public class bow extends PointDotBase {
 		
@@ -17632,7 +17942,10 @@ package charts.series {
 			aGraphics.lineTo(xVal, yVal);
 		}
 	}
-}package charts.series.dots {
+}
+
+/* AS3JS File */
+package charts.series.dots {
 
 	public class DefaultDotProperties extends Properties
 	{
@@ -17667,7 +17980,10 @@ package charts.series {
 			// tr.aces('4', this.get('type'));
 		}
 	}
-}package charts.series.dots {
+}
+
+/* AS3JS File */
+package charts.series.dots {
 	
 	public class dot_factory {
 		
@@ -17711,12 +18027,15 @@ package charts.series {
 			}
 		}
 	}
-}package charts.series.dots {
+}
+
+/* AS3JS File */
+package charts.series.dots {
 	
-	import charts.series.dots.PointDotBase;
-	import flash.display.BlendMode;
-	import flash.display.Sprite;
-	import string.Utils;
+	//removeMeIfWant charts.series.dots.PointDotBase;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant string.Utils;
 	
 	public class Hollow extends PointDotBase {
 		
@@ -17764,11 +18083,13 @@ package charts.series {
 	}
 }
 
+
+/* AS3JS File */
 package charts.series.dots {
-	import charts.series.dots.PointDotBase;
-	import flash.display.Sprite;
-	import flash.display.BlendMode;
-	import string.Utils;
+	//removeMeIfWant charts.series.dots.PointDotBase;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant string.Utils;
 	
 	public class Point extends PointDotBase {
 		
@@ -17800,12 +18121,15 @@ package charts.series.dots {
 			this.line_mask.visible = b;
 		}
 	}
-}package charts.series.dots {
+}
+
+/* AS3JS File */
+package charts.series.dots {
 	
-	import charts.series.dots.PointDotBase;
-	import flash.display.BlendMode;
-	import flash.display.Sprite;
-	import string.Utils;
+	//removeMeIfWant charts.series.dots.PointDotBase;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant string.Utils;
 	
 	public class PointDot extends PointDotBase {
 		
@@ -17833,17 +18157,19 @@ package charts.series.dots {
 	}
 }
 
+
+/* AS3JS File */
 package charts.series.dots {
 	
-	import flash.display.Sprite;
-	import charts.series.Element;
-	import flash.display.BlendMode;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.geom.Point;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import string.DateUtils;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant string.DateUtils;
 	
 	public class PointDotBase extends Element {
 		
@@ -18105,15 +18431,17 @@ package charts.series.dots {
 	}
 }
 
+
+/* AS3JS File */
 package charts.series.dots {
 	
-	import flash.display.Sprite;
-	import flash.display.Graphics;
-	import flash.display.BlendMode;
-	import charts.series.Element;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import string.Utils;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.Graphics;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant string.Utils;
 	
 	public class scat extends PointDotBase {
 		
@@ -18418,16 +18746,19 @@ package charts.series.dots {
 			}
 		}
 	}
-}package charts.series.dots {
+}
+
+/* AS3JS File */
+package charts.series.dots {
 	
-	import flash.display.Sprite;
-	import flash.display.Graphics;
-	import flash.display.BlendMode;
-	import charts.series.Element;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import string.Utils;
-	import flash.geom.Point;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.Graphics;
+	//removeMeIfWant flash.display.BlendMode;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant flash.geom.Point;
 	
 	public class star extends PointDotBase {
 		
@@ -18546,7 +18877,10 @@ package charts.series.dots {
 		}
 		
 	}
-}package charts.series.pies {
+}
+
+/* AS3JS File */
+package charts.series.pies {
 
 	public class DefaultPieProperties extends Properties
 	{
@@ -18578,12 +18912,15 @@ package charts.series.dots {
 			// tr.aces('4', this.get('type'));
 		}
 	}
-}package charts.series.pies {
+}
+
+/* AS3JS File */
+package charts.series.pies {
 	
-	import string.Utils;
-	import charts.series.has_tooltip;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
+	//removeMeIfWant string.Utils;
+	//removeMeIfWant charts.series.has_tooltip;
+	//removeMeIfWant flash.text.TextField;
+	//removeMeIfWant flash.text.TextFormat;
 	
 	public class PieLabel extends TextField implements has_tooltip{
 		public var is_over:Boolean;
@@ -18650,21 +18987,24 @@ package charts.series.dots {
 			
 		}
 	}
-}package charts.series.pies {
+}
+
+/* AS3JS File */
+package charts.series.pies {
 	
-	import charts.series.Element;
-	import charts.Pie;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant charts.Pie;
 	
-	import flash.display.Sprite;
-	import flash.display.GradientType;
-	import flash.geom.Matrix;
-	import flash.geom.Point;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
+	//removeMeIfWant flash.display.Sprite;
+	//removeMeIfWant flash.display.GradientType;
+	//removeMeIfWant flash.geom.Matrix;
+	//removeMeIfWant flash.geom.Point;
+	//removeMeIfWant flash.text.TextField;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
 	
 	public class PieSlice extends Element {
 		
@@ -18875,15 +19215,17 @@ package charts.series.dots {
 		}
 	}
 }
+
+/* AS3JS File */
 package charts.series.pies {
 	
-	import charts.series.Element;
-	import flash.events.Event;
-	import caurina.transitions.Tweener;
-	import caurina.transitions.Equations;
-	import flash.geom.Point;
-	//import flash.events.Event;
-	import flash.events.MouseEvent;
+	//removeMeIfWant charts.series.Element;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant caurina.transitions.Tweener;
+	//removeMeIfWant caurina.transitions.Equations;
+	//removeMeIfWant flash.geom.Point;
+	////removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
 	
 	public class PieSliceContainer extends Element {
 		
@@ -19331,19 +19673,21 @@ package charts.series.pies {
 		}
 	}
 }
+
+/* AS3JS File */
 package charts.series.tags {
 	
-	import flash.text.TextField;
-	import flash.text.TextFormat;
-	import mx.states.SetProperty
-	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.external.ExternalInterface;
-	import flash.net.URLRequest;
-	import flash.net.navigateToURL;
-	import string.Utils;
-	//import mx.managers.CursorManager;
-	//import mx.controls.Label;
+	//removeMeIfWant flash.text.TextField;
+	//removeMeIfWant flash.text.TextFormat;
+	//removeMeIfWant mx.states.SetProperty
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.MouseEvent;
+	//removeMeIfWant flash.external.ExternalInterface;
+	//removeMeIfWant flash.net.URLRequest;
+	//removeMeIfWant flash.net.navigateToURL;
+	//removeMeIfWant string.Utils;
+	////removeMeIfWant mx.managers.CursorManager;
+	////removeMeIfWant mx.controls.Label;
 	
 	public class Tag extends TextField {
 		
@@ -19570,520 +19914,8 @@ package charts.series.tags {
 			this.y = sc.get_y_from_val( this._y, this.right_axis ) + this.yAdj;
 		}
 	}
-}/*
-
-	Licence
-	
-		Copyright (c) 2005 JSON.org
-
-		Permission is hereby granted, free of charge, to any person obtaining a copy
-		of this software and associated documentation files (the "Software"), to deal
-		in the Software without restriction, including without limitation the rights
-		to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-		copies of the Software, and to permit persons to whom the Software is
-		furnished to do so, subject to the following conditions:
-	
-		The Software shall be used for Good, not Evil.
-
-		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-		IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-		FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-		AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-		LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-		OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-		SOFTWARE.
-	
-	Contributor(s) :
-	
-		- Ported to Actionscript May 2005 by Trannie Carter <tranniec@designvox.com>, wwww.designvox.com
-		
-		- Alcaraz Marc (aka eKameleon) 2006-01-24 <vegas@ekameleon.net>
-		
-			- Refactoring AS2 and MTASC Compatibilty
-			
-			- Add Hexa Digits in 'deserialize' method -
-			
-			NOTE : EDEN Hexa digits code inspiration -> http://www.burrrn.com/projects/eden.html
-
-*/
-
-/* JSON
-
-	AUTHOR
-	
-		Name : JSON
-		Package : vegas.string
-		Version : 1.0.0.0
-		Date :  2006-07-09
-		Author : ekameleon
-		URL : http://www.ekameleon.net
-		Mail : vegas@ekameleon.net
-
-	DESCRIPTION
-
-		JSON (JavaScript object Notation) is a lightweight data-interchange format.
-			
-		Serializer & deserializer in AS2.
-		
-		MORE INFORMATION IN : http://www.json.org/
-	
-		ADD HEXA DIGITS in deserialize method - EDEN inspiration : http://www.burrrn.com/projects/eden.html
-	
-	METHOD SUMMARY
-	
-		- static deserialize(source:String):*
-		
-		- static serialize(o:*):String
-	
-	EXAMPLE
-
-		import vegas.string.JSON ;
-				
-		// --- Init
-		var a:Array = [2, true, "hello"] ;
-		var o:Object = { prop1 : 1 , prop2 : 2 } ;
-		var s:String = "hello world" ;
-		var n:Number = 4 ;
-		var b:Boolean = true ;
-					
-		trace ("*** Serialize") ;
-		trace("* a : " + JSON.serialize( a ) )  ;
-		trace("* o : " + JSON.serialize( o ) )  ;
-		trace("* s : " + JSON.serialize( s ) )  ;
-		trace("* n : " + JSON.serialize( n ) )  ;
-		trace("* b : " + JSON.serialize( b ) )  ;
-				
-		trace ("*** Deserialize") ;
-		
-		var source:String = '[ {"prop1":0xFF0000, "prop2":2, "prop3":"hello", "prop4":true} , 2, true,	3, [3, 2] ]' ;
-		
-		import vegas.util.ClassUtil ;
-		
-		var result:* = JSON.deserialize(source) ;
-		for (var prop:String in result)
-		{
-			trace(prop + " : " + result[prop] + " -> " + ClassUtil.getPath(result[prop])) ;
-		}
-		
-		trace ("*** JSONError") ;
-		
-		var source:String = "[3, 2," ; // test1
-		//var source:String = '{"prop1":coucou"}' ; // test2
-		var o = JSON.deserialize(source) ;
-		for (var prop:String in o) {
-			trace(prop + " : " + o[prop]) ;
-		}
-	
-**/
-
-// TODO REFACTORING PLEASE - type and co... !!!!!!
-
-package com.serialization.json
-{
-	
-	public class JSON
-	{
-		
-	// ----o Public Methods
-
-	static public function deserialize(source:String):* {
-		
-		source = new String(source) ; // Speed
-		var at:Number = 0 ;
-        var ch:String = ' ';
-		
-		var _isDigit:Function ;
-		var _isHexDigit:Function ;
-		var _white:Function ;
-		var _string:Function ;
-		var _next:Function ;
-		var _array:Function ;
-		var _object:Function ;
-		var _number:Function ;
-		var _word:Function ;
-		var _value:Function ;
-		var _error:Function ;
-		
-		_isDigit = function( /*Char*/ c:String ):* {
-    		return( ("0" <= c) && (c <= "9") );
-    	} ;
-			
-		_isHexDigit = function( /*Char*/ c:String ):* {
-    		return( _isDigit( c ) || (("A" <= c) && (c <= "F")) || (("a" <= c) && (c <= "f")) );
-    	} ;
-				
-        _error = function(m:String):void {
-            //throw new JSONError( m, at - 1 , source) ;
-            throw new Error(m, at-1);
-        } ;
-		
-        _next = function():* {
-            ch = source.charAt(at);
-            at += 1;
-            return ch;
-        } ;
-		
-        _white = function ():void {
-           while (ch) {
-                if (ch <= ' ') {
-                    _next();
-                } else if (ch == '/') {
-                    switch (_next()) {
-                        case '/':
-                            while (_next() && ch != '\n' && ch != '\r') {}
-                            break;
-                        case '*':
-                            _next();
-                            for (;;) {
-                                if (ch) {
-                                    if (ch == '*') {
-                                        if (_next() == '/') {
-                                            _next();
-                                            break;
-                                        }
-                                    } else {
-                                        _next();
-                                    }
-                                } else {
-                                    _error("Unterminated Comment");
-                                }
-                            }
-                            break;
-                        default:
-                            _error("Syntax Error");
-                    }
-                } else {
-                    break;
-                }
-            }
-        };
-		
-        _string = function ():* {
-
-            var i:* = '' ;
-            var s:* = '' ;
-            var t:* ;
-            var u:* ;
-			var outer:Boolean = false;
-			
-            if (ch == '"') {
-				
-				while (_next()) {
-                    if (ch == '"')
-                    {
-                        _next();
-                        return s;
-                    }
-                    else if (ch == '\\')
-                    {
-                        switch (_next()) {
-                        case 'b':
-                            s += '\b';
-                            break;
-                        case 'f':
-                            s += '\f';
-                            break;
-                        case 'n':
-                            s += '\n';
-                            break;
-                        case 'r':
-                            s += '\r';
-                            break;
-                        case 't':
-                            s += '\t';
-                            break;
-                        case 'u':
-                            u = 0;
-                            for (i = 0; i < 4; i += 1) {
-                                t = parseInt(_next(), 16);
-                                if (!isFinite(t)) {
-                                    outer = true;
-									break;
-                                }
-                                u = u * 16 + t;
-                            }
-							if(outer) {
-								outer = false;
-								break;
-							}
-                            s += String.fromCharCode(u);
-                            break;
-                        default:
-                            s += ch;
-                        }
-                    } else {
-                        s += ch;
-                    }
-                }
-            }
-            _error("Bad String");
-            return null ;
-        } ;
-		
-        _array = function():* {
-            var a:Array = [];
-            if (ch == '[') {
-                _next();
-                _white();
-                if (ch == ']') {
-                    _next();
-                    return a;
-                }
-                while (ch) {
-                    a.push(_value());
-                    _white();
-                    if (ch == ']') {
-                        _next();
-                        return a;
-                    } else if (ch != ',') {
-                        break;
-                    }
-                    _next();
-                    _white();
-                }
-            }
-            _error("Bad Array");
-            return null ;
-        };
-		
-        _object = function ():* {
-            var k:* = {} ;
-            var o:* = {} ;
-            if (ch == '{') {
-
-                _next();
-
-                _white();
-
-                if (ch == '}')
-                {
-                    _next() ;
-                    return o ;
-                }
-
-                while (ch)
-                {
-                    k = _string();
-                    _white();
-                    if (ch != ':')
-                    {
-                        break;
-                    }
-                    _next();
-                    o[k] = _value();
-                    _white();
-                    if (ch == '}') {
-                        _next();
-                        return o;
-                    } else if (ch != ',') {
-                        break;
-                    }
-                    _next();
-                    _white();
-                }
-            }
-            _error("Bad Object") ;
-        };
-		
-        _number = function ():* {
-
-            var n:* = '' ;
-            var v:* ;
-			var hex:String = '' ;
-			var sign:String = '' ;
-			
-            if (ch == '-') {
-                n = '-';
-                sign = n ;
-                _next();
-            }
-
-            if( ch == "0" ) {
-        		_next() ;
-				if( ( ch == "x") || ( ch == "X") ) {
-            		_next();
-            		while( _isHexDigit( ch ) ) {
-                		hex += ch ;
-                		_next();
-                	}
-            		if( hex == "" ) {
-            			_error("mal formed Hexadecimal") ;
-					} else {
-						return Number( sign + "0x" + hex ) ;
-					}
-            	} else {
-	            	n += "0" ;
-            	}
-			}
-				
-            while ( _isDigit(ch) ) {
-                n += ch;
-                _next();
-            }
-            if (ch == '.') {
-                n += '.';
-                while (_next() && ch >= '0' && ch <= '9') {
-                    n += ch;
-                }
-            }
-            v = 1 * n ;
-            if (!isFinite(v)) {
-                _error("Bad Number");
-            } else {
-                return v;
-            }
-
-            return NaN ;
-
-        };
-		
-        _word = function ():* {
-            switch (ch) {
-                case 't':
-                    if (_next() == 'r' && _next() == 'u' && _next() == 'e') {
-                        _next();
-                        return true;
-                    }
-                    break;
-                case 'f':
-                    if (_next() == 'a' && _next() == 'l' && _next() == 's' && _next() == 'e') {
-                        _next();
-                        return false;
-                    }
-                    break;
-                case 'n':
-                    if (_next() == 'u' && _next() == 'l' && _next() == 'l') {
-                        _next();
-                        return null;
-                    }
-                    break;
-            }
-            _error("Syntax Error");
-            return null ;
-        };
-		
-        _value = function ():* {
-            _white();
-            switch (ch) {
-                case '{':
-                    return _object();
-                case '[':
-                    return _array();
-                case '"':
-                    return _string();
-                case '-':
-                    return _number();
-                default:
-                    return ch >= '0' && ch <= '9' ? _number() : _word();
-            }
-        };
-		
-        return _value() ;
-		
-    }
-	
-		static public function serialize(o:*):String {
-
-    	    var c:String ; // char
-	        var i:Number ;
-        	var l:Number ;
-			var s:String = '' ;
-			var v:* ;
-		
-	        switch (typeof o)
-    	    {
-
-				case 'object' :
-			
-					if (o)
-					{
-						if (o is Array)
-						{
-						
-							l = o.length ;
-						
-							for (i = 0 ; i < l ; ++i)
-							{
-								v = serialize(o[i]);
-								if (s) s += ',' ;
-								s += v ;
-							}
-							return '[' + s + ']';
-						
-						}
-						else if (typeof(o.toString) != 'undefined')
-						{
-							
-							for (var prop:String in o)
-							{
-								v = o[prop];
-								if ( (typeof(v) != 'undefined') && (typeof(v) != 'function') )
-								{
-									v = serialize(v);
-									if (s) s += ',';
-									s += serialize(prop) + ':' + v ;
-								}
-							}
-							return "{" + s + "}";
-						}
-					}
-					return 'null';
-			
-				case 'number':
-				
-					return isFinite(o) ? String(o) : 'null' ;
-				
-				case 'string' :
-				
-					l = o.length ;
-					s = '"';
-					for (i = 0 ; i < l ; i += 1) {
-						c = o.charAt(i);
-						if (c >= ' ') {
-							if (c == '\\' || c == '"')
-							{
-								s += '\\';
-							}
-							s += c;
-						}
-						else
-						{
-							switch (c)
-							{
-								
-								case '\b':
-									s += '\\b';
-									break;
-								case '\f':
-									s += '\\f';
-									break;
-								case '\n':
-									s += '\\n';
-									break;
-								case '\r':
-									s += '\\r';
-									break;
-								case '\t':
-									s += '\\t';
-									break;
-								default:
-									var code:Number = c.charCodeAt() ;
-									s += '\\u00' + (Math.floor(code / 16).toString(16)) + ((code % 16).toString(16)) ;
-							}
-						}
-					}
-					return s + '"';
-				
-				case 'boolean':
-					return String(o);
-				
-				default:
-					return 'null';
-				
-        	}
-   		}
-	}
-}/*
+}
+/*
 Adobe Systems Incorporated(r) Source Code License Agreement
 Copyright(c) 2005 Adobe Systems Incorporated. All rights reserved.
 	
@@ -20118,9 +19950,11 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.crypto {
 	
-	import com.adobe.utils.IntUtil;
+	//removeMeIfWant com.adobe.utils.IntUtil;
 	
 	/**
 	 * The MD5 Message-Digest Algorithm
@@ -20373,11 +20207,13 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.crypto
 {
-	import com.adobe.utils.IntUtil;
-	import flash.utils.ByteArray;
-	import mx.utils.Base64Encoder;
+	//removeMeIfWant com.adobe.utils.IntUtil;
+	//removeMeIfWant flash.utils.ByteArray;
+	//removeMeIfWant mx.utils.Base64Encoder;
 	
 	/**
 	 *  US Secure Hash Algorithm 1 (SHA1)
@@ -20640,11 +20476,13 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.crypto
 {
-	import com.adobe.utils.IntUtil;
-	import flash.utils.ByteArray;
-	import mx.utils.Base64Encoder;
+	//removeMeIfWant com.adobe.utils.IntUtil;
+	//removeMeIfWant flash.utils.ByteArray;
+	//removeMeIfWant mx.utils.Base64Encoder;
 	
 	/**
 	 * The SHA-224 algorithm
@@ -20894,11 +20732,13 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.crypto
 {
-	import com.adobe.utils.IntUtil;
-	import flash.utils.ByteArray;
-	import mx.utils.Base64Encoder;
+	//removeMeIfWant com.adobe.utils.IntUtil;
+	//removeMeIfWant flash.utils.ByteArray;
+	//removeMeIfWant mx.utils.Base64Encoder;
 	
 	/**
 	 * The SHA-256 algorithm
@@ -21153,10 +20993,12 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.crypto
 {
-	import mx.formatters.DateFormatter;
-	import mx.utils.Base64Encoder;
+	//removeMeIfWant mx.formatters.DateFormatter;
+	//removeMeIfWant mx.utils.Base64Encoder;
 	
 	/**
 	 * Web Services Security Username Token
@@ -21269,6 +21111,8 @@ package com.adobe.crypto
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.errors
 {
 	/**
@@ -21333,6 +21177,8 @@ package com.adobe.errors
 	OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
+/* AS3JS File */
 package com.adobe.images
 {
 	public class BitString
@@ -21374,11 +21220,13 @@ package com.adobe.images
 	OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
+/* AS3JS File */
 package com.adobe.images
 {
-	import flash.geom.*;
-	import flash.display.*;
-	import flash.utils.*;
+	//removeMeIfWant flash.geom.*;
+	//removeMeIfWant flash.display.*;
+	//removeMeIfWant flash.utils.*;
 	
 	/**
 	 * Class that converts BitmapData into a valid JPEG
@@ -22025,12 +21873,14 @@ package com.adobe.images
 	OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
+/* AS3JS File */
 package com.adobe.images
 {
-	import flash.geom.*;
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.utils.ByteArray;
+	//removeMeIfWant flash.geom.*;
+	//removeMeIfWant flash.display.Bitmap;
+	//removeMeIfWant flash.display.BitmapData;
+	//removeMeIfWant flash.utils.ByteArray;
 
 	/**
 	 * Class that converts BitmapData into a valid PNG
@@ -22169,9 +22019,11 @@ package com.adobe.images
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.net
 {
-	import flash.net.URLLoader;
+	//removeMeIfWant flash.net.URLLoader;
 
 	/**
 	* 	Class that provides a dynamic implimentation of the URLLoader class.
@@ -22226,6 +22078,8 @@ package com.adobe.net
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.net
 {
 	/**
@@ -22304,9 +22158,11 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.net
 {
-	import flash.utils.ByteArray;
+	//removeMeIfWant flash.utils.ByteArray;
 	
 	/**
 	 * This class implements functions and utilities for working with URI's
@@ -22314,7 +22170,7 @@ package com.adobe.net
 	 * URI syntax, please see RFC 3986 at http://www.ietf.org/rfc/rfc3986.txt
 	 * or do a web search for "rfc 3986".
 	 * 
-	 * <p>The most important aspect of URI's to understand is that URI's
+	 * <p>The most //removeMeIfWantant aspect of URI's to understand is that URI's
 	 * and URL's are not strings.  URI's are complex data structures that
 	 * encapsulate many pieces of information.  The string version of a
 	 * URI is the serialized representation of that data structure.  This
@@ -23111,7 +22967,7 @@ package com.adobe.net
 		 * part without regard for it's component parts.  This has the
 		 * possibliity of leaving the query string in an ambiguious state in
 		 * regards to its syntax.  If the contents of the query part are
-		 * important, it is recommended that get/setQueryValue() or
+		 * //removeMeIfWantant, it is recommended that get/setQueryValue() or
 		 * get/setQueryByMap() are used instead.</p>
 		 * 
 		 * If a different query syntax is being used, a subclass of URI
@@ -24608,7 +24464,7 @@ package com.adobe.net
 		 * <p>The intention of this function is to take anything that a
 		 * user might manually enter as a URI/URL and try to determine what
 		 * they mean.  This function differs from the URI constructor in
-		 * that it makes some assumptions to make it easy to import user
+		 * that it makes some assumptions to make it easy to //removeMeIfWant user
 		 * entered URI data.</p>
 		 * 
 		 * <p>This function is intended to be a helper function.
@@ -24737,7 +24593,10 @@ package com.adobe.net
 		}
 		
 	} // end URI class
-} // end package/*
+} // end 
+/* AS3JS File */
+package
+/*
 	Adobe Systems Incorporated(r) Source Code License Agreement
 	Copyright(c) 2005 Adobe Systems Incorporated. All rights reserved.
 	
@@ -24772,9 +24631,11 @@ package com.adobe.net
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.net
 {
-	import flash.utils.ByteArray;
+	//removeMeIfWant flash.utils.ByteArray;
 	
 	/**
 	 * This class implements an efficient lookup table for URI
@@ -24912,12 +24773,14 @@ package com.adobe.net
 	OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
+/* AS3JS File */
 package com.adobe.net.proxies
 {
-	import flash.events.Event;
-	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
-	import flash.net.Socket;
+	//removeMeIfWant flash.events.Event;
+	//removeMeIfWant flash.events.IOErrorEvent;
+	//removeMeIfWant flash.events.ProgressEvent;
+	//removeMeIfWant flash.net.Socket;
 
 	/**
 	 * This class allows TCP socket connections through HTTP proxies in accordance with
@@ -25148,7 +25011,7 @@ package com.adobe.net.proxies
 	
 	EXAMPLE
 
-		import vegas.string.JSON ;
+		//removeMeIfWant vegas.string.JSON ;
 				
 		// --- Init
 		var a:Array = [2, true, "hello"] ;
@@ -25168,7 +25031,7 @@ package com.adobe.net.proxies
 		
 		var source:String = '[ {"prop1":0xFF0000, "prop2":2, "prop3":"hello", "prop4":true} , 2, true,	3, [3, 2] ]' ;
 		
-		import vegas.util.ClassUtil ;
+		//removeMeIfWant vegas.util.ClassUtil ;
 		
 		var result:* = JSON.deserialize(source) ;
 		for (var prop:String in result)
@@ -25193,6 +25056,8 @@ package com.adobe.net.proxies
 
 // TODO REFACTORING PLEASE - type and co... !!!!!!
 
+
+/* AS3JS File */
 package com.serialization.json
 {
 	
@@ -25678,6 +25543,8 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.serialization.json {
 
 	public class JSONDecoder {
@@ -25896,10 +25763,12 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.serialization.json 
 {
 
-	import flash.utils.describeType;
+	//removeMeIfWant flash.utils.describeType;
 
 	public class JSONEncoder {
 	
@@ -26198,6 +26067,8 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.serialization.json {
 
 	/**
@@ -26287,6 +26158,8 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.serialization.json {
 
 	public class JSONToken {
@@ -26393,6 +26266,8 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.serialization.json {
 
 	public class JSONTokenizer {
@@ -26943,6 +26818,8 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOURCE CODE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.serialization.json {
 
 	/**
@@ -27012,6 +26889,8 @@ package com.adobe.serialization.json {
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.utils
 {
 	
@@ -27202,10 +27081,12 @@ package com.adobe.utils
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.utils
 {
-	import com.adobe.utils.ArrayUtil;
-	import mx.formatters.DateBase;
+	//removeMeIfWant com.adobe.utils.ArrayUtil;
+	//removeMeIfWant mx.formatters.DateBase;
 
 	/**
 	* 	Class that contains static utility methods for manipulating and working
@@ -27868,9 +27749,11 @@ package com.adobe.utils
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.utils
 {
-	import flash.utils.Dictionary;
+	//removeMeIfWant flash.utils.Dictionary;
 	
 	public class DictionaryUtil
 	{
@@ -27923,9 +27806,11 @@ package com.adobe.utils
 		
 	}
 }
+
+/* AS3JS File */
 package com.adobe.utils {
 	
-	import flash.utils.Endian;
+	//removeMeIfWant flash.utils.Endian;
 	
 	/**
 	 * Contains reusable methods for operations pertaining 
@@ -28025,6 +27910,8 @@ package com.adobe.utils {
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.utils
 {
 
@@ -28101,6 +27988,8 @@ package com.adobe.utils
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.utils
 {
 	
@@ -28357,6 +28246,8 @@ package com.adobe.utils
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.utils
 {
 
@@ -28528,9 +28419,11 @@ package com.adobe.utils
 */
 
 
+
+/* AS3JS File */
 package com.adobe.webapis 
 {
-	import flash.events.EventDispatcher;
+	//removeMeIfWant flash.events.EventDispatcher;
 
 	/**
 	* Base class for remote service classes.
@@ -28577,13 +28470,15 @@ package com.adobe.webapis
 	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+/* AS3JS File */
 package com.adobe.webapis
 {
-	import flash.events.IOErrorEvent;
-	import flash.events.SecurityErrorEvent;
-	import flash.events.ProgressEvent;
+	//removeMeIfWant flash.events.IOErrorEvent;
+	//removeMeIfWant flash.events.SecurityErrorEvent;
+	//removeMeIfWant flash.events.ProgressEvent;
 	
-	import com.adobe.net.DynamicURLLoader;
+	//removeMeIfWant com.adobe.net.DynamicURLLoader;
 	
 		/**
 		*  	Dispatched when data is 
@@ -28688,10 +28583,12 @@ package com.adobe.webapis
 */
 
 
+
+/* AS3JS File */
 package com.adobe.webapis.events
 {
 
-	import flash.events.Event;
+	//removeMeIfWant flash.events.Event;
 
 	/**
 	* Event class that contains data loaded from remote services.
