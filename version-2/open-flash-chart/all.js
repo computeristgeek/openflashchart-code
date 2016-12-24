@@ -57,7 +57,7 @@
         txt.autoSize = "left";
         txt.border = true;
 
-        var t = this.getChildAt(0) as TextField;
+        var t = (TextField) this.getChildAt(0);
         txt.y = t.y + t.height + 10;
         txt.x = 5;
 
@@ -145,7 +145,7 @@
 
       JsonInspector.has_pie_chart = function(json) {
 
-        var elements = json['elements'] as Array;
+        var elements = (Array) json['elements'];
 
         for (var i = 0; i < elements.length; i++) {
           // tr.ace( elements[i]['type'] );
@@ -460,8 +460,8 @@
         /*
         var b64 = new Base64Encoder();
         b64.encodeBytes(image_binary());
-        tr.ace( b64 as String );
-        return b64 as String;
+        tr.ace( (String) b64);
+        return (String) b64;
         */
       };
       main.prototype.saveImage = function(e) {
@@ -662,11 +662,11 @@
             break;
 
           case Tooltip.PROXIMITY:
-            this.mouse_move_proximity(event as MouseEvent);
+            this.mouse_move_proximity((MouseEvent) event);
             break;
 
           case Tooltip.NORMAL:
-            this.mouse_move_follow(event as MouseEvent);
+            this.mouse_move_follow((MouseEvent) event);
             break;
 
         }
@@ -677,7 +677,7 @@
         // tr.ace( event.target );
 
         if (event.target is has_tooltip)
-          this.tooltip.draw(event.target as has_tooltip);
+          this.tooltip.draw((has_tooltip) event.target);
         else
           this.tooltip.hide();
       };
@@ -849,7 +849,7 @@
         } catch (e: Error) {
           // remove the 'loading data...' msg:
           this.removeChildAt(0);
-          this.addChild(new JsonErrorMsg(json_string as String, e));
+          this.addChild(new JsonErrorMsg((String) json_string, e));
         }
 
         //
@@ -3553,7 +3553,7 @@
             };
 
             if (label is String)
-              label_style.text = label as String;
+              label_style.text = (String) label;
             else {
               object_helper.merge_2(label, label_style);
             }
@@ -3611,14 +3611,14 @@
 
             for (i = 0; i < this.numChildren; i++) {
               // right align
-              tf = this.getChildAt(i) as TextField;
+              tf = (TextField) this.getChildAt(i);
               tf.x = center - tf.width;
             }
 
             // now move it to the correct Y, vertical center align
             for (i = 0; i < this.numChildren; i++) {
 
-              tf = this.getChildAt(i) as TextField;
+              tf = (TextField) this.getChildAt(i);
               tf.y = (sc.get_y_from_val(i, false) - (tf.height / 2));
             }
           };
@@ -3682,7 +3682,7 @@
             };
 
             if (label is String)
-              label_style.text = label as String;
+              label_style.text = (String) label;
             else {
               object_helper.merge_2(label, label_style);
             }
@@ -3736,7 +3736,7 @@
               this.resize_2(sc);
 
               for (i = 0; i < this.numChildren; i++) {
-                tf = this.getChildAt(i) as TextField;
+                tf = (TextField) this.getChildAt(i);
                 if ((tf.x < sc.left) ||
                   (tf.y < sc.top) ||
                   (tf.y + tf.height > sc.bottom) ||
@@ -3761,7 +3761,7 @@
             // now move it to the correct Y, vertical center align
             for (i = 0; i < this.numChildren; i++) {
 
-              tf = this.getChildAt(i) as TextField;
+              tf = (TextField) this.getChildAt(i);
 
               var p = sc.get_get_x_from_pos_and_y_from_val(i, sc.get_max());
               if (p.x > mid_x)
@@ -4335,7 +4335,7 @@
             // our parents 'globals'
             //
             if (label is String)
-              label_style.text = label as String;
+              label_style.text = (String) label;
             else
               object_helper.merge_2(label, label_style);
 
@@ -4426,7 +4426,7 @@
             var i = 0;
 
             for (var pos = 0; pos < this.numChildren; pos++) {
-              var child = this.getChildAt(pos) as AxisLabel;
+              var child = (AxisLabel) this.getChildAt(pos);
               if (isNaN(child.xVal)) {
                 child.x = sc.get_x_tick_pos(pos) + child.xAdj;
               } else {
@@ -5082,7 +5082,7 @@
           YAxisLabelsBase.prototype.get_width = function() {
             var max = 0;
             for (var i = 0; i < this.numChildren; i++) {
-              var tf = this.getChildAt(i) as YTextField;
+              var tf = (YTextField) this.getChildAt(i);
               max = Math.max(max, tf.width);
             }
             return max;
@@ -5124,13 +5124,13 @@
 
             for (i = 0; i < this.numChildren; i++) {
               // right align
-              tf = this.getChildAt(i) as YTextField;
+              tf = (YTextField) this.getChildAt(i);
               tf.x = left - tf.width + maxWidth;
             }
 
             // now move it to the correct Y, vertical center align
             for (i = 0; i < this.numChildren; i++) {
-              tf = this.getChildAt(i) as YTextField;
+              tf = (YTextField) this.getChildAt(i);
               if (tf.rotation != 0) {
                 tf.y = sc.get_y_from_val(tf.y_val, false) + (tf.height / 2);
               } else {
@@ -5173,13 +5173,13 @@
 
             for (i = 0; i < this.numChildren; i++) {
               // left align
-              tf = this.getChildAt(i) as YTextField;
+              tf = (YTextField) this.getChildAt(i);
               tf.x = left; // - tf.width + maxWidth;
             }
 
             // now move it to the correct Y, vertical center align
             for (i = 0; i < this.numChildren; i++) {
-              tf = this.getChildAt(i) as YTextField;
+              tf = (YTextField) this.getChildAt(i);
               if (tf.rotation != 0) {
                 tf.y = box.get_y_from_val(tf.y_val, true) + (tf.height / 2);
               } else {
@@ -7885,12 +7885,12 @@
 
             for (var i = 0; i < this.numChildren; i++) {
 
-              tmp = this.getChildAt(i) as Sprite;
+              tmp = (Sprite) this.getChildAt(i);
 
               // filter out the masks
               if (tmp is Element) {
 
-                var e = tmp as Element;
+                var e = (Element) tmp;
 
                 if (first) {
 
@@ -8103,7 +8103,7 @@
           BarBase.prototype.resize = function(sc) {
 
             for (var i = 0; i < this.numChildren; i++) {
-              var e = this.getChildAt(i) as Element;
+              var e = (Element) this.getChildAt(i);
               e.resize(sc);
             }
           };
@@ -8113,7 +8113,7 @@
 
             for (var i = 0; i < this.numChildren; i++) {
 
-              var e = this.getChildAt(i) as Element;
+              var e = (Element) this.getChildAt(i);
               max_index = Math.max(max_index, e.index);
             }
 
@@ -8149,7 +8149,7 @@
             var ex = null;
 
             for (var i = 0; i < this.numChildren; i++) {
-              var e = this.getChildAt(i) as Element;
+              var e = (Element) this.getChildAt(i);
 
               e.is_tip = false;
 
@@ -8644,7 +8644,7 @@
               //
               if (this.getChildAt(i) is Element) {
 
-                e = this.getChildAt(i) as StackCollection;
+                e = (StackCollection) this.getChildAt(i);
 
                 p = e.get_mid_point();
                 if (p.x == x) {
@@ -8704,7 +8704,7 @@
             for (var i = 0; i < this.numChildren; i++) {
               if (this.getChildAt(i) is Element) {
 
-                var e = this.getChildAt(i) as Element
+                var e = (Element) this.getChildAt(i);
                 max = Math.max(max, e.get_x());
               }
             }
@@ -8720,7 +8720,7 @@
             for (var i = 0; i < this.numChildren; i++) {
               if (this.getChildAt(i) is Element) {
 
-                var e = this.getChildAt(i) as Element
+                var e = (Element) this.getChildAt(i);
                 min = Math.min(min, e.get_x());
               }
             }
@@ -8737,7 +8737,7 @@
             for (var i = 0; i < this.numChildren; i++) {
               if (this.getChildAt(i) is Element) {
 
-                var e = this.getChildAt(i) as Element;
+                var e = (Element) this.getChildAt(i);
                 var y = e.get_y();
                 max = Math.max(max, y);
                 min = Math.min(min, y);
@@ -8768,7 +8768,7 @@
               //
               if (this.getChildAt(i) is Element) {
 
-                var e = this.getChildAt(i) as Element;
+                var e = (Element) this.getChildAt(i);
                 e.set_tip(false);
 
                 dx = Math.abs(x - e.x);
@@ -8819,7 +8819,7 @@
               //
               if (this.getChildAt(i) is Element) {
 
-                var e = this.getChildAt(i) as Element;
+                var e = (Element) this.getChildAt(i);
 
                 p = e.get_mid_point();
                 dx = Math.abs(x - p.x);
@@ -8846,7 +8846,7 @@
               //
               if (this.getChildAt(i) is Element) {
 
-                e = this.getChildAt(i) as Element;
+                e = (Element) this.getChildAt(i);
 
                 //
                 // Point elements are invisible by default.
@@ -8908,7 +8908,7 @@
               // filter mask Sprites
               if (this.getChildAt(i) is Element) {
 
-                e = this.getChildAt(i) as Element;
+                e = (Element) this.getChildAt(i);
                 closest = Math.min(flash.geom.Point.distance(e.get_mid_point(), mouse), closest);
               }
             }
@@ -8922,7 +8922,7 @@
               // filter mask Sprites
               if (this.getChildAt(i) is Element) {
 
-                e = this.getChildAt(i) as Element;
+                e = (Element) this.getChildAt(i);
                 if (flash.geom.Point.distance(e.get_mid_point(), mouse) == closest)
                   close.push(e);
               }
@@ -8936,7 +8936,7 @@
               // filter out the mask elements in line charts
               if (this.getChildAt(i) is Element) {
 
-                var e = this.getChildAt(i) as Element;
+                var e = (Element) this.getChildAt(i);
                 e.set_tip(false);
               }
             }
@@ -8975,7 +8975,7 @@
               // filter out the mask elements in line charts
               if (this.getChildAt(i) is Element) {
 
-                var e = this.getChildAt(i) as Element;
+                var e = (Element) this.getChildAt(i);
                 e.tooltip_replace_labels(labels);
               }
             }
@@ -8985,7 +8985,7 @@
             for (var i = 0; i < this.numChildren; i++)
               if (this.getChildAt(i) is Element) {
 
-                var e = this.getChildAt(i) as Element;
+                var e = (Element) this.getChildAt(i);
                 e.die();
               }
 
@@ -9072,7 +9072,7 @@
             var name = '';
             var c = 1;
 
-            var elements = json['elements'] as Array;
+            var elements = (Array) json['elements'];
 
             for (var i = 0; i < elements.length; i++) {
               // tr.ace( elements[i]['type'] );
@@ -9301,7 +9301,7 @@
           HBar.prototype.resize = function(sc) {
 
             for (var i = 0; i < this.numChildren; i++) {
-              var p = this.getChildAt(i) as Horizontal;
+              var p = (Horizontal) this.getChildAt(i);
               p.resize(sc);
             }
           };
@@ -9314,7 +9314,7 @@
             for (var i = 0; i < this.numChildren; i++)
               if (this.getChildAt(i) is Horizontal) {
 
-                var h = this.getChildAt(i) as Horizontal;
+                var h = (Horizontal) this.getChildAt(i);
                 x = Math.max(x, h.get_max_x());
 
               }
@@ -9444,11 +9444,11 @@
 
             for (i = 0; i < this.numChildren; i++) {
 
-              tmp = this.getChildAt(i) as Sprite;
+              tmp = (Sprite) this.getChildAt(i);
 
               // filter out the line masks
               if (tmp is PointDotBase) {
-                var e = tmp as PointDotBase;
+                var e = (PointDotBase) tmp;
                 if (e.is_tweening())
                   return true;
               }
@@ -9476,11 +9476,11 @@
 
             for (i = 0; i < this.numChildren; i++) {
 
-              tmp = this.getChildAt(i) as Sprite;
+              tmp = (Sprite) this.getChildAt(i);
 
               // filter out the line masks
               if (tmp is Element) {
-                var e = tmp as Element;
+                var e = (Element) tmp;
 
                 // tell the point where it is on the screen
                 // we will use this info to place the tooltip
@@ -9498,11 +9498,11 @@
 
             for (i = 0; i < this.numChildren; i++) {
 
-              tmp = this.getChildAt(i) as Sprite;
+              tmp = (Sprite) this.getChildAt(i);
 
               // filter out the line masks
               if (tmp is Element) {
-                var e = tmp as Element;
+                var e = (Element) tmp;
 
                 if (first) {
                   this.graphics.moveTo(e.x, e.y);
@@ -9532,12 +9532,12 @@
             var now_on = true;
 
             for (var i = 0; i < this.numChildren; i++) {
-              var tmp = this.getChildAt(i) as Sprite;
+              var tmp = (Sprite) this.getChildAt(i);
               //
               // filter out the line masks
               //
               if (tmp is Element) {
-                var e = tmp as Element;
+                var e = (Element) tmp;
 
                 if (first) {
                   this.graphics.moveTo(e.x, e.y);
@@ -9675,13 +9675,13 @@
 
             for (i = 0; i < this.numChildren; i++) {
 
-              tmp = this.getChildAt(i) as Sprite;
+              tmp = (Sprite) this.getChildAt(i);
 
               //
               // filter out the line masks
               //
               if (tmp is Element) {
-                var e = tmp as Element;
+                var e = (Element) tmp;
 
                 // tell the point where it is on the screen
                 // we will use this info to place the tooltip
@@ -9714,12 +9714,12 @@
             var now_on = true;
 
             for (var i = 0; i < this.numChildren; i++) {
-              var tmp = this.getChildAt(i) as Sprite;
+              var tmp = (Sprite) this.getChildAt(i);
               //
               // filter out the line masks
               //
               if (tmp is Element) {
-                var e = tmp as Element;
+                var e = (Element) tmp;
 
                 // tell the point where it is on the screen
                 // we will use this info to place the tooltip
@@ -10274,7 +10274,7 @@
             i = 0;
             for each(val in this.values) {
 
-              var value = val is Number ? val as Number : val.value;
+              var value = val is Number ? (Number ) val: val.value;
               var slice_angle = value * 360 / total;
 
               if (slice_angle >= 0) {
@@ -10354,7 +10354,7 @@
 
               // loop to gather and merge offsets
               for (i = 0; i < this.numChildren; i++) {
-                sliceContainer = this.getChildAt(i) as PieSliceContainer;
+                sliceContainer = (PieSliceContainer) this.getChildAt(i);
                 var pie_offsets = sliceContainer.get_radius_offsets();
                 for (var key in offsets) {
                   if (pie_offsets[key] > offsets[key]) {
@@ -10392,7 +10392,7 @@
 
             // loop and resize
             for (i = 0; i < this.numChildren; i++) {
-              sliceContainer = this.getChildAt(i) as PieSliceContainer;
+              sliceContainer = (PieSliceContainer) this.getChildAt(i);
               sliceContainer.pie_resize(sc, radius);
 
               // While we are looping through the children, we determine which
@@ -10454,7 +10454,7 @@
             var yVal = sc.top;
             var bDone = false;
             while ((childIdx >= 0) && (!bDone)) {
-              sliceContainer = this.getChildAt(childIdx) as PieSliceContainer;
+              sliceContainer = (PieSliceContainer) this.getChildAt(childIdx);
               ticAngle = sliceContainer.getTicAngle();
               if ((ticAngle >= 270) || (ticAngle <= 90)) {
                 yVal = sliceContainer.moveLabelDown(sc, yVal);
@@ -10474,7 +10474,7 @@
             yVal = sc.bottom;
             bDone = false;
             while ((childIdx >= 0) && (!bDone)) {
-              sliceContainer = this.getChildAt(childIdx) as PieSliceContainer;
+              sliceContainer = (PieSliceContainer) this.getChildAt(childIdx);
               ticAngle = sliceContainer.getTicAngle();
               if ((ticAngle >= 270) || (ticAngle <= 90)) {
                 yVal = sliceContainer.moveLabelUp(sc, yVal);
@@ -10494,7 +10494,7 @@
             yVal = sc.bottom;
             bDone = false;
             while ((childIdx >= 0) && (!bDone)) {
-              sliceContainer = this.getChildAt(childIdx) as PieSliceContainer;
+              sliceContainer = (PieSliceContainer) this.getChildAt(childIdx);
               ticAngle = sliceContainer.getTicAngle();
               if ((ticAngle > 90) && (ticAngle < 270)) {
                 yVal = sliceContainer.moveLabelUp(sc, yVal);
@@ -10514,7 +10514,7 @@
             yVal = sc.top;
             bDone = false;
             while ((childIdx >= 0) && (!bDone)) {
-              sliceContainer = this.getChildAt(childIdx) as PieSliceContainer;
+              sliceContainer = (PieSliceContainer) this.getChildAt(childIdx);
               ticAngle = sliceContainer.getTicAngle();
               if ((ticAngle > 90) && (ticAngle < 270)) {
                 yVal = sliceContainer.moveLabelDown(sc, yVal);
@@ -10668,13 +10668,13 @@
 
             var tmp;
             for (var i = 0; i < this.numChildren; i++) {
-              tmp = this.getChildAt(i) as Sprite;
+              tmp = (Sprite) this.getChildAt(i);
 
               //
               // filter out the line masks
               //
               if (tmp is Element) {
-                var e = tmp as Element;
+                var e = (Element) tmp;
                 e.resize(sc);
               }
             }
@@ -10801,13 +10801,13 @@
 
             for (var i = 0; i < this.numChildren; i++) {
 
-              var tmp = this.getChildAt(i) as Sprite;
+              var tmp = (Sprite) this.getChildAt(i);
 
               //
               // filter out the line masks
               //
               if (tmp is Element) {
-                var e = tmp as Element;
+                var e = (Element) tmp;
 
                 // tell the point where it is on the screen
                 // we will use this info to place the tooltip
@@ -10966,7 +10966,7 @@
           };
           Tags.prototype.resize = function(sc) {
             for (var i = 0; i < this.numChildren; i++) {
-              var tag = this.getChildAt(i) as Tag;
+              var tag = (Tag) this.getChildAt(i);
               tag.resize(sc);
             }
           }
@@ -11010,7 +11010,7 @@
               height = bar_bottom-this.screen_y;
             }
             */
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.graphics.clear();
             this.graphics.beginFill(this.colour, 1.0);
@@ -11277,7 +11277,7 @@
 
           Bar3D.prototype.resize = function(sc) {
 
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.graphics.clear();
 
@@ -11372,7 +11372,7 @@
 
           Bar.prototype.resize = function(sc) {
 
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.graphics.clear();
             this.graphics.beginFill(this.colour, 1.0);
@@ -11722,7 +11722,7 @@
           Cylinder.prototype.resize = function(sc) {
 
             this.graphics.clear();
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.bg(h.width, h.height, h.upside_down);
             this.glass(h.width, h.height, h.upside_down);
@@ -11931,7 +11931,7 @@
           CylinderOutline.prototype.resize = function(sc) {
 
             this.graphics.clear();
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.bg(h.width, h.height, h.upside_down);
             this.glass(h.width, h.height, h.upside_down);
@@ -12155,7 +12155,7 @@
           Dome.prototype.resize = function(sc) {
 
             this.graphics.clear();
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.bg(h.width, h.height, h.upside_down);
             this.glass(h.width, h.height, h.upside_down);
@@ -12544,7 +12544,7 @@
           ECandle.prototype.resize = function(sc) {
 
             // this moves everyting relative to the box (NOT the whiskers)
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             // 
             //var bar_high = 0;
@@ -12688,7 +12688,7 @@
           Glass.prototype.resize = function(sc) {
 
             this.graphics.clear();
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
             if (h.height == 0)
               return;
 
@@ -12836,7 +12836,7 @@
           Horizontal.prototype.resize = function(sc) {
 
             // is it OK to cast up like this?
-            var sc2 = sc as ScreenCoords;
+            var sc2 = (ScreenCoords) sc;
 
             var tmp = sc2.get_horiz_bar_coords(this.index, this.group);
 
@@ -12893,7 +12893,7 @@
           Outline.prototype.outline = 0;
           Outline.prototype.resize = function(sc) {
 
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.graphics.clear();
             this.graphics.lineStyle(1, this.outline, 1);
@@ -13010,7 +13010,7 @@
           Plastic.prototype.resize = function(sc) {
 
             this.graphics.clear();
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.bg(h.width, h.height, h.upside_down);
             this.glass(h.width, h.height, h.upside_down);
@@ -13237,7 +13237,7 @@
           PlasticFlat.prototype.resize = function(sc) {
 
             this.graphics.clear();
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.bg(h.width, h.height, h.upside_down);
             this.glass(h.width, h.height, h.upside_down);
@@ -13480,7 +13480,7 @@
           Round3D.prototype.resize = function(sc) {
 
             this.graphics.clear();
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.bg(h.width, h.height, h.upside_down);
             this.glass(h.width, h.height, h.upside_down);
@@ -13919,7 +13919,7 @@
           Round.prototype.resize = function(sc) {
 
             this.graphics.clear();
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.bg(h.width, h.height, h.upside_down);
             this.glass(h.width, h.height, h.upside_down);
@@ -14206,7 +14206,7 @@
           RoundGlass.prototype.resize = function(sc) {
 
             this.graphics.clear();
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.bg(h.width, h.height, h.upside_down);
             this.glass(h.width, h.height, h.upside_down);
@@ -14517,7 +14517,7 @@
           Sketch.prototype.offset = 0;
           Sketch.prototype.resize = function(sc) {
 
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             // how sketchy the bar is:
             var offset = this.offset;
@@ -14591,7 +14591,7 @@
           };
           Stack.prototype.resize = function(sc) {
 
-            var h = this.resize_helper(sc as ScreenCoords);
+            var h = this.resize_helper((ScreenCoords) sc);
 
             this.graphics.clear();
             this.graphics.beginFill(this.colour, 1.0);
@@ -14630,7 +14630,7 @@
 
             // a stacked bar has n Y values
             // so this is an array of objects
-            this.vals = props.get('values') as Array;
+            this.vals = (Array) props.get('values');
 
             this.total = 0;
             for each(item in this.vals) {
@@ -14712,14 +14712,14 @@
           StackCollection.prototype.resize = function(sc) {
 
             for (var i = 0; i < this.numChildren; i++) {
-              var e = this.getChildAt(i) as Element;
+              var e = (Element) this.getChildAt(i);
               e.resize(sc);
             }
           };
           StackCollection.prototype.get_mid_point = function() {
 
             // get the first bar in the stack
-            var e = this.getChildAt(0) as Element;
+            var e = (Element) this.getChildAt(0);
 
             return e.get_mid_point();
           };
@@ -14735,7 +14735,7 @@
             //
             // get top item in stack
             //
-            var e = this.getChildAt(this.numChildren - 1) as Element;
+            var e = (Element) this.getChildAt(this.numChildren - 1);
             return e.get_tip_pos();
           };
           StackCollection.prototype.get_tooltip = function() {
@@ -14745,7 +14745,7 @@
 
             // tr.ace( this.numChildren );
             for (var i = 0; i < this.numChildren; i++) {
-              var e = this.getChildAt(i) as Element;
+              var e = (Element) this.getChildAt(i);
               if (e.is_tip) {
                 //tr.ace( 'TIP' );
                 return e.get_tooltip();
@@ -14759,7 +14759,7 @@
           StackCollection.prototype.tooltip_replace_labels = function(labels) {
 
             for (var i = 0; i < this.numChildren; i++) {
-              var e = this.getChildAt(i) as Stack;
+              var e = (Stack) this.getChildAt(i);
               e.replace_x_axis_label(labels.get(this.index));
             }
           }
@@ -16016,14 +16016,14 @@
               return false;
           };
           PieLabel.prototype.get_tooltip = function() {
-            tr.ace((this.parent as has_tooltip).this.get_tooltip());
-            return (this.parent as has_tooltip).this.get_tooltip();
+            tr.ace(((has_tooltip) this.parent).this.get_tooltip());
+            return ((has_tooltip) this.parent).this.get_tooltip();
           };
           PieLabel.prototype.get_tip_pos = function() {
-            return (this.parent as has_tooltip).this.get_tip_pos();
+            return ((has_tooltip) this.parent).this.get_tip_pos();
           };
           PieLabel.prototype.set_tip = function(b) {
-            return (this.parent as has_tooltip).this.set_tip(b);
+            return ((has_tooltip) this.parent).this.set_tip(b);
           };
           PieLabel.prototype.resize = function(sc) {
 
@@ -16370,7 +16370,7 @@
               }
             }
 
-            var anims = animate as Array;
+            var anims = (Array) animate;
             //
             // end to do
             //
@@ -20345,12 +20345,12 @@
                         if (value is String) {
 
                           // escape the string so it's formatted correctly
-                          return this.escapeString(value as String);
+                          return this.escapeString((String) value);
 
                         } else if (value is Number) {
 
                           // only encode numbers that finate
-                          return isFinite(value as Number) ? value.toString() : "null";
+                          return isFinite((Number) value) ? value.toString() : "null";
 
                         } else if (value is Boolean) {
 
@@ -20360,7 +20360,7 @@
                         } else if (value is Array) {
 
                           // call the helper method to convert an array
-                          return this.arrayToString(value as Array);
+                          return this.arrayToString((Array) value);
 
                         } else if (value is Object && value != null) {
 
